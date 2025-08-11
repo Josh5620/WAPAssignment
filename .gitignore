@@ -1,0 +1,48 @@
+# Root gitignore combining client and server ignores
+
+# Environment files (never commit secrets)
+.env
+.env.*
+server/.env
+client/.env
+client/.env.*
+!*.env.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependency folders
+node_modules
+
+# Build outputs
+client/dist
+client/dist-ssr
+server/dist
+server/build
+
+# Local environment / tooling
+*.local
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Temporary
+/tmp
+*.tmp
+
+# Lockfiles can be kept if desired; uncomment to ignore
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml

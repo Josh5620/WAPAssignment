@@ -33,3 +33,6 @@ C:\Users\Administrator\Desktop\WAPAssignment\server\ProjectAPI\obj\Debug\net9.0\
 C:\Users\Administrator\Desktop\WAPAssignment\server\ProjectAPI\obj\Debug\net9.0\ref\ProjectAPI.dll
 C:\Users\Administrator\Desktop\WAPAssignment\server\ProjectAPI\bin\Debug\net9.0\DotnetGeminiSDK.dll
 C:\Users\Administrator\Desktop\WAPAssignment\server\ProjectAPI\bin\Debug\net9.0\Newtonsoft.Json.dll
+C:\Users\Administrator\Desktop\WAPAssignment\server\ProjectAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Administrator\Desktop\WAPAssignment\server\ProjectAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Administrator\Desktop\WAPAssignment\server\ProjectAPI\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll

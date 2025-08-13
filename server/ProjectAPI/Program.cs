@@ -2,29 +2,30 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Read API keys from configuration
 var geminiKey = builder.Configuration["Gemini:ApiKey"];
-/*
-var supabaseKey = builder.Configuration["SupabaseApiKey"];
-*/
-// Register HttpClients
+
+// HttpClient for Gemini
 builder.Services.AddHttpClient("Gemini", client =>
 {
     client.BaseAddress = new Uri("https://generativelanguage.googleapis.com/v1beta/");
 });
-/*
-builder.Services.AddHttpClient("Supabase", client =>
-{
-    client.BaseAddress = new Uri("https://YOUR_PROJECT_REF.supabase.co/rest/v1/");
-    client.DefaultRequestHeaders.Add("apikey", supabaseKey);
-});
-*/
-// Register services
 
+// Register GeminiService
 builder.Services.AddScoped<GeminiService>(sp =>
     new GeminiService(sp.GetRequiredService<IHttpClientFactory>().CreateClient("Gemini"), geminiKey));
-/*
-builder.Services.AddScoped<SupabaseService>(sp =>
-    new SupabaseService(sp.GetRequiredService<IHttpClientFactory>().CreateClient("Supabase")));
-*/
+
+// Enable CORS for React
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        policy => policy
+            .WithOrigins("http://localhost:3000") // remove if want host and change to react hosted url 
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
+// Controllers
+builder.Services.AddControllers();
+
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -38,21 +39,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowReactApp");
 
-// Group 1: Gemini routes
-var gemGroup = app.MapGroup("/api/v1/gem");
-gemGroup.MapPost("/chat", async (GeminiService gemini, string prompt) =>
-{
-    var reply = await gemini.AskGeminiAsync(prompt);
-    return Results.Ok(new { response = reply });
-});
+app.MapControllers();
 
-// Group 2: Supabase routes
-/*
-var dbGroup = app.MapGroup("/api/v1/db");
-dbGroup.MapGet("/test", (SupabaseService supabase) =>
-{
-    return Results.Ok(new { message = "DB route works!" });
-});
-*/
 app.Run();

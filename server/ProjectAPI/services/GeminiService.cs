@@ -1,40 +1,63 @@
 using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+using System.Net.Http.Json;
 
-public class GeminiService
+public class GeminiService(HttpClient httpClient, string apiKey)
 {
-    private readonly HttpClient _httpClient;
-    private readonly string _apiKey;
+    private readonly HttpClient _httpClient = httpClient; // Add this field
+    private readonly string _apiKey = apiKey; // Store API key as field
 
-    public GeminiService(HttpClient httpClient, string apiKey)
-    {
-        _httpClient = httpClient;
-        _apiKey = apiKey;
-    }
+    private static readonly Dictionary<string, List<(string Role, string Text)>> _conversations = new();
 
-    public async Task<string> AskGeminiAsync(string prompt)
+    public async Task<string> SendMessageAsync(string sessionId, string userMessage)
     {
-        var requestBody = new
+        if (!_conversations.ContainsKey(sessionId))
+            _conversations[sessionId] = new List<(string, string)>();
+
+        _conversations[sessionId].Add(("user", userMessage));
+
+        var payload = new
         {
-            contents = new[]
+            contents = _conversations[sessionId].Select(m => new
             {
-                new { role = "user", parts = new[] { new { text = prompt } } }
-            }
+                role = m.Role,
+                parts = new[] { new { text = m.Text } }
+            })
         };
 
-        var json = JsonSerializer.Serialize(requestBody);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = await _httpClient.PostAsJsonAsync(
+            $"models/gemini-1.5-flash:generateContent?key={_apiKey}", payload);
 
-        var response = await _httpClient.PostAsync(
-            $"models/gemini-1.5-flash:generateContent?key={_apiKey}",
-            content
-        );
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadAsStringAsync();
+            throw new Exception($"Gemini API error: {response.StatusCode} - {error}");
+        }
 
-        response.EnsureSuccessStatusCode();
+        var result = await response.Content.ReadFromJsonAsync<GeminiResponse>();
 
-        var responseString = await response.Content.ReadAsStringAsync();
-        return responseString; // for now we just return the raw JSON
+        var botReply = result?.Candidates?.FirstOrDefault()?.Content?.Parts?.FirstOrDefault()?.Text ?? "";
+        _conversations[sessionId].Add(("model", botReply));
+
+        return botReply;
     }
+}
+
+public class GeminiResponse
+{
+    public List<Candidate>? Candidates { get; set; }
+}
+
+public class Candidate
+{
+    public Content? Content { get; set; }
+}
+
+public class Content
+{
+    public List<Part>? Parts { get; set; }
+}
+
+public class Part
+{
+    public string? Text { get; set; }
 }

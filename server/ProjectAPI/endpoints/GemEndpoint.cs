@@ -17,6 +17,8 @@ public class GemEndpoint : ControllerBase
         var reply = await _geminiService.SendMessageAsync(request.SessionId, request.Message);
         return Ok(new { reply });
     }
+
 }
 
 public record ChatRequest(string SessionId, string Message);
+public record InstructionRequest(string SessionId);

@@ -8,14 +8,28 @@ const ChatBotPopup = () => {
     { id: 1, text: "Hello! How can I help you today?", sender: "bot", timestamp: new Date() },
   ]);
   const [inputText, setInputText] = useState('');
-
+// add it so that the first msg sends the instructions taht gets its json txt dropped. 
   const toggleChat = () => {
     setIsOpen(!isOpen);
   };
 
+  async function fetchBotResponse(sessionid, userMessage) {
+    const ret = await fetch("http://localhost:5245/api/chat/send", {
+      method: 'POST',
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ sessionId: sessionid, message: userMessage })
+    });
+
+    const data = await ret.json();
+    console.log(data)
+    return data;
+  }
+
+
   const sendMessage = (e) => {
     e.preventDefault();
     if (inputText.trim() === '') return;
+
 
     const userMessage = {
       id: messages.length + 1,
@@ -25,12 +39,11 @@ const ChatBotPopup = () => {
     };
 
     setMessages(prev => [...prev, userMessage]);
-    
-    // Simulate bot response after a short delay
-    setTimeout(() => {
+
+    fetchBotResponse("1", userMessage.text).then(data => {
       const botResponse = {
         id: messages.length + 2,
-        text: "Thank you for your message! I'm processing your request...",
+        text: data.reply,
         sender: "bot",
         timestamp: new Date()
       };

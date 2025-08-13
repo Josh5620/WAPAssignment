@@ -19,7 +19,7 @@ const ChatBotPopup = () => {
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({ sessionId: sessionid, message: userMessage })
     });
-
+    console.log(ret)
     const data = await ret.json();
     console.log(data)
     return data;

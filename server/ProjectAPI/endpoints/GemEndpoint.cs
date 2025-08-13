@@ -21,4 +21,4 @@ public class GemEndpoint : ControllerBase
 }
 
 public record ChatRequest(string SessionId, string Message);
-public record InstructionRequest(string SessionId);
+

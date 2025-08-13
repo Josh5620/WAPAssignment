@@ -3,9 +3,11 @@ import Login from './pages/Login'
 import Home from './pages/Home' 
 import RegisterPage from './pages/RegisterPage'
 import AdminLogin from './pages/AdminLogin'
+import ChatBotPopup from './components/ChatBotPopup'
 
 function App() {
   return (
+    <>
     <Router>
       <Routes>
         <Route path="/teacherLogin" element={<Login />} />
@@ -15,6 +17,8 @@ function App() {
         <Route path="/" element={<Home/>} />
       </Routes>
     </Router>
+    <ChatBotPopup></ChatBotPopup>
+    </>
   )
 }
 

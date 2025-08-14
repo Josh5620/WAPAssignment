@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import RegisterPage from './pages/RegisterPage'
 import AdminLogin from './pages/AdminLogin'
 import ChatBotPopup from './components/ChatBotPopup'
+import ExplainTest from './pages/ExplainTest'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/studentLogin" element={<Login />} />
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/explainTest" element={<ExplainTest />} />
         <Route path="/" element={<Home/>} />
       </Routes>
     </Router>

@@ -11,6 +11,7 @@ const Home = () => {
             <StartChoice startLoc="/studentLogin" text="Go to Student Login" />
             <StartChoice startLoc="/admin" text="Go to Admin Login" />
             <StartChoice startLoc="/register" text="register" />
+            <StartChoice startLoc="/explainTest" text="Explain Test" />
             
         </div>
     );

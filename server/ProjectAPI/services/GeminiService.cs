@@ -52,7 +52,16 @@ public class GeminiService(HttpClient httpClient, string apiKey)
 
         return botReply;
     }
+
+//    public async Task<string> ExplainCodeAsync(User user, string question)
+//   {
+        // var reply = await ExplainCodeAsync(user.userId, question);
+        //return reply;
+        // i fix ltr ignore for now 
+   // }
 }
+
+
 
 public class GeminiResponse
 {

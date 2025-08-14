@@ -37,7 +37,7 @@ public class GeminiService(HttpClient httpClient, string apiKey)
         };
 
         var response = await _httpClient.PostAsJsonAsync(
-            $"models/gemini-1.5-flash:generateContent?key={_apiKey}", payload);
+            $"models/gemini-1.5-pro:generateContent?key={_apiKey}", payload);
 
         if (!response.IsSuccessStatusCode)
         {

@@ -1,67 +1,53 @@
 import React, { useState } from 'react';
 import '../styles/ExplainTest.css';
 import ReturnHome from '../components/ReturnHome';
+import ExplanationPopup from '../components/ExplanationPopup';
 import { submitTestExplanation } from '../pagesBack/explainTestService';
 
 const ExplainTest = () => {
-    const [formData, setFormData] = useState({
-        testContent: '',
-        userName: ''
-    });
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [formData, setFormData] = useState({ testContent: '', userName: '' });
+    const [status, setStatus] = useState({ error: '', success: '', loading: false });
+    const [popup, setPopup] = useState({ show: false, explanation: '' });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
+
+    const resetStatus = () => setStatus({ error: '', success: '', loading: false });
 
     
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError('');
-        setSuccess('');
-        setLoading(true);
-
-        // Basic validation
+        resetStatus();
+        
+        // Validation
         if (!formData.testContent.trim() || !formData.userName.trim()) {
-            setError('All fields are required');
-            setLoading(false);
+            setStatus({ error: 'All fields are required', success: '', loading: false });
             return;
         }
 
+        setStatus({ error: '', success: '', loading: true });
+
         try {
             const result = await submitTestExplanation(formData);
-            if (result.error) {
-                setError(result.error);
-            } else {
-                setSuccess('Test explanation submitted successfully!');
-                setFormData({
-                    testContent: '',
-                    userName: ''
-                });
-            }
+            
+            setStatus({ error: '', success: 'Test explanation submitted successfully!', loading: false });
+            setPopup({ show: true, explanation: result });
+            setFormData({ testContent: '', userName: '' });
+            
         } catch (err) {
-            setError(err.message || 'An unexpected error occurred');
-        } finally {
-            setLoading(false);
+            setStatus({ error: err.message || 'An unexpected error occurred', success: '', loading: false });
         }
     };
-
-
-
     return (
         <div className="explain-test-container">
             <div className="explain-test-card">
                 <h2>Test Explanation Submission</h2>
                 
-                {error && <div className="error">{error}</div>}
-                {success && <div className="success">{success}</div>}
+                {status.error && <div className="error">{status.error}</div>}
+                {status.success && <div className="success">{status.success}</div>}
                 
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -73,7 +59,7 @@ const ExplainTest = () => {
                             placeholder="Enter your name"
                             value={formData.userName}
                             onChange={handleChange}
-                            disabled={loading}
+                            disabled={status.loading}
                         />
                     </div>
                     
@@ -86,17 +72,23 @@ const ExplainTest = () => {
                             rows="10"
                             value={formData.testContent}
                             onChange={handleChange}
-                            disabled={loading}
+                            disabled={status.loading}
                         />
                     </div>
                     
-                    <button type="submit" disabled={loading}>
-                        {loading ? 'Submitting...' : 'Submit Explanation'}
+                    <button type="submit" disabled={status.loading}>
+                        {status.loading ? 'Submitting...' : 'Submit Explanation'}
                     </button>
                 </form>
                 
                 <ReturnHome />
             </div>
+            
+            <ExplanationPopup 
+                isOpen={popup.show}
+                explanation={popup.explanation}
+                onClose={() => setPopup({ show: false, explanation: '' })}
+            />
         </div>
     );
 };

@@ -8,7 +8,8 @@ const ChatBotPopup = () => {
     { id: 1, text: "Hello! How can I help you today?", sender: "bot", timestamp: new Date() },
   ]);
   const [inputText, setInputText] = useState('');
-// add it so that the first msg sends the instructions taht gets its json txt dropped. 
+
+  
   const toggleChat = () => {
     setIsOpen(!isOpen);
   };

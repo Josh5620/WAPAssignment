@@ -74,6 +74,7 @@ public class GeminiService(HttpClient httpClient, string apiKey)
                 user is asking help with an explanation for his code snippet given below.
                 Greet in a friendly manner and provide a concise explanation. Keep it short if possible.
                 Do not provide personal opinions and only provide lengthy explanations if prompted to.
+                Show output as simple as possible, do not give lengthy explanations.
                 " }
                     }
                 },

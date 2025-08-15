@@ -27,6 +27,6 @@ public class GemEndpoint : ControllerBase
 
 }
 
-public record ChatRequest(string user, string Message);
+public record ChatRequest(string SessionId, string Message);
 public record CheckAnswer(User user, string question);
 public record User(string userName);

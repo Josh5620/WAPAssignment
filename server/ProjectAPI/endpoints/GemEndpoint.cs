@@ -24,7 +24,6 @@ public class GemEndpoint : ControllerBase
         var reply = await _geminiService.ExplainCodeAsync(request.user, request.question);
         return Ok(new { reply });
     }
-
 }
 
 public record ChatRequest(string SessionId, string Message);

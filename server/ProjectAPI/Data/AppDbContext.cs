@@ -31,9 +31,9 @@ namespace ProjectAPI.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Configure indexes for better performance
-            modelBuilder.Entity<User>()
-                .HasIndex(u => u.Email)
-                .IsUnique();
+            // modelBuilder.Entity<User>()
+            //     .HasIndex(u => u.Email)
+            //     .IsUnique();
 
             modelBuilder.Entity<ForumPost>()
                 .HasIndex(fp => fp.CreatedAt);

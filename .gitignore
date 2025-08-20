@@ -388,7 +388,71 @@ Temporary Items
 .apdisk
 
 # =============================================================================
-# TEMPORARY FILES
+# TEMPORARY FILES & CACHE
 # =============================================================================
 /tmp
 *.tmp
+
+# Cache directories
+.cache/
+.parcel-cache/
+.nyc_output/
+.temp/
+.tmp/
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# Browser cache
+.eslintcache
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# Jest cache
+.jest/
+
+# Webpack cache
+.webpack/
+
+# Storybook build outputs
+.out
+.storybook-out
+storybook-static/
+
+# Tailwind CSS cache
+.tailwindcss-cache
+
+# Next.js cache
+.next/
+
+# Nuxt.js cache
+.nuxt/
+
+# SvelteKit cache
+.svelte-kit/
+
+# Vite cache
+.vite/
+
+# Turbo cache
+.turbo/
+
+# ESBuild cache
+.esbuild/

@@ -43,7 +43,8 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 0 0 0 rgba(102, 126, 234, 0.7);
   }
   70% {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 0 0 10px rgba(102, 126, 234, 0);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15),
+      0 0 0 10px rgba(102, 126, 234, 0);
   }
   100% {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 0 0 0 rgba(102, 126, 234, 0);
@@ -251,7 +252,7 @@
     left: 20px;
     max-width: none;
   }
-  
+
   .chat-toggle {
     bottom: 30px;
     right: 30px;
@@ -267,7 +268,7 @@
     left: 0;
     border-radius: 0;
   }
-  
+
   .chat-header {
     border-radius: 0;
   }

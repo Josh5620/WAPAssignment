@@ -18,7 +18,14 @@ public class GemEndpoint : ControllerBase
         return Ok(new { reply });
     }
 
+    [HttpPost("explain")]
+    public async Task<IActionResult> ExplainCode([FromBody] CheckAnswer request)
+    {
+        var reply = await _geminiService.ExplainCodeAsync(request.user, request.question);
+        return Ok(new { reply });
+    }
 }
 
 public record ChatRequest(string SessionId, string Message);
-
+public record CheckAnswer(User user, string question);
+public record User(string userName);

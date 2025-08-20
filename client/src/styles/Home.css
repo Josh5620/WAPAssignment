@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;500;600;700&display=swap');
+
+/* Home page container */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #160F29, #1D3D4E);
+  padding: clamp(1rem, 3vh, 3rem);
+  font-family: 'Pixelify Sans', cursive;
+}
+
+/* Welcome title styling */
+.home-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(2rem, 6vw, 8rem);
+  color: #F8EDDD;
+  text-align: center;
+  margin-bottom: clamp(2rem, 4vh, 6rem);
+  text-shadow: 4px 4px 0px #160F29;
+  animation: glow 2s ease-in-out infinite alternate;
+  line-height: 1.2;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 3px 3px 0px #160F29, 0 0 10px #246A73;
+  }
+  to {
+    text-shadow: 3px 3px 0px #160F29, 0 0 20px #368F8B, 0 0 30px #97BEB4;
+  }
+}
+
+/* Button container */
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vh, 3rem);
+  width: 90%;
+  max-width: clamp(400px, 50vw, 800px);
+}

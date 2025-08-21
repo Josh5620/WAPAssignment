@@ -6,8 +6,10 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import ChatBotPopup from "./components/ChatBotPopup";
 import ExplainTest from "./pages/ExplainTest";
+import DevConsoleProbe from "./components/DevConsoleProbe"; // ⬅️ add this
 
 function App() {
+    console.log("App mounted ✅");
   return (
     <>
       <Router>
@@ -21,7 +23,9 @@ function App() {
           <Route path="/home" element={<HomePage />} />
         </Routes>
       </Router>
-      <ChatBotPopup></ChatBotPopup>
+
+      <DevConsoleProbe /> {/* runs once and logs results */}
+      <ChatBotPopup />
     </>
   );
 }

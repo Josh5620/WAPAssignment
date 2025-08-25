@@ -23,7 +23,10 @@ const HomePage = () => {
             {/* Navigation Bar */}
             <nav className="navbar">
                 <div className="nav-left">
-                    <div className="logo">Logo</div>
+                    <div className="logo">
+                        <img src="/CodeSage.svg" alt="CodeSage" className="logo-text" />
+                        <img src="/CodeSageLogo.svg" alt="CodeSage Hat" className="logo-hat" />
+                    </div>
                     <div className="nav-links">
                         <a href="#home" className="nav-link active">Home</a>
                         <a href="#courses" className="nav-link">
@@ -56,17 +59,7 @@ const HomePage = () => {
                             <button className="btn-secondary">Watch Demo</button>
                         </div>
                     </div>
-                    <div className="hero-right">
-                        <div className="hero-illustration">
-                            <div className="illustration-circle">
-                                <img 
-                                    src="/codegirl.png" 
-                                    alt="Girl coding with laptop" 
-                                    className="hero-image"
-                                />
-                            </div>
-                        </div>
-                    </div>
+                    {/* Removed hero image */}
                 </div>
             </section>
 
@@ -78,7 +71,7 @@ const HomePage = () => {
                         <div className="course-icon">
                             <div className="html-icon">
                                 <span className="icon-text">HTML</span>
-                                <span className="icon-number">5</span>
+                                {/* Removed icon-number SVG */}
                             </div>
                         </div>
                         <h3 className="course-title">HTML Basics</h3>
@@ -88,6 +81,7 @@ const HomePage = () => {
                         <div className="course-icon">
                             <div className="js-icon">
                                 <span className="icon-text">JS</span>
+                                {/* Removed SVG */}
                             </div>
                         </div>
                         <h3 className="course-title">JavaScript Essentials</h3>
@@ -96,7 +90,7 @@ const HomePage = () => {
                     <div className="course-card">
                         <div className="course-icon">
                             <div className="python-icon">
-                                <span className="python-symbol">🐍</span>
+                                {/* Removed python-symbol SVG */}
                             </div>
                         </div>
                         <h3 className="course-title">Python Basics</h3>
@@ -111,19 +105,19 @@ const HomePage = () => {
                 <div className="testimonials-grid">
                     <div className="testimonial-card">
                         <div className="testimonial-photo">
-                            <span>photo</span>
+                            {/* Removed photo SVG */}
                         </div>
                         <p className="testimonial-text">CodeSage has helped me grow so much!</p>
                     </div>
                     <div className="testimonial-card">
                         <div className="testimonial-photo">
-                            <span>photo</span>
+                            {/* Removed photo SVG */}
                         </div>
                         <p className="testimonial-text">CodeSage has helped me grow so much!</p>
                     </div>
                     <div className="testimonial-card">
                         <div className="testimonial-photo">
-                            <span>photo</span>
+                            {/* Removed photo SVG */}
                         </div>
                         <p className="testimonial-text">CodeSage has helped me grow so much!</p>
                     </div>

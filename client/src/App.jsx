@@ -6,7 +6,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import ChatBotPopup from "./components/ChatBotPopup";
 import ExplainTest from "./pages/ExplainTest";
-import DevConsoleProbe from "./components/DevConsoleProbe"; // ⬅️ add this
+import DevConsoleProbe from "./components/DevConsoleProbe"; 
 
 function App() {
     console.log("App mounted ✅");
@@ -14,6 +14,7 @@ function App() {
     <>
       <Router>
         <Routes>
+          <Route path="/" element={<HomePage />} />
           <Route path="/teacherLogin" element={<Login />} />
           <Route path="/studentLogin" element={<Login />} />
           <Route path="/admin" element={<AdminLogin />} />

@@ -19,7 +19,7 @@ html, body {
 
 .homepage {
     font-family: 'Pixelify Sans', cursive;
-    background-color: #F8EDDD;
+    background-color: #eff1ed;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -30,10 +30,12 @@ html, body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    background-color: #F8EDDD;
+    padding: 1rem 1rem 1rem 2rem;
+    background-color: #eff1ed;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     flex-shrink: 0;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .nav-left {
@@ -43,13 +45,19 @@ html, body {
 }
 
 .logo {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 1.2rem;
-    color: #160F29;
-    background-color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    border: 2px solid #160F29;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-hat {
+    height: 3rem;
+    width: auto;
+}
+
+.logo-text {
+    height: 1.5rem;
+    width: auto;
 }
 
 .nav-links {
@@ -59,7 +67,7 @@ html, body {
 
 .nav-link {
     text-decoration: none;
-    color: #160F29;
+    color: #373d20;
     font-weight: 500;
     font-size: 1.1rem;
     transition: color 0.3s ease;
@@ -69,11 +77,11 @@ html, body {
 }
 
 .nav-link:hover {
-    color: #246A73;
+    color: #717744;
 }
 
 .nav-link.active {
-    color: #246A73;
+    color: #717744;
     font-weight: 600;
 }
 
@@ -88,50 +96,70 @@ html, body {
 }
 
 .nav-login {
-    background: none;
-    border: none;
-    color: #160F29;
+    background: none !important;
+    border: none !important;
+    color: #373d20 !important;
     font-weight: 500;
     font-size: 1.1rem;
     transition: color 0.3s ease;
     cursor: pointer;
     font-family: 'Pixelify Sans', cursive;
-    outline: none;
-    text-decoration: none;
+    outline: none !important;
+    text-decoration: none !important;
+    box-shadow: none !important;
 }
 
 .nav-login:hover {
-    color: #246A73;
-    background: none;
+    color: #717744 !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 .nav-login:focus {
-    outline: none;
-    background: none;
+    outline: none !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #717744 !important;
 }
 
 .nav-register {
-    background-color: #160F29;
-    color: white;
+    background-color: #373d20 !important;
+    color: #eff1ed !important;
     padding: 0.8rem 1.5rem;
     border-radius: 25px;
     font-weight: 600;
     transition: all 0.3s ease;
-    border: none;
+    border: none !important;
     cursor: pointer;
     font-family: 'Pixelify Sans', cursive;
     font-size: 1.1rem;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .nav-register:hover {
-    background-color: #246A73;
+    background-color: #717744 !important;
+    border: none !important;
+    color: #eff1ed !important;
     transform: translateY(-2px);
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.nav-register:focus {
+    background-color: #717744 !important;
+    border: none !important;
+    color: #eff1ed !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 /* Hero Section */
 .hero {
     padding: 3rem 2rem 2rem 2rem;
-    background-color: #F8EDDD;
+    background-color: #eff1ed;
     flex: 1;
     display: flex;
     align-items: center;
@@ -156,7 +184,7 @@ html, body {
 .hero-title {
     font-family: 'Press Start 2P', cursive;
     font-size: clamp(2.8rem, 6vw, 2.5rem);
-    color: #160F29;
+    color: #373d20;
     line-height: 1.1;
     margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
     word-spacing: -0.2em;
@@ -164,7 +192,7 @@ html, body {
 
 .hero-description {
     font-size: clamp(1.2rem, 2.5vw, 1.6rem);
-    color: #160F29;
+    color: #373d20;
     margin-bottom: clamp(2rem, 5vh, 3.5rem);
     line-height: 1.5;
     font-weight: 500;
@@ -180,46 +208,53 @@ html, body {
 
 .btn-primary {
     font-family: 'Press Start 2P', cursive;
-    background-color: #160F29;
-    color: white;
-    border: none;
+    background-color: #373D20 !important;
+    background-image: none !important;
+    color: #eff1ed !important;
+    border: none !important;
     padding: 1.2rem 2.5rem;
     border-radius: 30px;
     font-size: 0.9rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.24s ease;
     letter-spacing: 1px;
     white-space: nowrap;
     width: 100%;
     max-width: 300px;
+    box-shadow: 0 6px 18px rgba(55,61,32,0.12);
 }
 
 .btn-primary:hover {
-    background-color: #246A73;
+    background-color: #717744 !important;
+    border-color: #717744 !important;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(22, 15, 41, 0.3);
+    box-shadow: 0 8px 22px rgba(55,61,32,0.18);
 }
 
 .btn-secondary {
     font-family: 'Press Start 2P', cursive;
-    background-color: transparent;
-    color: #160F29;
-    border: 2px solid #160F29;
+    background-color: #373D20 !important;
+    background-image: none !important;
+    color: #eff1ed !important;
+    border: none !important;
     padding: 1.2rem 2.5rem;
     border-radius: 30px;
     font-size: 0.9rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.24s ease;
     letter-spacing: 1px;
     white-space: nowrap;
     width: 100%;
     max-width: 300px;
+    box-shadow: 0 6px 14px rgba(55,61,32,0.10) inset;
 }
 
 .btn-secondary:hover {
-    background-color: #160F29;
-    color: white;
+    background-color: #717744 !important;
+    color: #eff1ed !important;
+    border-color: #717744 !important;
     transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(55,61,32,0.14) inset;
 }
 
 /* Hero Illustration */
@@ -236,7 +271,7 @@ html, body {
 .illustration-circle {
     width: clamp(300px, 35vw, 450px);
     height: clamp(300px, 35vw, 450px);
-    background: linear-gradient(135deg, #97BEB4, #C8D6C9);
+    background: linear-gradient(135deg, #979a68, #bcbd8b);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -256,14 +291,14 @@ html, body {
 /* Featured Courses Section */
 .featured-courses {
     padding: 4rem 2rem;
-    background-color: #F8EDDD;
+    background-color: #eff1ed;
     text-align: center;
 }
 
 .featured-title {
     font-family: 'Press Start 2P', cursive;
     font-size: clamp(1.8rem, 4vw, 3rem);
-    color: #160F29;
+    color: #373d20;
     margin-bottom: 3rem;
 }
 
@@ -276,7 +311,7 @@ html, body {
 }
 
 .course-card {
-    background-color: #160F29;
+    background-color: #373d20;
     border-radius: 20px;
     padding: 2rem;
     text-align: center;
@@ -285,7 +320,7 @@ html, body {
 
 .course-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(22, 15, 41, 0.3);
+    box-shadow: 0 10px 25px rgba(55, 61, 32, 0.3);
 }
 
 .course-icon {
@@ -297,7 +332,7 @@ html, body {
 .html-icon, .js-icon, .python-icon {
     width: 80px;
     height: 80px;
-    background-color: #F8EDDD;
+    background-color: #bcbd8b;
     border-radius: 15px;
     display: flex;
     align-items: center;
@@ -309,13 +344,13 @@ html, body {
 .icon-text {
     font-family: 'Press Start 2P', cursive;
     font-size: 1.2rem;
-    color: #160F29;
+    color: #373d20;
 }
 
 .icon-number {
     font-family: 'Press Start 2P', cursive;
     font-size: 2rem;
-    color: #160F29;
+    color: #373d20;
     font-weight: bold;
 }
 
@@ -325,7 +360,7 @@ html, body {
 
 .course-title {
     font-family: 'Press Start 2P', cursive;
-    color: #F8EDDD;
+    color: #eff1ed;
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
 }
@@ -333,8 +368,8 @@ html, body {
 .course-button {
     font-family: 'Press Start 2P', cursive;
     background-color: transparent;
-    color: #97BEB4;
-    border: 2px solid #97BEB4;
+    color: #979a68;
+    border: 2px solid #979a68;
     padding: 0.8rem 1.5rem;
     border-radius: 20px;
     cursor: pointer;
@@ -343,21 +378,21 @@ html, body {
 }
 
 .course-button:hover {
-    background-color: #97BEB4;
-    color: #160F29;
+    background-color: #979a68;
+    color: #373d20;
 }
 
 /* Testimonials Section */
 .testimonials {
     padding: 4rem 2rem;
-    background-color: #F8EDDD;
+    background-color: #eff1ed;
     text-align: center;
 }
 
 .testimonials-title {
     font-family: 'Press Start 2P', cursive;
     font-size: clamp(1.8rem, 4vw, 3rem);
-    color: #160F29;
+    color: #373d20;
     margin-bottom: 3rem;
 }
 
@@ -377,14 +412,14 @@ html, body {
 .testimonial-photo {
     width: 150px;
     height: 150px;
-    background: linear-gradient(135deg, #97BEB4, #C8D6C9);
+    background: linear-gradient(135deg, #979a68, #bcbd8b);
     border-radius: 50%;
     margin: 0 auto 1.5rem auto;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Pixelify Sans', cursive;
-    color: #160F29;
+    color: #373d20;
     font-size: 1.1rem;
     transition: transform 0.3s ease;
 }
@@ -395,7 +430,7 @@ html, body {
 
 .testimonial-text {
     font-family: 'Pixelify Sans', cursive;
-    color: #160F29;
+    color: #373d20;
     font-size: 1.1rem;
     line-height: 1.5;
     max-width: 250px;

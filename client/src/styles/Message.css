@@ -31,7 +31,7 @@
 .message-avatar {
   width: 28px;
   height: 28px;
-  background: #e2e8f0;
+  background: #bcbd8b;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -43,13 +43,13 @@
 
 .message.bot .message-avatar {
   left: 8px;
-  background: #e2e8f0;
+  background: #bcbd8b;
 }
 
 .message.user .message-avatar {
   right: 8px;
-  background: #C8D6C9;
-  color: #1D3D4E;
+  background: #979a68;
+  color: #373d20;
 }
 
 .message-content {
@@ -77,18 +77,18 @@
 
 .message.bot .message-text {
   background: white;
-  color: #374151;
-  border: 1px solid #e5e7eb;
+  color: #373d20;
+  border: 1px solid #bcbd8b;
 }
 
 .message.user .message-text {
-  background: #1D3D4E;
-  color: white;
+  background: #373d20;
+  color: #eff1ed;
 }
 
 .message-time {
   font-size: 11px;
-  color: #9ca3af;
+  color: #766153;
   padding: 0 4px;
 }
 

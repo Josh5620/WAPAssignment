@@ -8,7 +8,7 @@
   right: 20px;
   width: 60px;
   height: 60px;
-  background: #160F29;
+  background: #373d20;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
@@ -22,8 +22,8 @@
 
 .chat-toggle:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 25px rgba(36, 106, 115, 0.2);
-  background: #1D3D4E;
+  box-shadow: 0 6px 25px rgba(113, 119, 68, 0.2);
+  background: #545a32;
 }
 
 .chat-toggle.hidden {
@@ -40,14 +40,14 @@
 
 @keyframes pulse {
   0% {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 0 0 0 rgba(102, 126, 234, 0.7);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 0 0 0 rgba(151, 154, 104, 0.7);
   }
   70% {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15),
-      0 0 0 10px rgba(102, 126, 234, 0);
+      0 0 0 10px rgba(151, 154, 104, 0);
   }
   100% {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 0 0 0 rgba(102, 126, 234, 0);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 0 0 0 rgba(151, 154, 104, 0);
   }
 }
 
@@ -58,7 +58,7 @@
   right: 20px;
   width: 350px;
   height: 500px;
-  background: #F8EDDD;
+  background: #eff1ed;
   border-radius: 12px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
   display: flex;
@@ -80,8 +80,8 @@
 
 /* Chat Header */
 .chat-header {
-  background: #246A73;
-  color: white;
+  background: #717744;
+  color: #eff1ed;
   padding: 16px 20px;
   display: flex;
   align-items: center;
@@ -98,7 +98,7 @@
 .bot-avatar {
   width: 32px;
   height: 32px;
-  background: #368F8B;
+  background: #979a68;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -115,28 +115,45 @@
 
 .status {
   font-size: 10px;
-  color: #97BEB4;
+  color: #bcbd8b;
   font-family: 'Press Start 2P', monospace;
 }
 
 .close-button {
-  background: transparent;
-  border: none;
-  color: #F8EDDD;
+  background: transparent !important;
+  border: none !important;
+  color: #eff1ed !important;
   cursor: pointer;
   padding: 6px;
   border-radius: 4px;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 32px;
   height: 32px;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .close-button:hover {
-  background: rgba(248, 237, 221, 0.15);
-  color: #F8EDDD;
+  background: rgba(239, 241, 237, 0.15) !important;
+  color: #eff1ed !important;
+}
+
+.close-button:focus {
+  background: rgba(239, 241, 237, 0.2) !important;
+  color: #eff1ed !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.close-button svg {
+  color: #eff1ed !important;
+}
+
+.close-button svg path {
+  stroke: #eff1ed !important;
 }
 
 /* Messages Container */
@@ -147,7 +164,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  background: #F8EDDD;
+  background: #eff1ed;
 }
 
 .messages-container::-webkit-scrollbar {
@@ -159,14 +176,14 @@
 }
 
 .messages-container::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #939787;
   border-radius: 2px;
 }
 
 /* Chat Input */
 .chat-input-container {
   padding: 16px;
-  background: #246A73;
+  background: #717744;
 }
 
 .chat-form {
@@ -178,48 +195,49 @@
 .chat-input {
   flex: 1;
   padding: 12px 16px;
-  border: 1px solid #C8D6C9;
+  border: 1px solid #bcbd8b;
   border-radius: 24px;
   font-size: 14px;
   outline: none;
   transition: border-color 0.2s ease;
   font-family: 'Pixelify Sans', monospace;
-  background: #F8EDDD;
-  color: #1D3D4E;
+  background: #eff1ed;
+  color: #373d20;
 }
 
 .chat-input:focus {
-  border: 1px solid #246A73;
-  box-shadow: 0 0 0 3px rgba(36, 106, 115, 0.1);
+  border: 1px solid #717744;
+  box-shadow: 0 0 0 3px rgba(113, 119, 68, 0.1);
 }
 
 .chat-input::placeholder {
-  color: #246A73;
+  color: #717744;
   font-family: 'Pixelify Sans', monospace;
 }
 
 .send-button {
-  width: 40px;
-  height: 40px;
-  background: #160F29;
+  width: 48px;
+  height: 48px;
+  background: #373d20;
   border: none;
   border-radius: 50%;
-  color: #F8EDDD;
+  color: #eff1ed;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .send-button:hover:not(:disabled) {
   transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(36, 106, 115, 0.3);
-  background: #160F29;
+  box-shadow: 0 4px 12px rgba(113, 119, 68, 0.3);
+  background: #373d20;
 }
 
 .send-button:disabled {
-  background: #d1d5db;
+  background: #939787;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;

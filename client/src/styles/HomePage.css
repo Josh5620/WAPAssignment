@@ -1,496 +1,435 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;500;600;700&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* =========================
+   CODE SAGE DESIGN TOKENS
+   ========================= */
+:root{
+  /* base palette */
+  --cs-beige:  #eff1ed; /* eff1ed */
+  --cs-slate8: #939787; /* 939787 */
+  --cs-olive9: #373d20; /* 373d20 */
+  --cs-olive6: #545a32; /* 545a32 */
+  --cs-olive7: #717744; /* 717744 */
+  --cs-sage4:  #979a68; /* 979a68 */
+  --cs-sage3:  #bcbd8b; /* bcbd8b */
+  --cs-sage2:  #998f6f; /* 998f6f */
+  --cs-slate7: #766153; /* 766153 */
+
+  /* semantics */
+  --bg: var(--cs-beige);
+  --text: var(--cs-olive9);
+  --muted: var(--cs-slate7);
+  --primary: var(--cs-olive9);
+  --primary-hover: var(--cs-olive7);
+  --card: var(--cs-olive9);
+  --chip: var(--cs-sage3);
+  --accent: var(--cs-sage4);
+  --border: var(--cs-olive6);
+
+  /* shadows (olive‑tinted) */
+  --shadow-1: 0 2px 10px rgba(55,61,32,.08);
+  --shadow-2: 0 6px 18px rgba(55,61,32,.12);
+  --shadow-3: 0 8px 22px rgba(55,61,32,.18);
 }
+
+/* =========================
+   RESET & BASICS
+   ========================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 html, body {
-    height: 100%;
-    overflow-x: hidden;
-    margin: 0;
-    padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--text);
 }
 
-#root {
-    height: 100%;
-}
+#root { height: 100%; }
 
 .homepage {
-    font-family: 'Pixelify Sans', cursive;
-    background-color: #eff1ed;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  font-family: 'Pixelify Sans', cursive;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Navigation Bar */
+/* =========================
+   NAVIGATION
+   ========================= */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 1rem 1rem 2rem;
-    background-color: #eff1ed;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    flex-shrink: 0;
-    width: 100%;
-    box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1rem 1rem 2rem;
+  background: var(--bg);
+  box-shadow: var(--shadow-1);
+  flex-shrink: 0;
+  width: 100%;
 }
 
-.nav-left {
-    display: flex;
-    align-items: center;
-    gap: 3rem;
-}
+.nav-left { display: flex; align-items: center; gap: 3rem; }
+.logo { display: flex; align-items: center; gap: .5rem; }
+.logo-hat { height: 3rem; width: auto; }
+.logo-text { height: 1.5rem; width: auto; }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.logo-hat {
-    height: 3rem;
-    width: auto;
-}
-
-.logo-text {
-    height: 1.5rem;
-    width: auto;
-}
-
-.nav-links {
-    display: flex;
-    gap: 2rem;
-}
+.nav-links { display: flex; gap: 2rem; }
 
 .nav-link {
-    text-decoration: none;
-    color: #373d20;
-    font-weight: 500;
-    font-size: 1.1rem;
-    transition: color 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: color .3s ease;
+  display: flex;
+  align-items: center;
+  gap: .3rem;
 }
+.nav-link:hover,
+.nav-link.active { color: var(--primary-hover); font-weight: 600; }
 
-.nav-link:hover {
-    color: #717744;
-}
+.dropdown-arrow { font-size: .8rem; }
 
-.nav-link.active {
-    color: #717744;
-    font-weight: 600;
-}
-
-.dropdown-arrow {
-    font-size: 0.8rem;
-}
-
-.nav-right {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
+.nav-right { display: flex; gap: 1rem; align-items: center; }
 
 .nav-login {
-    background: none !important;
-    border: none !important;
-    color: #373d20 !important;
-    font-weight: 500;
-    font-size: 1.1rem;
-    transition: color 0.3s ease;
-    cursor: pointer;
-    font-family: 'Pixelify Sans', cursive;
-    outline: none !important;
-    text-decoration: none !important;
-    box-shadow: none !important;
+  background: none !important;
+  border: none !important;
+  color: var(--text) !important;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: color .3s ease;
+  cursor: pointer;
+  font-family: 'Pixelify Sans', cursive;
+  text-decoration: none !important;
+  box-shadow: none !important;
 }
-
-.nav-login:hover {
-    color: #717744 !important;
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-}
-
-.nav-login:focus {
-    outline: none !important;
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    color: #717744 !important;
-}
+.nav-login:hover,
+.nav-login:focus { color: var(--primary-hover) !important; }
 
 .nav-register {
-    background-color: #373d20 !important;
-    color: #eff1ed !important;
-    padding: 0.8rem 1.5rem;
-    border-radius: 25px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    border: none !important;
-    cursor: pointer;
-    font-family: 'Pixelify Sans', cursive;
-    font-size: 1.1rem;
-    outline: none !important;
-    box-shadow: none !important;
+  background: var(--primary) !important;
+  color: var(--cs-beige) !important;
+  padding: .8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: transform .24s ease, background .24s ease, box-shadow .24s ease;
+  border: none !important;
+  cursor: pointer;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1.1rem;
+  box-shadow: none !important;
 }
-
-.nav-register:hover {
-    background-color: #717744 !important;
-    border: none !important;
-    color: #eff1ed !important;
-    transform: translateY(-2px);
-    outline: none !important;
-    box-shadow: none !important;
-}
-
+.nav-register:hover,
 .nav-register:focus {
-    background-color: #717744 !important;
-    border: none !important;
-    color: #eff1ed !important;
-    outline: none !important;
-    box-shadow: none !important;
+  background: var(--primary-hover) !important;
+  color: var(--cs-beige) !important;
+  transform: translateY(-2px);
 }
 
-/* Hero Section */
+/* =========================
+   HERO
+   ========================= */
 .hero {
-    padding: 3rem 2rem 2rem 2rem;
-    background-color: #eff1ed;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 0;
+  padding: 3rem 2rem 2rem 2rem;
+  background: var(--bg);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
 }
 
 .hero-content {
-    width: 100%;
-    max-width: 1200px;
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: clamp(1rem, 3vw, 3rem);
-    align-items: center;
-    height: 100%;
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: clamp(1rem, 3vw, 3rem);
+  align-items: center;
+  height: 100%;
 }
 
-.hero-left {
-    padding-right: clamp(0.2rem, 1vw, 1rem);
-}
+.hero-left { padding-right: clamp(.2rem, 1vw, 1rem); }
 
 .hero-title {
-    font-family: 'Press Start 2P', cursive;
-    font-size: clamp(2.8rem, 6vw, 2.5rem);
-    color: #373d20;
-    line-height: 1.1;
-    margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
-    word-spacing: -0.2em;
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(2.8rem, 6vw, 2.5rem);
+  color: var(--text);
+  line-height: 1.1;
+  margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
+  word-spacing: -0.2em;
 }
 
 .hero-description {
-    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
-    color: #373d20;
-    margin-bottom: clamp(2rem, 5vh, 3.5rem);
-    line-height: 1.5;
-    font-weight: 500;
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  color: var(--text);
+  margin-bottom: clamp(2rem, 5vh, 3.5rem);
+  line-height: 1.5;
+  font-weight: 500;
 }
 
 .hero-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start;
-    max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+  max-width: 400px;
 }
 
-.btn-primary {
-    font-family: 'Press Start 2P', cursive;
-    background-color: #373D20 !important;
-    background-image: none !important;
-    color: #eff1ed !important;
-    border: none !important;
-    padding: 1.2rem 2.5rem;
-    border-radius: 30px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.24s ease;
-    letter-spacing: 1px;
-    white-space: nowrap;
-    width: 100%;
-    max-width: 300px;
-    box-shadow: 0 6px 18px rgba(55,61,32,0.12);
-}
-
-.btn-primary:hover {
-    background-color: #717744 !important;
-    border-color: #717744 !important;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 22px rgba(55,61,32,0.18);
-}
-
+/* Primary + secondary unified */
+.btn-primary,
 .btn-secondary {
-    font-family: 'Press Start 2P', cursive;
-    background-color: #373D20 !important;
-    background-image: none !important;
-    color: #eff1ed !important;
-    border: none !important;
-    padding: 1.2rem 2.5rem;
-    border-radius: 30px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.24s ease;
-    letter-spacing: 1px;
-    white-space: nowrap;
-    width: 100%;
-    max-width: 300px;
-    box-shadow: 0 6px 14px rgba(55,61,32,0.10) inset;
+  font-family: 'Press Start 2P', cursive;
+  background: var(--primary) !important;
+  color: var(--cs-beige) !important;
+  border: none !important;
+  padding: 1.2rem 2.5rem;
+  border-radius: 30px;
+  font-size: .9rem;
+  cursor: pointer;
+  transition: transform .24s ease, background .24s ease, box-shadow .24s ease;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  width: 100%;
+  max-width: 300px;
+  box-shadow: var(--shadow-2);
 }
-
+.btn-primary:hover,
 .btn-secondary:hover {
-    background-color: #717744 !important;
-    color: #eff1ed !important;
-    border-color: #717744 !important;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 22px rgba(55,61,32,0.14) inset;
+  background: var(--primary-hover) !important;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-3);
 }
 
 /* Hero Illustration */
-.hero-right {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.hero-illustration {
-    position: relative;
-}
+.hero-right { display: flex; justify-content: center; align-items: center; }
+.hero-illustration { position: relative; }
 
 .illustration-circle {
-    width: clamp(300px, 35vw, 450px);
-    height: clamp(300px, 35vw, 450px);
-    background: linear-gradient(135deg, #979a68, #bcbd8b);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    padding: 20px;
+  width: clamp(300px, 35vw, 450px);
+  height: clamp(300px, 35vw, 450px);
+  background: linear-gradient(135deg, var(--accent), var(--cs-sage3));
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
 }
-
 .hero-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
+  width: 100%; height: 100%;
+  object-fit: cover; border-radius: 50%;
 }
 
-/* Featured Courses Section */
+/* =========================
+   FEATURED COURSES
+   ========================= */
 .featured-courses {
-    padding: 4rem 2rem;
-    background-color: #eff1ed;
-    text-align: center;
+  padding: 4rem 2rem;
+  background: var(--bg);
+  text-align: center;
 }
-
 .featured-title {
-    font-family: 'Press Start 2P', cursive;
-    font-size: clamp(1.8rem, 4vw, 3rem);
-    color: #373d20;
-    margin-bottom: 3rem;
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: var(--text);
+  margin-bottom: 3rem;
 }
 
 .courses-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .course-card {
-    background-color: #373d20;
-    border-radius: 20px;
-    padding: 2rem;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: var(--card);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  transition: transform .3s ease, box-shadow .3s ease;
 }
-
 .course-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(55, 61, 32, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(55,61,32,.30);
 }
 
-.course-icon {
-    margin-bottom: 1.5rem;
-    display: flex;
-    justify-content: center;
-}
-
-.html-icon, .js-icon, .python-icon {
-    width: 80px;
-    height: 80px;
-    background-color: #bcbd8b;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    position: relative;
-}
-
-.icon-text {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 1.2rem;
-    color: #373d20;
-}
-
-.icon-number {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 2rem;
-    color: #373d20;
-    font-weight: bold;
-}
-
-.python-symbol {
-    font-size: 2.5rem;
-}
-
-.course-title {
-    font-family: 'Press Start 2P', cursive;
-    color: #eff1ed;
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-}
-
+/* Force course buttons to use solid earthy color */
+.featured-courses .course-card .course-button,
+.course-card .course-button,
 .course-button {
-    font-family: 'Press Start 2P', cursive;
-    background-color: transparent;
-    color: #979a68;
-    border: 2px solid #979a68;
-    padding: 0.8rem 1.5rem;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
+  background: #373d20 !important;  /* CHANGED: Solid color instead of gradient */
+  color: #eff1ed !important;
+  border: 2px solid #373d20 !important;
+  padding: 0.8rem 1.5rem !important;
+  border-radius: 25px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
+  font-size: 0.9rem !important;
+  box-shadow: 0 4px 8px rgba(55, 61, 32, 0.3) !important;
 }
 
+.featured-courses .course-card .course-button:hover,
+.course-card .course-button:hover,
 .course-button:hover {
-    background-color: #979a68;
-    color: #373d20;
+  background: #717744 !important;  /* CHANGED: Solid hover color instead of gradient */
+  border-color: #717744 !important;
+  color: #eff1ed !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 12px rgba(55, 61, 32, 0.4) !important;
 }
 
-/* Testimonials Section */
+.featured-courses .course-card .course-button:active,
+.course-card .course-button:active,
+.course-button:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 4px rgba(55, 61, 32, 0.2) !important;
+}
+
+/* =========================
+   TESTIMONIALS
+   ========================= */
 .testimonials {
-    padding: 4rem 2rem;
-    background-color: #eff1ed;
-    text-align: center;
+  padding: 4rem 2rem;
+  background: var(--bg);
+  text-align: center;
 }
-
 .testimonials-title {
-    font-family: 'Press Start 2P', cursive;
-    font-size: clamp(1.8rem, 4vw, 3rem);
-    color: #373d20;
-    margin-bottom: 3rem;
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: var(--text);
+  margin-bottom: 3rem;
 }
 
 .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.testimonial-card {
-    text-align: center;
-    padding: 1rem;
-}
+.testimonial-card { text-align: center; padding: 1rem; }
 
 .testimonial-photo {
-    width: 150px;
-    height: 150px;
-    background: linear-gradient(135deg, #979a68, #bcbd8b);
-    border-radius: 50%;
-    margin: 0 auto 1.5rem auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Pixelify Sans', cursive;
-    color: #373d20;
-    font-size: 1.1rem;
-    transition: transform 0.3s ease;
+  width: 150px; height: 150px;
+  background: linear-gradient(135deg, var(--accent), var(--cs-sage3));
+  border-radius: 50%;
+  margin: 0 auto 1.5rem auto;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Pixelify Sans', cursive;
+  color: var(--text);
+  font-size: 1.1rem;
+  transition: transform .3s ease;
 }
-
-.testimonial-photo:hover {
-    transform: scale(1.05);
-}
+.testimonial-photo:hover { transform: scale(1.05); }
 
 .testimonial-text {
-    font-family: 'Pixelify Sans', cursive;
-    color: #373d20;
-    font-size: 1.1rem;
-    line-height: 1.5;
-    max-width: 250px;
-    margin: 0 auto;
+  font-family: 'Pixelify Sans', cursive;
+  color: var(--text);
+  font-size: 1.1rem;
+  line-height: 1.5;
+  max-width: 250px;
+  margin: 0 auto;
 }
 
-/* Responsive Design */
+/* =========================
+   RESPONSIVE
+   ========================= */
 @media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
-    }
-    
-    .nav-left {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    .hero-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        text-align: center;
-    }
-    
-    .hero-left {
-        padding-right: 0;
-    }
-    
-    .illustration-circle {
-        width: 300px;
-        height: 300px;
-    }
-    
-    .hero-buttons {
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .courses-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-    
-    .course-card {
-        padding: 1.5rem;
-    }
-    
-    .testimonials-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
-    .testimonial-photo {
-        width: 120px;
-        height: 120px;
-    }
-    
-    .featured-courses,
-    .testimonials {
-        padding: 3rem 1rem;
-    }
+  .navbar { flex-direction: column; gap: 1rem; padding: 1rem; }
+  .nav-left { flex-direction: column; gap: 1rem; }
+  .hero-content { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
+  .hero-left { padding-right: 0; }
+  .illustration-circle { width: 300px; height: 300px; }
+  .hero-buttons { justify-content: center; align-items: center; }
+  .courses-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .course-card { padding: 1.5rem; }
+  .testimonials-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .testimonial-photo { width: 120px; height: 120px; }
+  .featured-courses, .testimonials { padding: 3rem 1rem; }
 }
+
+body {
+  display: block !important;
+  place-items: initial !important;   /* neutralize */
+  min-width: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* make the app control height instead of body */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: inherit;
+  margin: 0;
+}
+
+/* Hero main heading */
+.hero-title,
+h1.hero-title {
+  font-size: clamp(1.1rem, 2.6vw, 1.7rem);
+  line-height: 1.15;
+  margin-bottom: 1rem;
+  letter-spacing: 0;           /* Press Start can look big; keep tight */
+  word-spacing: -0.08em;
+}
+
+/* Hero paragraph */
+.hero-description {
+  font-size: clamp(.95rem, 1.8vw, 1.15rem);
+  margin-bottom: 1.5rem;
+}
+
+/* Hero buttons */
+.btn-primary,
+.btn-secondary {
+  padding: 0.9rem 1.6rem;
+  font-size: 0.8rem;
+  max-width: 240px;
+  border-radius: 22px;
+}
+
+/* Section title: "Featured Courses" */
+.featured-title {
+  font-size: clamp(1.2rem, 3.2vw, 2rem);
+  margin-bottom: 2rem;
+}
+
+/* Card title + chip sizes */
+.course-title {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+.icon-text { font-size: .95rem; }
+.icon-number { font-size: 1.4rem; }
+.python-symbol { font-size: 1.8rem; }
+
+/* Card CTA */
+.course-button {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.8rem;
+  border-radius: 16px;
+}
+
+/* Layout spacing a touch smaller */
+.courses-grid { gap: 1.5rem; }
+.course-card  { padding: 1.5rem; }
+
+/* Optional: slightly smaller base so ALL text nudges down */
+html { font-size: 15px; } /* set to 14px if you want it even smaller */

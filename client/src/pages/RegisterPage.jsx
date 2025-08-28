@@ -8,11 +8,14 @@ const RegisterPage = () => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
+        confirmPassword: '',
         fullName: '',
         role: 'student'
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -27,8 +30,20 @@ const RegisterPage = () => {
         setLoading(true);
         setError('');
 
+        // Check if passwords match
+        if (formData.password !== formData.confirmPassword) {
+            setError('Passwords do not match');
+            setLoading(false);
+            return;
+        }
+
         try {
-            const result = await authService.register(formData);
+            const result = await authService.register({
+                email: formData.email,
+                password: formData.password,
+                fullName: formData.fullName,
+                role: formData.role
+            });
             
             if (result.success) {
                 // Redirect based on user role
@@ -51,59 +66,117 @@ const RegisterPage = () => {
         }
     };
 
+    const handleSignIn = () => {
+        navigate('/login');
+    };
+
     return (
         <div className="register-container">
+            <ReturnHome /> {/* Move this outside the card */}
             <div className="register-card">
-                <h2>Register Form</h2>
+                {/* Logo Section */}
+                <div className="register-logo">
+                    <img src="/CodeSage.svg" alt="CodeSage" />
+                    <img src="/CodeSageLogo.svg" alt="CodeSage Hat" />
+                </div>
+                
+                <h2>REGISTER</h2>
+                
                 {error && <div className="error">{error}</div>}
+                
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <input 
                             type="text" 
                             name="fullName"
-                            placeholder="Full Name"
+                            placeholder="full name"
                             value={formData.fullName}
                             onChange={handleChange}
                             required
                         />
                     </div>
+                    
                     <div className="form-group">
                         <input 
                             type="email" 
                             name="email"
-                            placeholder="Email"
+                            placeholder="email"
                             value={formData.email}
                             onChange={handleChange}
                             required
                         />
                     </div>
+                    
                     <div className="form-group">
-                        <input 
-                            type="password" 
-                            name="password"
-                            placeholder="Password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                        />
+                        <div className="password-container">
+                            <input 
+                                type={showPassword ? "text" : "password"}
+                                name="password"
+                                placeholder="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                            />
+                            <button 
+                                type="button"
+                                className="password-toggle"
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                <img src="/crosseye.svg" alt="Toggle Password" style={{width: '20px', height: '20px'}} />
+                            </button>
+                        </div>
                     </div>
+                    
                     <div className="form-group">
-                        <select 
-                            name="role"
-                            value={formData.role}
-                            onChange={handleChange}
-                            required
-                        >
-                            <option value="student">Student</option>
-                            <option value="teacher">Teacher</option>
-                            <option value="admin">Admin</option>
-                        </select>
+                        <div className="password-container">
+                            <input 
+                                type={showConfirmPassword ? "text" : "password"}
+                                name="confirmPassword"
+                                placeholder="confirm password"
+                                value={formData.confirmPassword}
+                                onChange={handleChange}
+                                required
+                            />
+                            <button 
+                                type="button"
+                                className="password-toggle"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            >
+                                <img src="/crosseye.svg" alt="Toggle Password" style={{width: '20px', height: '20px'}} />
+                            </button>
+                        </div>
                     </div>
+                    
                     <button type="submit" disabled={loading}>
-                        {loading ? 'Registering...' : 'Register'}
+                        {loading ? 'SIGNING UP...' : 'SIGN UP'}
                     </button>
                 </form>
-                <ReturnHome />
+                
+                <div className="terms-text">
+                    By signing up, I agree to CodeSage's <a href="#terms">Terms</a>.
+                </div>
+                
+                <div className="divider">
+                    <span>OR</span>
+                </div>
+                
+                <div className="social-buttons">
+                    <button className="social-btn" type="button">
+                        <img src="/google.svg" alt="Google" style={{width: '24px', height: '24px'}} />
+                    </button>
+                    <button className="social-btn" type="button">
+                        <img src="/apple.svg" alt="Apple" style={{width: '24px', height: '24px'}} />
+                    </button>
+                    <button className="social-btn" type="button">
+                        <img src="/facebook.svg" alt="Facebook" style={{width: '24px', height: '24px'}} />
+                    </button>
+                </div>
+                
+                <div className="signin-link">
+                    Already have an account? <a href="#" onClick={handleSignIn}>Sign In</a>
+                </div>
+                
+                {/* Remove ReturnHome from here */}
             </div>
         </div>
     );

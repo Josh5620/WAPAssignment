@@ -1,17 +1,23 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import "../styles/ReturnHome.css";
-import { useNavigate } from "react-router-dom";
-const ReturnHome = () => {
-  const navigate = useNavigate();   
-  const handleReturnHome = () => {
-    navigate("/");
-  };
 
-  return (
-    <div className="return-home-container">
-      <button className="return-home-button" onClick={handleReturnHome}>
-        Return Home
-      </button>
-    </div>
-  );
-}
+const ReturnHome = () => {
+    const navigate = useNavigate();
+
+    const handleReturnHome = () => {
+        navigate('/');
+    };
+
+    return (
+        <button 
+            onClick={handleReturnHome} 
+            className="return-home-arrow"
+            title="Back to Home"
+        >
+            ←
+        </button>
+    );
+};
+
 export default ReturnHome;

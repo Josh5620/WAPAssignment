@@ -59,7 +59,11 @@ const HomePage = () => {
                             <button className="btn-secondary">Watch Demo</button>
                         </div>
                     </div>
-                    {/* Removed hero image */}
+                    <div className="hero-right">
+                        <div className="hero-illustration">
+                            <div className="illustration-container-1"></div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -68,32 +72,33 @@ const HomePage = () => {
                 <h2 className="featured-title">Featured Courses</h2>
                 <div className="courses-grid">
                     <div className="course-card">
-                        <div className="course-icon">
-                            <div className="html-icon">
-                                <span className="icon-text">HTML</span>
-                                {/* Removed icon-number SVG */}
-                            </div>
-                        </div>
+                        <img 
+                            src="/html5.svg" 
+                            alt="HTML5 Logo" 
+                            className="course-icon"
+                        />
                         <h3 className="course-title">HTML Basics</h3>
+                        <p className="course-description">Learn the fundamentals of web structure</p>
                         <button className="course-button">Try Lesson 1</button>
                     </div>
                     <div className="course-card">
-                        <div className="course-icon">
-                            <div className="js-icon">
-                                <span className="icon-text">JS</span>
-                                {/* Removed SVG */}
-                            </div>
-                        </div>
+                        <img 
+                            src="/javascript.svg" 
+                            alt="JavaScript Logo" 
+                            className="course-icon"
+                        />
                         <h3 className="course-title">JavaScript Essentials</h3>
+                        <p className="course-description">Master interactive web programming</p>
                         <button className="course-button">Preview</button>
                     </div>
                     <div className="course-card">
-                        <div className="course-icon">
-                            <div className="python-icon">
-                                {/* Removed python-symbol SVG */}
-                            </div>
-                        </div>
+                        <img 
+                            src="/python.svg" 
+                            alt="Python Logo" 
+                            className="course-icon"
+                        />
                         <h3 className="course-title">Python Basics</h3>
+                        <p className="course-description">Start your programming journey</p>
                         <button className="course-button">Try Lesson 1</button>
                     </div>
                 </div>

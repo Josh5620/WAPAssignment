@@ -1,46 +1,18 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; 
+import Navbar from '../pages/Navbar';
 import '../styles/HomePage.css';
 
 const HomePage = () => {
     const navigate = useNavigate();
 
     const handleStartLearning = () => {
-        // Navigate to student login for learning
         navigate('/studentLogin');
-    };
-
-    const handleLogin = () => {
-        navigate('/teacherLogin');
-    };
-
-    const handleRegister = () => {
-        navigate('/register');
     };
 
     return (
         <div className="homepage">
-            {/* Navigation Bar */}
-            <nav className="navbar">
-                <div className="nav-left">
-                    <div className="logo">
-                        <img src="/CodeSage.svg" alt="CodeSage" className="logo-text" />
-                        <img src="/CodeSageLogo.svg" alt="CodeSage Hat" className="logo-hat" />
-                    </div>
-                    <div className="nav-links">
-                        <a href="#home" className="nav-link active">Home</a>
-                        <a href="#courses" className="nav-link">
-                            Courses <span className="dropdown-arrow">▼</span>
-                        </a>
-                        <a href="#about" className="nav-link">About</a>
-                        <a href="#faq" className="nav-link">FAQ</a>
-                    </div>
-                </div>
-                <div className="nav-right">
-                    <button onClick={handleLogin} className="nav-login">Login</button>
-                    <button onClick={handleRegister} className="nav-register">Register</button>
-                </div>
-            </nav>
+            <Navbar /> {/* <-- Use Navbar component here */}
 
             {/* Hero Section */}
             <section className="hero">

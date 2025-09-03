@@ -55,81 +55,6 @@ html, body {
 }
 
 /* =========================
-   NAVIGATION
-   ========================= */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1rem 1rem 2rem;
-  background: #EFF1ED; /* Updated background */
-  box-shadow: var(--shadow-1);
-  flex-shrink: 0;
-  width: 100%;
-}
-
-.nav-left { display: flex; align-items: center; gap: 3rem; }
-.logo { display: flex; align-items: center; gap: .5rem; }
-.logo-hat { height: 3rem; width: auto; }
-.logo-text { height: 1.5rem; width: auto; }
-
-.nav-links { display: flex; gap: 2rem; }
-
-.nav-link {
-  text-decoration: none;
-  color: var(--text);
-  font-weight: 500;
-  font-size: 1.3rem; /* Increased from 1.1rem */
-  transition: color .3s ease;
-  display: flex;
-  align-items: center;
-  gap: .3rem;
-}
-.nav-link:hover,
-.nav-link.active { color: var(--primary-hover); font-weight: 600; }
-
-.dropdown-arrow { 
-  font-size: 1rem; 
-}
-
-.nav-right { display: flex; gap: 1rem; align-items: center; }
-
-.nav-login {
-  background: none !important;
-  border: none !important;
-  color: var(--text) !important;
-  font-weight: 500;
-  font-size: 1.1rem;
-  transition: color .3s ease;
-  cursor: pointer;
-  font-family: 'Pixelify Sans', cursive;
-  text-decoration: none !important;
-  box-shadow: none !important;
-}
-.nav-login:hover,
-.nav-login:focus { color: var(--primary-hover) !important; }
-
-.nav-register {
-  background: var(--primary) !important;
-  color: var(--cs-beige) !important;
-  padding: .8rem 1.5rem;
-  border-radius: 25px;
-  font-weight: 600;
-  transition: transform .24s ease, background .24s ease, box-shadow .24s ease;
-  border: none !important;
-  cursor: pointer;
-  font-family: 'Pixelify Sans', cursive;
-  font-size: 1.1rem;
-  box-shadow: none !important;
-}
-.nav-register:hover,
-.nav-register:focus {
-  background: var(--primary-hover) !important;
-  color: var(--cs-beige) !important;
-  transform: translateY(-2px);
-}
-
-/* =========================
    HERO
    ========================= */
 .hero {
@@ -142,13 +67,13 @@ html, body {
   min-height: 70vh;
 }
 
-.hero-content {
+.hero-content{
   width: 100%;
   max-width: 1400px;
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Equal columns for better balance */
-  gap: clamp(3rem, 6vw, 5rem); /* Increased gap for clear separation */
-  align-items: center;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(3rem, 6vw, 5rem);
+  align-items: start;           
   height: 100%;
 }
 
@@ -161,31 +86,34 @@ html, body {
   justify-content: center;
 }
 
-.hero-right { 
-  display: flex; 
-  flex-direction: column; /* Changed to column for two containers */
-  justify-content: center; 
-  align-items: center; 
-  gap: 2rem; /* Space between the two containers */
+.hero-right{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
+  align-items: center;
+  gap: 2rem;
   width: 100%;
   height: 100%;
+  align-self: start;          
 }
 
-.hero-title {
+.hero-title{
   font-family: 'Press Start 2P', cursive;
-  font-size: clamp(1.8rem, 5vw, 3.5rem);
+  font-size: clamp(1.2rem, 3vw, 4rem); 
   color: var(--text);
-  line-height: 1.1;
-  margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
-  word-spacing: -0.1em;
-  white-space: nowrap; /* Prevent text wrapping */
-  overflow: visible; /* Allow text to extend beyond container */
-}
+  line-height: 1.1; 
+  margin-top: clamp(3rem, 4vh, 5rem);
+  margin: 0 0 clamp(1.5rem, 3vh, 2.5rem);
+  word-spacing: 0;
+  white-space: normal; 
+  max-width: 100%;  
+  text-align: left;
+}    
 
 .hero-description {
-  font-size: clamp(1.2rem, 2.5vw, 1.6rem); /* Increased font sizes */
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem); 
   color: var(--text);
-  margin-bottom: clamp(2.5rem, 5vh, 3rem); /* Increased margin */
+  margin-bottom: clamp(2.5rem, 5vh, 3rem);  
   line-height: 1.4;
   font-weight: 500;
 }
@@ -251,7 +179,7 @@ html, body {
 }
 
 /* Hero Illustration */
-.hero-right { display: flex; justify-content: center; align-items: center; }
+/* .hero-right { display: flex; justify-content: center; align-items: center; } */
 .hero-illustration { 
   position: relative; 
   width: 100%;
@@ -262,8 +190,8 @@ html, body {
 
 /* Keep only the first container - WIDER SIZE */
 .illustration-container-1 {
-  width: clamp(420px, 48vw, 600px); /* Increased from 380px, 42vw, 550px */
-  height: clamp(285px, 32vw, 415px); /* Keep same height for wider aspect ratio */
+  width: clamp(500px, 40vw, 550px); 
+  height: clamp(300px, 25vw, 350px); 
   background: var(--cs-sage4);
   border-radius: 20px;
   display: flex;
@@ -528,11 +456,10 @@ body {
   padding: 0 !important;
 }
 
-/* make the app control height instead of body */
 #root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-html { font-size: 15px; } /* set to 14px if you want it even smaller */
+html { font-size: 15px; }

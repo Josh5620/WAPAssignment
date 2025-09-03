@@ -6,12 +6,26 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import ChatBotPopup from "./components/ChatBotPopup";
 import ExplainTest from "./pages/ExplainTest";
-import DevConsoleProbe from "./components/DevConsoleProbe"; 
+import DevConsoleProbe from "./components/DevConsoleProbe";
+import About from "./pages/About"; // <-- Import your About page
+import React from 'react';
 
 function App() {
     console.log("App mounted ✅");
   return (
     <>
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '20px', // Height of hotspot
+          zIndex: 101,
+          background: 'transparent',
+        }}
+        onMouseEnter={() => window.dispatchEvent(new Event('showNavbar'))}
+      />
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -22,6 +36,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/explainTest" element={<ExplainTest />} />
           <Route path="/home" element={<HomePage />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </Router>
 

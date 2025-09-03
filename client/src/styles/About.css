@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;500;600;700&display=swap');
+
+/* Page background and base font */
+body, #root {
+  background: #EFF1ED;
+  font-family: 'Pixelify Sans', cursive;
+  color: #373D20;
+  padding-left: 4rem;   /* Add horizontal padding */
+  padding-right: 4rem;  /* Add horizontal padding */
+}
+
+/* Main heading */
+h1 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 2rem;
+  color: #373D20;
+  margin-top: 4rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+/* Tagline */
+.about-tagline {
+  font-size: 1.5rem; /* Increased from 1.2rem */
+  color: #373D20;
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+/* Section headings */
+.about-section h3 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.3rem; /* Increased from 1.1rem */
+  color: #373D20;
+  margin-top: 2.5rem;
+  margin-bottom: 0.8rem;
+  text-align: center;
+  letter-spacing: 1px;
+  transition: color 0.3s, transform 0.3s;
+  cursor: pointer;
+}
+
+/* Section paragraphs */
+.about-section p {
+  font-size: 1.3rem; /* Increased from 1.1rem */
+  color: #373D20;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  line-height: 1.7;
+}
+
+/* About container styles */
+.about-container {
+  background: #EFF1ED;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(55,61,32,.12);
+  padding: 3rem;
+  max-width: 600px;
+  margin: 5rem auto 5rem auto;
+  text-align: center;
+  font-family: 'Pixelify Sans', cursive;
+  color: #373D20;
+}
+
+.about-container h1 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 2rem;
+  color: #373D20; 
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+}
+
+.about-container p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  color: #373D20;
+  line-height: 1.7;
+}
+
+/* About page wrapper */
+.about-page-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Section styles */
+.about-section {
+  margin-bottom: 2.5rem;
+  text-align: left;
+  border-bottom: 1px solid #cacdc5;
+  padding-bottom: 2rem;
+}
+
+.about-section h3 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.5rem;
+  color: #373D20;
+  border-left: 5px solid #717744;
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+  text-align: left; /* <-- Change from center to left */
+  transition: color 0.3s, transform 0.3s;
+  cursor: pointer;
+}
+
+.about-section h3:hover {
+  color: #717744; /* Olive highlight */
+  transform: translateX(8px); /* Move slightly to the right */
+}
+
+.about-section p {
+  font-size: 1.2rem;
+  color: #373D20;
+  line-height: 1.7;
+  margin-bottom: 0;
+  text-align: left;
+}
+
+/* Remove border-bottom for the last child of .about-section */
+.about-section:last-child {
+  border-bottom: none;
+}
+
+/* Highlighted text */
+.highlight {
+  background: #71774422;
+  padding: 0.1em 0.3em;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* Link styles */
+a {
+  color: #373D20;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.about-section a,
+.about-cta-banner a {
+  transition: color 0.3s, text-decoration-thickness 0.3s;
+}
+
+.about-section a:hover,
+.about-cta-banner a:hover {
+  color: #717744;
+  text-decoration-thickness: 3px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  body, #root {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  h1 {
+    font-size: 1.2rem;
+    margin-top: 2rem;
+  }
+  .about-tagline {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .about-section h3 {
+    font-size: 1rem;
+    margin-top: 1.5rem;
+  }
+  .about-section p {
+    font-size: 1rem;
+  }
+  .about-container {
+    padding: 1.5rem;
+    max-width: 95vw;
+    margin: 2rem auto;
+  }
+  .about-container h1 {
+    font-size: 1.2rem;
+  }
+  .about-container p {
+    font-size: 1rem;
+  }
+}

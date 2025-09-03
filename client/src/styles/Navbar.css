@@ -1,0 +1,97 @@
+/* =========================
+   NAVIGATION
+   ========================= */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1rem 1rem 2rem;
+  background: #EFF1ED; /* Updated background */
+  box-shadow: none;
+  border: none;
+  margin: 0;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+  flex-shrink: 0;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 80;
+  border-bottom: 0.2px solid #717744; /* Olive line under navbar */
+  padding-bottom: 1.2rem;
+  transition: opacity 0.5s;
+  opacity: 1;
+  pointer-events: auto; /* Always allow pointer events */
+}
+
+.navbar.navbar-hidden {
+  opacity: 0;
+  pointer-events: auto; /* Allow hover to bring it back */
+}
+
+.nav-left { display: flex; align-items: center; gap: 3rem; }
+.logo { display: flex; align-items: center; gap: .5rem; }
+.logo-hat { height: 3rem; width: auto; }
+.logo-text { height: 1.5rem; width: auto; }
+
+.nav-links { display: flex; gap: 2rem; }
+
+.nav-link {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+  font-size: 1.3rem; /* Increased from 1.1rem */
+  transition: color .3s ease;
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+}
+.nav-link:hover,
+.nav-link.active { color: var(--primary-hover); font-weight: 600; }
+
+.dropdown-arrow { 
+  font-size: 1rem; 
+}
+
+.nav-right { display: flex; gap: 1rem; align-items: center; }
+
+.nav-login {
+  background: none !important;
+  border: none !important;
+  color: var(--text) !important;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: color .3s ease;
+  cursor: pointer;
+  font-family: 'Pixelify Sans', cursive;
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
+.nav-login:hover,
+.nav-login:focus { color: var(--primary-hover) !important; }
+
+.nav-register {
+  background: var(--primary) !important;
+  color: var(--cs-beige) !important;
+  padding: .8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: transform .24s ease, background .24s ease, box-shadow .24s ease;
+  border: none !important;
+  cursor: pointer;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1.1rem;
+  box-shadow: none !important;
+}
+.nav-register:hover,
+.nav-register:focus {
+  background: var(--primary-hover) !important;
+  color: var(--cs-beige) !important;
+  transform: translateY(-2px);
+}
+
+.homepage {
+  padding-top: 100px; /* Adjust to match your navbar height */
+}

@@ -1,14 +1,14 @@
 using System.Net.Http.Headers;
-using ProjectAPI.GeminiService;
+using ProjectAPI.Services;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using ProjectAPI.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Read config
 var geminiKey = builder.Configuration["Gemini:ApiKey"];
-
-var supaUrl    = builder.Configuration["Supabase:Url"]!;       // from user-secrets
-var anonKey    = builder.Configuration["Supabase:AnonKey"]!;   // from user-secrets
-var serviceKey = builder.Configuration["Supabase:ServiceRoleKey"]; // optional
 
 //  HttpClient: Gemini
 builder.Services.AddHttpClient("Gemini", client =>
@@ -16,17 +16,17 @@ builder.Services.AddHttpClient("Gemini", client =>
     client.BaseAddress = new Uri("https://generativelanguage.googleapis.com/v1beta/");
 });
 
-//  HttpClient: Supabase PostgREST
-builder.Services.AddHttpClient("supa", c =>
-{
-    c.BaseAddress = new Uri($"{supaUrl}/rest/v1/");
-    c.DefaultRequestHeaders.Add("apikey", anonKey);
-    c.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", anonKey);
-});
+// Bind Supabase Options from user-secrets
+builder.Services.Configure<SupabaseOptions>(builder.Configuration.GetSection("Supabase"));
+
+// Supabase HttpClient + service
+builder.Services.AddHttpClient<ISupabaseService, SupabaseService>();
 
 //  Register Services
 builder.Services.AddScoped<GeminiService>(sp =>
     new GeminiService(sp.GetRequiredService<IHttpClientFactory>().CreateClient("Gemini"), geminiKey));
+
+
 
 //  CORS for React
 builder.Services.AddCors(options =>

@@ -40,7 +40,6 @@ function App() {
         </Routes>
       </Router>
 
-      <DevConsoleProbe /> {/* runs once and logs results */}
       <ChatBotPopup />
     </>
   );

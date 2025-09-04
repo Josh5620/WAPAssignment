@@ -187,3 +187,7 @@ a:hover {
     font-size: 1rem;
   }
 }
+
+.about-page-wrapper {
+  padding-top: 100px;
+}

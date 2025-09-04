@@ -20,7 +20,7 @@ function App() {
           top: 0,
           left: 0,
           width: '100vw',
-          height: '20px', // Height of hotspot
+          height: '20px', 
           zIndex: 101,
           background: 'transparent',
         }}
@@ -29,8 +29,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/teacherLogin" element={<Login />} />
-          <Route path="/studentLogin" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -40,6 +39,7 @@ function App() {
         </Routes>
       </Router>
 
+      <DevConsoleProbe /> {/* runs once and logs results */}
       <ChatBotPopup />
     </>
   );

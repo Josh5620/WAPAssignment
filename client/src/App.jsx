@@ -6,6 +6,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import ChatBotPopup from "./components/ChatBotPopup";
 import ExplainTest from "./pages/ExplainTest";
+import Courses from "./pages/Courses";
 
 function App() {
     console.log("App mounted ✅");
@@ -20,6 +21,7 @@ function App() {
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/explainTest" element={<ExplainTest />} />
+          <Route path="/courses" element={<Courses />} />
           <Route path="/home" element={<HomePage />} />
         </Routes>
       </Router>

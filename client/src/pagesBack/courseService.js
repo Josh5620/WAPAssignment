@@ -7,23 +7,23 @@ async function handle(res) {
 }
 
 export const listCourses = () =>
-  fetch(`${API_URL}/api/courses`).then(handle);
+  fetch(`${API_URL}/courses`).then(handle);
 
 export const createCourse = (body) =>
-  fetch(`${API_URL}/api/courses`, {
+  fetch(`${API_URL}/courses`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   }).then(handle);
 
 export const updateCourse = (id, body) =>
-  fetch(`${API_URL}/api/courses/${id}`, {
+  fetch(`${API_URL}/courses/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   }).then(handle);
 
 export const removeCourse = (id) =>
-  fetch(`${API_URL}/api/courses/${id}`, {
+  fetch(`${API_URL}/courses/${id}`, {
     method: "DELETE",
   }).then(handle);

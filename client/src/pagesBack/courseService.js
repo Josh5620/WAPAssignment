@@ -25,5 +25,5 @@ export const updateCourse = (id, body) =>
 
 export const removeCourse = (id) =>
   fetch(`${API_URL}/courses/${id}`, {
-    method: "DELETE",
+    method: "DELETE",x
   }).then(handle);

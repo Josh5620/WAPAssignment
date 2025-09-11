@@ -11,6 +11,7 @@ const Login = () => {
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false); 
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -18,6 +19,10 @@ const Login = () => {
             ...formData,
             [e.target.name]: e.target.value
         });
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     const handleSubmit = async (e) => {
@@ -51,6 +56,7 @@ const Login = () => {
 
     return (
         <div className="login-container">
+            <ReturnHome />
             <div className="login-card">
                 <div className="login-header">
                     <div className="login-logo">
@@ -76,15 +82,22 @@ const Login = () => {
                     
                     <div className="form-group password-field">
                         <input 
-                            type="password" 
+                            type={showPassword ? "text" : "password"}
                             name="password"
                             placeholder="password"
                             value={formData.password}
                             onChange={handleChange}
                             required
                         />
-                        <button type="button" className="password-toggle">
-                            <img src="/crosseye.svg" alt="Show/Hide Password" />
+                        <button 
+                            type="button" 
+                            className="password-toggle"
+                            onClick={togglePasswordVisibility}
+                        >
+                            <img 
+                                src={showPassword ? "/eye.svg" : "/crosseye.svg"}
+                                alt="Show/Hide Password" 
+                            />
                         </button>
                     </div>
                     
@@ -100,7 +113,9 @@ const Login = () => {
                     </button>
                 </form>
                 
-                <div className="social-divider">OR</div>
+                <div className="divider">
+                    <span>OR</span>
+                </div>
                 
                 <div className="social-buttons">
                     <button className="social-btn">
@@ -117,8 +132,6 @@ const Login = () => {
                 <div className="signup-link">
                     Don't have an account? <a href="/register">Sign Up</a>
                 </div>
-                
-                <ReturnHome />
             </div>
         </div>
     );

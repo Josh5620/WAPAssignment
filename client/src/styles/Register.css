@@ -35,12 +35,11 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    min-height: calc(100vh + 6rem); /* Add extra height to accommodate bottom padding */
+    min-height: calc(100vh + 8rem); 
     background-color: var(--cs-beige);
     font-family: 'Pixelify Sans', cursive;
     padding: 3rem;
     padding-top: 3rem;
-    padding-bottom: 6rem; /* Increase bottom padding */
 }
 
 .register-card {
@@ -53,7 +52,7 @@
     text-align: center;
     backdrop-filter: blur(10px);
     margin: 2rem;
-    margin-top: 0; /* Remove top margin since we're using padding-top on container */
+    margin-top: 0; 
 }
 
 /* Logo section */
@@ -62,7 +61,17 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+}
+
+.register-register{
+    font-family: 'Pixelify Sans', cursive;
+    font-size: 1.5rem;
+    color: var(--cs-olive9);
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--cs-olive9);
+    border-top: 1px solid var(--cs-olive9);
+    padding: 1rem 0;
 }
 
 /* Remove the general img styling and use specific targeting */
@@ -264,7 +273,7 @@ button:disabled {
 
 /* Return Home Arrow Button - Fixed to viewport top-left */
 .return-home-arrow {
-    position: fixed !important; /* Changed from absolute to fixed */
+    position: fixed !important; 
     top: 1.5rem !important;
     left: 1.5rem !important;
     width: 35px !important;

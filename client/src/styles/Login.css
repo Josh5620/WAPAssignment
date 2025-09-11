@@ -1,33 +1,58 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;500;600;700&display=swap');
 
-/* Use CodeSage color palette */
+/* CSS Variables from your homepage */
 :root {
-  --cs-beige: #eff1ed;
-  --cs-olive9: #373d20;
-  --cs-olive7: #717744;
-  --cs-slate7: #766153;
-  --cs-sage3: #bcbd8b;
-  --cs-gray: #c4c4c4;
+    --cs-beige: #eff1ed;
+    --cs-slate8: #939787;
+    --cs-olive9: #373d20;
+    --cs-olive6: #545a32;
+    --cs-olive7: #717744;
+    --cs-sage4: #979a68;
+    --cs-sage3: #bcbd8b;
+    --cs-sage2: #998f6f;
+    --cs-slate7: #766153;
+    --cs-brown: #766153;
+    --cs-brown-hover: #645447;
+    --cs-card-bg: #CACDC5; /* Add new variable for the card background */
+
+    /* semantics */
+    --bg: var(--cs-beige);
+    --text: var(--cs-olive9);
+    --muted: var(--cs-slate7);
+    --primary: var(--cs-olive9);
+    --primary-hover: var(--cs-olive7);
+    --card: #CACDC5; /* Updated to use the new color */
+    --chip: var(--cs-sage3);
+    --accent: var(--cs-sage4);
+    --border: var(--cs-olive6);
+
+    /* shadows (olive‑tinted) */
+    --shadow-1: 0 2px 10px rgba(0, 0, 0, 0.12), 0 2px 10px rgba(0, 0, 0, 0.24);
+    --shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .login-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: var(--cs-beige);
+    align-items: flex-start;
+    min-height: calc(100vh + 2rem); 
+    background-color: var(--cs-beige);
     font-family: 'Pixelify Sans', cursive;
-    padding: 2rem;
+    padding: 3rem;
+    padding-top: 3rem;
 }
 
 .login-card {
-    background: var(--cs-gray);
+    background: #CACDC5;
     padding: 3rem 2.5rem;
     border-radius: 20px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-2);
     width: 100%;
     max-width: 400px;
     text-align: center;
+    backdrop-filter: blur(10px);
+    margin: 2rem;
+    margin-top: 0; 
 }
 
 /* Header section */
@@ -41,6 +66,14 @@
     justify-content: center;
     gap: 0.5rem;
     margin-bottom: 1rem;
+}
+
+.login-logo img[alt="CodeSage"] {
+    height: 2rem; /* Smaller CodeSage text */
+}
+
+.login-logo img[alt="CodeSage Hat"] {
+    height: 4rem; /* Bigger hat to balance with smaller text */
 }
 
 .logo-text {
@@ -58,8 +91,8 @@
     font-size: 1.5rem;
     color: var(--cs-olive9);
     margin-bottom: 1.5rem;
-    border-bottom: 2px solid var(--cs-olive9);
-    border-top: 2px solid var(--cs-olive9);
+    border-bottom: 1px solid var(--cs-olive9);
+    border-top: 1px solid var(--cs-olive9);
     padding: 1rem 0;
 }
 
@@ -97,10 +130,46 @@
 
 .form-group input:focus {
     outline: none !important;
-    box-shadow: 0 0 0 3px rgba(113, 119, 68, 0.3) !important;
+    box-shadow: 0 0 0 3px rgba(122, 132, 113, 0.3) !important;
+    transform: translateY(-2px) !important; /* ADD THIS */
 }
 
-/* Password field with eye icon */
+.return-home-arrow {
+    position: fixed !important; 
+    top: 1.5rem !important;
+    left: 1.5rem !important;
+    width: 35px !important;
+    height: 35px !important;
+    border-radius: 50% !important;
+    background: var(--cs-sage4) !important;
+    color: var(--cs-beige) !important;
+    border: none !important;
+    font-size: 1.2rem !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.3s ease !important;
+    box-shadow: var(--shadow-1) !important;
+    font-family: inherit !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    min-height: auto !important;
+    z-index: 1000 !important; /* Higher z-index for fixed positioning */
+}
+
+.return-home-arrow:hover {
+    background: var(--primary-hover) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: var(--shadow-2) !important;
+}
+
+.password-container {
+    position: relative;
+}
+
 .password-field {
     position: relative;
 }
@@ -113,14 +182,47 @@
     background: none !important;
     border: none !important;
     cursor: pointer !important;
-    font-size: 1rem;
-    color: #666;
+    color: #999 !important;
+    width: auto !important;
+    padding: 5px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    min-height: auto !important;
+    height: auto !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    font-family: inherit !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
 }
 
 .password-toggle img {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
+    width: 20px !important;
+    height: 20px !important;
+    object-fit: contain !important;
+    opacity: 0.6 !important;
+    transition: opacity 0.3s ease !important;
+}
+
+.password-toggle:hover img {
+    opacity: 1 !important;
+}
+
+/* Update the password input to match Register styling */
+.password-field input {
+    width: 100% !important;
+    padding: 1rem 45px 1rem 1.2rem !important; /* Right padding for icon */
+    border: none !important;
+    border-radius: 25px !important;
+    font-size: 1rem !important;
+    font-family: 'Pixelify Sans', cursive !important;
+    background: white !important;
+    color: var(--cs-olive9) !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12), 0 2px 10px rgba(0, 0, 0, 0.24) !important;
 }
 
 /* Forgot password and remember me */
@@ -148,21 +250,24 @@
 .login-btn {
     width: 100% !important;
     padding: 1rem !important;
-    background: var(--cs-slate7) !important;
-    color: white !important;
+    background: #766153 !important; /* Brown color like Register */
+    color: #EFF1ED !important;
     border: none !important;
     border-radius: 25px !important;
     font-size: 1.1rem !important;
-    font-family: 'Pixelify Sans', cursive !important;
-    font-weight: 600 !important;
+    font-family: 'Press Start 2P', cursive !important; /* Pixelated font */
     cursor: pointer !important;
-    transition: background 0.3s !important;
+    transition: all 0.3s ease !important;
     text-transform: uppercase !important;
+    letter-spacing: 1px !important;
     margin: 1rem 0 !important;
+    box-shadow: var(--shadow-1) !important;
 }
 
 .login-btn:hover {
-    background: var(--cs-olive7) !important;
+    background: #645447 !important; /* Darker brown hover */
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-2) !important;
 }
 
 /* Social login section */
@@ -220,6 +325,13 @@
     width: 24px;
     height: 24px;
     object-fit: contain;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 2rem 0;
+    color: var(--text);
 }
 
 /* Sign up link */

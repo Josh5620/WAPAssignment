@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import HomePage from "./pages/HomePage";
-import RegisterPage from "./pages/RegisterPage";
+import Register from "./pages/Register";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import ChatBotPopup from "./components/ChatBotPopup";
 import ExplainTest from "./pages/ExplainTest";
-import About from "./pages/About"; // <-- Import your About page
+import About from "./pages/About"; 
 import React from 'react';
 import Courses from "./pages/Courses";
 
@@ -32,7 +32,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/explainTest" element={<ExplainTest />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/home" element={<HomePage />} />

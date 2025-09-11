@@ -4,9 +4,9 @@ import '../styles/Register.css';
 import ReturnHome from '../components/ReturnHome';
 import { authService } from '../services/apiService';
 
-const RegisterPage = () => {
+const Register = () => {
     const [formData, setFormData] = useState({
-        email: '',
+        username: '',
         password: '',
         confirmPassword: '',
         fullName: '',
@@ -72,15 +72,15 @@ const RegisterPage = () => {
 
     return (
         <div className="register-container">
-            <ReturnHome /> {/* Move this outside the card */}
+            <ReturnHome /> 
             <div className="register-card">
-                {/* Logo Section */}
-                <div className="register-logo">
-                    <img src="/CodeSage.svg" alt="CodeSage" />
-                    <img src="/CodeSageLogo.svg" alt="CodeSage Hat" />
+                <div className="register-header">
+                    <div className="register-logo">
+                        <img src="/CodeSage.svg" alt="CodeSage" />
+                        <img src="/CodeSageLogo.svg" alt="CodeSage Hat" />
+                    </div>
+                    <div className="register-register">REGISTER</div>
                 </div>
-                
-                <h2>REGISTER</h2>
                 
                 {error && <div className="error">{error}</div>}
                 
@@ -182,4 +182,4 @@ const RegisterPage = () => {
     );
 }
 
-export default RegisterPage;
+export default Register;

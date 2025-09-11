@@ -55,7 +55,7 @@ const Navbar = () => {
           <img src="/CodeSageLogo.svg" alt="CodeSage Hat" className="logo-hat" />
         </div>
         <div className="nav-links">
-          <Link to="/" className="nav-link">Home</Link>
+          <Link to="/" className="nav-link home-link">Home</Link>
           <div className="nav-item-dropdown">
             <span className="nav-link">
               Courses <span className="dropdown-arrow">▼</span>
@@ -68,7 +68,7 @@ const Navbar = () => {
               <a href="#react" className="dropdown-item">React Fundamentals</a>
             </div>
           </div>
-          <Link to="/about" className="nav-link">About</Link>
+          <Link to="/about" className="nav-link about-link">About</Link>
           <a href="#faq" className="nav-link">FAQ</a>
         </div>
       </div>

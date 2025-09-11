@@ -5,30 +5,30 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1rem 1rem 2rem;
+  padding: 1rem 1rem 0.5rem 2rem;
   background: #EFF1ED; /* Updated background */
   box-shadow: none;
   border: none;
   margin: 0;
   padding-top: 1.2rem;
-  padding-bottom: 1.2rem;
+  padding-bottom: 0.2rem;
   flex-shrink: 0;
   width: 100%;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 80;
+  z-index: 1001;
   border-bottom: 0.2px solid #717744; /* Olive line under navbar */
-  padding-bottom: 1.2rem;
+  padding-bottom: 0.2rem; 
   transition: opacity 0.5s;
   opacity: 1;
-  pointer-events: auto; /* Always allow pointer events */
+  pointer-events: auto; 
 }
 
 .navbar.navbar-hidden {
   opacity: 0;
-  pointer-events: auto; /* Allow hover to bring it back */
+  pointer-events: auto; 
 }
 
 .nav-left { display: flex; align-items: center; gap: 3rem; }
@@ -36,21 +36,113 @@
 .logo-hat { height: 3rem; width: auto; }
 .logo-text { height: 1.5rem; width: auto; }
 
-.nav-links { display: flex; gap: 2rem; }
+.nav-links { 
+  display: flex; 
+  align-items: center;
+}
 
 .nav-link {
   text-decoration: none;
   color: var(--text);
   font-weight: 500;
-  font-size: 1.3rem; /* Increased from 1.1rem */
+  font-size: 1.3rem; 
   transition: color .3s ease;
   display: flex;
   align-items: center;
   gap: .3rem;
+  margin-right: 1.2rem; /* Default */
 }
 .nav-link:hover,
 .nav-link.active { color: var(--primary-hover); font-weight: 600; }
 
+/* Custom gaps */
+.nav-link.home-link {
+  margin-right: 1.4rem; /* Home to Courses - closer */
+}
+
+.nav-item-dropdown {
+  margin-right: 0rem; /* Courses to About - closer */
+}
+
+.nav-link.about-link {
+  margin-right: 2rem; /* About to FAQ - normal */
+}
+
+.nav-link:last-child {
+  margin-right: 1rem; /* FAQ to Login - closer */
+}
+
+/* Dropdown container */
+.nav-item-dropdown {
+  position: relative;
+  display: inline-block;
+  
+}
+
+/* Create an extension that connects to dropdown */
+.nav-item-dropdown:hover > .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; /* Reduce from -8px to -2px */
+  left: 0;
+  right: 0;
+  height: 2px; /* Reduce from 8px to 2px */
+  background: #373d20;
+  z-index: 999;
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% - 2px); /* Overlap slightly to connect seamlessly */
+  left: -3rem; 
+  width: calc(100vw - 4rem); 
+  background: #373d20;
+  padding: 1rem 0;
+  display: none; 
+  border-radius: 0 0 0 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+/* Show dropdown on hover - use display instead of opacity */
+.nav-item-dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Give the courses nav-link default padding to reserve space */
+.nav-item-dropdown .nav-link {
+  padding: 8px 12px; /* Always have this padding */
+  transition: background 0.3s, color 0.3s; 
+}
+
+/* On hover, just change colors - no padding changes */
+.nav-item-dropdown:hover > .nav-link {
+  background: #373d20;
+  color: #EFF1ED;
+  position: relative;
+}
+
+/* Dropdown items */
+.dropdown-item {
+  display: block;
+  padding: 0.8rem 1.5rem;
+  color: #EFF1ED;
+  text-decoration: none;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+
+.dropdown-item:hover {
+  background: rgba(239, 241, 237, 0.1);
+  color: #EFF1ED;
+}
+
+/* Arrow rotation */
+.nav-item-dropdown:hover .dropdown-arrow {
+  transform: rotate(180deg);
+}
 
 .dropdown-arrow {
   transition: transform 0.3s ease;

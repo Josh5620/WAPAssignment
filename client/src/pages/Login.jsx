@@ -52,33 +52,72 @@ const Login = () => {
     return (
         <div className="login-container">
             <div className="login-card">
-                <h2>Login Form</h2>
+                <div className="login-header">
+                    <div className="login-logo">
+                        <img src="/CodeSage.svg" alt="CodeSage" className="logo-text" />
+                        <img src="/CodeSageLogo.svg" alt="CodeSage Hat" className="logo-hat" />
+                    </div>
+                    <div className="login-welcome">WELCOME BACK</div>
+                </div>
+                
                 {error && <div className="error">{error}</div>}
+                
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <input 
                             type="email" 
                             name="email"
-                            placeholder="Email"
+                            placeholder="email/username"
                             value={formData.email}
                             onChange={handleChange}
                             required
                         />
                     </div>
-                    <div className="form-group">
+                    
+                    <div className="form-group password-field">
                         <input 
                             type="password" 
                             name="password"
-                            placeholder="Password"
+                            placeholder="password"
                             value={formData.password}
                             onChange={handleChange}
                             required
                         />
+                        <button type="button" className="password-toggle">
+                            <img src="/crosseye.svg" alt="Show/Hide Password" />
+                        </button>
                     </div>
-                    <button type="submit" disabled={loading}>
-                        {loading ? 'Logging in...' : 'Login'}
+                    
+                    <div className="form-options">
+                        <label className="remember-me">
+                            <input type="checkbox" /> Remember Me
+                        </label>
+                        <a href="#" className="forgot-password">Forgot Password?</a>
+                    </div>
+                    
+                    <button type="submit" className="login-btn" disabled={loading}>
+                        {loading ? 'Logging in...' : 'LOGIN'}
                     </button>
                 </form>
+                
+                <div className="social-divider">OR</div>
+                
+                <div className="social-buttons">
+                    <button className="social-btn">
+                        <img src="/google.svg" alt="Google" />
+                    </button>
+                    <button className="social-btn">
+                        <img src="/apple.svg" alt="Apple" />
+                    </button>
+                    <button className="social-btn">
+                        <img src="/facebook.svg" alt="Facebook" />
+                    </button>
+                </div>
+                
+                <div className="signup-link">
+                    Don't have an account? <a href="/register">Sign Up</a>
+                </div>
+                
                 <ReturnHome />
             </div>
         </div>

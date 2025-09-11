@@ -36,7 +36,7 @@ const Navbar = () => {
   }, [visible]);
 
   const handleLogin = () => {
-    navigate('/studentLogin');
+    navigate('/Login');
   };
 
   const handleRegister = () => {

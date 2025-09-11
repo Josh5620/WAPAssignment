@@ -98,10 +98,10 @@ const RegisterPage = () => {
                     
                     <div className="form-group">
                         <input 
-                            type="email" 
-                            name="email"
-                            placeholder="email"
-                            value={formData.email}
+                            type="text" 
+                            name="username"
+                            placeholder="username"
+                            value={formData.username}
                             onChange={handleChange}
                             required
                         />

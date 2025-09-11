@@ -51,8 +51,10 @@
 .nav-link:hover,
 .nav-link.active { color: var(--primary-hover); font-weight: 600; }
 
-.dropdown-arrow { 
-  font-size: 1rem; 
+
+.dropdown-arrow {
+  transition: transform 0.3s ease;
+  margin-left: 0.3rem;
 }
 
 .nav-right { display: flex; gap: 1rem; align-items: center; }

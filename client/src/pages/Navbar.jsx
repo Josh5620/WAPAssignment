@@ -56,9 +56,18 @@ const Navbar = () => {
         </div>
         <div className="nav-links">
           <Link to="/" className="nav-link">Home</Link>
-          <a href="#courses" className="nav-link">
-            Courses <span className="dropdown-arrow">▼</span>
-          </a>
+          <div className="nav-item-dropdown">
+            <span className="nav-link">
+              Courses <span className="dropdown-arrow">▼</span>
+            </span>
+            <div className="dropdown-menu">
+              <a href="#html" className="dropdown-item">HTML Basics</a>
+              <a href="#javascript" className="dropdown-item">JavaScript Essentials</a>
+              <a href="#python" className="dropdown-item">Python Basics</a>
+              <a href="#css" className="dropdown-item">CSS Styling</a>
+              <a href="#react" className="dropdown-item">React Fundamentals</a>
+            </div>
+          </div>
           <Link to="/about" className="nav-link">About</Link>
           <a href="#faq" className="nav-link">FAQ</a>
         </div>

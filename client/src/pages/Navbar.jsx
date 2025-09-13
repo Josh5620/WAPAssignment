@@ -61,11 +61,9 @@ const Navbar = () => {
               Courses <span className="dropdown-arrow">▼</span>
             </span>
             <div className="dropdown-menu">
-              <a href="#html" className="dropdown-item">HTML Basics</a>
-              <a href="#javascript" className="dropdown-item">JavaScript Essentials</a>
-              <a href="#python" className="dropdown-item">Python Basics</a>
-              <a href="#css" className="dropdown-item">CSS Styling</a>
-              <a href="#react" className="dropdown-item">React Fundamentals</a>
+              <Link to="/html" className="dropdown-item">HTML Basics</Link>
+              <Link to="/java" className="dropdown-item">Java Essentials</Link>
+              <Link to="/python" className="dropdown-item">Python Basics</Link>              
             </div>
           </div>
           <Link to="/about" className="nav-link about-link">About</Link>

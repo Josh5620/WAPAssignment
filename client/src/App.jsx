@@ -9,6 +9,9 @@ import ExplainTest from "./pages/ExplainTest";
 import About from "./pages/About"; 
 import React from 'react';
 import Courses from "./pages/Courses";
+import HTML from './pages/HTML';
+import Python from './pages/Python';
+import Java from './pages/Java';
 
 function App() {
     console.log("App mounted ✅");
@@ -37,6 +40,9 @@ function App() {
           <Route path="/courses" element={<Courses />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/about" element={<About />} />
+          <Route path="/html" element={<HTML />} />
+          <Route path="/python" element={<Python />} />
+          <Route path="/java" element={<Java />} />
         </Routes>
       </Router>
 

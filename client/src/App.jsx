@@ -9,9 +9,9 @@ import ExplainTest from "./pages/ExplainTest";
 import About from "./pages/About"; 
 import React from 'react';
 import Courses from "./pages/Courses";
-import HTML from './pages/HTML';
-import Python from './pages/Python';
-import Java from './pages/Java';
+import HTML from './pages/LearnHTML';
+import Python from './pages/LearnPython';
+import Java from './pages/LearnJava';
 
 function App() {
     console.log("App mounted ✅");

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\yingx\\OneDrive - Asia Pacific University of Technology And Innovation (APU)\\Desktop\\WAPAssignment\\server\\ProjectAPI\\ProjectAPI.csproj": {}
+    "C:\\Users\\yingx\\OneDrive - Asia Pacific University of Technology And Innovation (APU)\\Desktop\\WAPAssignment\\server\\projectapi\\ProjectAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\yingx\\OneDrive - Asia Pacific University of Technology And Innovation (APU)\\Desktop\\WAPAssignment\\server\\ProjectAPI\\ProjectAPI.csproj": {
+    "C:\\Users\\yingx\\OneDrive - Asia Pacific University of Technology And Innovation (APU)\\Desktop\\WAPAssignment\\server\\projectapi\\ProjectAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\yingx\\OneDrive - Asia Pacific University of Technology And Innovation (APU)\\Desktop\\WAPAssignment\\server\\ProjectAPI\\ProjectAPI.csproj",
+        "projectUniqueName": "C:\\Users\\yingx\\OneDrive - Asia Pacific University of Technology And Innovation (APU)\\Desktop\\WAPAssignment\\server\\projectapi\\ProjectAPI.csproj",
         "projectName": "ProjectAPI",
-        "projectPath": "C:\\Users\\yingx\\OneDrive - Asia Pacific University of Technology And Innovation (APU)\\Desktop\\WAPAssignment\\server\\ProjectAPI\\ProjectAPI.csproj",
+        "projectPath": "C:\\Users\\yingx\\OneDrive - Asia Pacific University of Technology And Innovation (APU)\\Desktop\\WAPAssignment\\server\\projectapi\\ProjectAPI.csproj",
         "packagesPath": "C:\\Users\\yingx\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\yingx\\OneDrive - Asia Pacific University of Technology And Innovation (APU)\\Desktop\\WAPAssignment\\server\\ProjectAPI\\obj\\",
+        "outputPath": "C:\\Users\\yingx\\OneDrive - Asia Pacific University of Technology And Innovation (APU)\\Desktop\\WAPAssignment\\server\\projectapi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

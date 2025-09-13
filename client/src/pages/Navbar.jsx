@@ -63,7 +63,7 @@ const Navbar = () => {
             <div className="dropdown-menu">
               <Link to="/html" className="dropdown-item">HTML Basics</Link>
               <Link to="/java" className="dropdown-item">Java Essentials</Link>
-              <Link to="/python" className="dropdown-item">Python Basics</Link>              
+              <Link to="/python" className="dropdown-item">Python Basics</Link>
             </div>
           </div>
           <Link to="/about" className="nav-link about-link">About</Link>

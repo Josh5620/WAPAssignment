@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TT17pFRCoE4=",
+  "dgSpecHash": "zSNQjVFE8Io=",
   "success": true,
-  "projectFilePath": "C:\\Users\\yingx\\OneDrive - Asia Pacific University of Technology And Innovation (APU)\\Desktop\\WAPAssignment\\server\\ProjectAPI\\ProjectAPI.csproj",
+  "projectFilePath": "C:\\Users\\yingx\\OneDrive - Asia Pacific University of Technology And Innovation (APU)\\Desktop\\WAPAssignment\\server\\projectapi\\ProjectAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\yingx\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\yingx\\.nuget\\packages\\dotnetgeminisdk\\1.0.14\\dotnetgeminisdk.1.0.14.nupkg.sha512",

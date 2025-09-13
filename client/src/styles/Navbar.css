@@ -1,6 +1,11 @@
 /* =========================
    NAVIGATION
    ========================= */
+
+:root { --gutter: 2rem; }                 /* side padding you want */
+html, body { height: 100%; margin: 0; }
+body { min-height: 100vh; padding-top: calc(var(--nav-height, 4.2rem) + 0.4rem); }
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -24,6 +29,10 @@
   transition: opacity 0.5s;
   opacity: 1;
   pointer-events: auto; 
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+  --nav-height: 4.2rem;                   /* set your navbar height once */
+  overflow: visible;                      /* allow dropdown to escape */
 }
 
 .navbar.navbar-hidden {
@@ -62,6 +71,7 @@
 
 .nav-item-dropdown {
   margin-right: 0rem; /* Courses to About - closer */
+  position: static;  
 }
 
 .nav-link.about-link {
@@ -83,7 +93,7 @@
 .nav-item-dropdown:hover > .nav-link::after {
   content: '';
   position: absolute;
-  bottom: -2px; /* Reduce from -8px to -2px */
+  bottom: -5px; /* Reduce from -8px to -2px */
   left: 0;
   right: 0;
   height: 2px; /* Reduce from 8px to 2px */
@@ -93,16 +103,17 @@
 
 /* Dropdown menu styling */
 .dropdown-menu {
-  position: absolute;
-  top: calc(100% - 2px); /* Overlap slightly to connect seamlessly */
-  left: -3rem; 
-  width: calc(100vw - 4rem); 
+  position: fixed;                        /* anchor to the viewport */
+  top: calc(var(--nav-height, 4.2rem) + 30px); /* Reduced gap to connect */
+  left: 0;
+  right: 0;
+  width: 100vw;                           /* span entire screen */
+  padding: 1.25rem var(--gutter);         /* match navbar side gutters */
   background: #373d20;
-  padding: 1rem 0;
-  display: none; 
-  border-radius: 0 0 0 0;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
+  display: none;                          /* shown on hover below */
+  border-radius: 0;
+  box-shadow: 0 4px 15px rgba(0,0,0,.2);
+  z-index: 2000;   
 }
 
 /* Show dropdown on hover - use display instead of opacity */
@@ -112,7 +123,7 @@
 
 /* Give the courses nav-link default padding to reserve space */
 .nav-item-dropdown .nav-link {
-  padding: 8px 12px; /* Always have this padding */
+  padding: 22px 12px; /* Always have this padding */
   transition: background 0.3s, color 0.3s; 
 }
 
@@ -126,17 +137,18 @@
 /* Dropdown items */
 .dropdown-item {
   display: block;
-  padding: 0.8rem 1.5rem;
+  padding: .9rem 0;
   color: #EFF1ED;
   text-decoration: none;
   font-family: 'Pixelify Sans', cursive;
   font-size: 0.95rem;
-  transition: background 0.2s;
+  transition: background 0.3s;
 }
 
 .dropdown-item:hover {
   background: rgba(239, 241, 237, 0.1);
   color: #EFF1ED;
+  transition: background 0.3s, color 0.3s; 
 }
 
 /* Arrow rotation */

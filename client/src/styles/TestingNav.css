@@ -1,0 +1,119 @@
+/* Toggle Button */
+.testing-nav-toggle-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1001;
+  width: 50px;
+  height: 50px;
+  background: #007bff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.testing-nav-toggle-btn.testing-nav-open {
+  background: #dc3545;
+}
+
+/* Hamburger Lines */
+.testing-nav-hamburger-line {
+  width: 20px;
+  height: 2px;
+  background: white;
+  transition: transform 0.3s;
+}
+
+.testing-nav-toggle-btn.testing-nav-open .testing-nav-hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.testing-nav-toggle-btn.testing-nav-open .testing-nav-hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.testing-nav-toggle-btn.testing-nav-open .testing-nav-hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Overlay */
+.testing-nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* Popup */
+.testing-nav-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 400px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  max-height: 80vh;
+}
+
+.testing-nav-popup.testing-nav-popup-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Header */
+.testing-nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  background: #f5f5f5;
+}
+
+.testing-nav-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.testing-nav-close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+}
+
+/* Links */
+.testing-nav-links {
+  padding: 10px 0;
+  max-height: calc(80vh - 80px);
+  overflow-y: auto;
+}
+
+.testing-nav-link {
+  display: block;
+  padding: 12px 20px;
+  color: #333;
+  text-decoration: none;
+}
+
+.testing-nav-link:hover {
+  background: #f0f0f0;
+  color: #007bff;
+}

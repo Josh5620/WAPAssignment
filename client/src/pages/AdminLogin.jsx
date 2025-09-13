@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/AdminLogin.css';
 import ReturnHome from '../components/ReturnHome';
+import TestingNav from '../components/TestingNav';
 import { authService } from '../services/apiService';
 
 const AdminLogin = () => {
@@ -51,6 +52,7 @@ const AdminLogin = () => {
   return (
     <div className="admin-login-container">
       <ReturnHome />
+      <TestingNav />
       <div className="admin-login-form">
         <h2 className="admin-login-title">Admin Login</h2>
         {error && <div className="error" style={{color: '#d32f2f', marginBottom: '1rem', textAlign: 'center'}}>{error}</div>}

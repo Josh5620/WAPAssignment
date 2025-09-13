@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 import ReturnHome from '../components/ReturnHome';
+import TestingNav from '../components/TestingNav';
 import { authService } from '../services/apiService';
 
 const Login = () => {
@@ -57,6 +58,7 @@ const Login = () => {
     return (
         <div className="login-container">
             <ReturnHome />
+            <TestingNav />
             <div className="login-card">
                 <div className="login-header">
                     <div className="login-logo">

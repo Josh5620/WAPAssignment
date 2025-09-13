@@ -1,11 +1,13 @@
 import React from 'react';
 import '../styles/About.css';
-import Navbar from '../pages/Navbar';
+import Navbar from '../components/Navbar';
+import TestingNav from '../components/TestingNav';
 
 
 const About = () => (
   <>
     <Navbar />
+    <TestingNav />
     <div className="about-page-wrapper">
       <h1>CodeSage: Coding for All!</h1>
       <h2 className="about-tagline">Learn coding step by step, anywhere, anytime.</h2>

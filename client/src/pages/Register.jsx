@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Register.css';
 import ReturnHome from '../components/ReturnHome';
+import TestingNav from '../components/TestingNav';
 import { authService } from '../services/apiService';
 
 const Register = () => {
@@ -73,6 +74,7 @@ const Register = () => {
     return (
         <div className="register-container">
             <ReturnHome /> 
+            <TestingNav />
             <div className="register-card">
                 <div className="register-header">
                     <div className="register-logo">

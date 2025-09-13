@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { listCourses, createCourse, updateCourse, removeCourse } from "../pagesBack/courseService";
+import TestingNav from '../components/TestingNav';
 
 export default function Courses() {
   const [items, setItems] = useState([]);
@@ -35,6 +36,7 @@ export default function Courses() {
 
   return (
     <div style={{ maxWidth: 720, margin: "2rem auto", padding: "1rem" }}>
+      <TestingNav />
       <h1>Courses</h1>
 
       <form onSubmit={onCreate} style={{ margin: "1rem 0" }}>

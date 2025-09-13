@@ -4,7 +4,10 @@ import HomePage from "./pages/HomePage";
 import Register from "./pages/Register";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
+import UserDashboard from "./pages/UserDashboard";
+import TeacherDashboard from "./pages/TeacherDashboard";
 import ChatBotPopup from "./components/ChatBotPopup";
+import TestingNav from "./components/TestingNav";
 import ExplainTest from "./pages/ExplainTest";
 import About from "./pages/About"; 
 import React from 'react';
@@ -35,6 +38,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/user-dashboard" element={<UserDashboard />} />
+          <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
           <Route path="/register" element={<Register />} />
           <Route path="/explainTest" element={<ExplainTest />} />
           <Route path="/courses" element={<Courses />} />
@@ -43,10 +48,13 @@ function App() {
           <Route path="/html" element={<HTML />} />
           <Route path="/python" element={<Python />} />
           <Route path="/java" element={<Java />} />
+          
         </Routes>
       </Router>
 
+      
       <ChatBotPopup />
+      
     </>
   );
 }

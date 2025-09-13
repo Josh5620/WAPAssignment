@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\yingx\\OneDrive - Asia Pacific University of Technology And Innovation (APU)\\Desktop\\WAPAssignment\\server\\projectapi\\ProjectAPI.csproj": {}
+    "C:\\Users\\joshu\\Desktop\\WAPAssignment\\server\\ProjectAPI\\ProjectAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\yingx\\OneDrive - Asia Pacific University of Technology And Innovation (APU)\\Desktop\\WAPAssignment\\server\\projectapi\\ProjectAPI.csproj": {
+    "C:\\Users\\joshu\\Desktop\\WAPAssignment\\server\\ProjectAPI\\ProjectAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\yingx\\OneDrive - Asia Pacific University of Technology And Innovation (APU)\\Desktop\\WAPAssignment\\server\\projectapi\\ProjectAPI.csproj",
+        "projectUniqueName": "C:\\Users\\joshu\\Desktop\\WAPAssignment\\server\\ProjectAPI\\ProjectAPI.csproj",
         "projectName": "ProjectAPI",
-        "projectPath": "C:\\Users\\yingx\\OneDrive - Asia Pacific University of Technology And Innovation (APU)\\Desktop\\WAPAssignment\\server\\projectapi\\ProjectAPI.csproj",
-        "packagesPath": "C:\\Users\\yingx\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\yingx\\OneDrive - Asia Pacific University of Technology And Innovation (APU)\\Desktop\\WAPAssignment\\server\\projectapi\\obj\\",
+        "projectPath": "C:\\Users\\joshu\\Desktop\\WAPAssignment\\server\\ProjectAPI\\ProjectAPI.csproj",
+        "packagesPath": "C:\\Users\\joshu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\joshu\\Desktop\\WAPAssignment\\server\\ProjectAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\yingx\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\joshu\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

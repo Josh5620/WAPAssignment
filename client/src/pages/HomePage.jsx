@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import Navbar from '../pages/Navbar';
+import Navbar from '../components/Navbar';
+import TestingNav from '../components/TestingNav';
 import '../styles/HomePage.css';
 
 const HomePage = () => {
@@ -13,6 +14,7 @@ const HomePage = () => {
     return (
         <div className="homepage">
             <Navbar /> {/* <-- Use Navbar component here */}
+            <TestingNav />
 
             {/* Hero Section */}
             <section className="hero">

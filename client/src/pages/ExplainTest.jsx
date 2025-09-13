@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/ExplainTest.css';
 import ReturnHome from '../components/ReturnHome';
+import TestingNav from '../components/TestingNav';
 import ExplanationPopup from '../components/ExplanationPopup';
 import { submitTestExplanation } from '../pagesBack/explainTestService';
 
@@ -43,6 +44,7 @@ const ExplainTest = () => {
     };
     return (
         <div className="explain-test-container">
+            <TestingNav />
             <div className="explain-test-card">
                 <h2>Test Explanation Submission</h2>
                 

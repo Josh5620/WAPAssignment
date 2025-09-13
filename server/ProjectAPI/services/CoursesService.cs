@@ -7,7 +7,7 @@ using ProjectAPI.Options;
 
 namespace ProjectAPI.Services;
 
-public sealed class SupabaseService : ISupabaseService
+public sealed class CoursesService : ICoursesService
 {
     private readonly HttpClient _http;
     private static readonly JsonSerializerOptions JsonOpts = new()
@@ -16,7 +16,7 @@ public sealed class SupabaseService : ISupabaseService
         DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
     };
 
-    public SupabaseService(HttpClient http, IOptions<SupabaseOptions> opt)
+    public CoursesService(HttpClient http, IOptions<SupabaseOptions> opt)
     {
         _http = http;
         var cfg = opt.Value;

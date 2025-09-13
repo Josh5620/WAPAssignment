@@ -19,8 +19,10 @@ builder.Services.AddHttpClient("Gemini", client =>
 // Bind Supabase Options from user-secrets
 builder.Services.Configure<SupabaseOptions>(builder.Configuration.GetSection("Supabase"));
 
-// Supabase HttpClient + service
-builder.Services.AddHttpClient<ISupabaseService, SupabaseService>();
+// Supabase HttpClient + services
+builder.Services.AddHttpClient<ICoursesService, CoursesService>();
+builder.Services.AddHttpClient<IChaptersService, ChaptersService>();
+builder.Services.AddHttpClient<IProfilesService, ProfilesService>();
 
 //  Register Services
 builder.Services.AddScoped<GeminiService>(sp =>

@@ -2,7 +2,7 @@ using System.Text.Json.Nodes;
 
 namespace ProjectAPI.Services;
 
-public interface ISupabaseService
+public interface ICoursesService
 {
     Task<JsonArray> GetCoursesAsync(CancellationToken ct = default);
     Task<JsonObject> CreateCourseAsync(string title, string? description, CancellationToken ct = default);

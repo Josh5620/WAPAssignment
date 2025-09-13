@@ -5,7 +5,7 @@ namespace ProjectAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public sealed class CoursesController(ISupabaseService supa) : ControllerBase
+public sealed class CoursesController(ICoursesService supa) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> List(CancellationToken ct) =>

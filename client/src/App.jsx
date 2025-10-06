@@ -10,11 +10,10 @@ import ChatBotPopup from "./components/ChatBotPopup";
 import TestingNav from "./components/TestingNav";
 import ExplainTest from "./pages/ExplainTest";
 import About from "./pages/About"; 
+import CoursesPage from "./pages/CoursesPage";
+import FAQ from "./pages/FAQ";
+import ApiTest from './components/ApiTest';
 import React from 'react';
-import Courses from "./pages/Courses";
-import HTML from './pages/LearnHTML';
-import Python from './pages/LearnPython';
-import Java from './pages/LearnJava';
 
 function App() {
     console.log("App mounted ✅");
@@ -42,12 +41,11 @@ function App() {
           <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
           <Route path="/register" element={<Register />} />
           <Route path="/explainTest" element={<ExplainTest />} />
-          <Route path="/courses" element={<Courses />} />
+          <Route path="/courses" element={<CoursesPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/about" element={<About />} />
-          <Route path="/html" element={<HTML />} />
-          <Route path="/python" element={<Python />} />
-          <Route path="/java" element={<Java />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/api-test" element={<ApiTest />} />
           
         </Routes>
       </Router>

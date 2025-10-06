@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeSage API Tester</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .card { background: white; padding: 20px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        button { background: #007acc; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin: 5px; }
+        button:hover { background: #005999; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        .success { color: #28a745; }
+        .error { color: #dc3545; }
+        h1 { color: #333; }
+        .endpoint { margin: 10px 0; }
+        .method { padding: 4px 8px; border-radius: 4px; font-weight: bold; color: white; font-size: 12px; }
+        .get { background: #61affe; }
+        .post { background: #49cc90; }
+        .delete { background: #f93e3e; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 CodeSage API Test Center</h1>
+        
+        <div class="card">
+            <h2>Quick Start</h2>
+            <p>Use this page to test all your API endpoints without dealing with CORS or command line tools!</p>
+            
+            <div class="endpoint">
+                <span class="method get">GET</span> <strong>/api/TestData/status</strong> - Check data status
+                <button onclick="checkStatus()">Test Status</button>
+            </div>
+            
+            <div class="endpoint">
+                <span class="method post">POST</span> <strong>/api/TestData/seed</strong> - Add test data
+                <button onclick="seedData()">Add Test Data</button>
+            </div>
+            
+            <div class="endpoint">
+                <span class="method delete">DELETE</span> <strong>/api/TestData/clear</strong> - Clear all data
+                <button onclick="clearData()">Clear Data</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Main API Endpoints</h2>
+            
+            <div class="endpoint">
+                <span class="method get">GET</span> <strong>/api/Profiles</strong> - Get all profiles
+                <button onclick="getProfiles()">Get Profiles</button>
+            </div>
+            
+            <div class="endpoint">
+                <span class="method get">GET</span> <strong>/api/Courses</strong> - Get all courses
+                <button onclick="getCourses()">Get Courses</button>
+            </div>
+            
+            <div class="endpoint">
+                <span class="method get">GET</span> <strong>/api/Chapters</strong> - Get all chapters
+                <button onclick="getChapters()">Get Chapters</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Response Output</h2>
+            <div id="output">
+                <p>Click any button above to test the API endpoints...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const apiBase = 'http://localhost:5245/api';
+
+        function displayResult(data, isError = false) {
+            const output = document.getElementById('output');
+            const className = isError ? 'error' : 'success';
+            output.innerHTML = `<pre class="${className}">${JSON.stringify(data, null, 2)}</pre>`;
+        }
+
+        async function makeRequest(endpoint, method = 'GET') {
+            try {
+                const response = await fetch(`${apiBase}${endpoint}`, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    displayResult(data);
+                } else {
+                    displayResult(data, true);
+                }
+            } catch (error) {
+                displayResult({error: error.message}, true);
+            }
+        }
+
+        // Test Data Functions
+        function checkStatus() { makeRequest('/TestData/status'); }
+        function seedData() { makeRequest('/TestData/seed', 'POST'); }
+        function clearData() { makeRequest('/TestData/clear', 'DELETE'); }
+
+        // Main API Functions
+        function getProfiles() { makeRequest('/Profiles'); }
+        function getCourses() { makeRequest('/Courses'); }
+        function getChapters() { makeRequest('/Chapters'); }
+
+        // Auto-check status on load
+        window.onload = function() {
+            setTimeout(checkStatus, 1000);
+        }
+    </script>
+</body>
+</html>

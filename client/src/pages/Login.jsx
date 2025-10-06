@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 import ReturnHome from '../components/ReturnHome';
 import TestingNav from '../components/TestingNav';
-import { authService } from '../services/apiService';
+import { login } from '../services/apiService';
 
 const Login = () => {
     const [formData, setFormData] = useState({
-        email: '',
+        identifier: '',
         password: ''
     });
     const [error, setError] = useState('');
@@ -32,24 +32,25 @@ const Login = () => {
         setError('');
 
         try {
-            const result = await authService.login(formData);
+            const userData = await login(formData.identifier, formData.password);
             
-            if (result.success) {
-                // Redirect based on user role
-                const user = result.data.user;
-                if (user.isAdmin) {
-                    navigate('/admin-dashboard');
-                } else if (user.isTeacher) {
-                    navigate('/teacher-dashboard');
-                } else {
-                    navigate('/student-dashboard');
-                }
+            console.log("Login success:", userData);
+            
+            // Store the token in localStorage for future API calls
+            localStorage.setItem('access_token', userData.access_token);
+            localStorage.setItem('user_profile', JSON.stringify(userData));
+            
+            // Redirect based on user role
+            if (userData.role === 'admin') {
+                navigate('/admin-dashboard');
+            } else if (userData.role === 'teacher') {
+                navigate('/teacher-dashboard');
             } else {
-                setError(result.message || 'Login failed');
+                navigate('/student-dashboard');
             }
         } catch (error) {
-            setError('An error occurred during login');
-            console.error('Login error:', error);
+            console.error("Login failed:", error);
+            setError('Login failed: ' + error.message);
         } finally {
             setLoading(false);
         }
@@ -73,10 +74,10 @@ const Login = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <input 
-                            type="email" 
-                            name="email"
-                            placeholder="email/username"
-                            value={formData.email}
+                            type="text" 
+                            name="identifier"
+                            placeholder="Email or Username"
+                            value={formData.identifier}
                             onChange={handleChange}
                             required
                         />

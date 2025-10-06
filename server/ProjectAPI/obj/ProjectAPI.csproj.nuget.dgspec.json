@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\joshu\\Desktop\\WAPAssignment\\server\\ProjectAPI\\ProjectAPI.csproj": {}
+    "C:\\Users\\Dylan\\OneDrive - Asia Pacific University\\Desktop\\WAPAssignment\\server\\ProjectAPI\\ProjectAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\joshu\\Desktop\\WAPAssignment\\server\\ProjectAPI\\ProjectAPI.csproj": {
+    "C:\\Users\\Dylan\\OneDrive - Asia Pacific University\\Desktop\\WAPAssignment\\server\\ProjectAPI\\ProjectAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\joshu\\Desktop\\WAPAssignment\\server\\ProjectAPI\\ProjectAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Dylan\\OneDrive - Asia Pacific University\\Desktop\\WAPAssignment\\server\\ProjectAPI\\ProjectAPI.csproj",
         "projectName": "ProjectAPI",
-        "projectPath": "C:\\Users\\joshu\\Desktop\\WAPAssignment\\server\\ProjectAPI\\ProjectAPI.csproj",
-        "packagesPath": "C:\\Users\\joshu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\joshu\\Desktop\\WAPAssignment\\server\\ProjectAPI\\obj\\",
+        "projectPath": "C:\\Users\\Dylan\\OneDrive - Asia Pacific University\\Desktop\\WAPAssignment\\server\\ProjectAPI\\ProjectAPI.csproj",
+        "packagesPath": "C:\\Users\\Dylan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Dylan\\OneDrive - Asia Pacific University\\Desktop\\WAPAssignment\\server\\ProjectAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\joshu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Dylan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -61,7 +61,7 @@
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
-              "version": "[9.0.0, )"
+              "version": "[9.0.9, )"
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
@@ -69,15 +69,21 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[9.0.0, )"
+              "version": "[9.0.9, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "target": "Package",
-              "version": "[9.0.0, )"
+              "version": "[9.0.9, )"
             },
-            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[9.0.0, )"
+              "version": "[9.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.9, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

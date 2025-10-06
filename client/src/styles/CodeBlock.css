@@ -1,0 +1,195 @@
+/* Code Block Component - W3Schools inspired */
+.code-block {
+  margin: 20px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e1e8ed;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.code-header {
+  background: #2c3e50;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.code-title {
+  font-weight: 600;
+}
+
+.code-language {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.code-container {
+  position: relative;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+
+.copy-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  z-index: 10;
+  transition: all 0.3s;
+}
+
+.copy-button:hover {
+  background: #5a6268;
+  transform: translateY(-1px);
+}
+
+.copy-button.copied {
+  background: #28a745;
+}
+
+.code-content {
+  margin: 0;
+  padding: 20px;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  background: #f8f9fa;
+  color: #2c3e50;
+}
+
+.code-line {
+  display: flex;
+  min-height: 1.5em;
+}
+
+.line-number {
+  color: #95a5a6;
+  margin-right: 15px;
+  min-width: 30px;
+  text-align: right;
+  user-select: none;
+  font-weight: 500;
+}
+
+.line-content {
+  flex: 1;
+  white-space: pre;
+}
+
+/* Syntax highlighting for different languages */
+.language-javascript .line-content,
+.language-js .line-content {
+  color: #2c3e50;
+}
+
+.language-python .line-content {
+  color: #2c3e50;
+}
+
+.language-html .line-content {
+  color: #e74c3c;
+}
+
+.language-css .line-content {
+  color: #9b59b6;
+}
+
+/* Basic syntax highlighting patterns */
+.code-content code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+.code-footer {
+  background: #e9ecef;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #dee2e6;
+}
+
+.try-it-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.try-it-btn:hover {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+.code-info {
+  color: #6c757d;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .code-header {
+    padding: 8px 15px;
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+  }
+  
+  .code-content {
+    padding: 15px;
+    font-size: 0.8rem;
+  }
+  
+  .copy-button {
+    position: static;
+    margin-bottom: 10px;
+    align-self: flex-end;
+  }
+  
+  .code-footer {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  .line-number {
+    min-width: 25px;
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .code-content {
+    padding: 10px;
+    font-size: 0.75rem;
+  }
+  
+  .line-number {
+    min-width: 20px;
+    margin-right: 8px;
+    font-size: 0.7rem;
+  }
+}

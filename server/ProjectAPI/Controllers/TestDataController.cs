@@ -7,6 +7,9 @@ namespace ProjectAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+
+// Used to add or clear test data in the database for development and testing purposes.
+// Adds Data to the DBContext directly - bypassing services and business logic.
 public class TestDataController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
@@ -156,7 +159,7 @@ public class TestDataController : ControllerBase
             var studentProfile = testProfiles.First(p => p.Role == "student");
 
             Course jsCourse, pythonCourse;
-            
+
             if (!coursesExist)
             {
                 // Create test courses
@@ -221,15 +224,18 @@ public class TestDataController : ControllerBase
             await _context.Enrolments.AddAsync(enrollment);
             await _context.SaveChangesAsync();
 
-            return Ok(new { 
+            return Ok(new
+            {
                 message = "Test data created successfully!",
-                data = new {
+                data = new
+                {
                     profiles = 12,
                     courses = 2,
                     chapters = 2,
                     enrollments = 1
                 },
-                accounts = new {
+                accounts = new
+                {
                     admins = testProfiles.Where(p => p.Role == "admin").Select(p => new { p.Email, p.FullName, Password = "Check documentation for passwords" }),
                     teachers = testProfiles.Where(p => p.Role == "teacher").Select(p => new { p.Email, p.FullName, Password = "Check documentation for passwords" }),
                     students = testProfiles.Where(p => p.Role == "student").Select(p => new { p.Email, p.FullName, Password = "Check documentation for passwords" })
@@ -278,7 +284,8 @@ public class TestDataController : ControllerBase
             await _context.Profiles.AddRangeAsync(testUsers);
             await _context.SaveChangesAsync();
 
-            return Ok(new { 
+            return Ok(new
+            {
                 message = "Test users created successfully!",
                 users = testUsers.Select(u => new { u.Email, Password = "password", u.Role }).ToArray()
             });
@@ -316,7 +323,8 @@ public class TestDataController : ControllerBase
             await _context.Profiles.AddRangeAsync(testUsers);
             await _context.SaveChangesAsync();
 
-            return Ok(new { 
+            return Ok(new
+            {
                 message = "Simple test user created (plain password)!",
                 users = testUsers.Select(u => new { u.Email, Password = "test123", u.Role }).ToArray()
             });

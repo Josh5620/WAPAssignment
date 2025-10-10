@@ -1,0 +1,142 @@
+.faq-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.faq-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 40px 30px;
+  text-align: center;
+}
+
+.faq-header h1 {
+  margin: 0 0 15px 0;
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+.faq-header p {
+  margin: 0;
+  font-size: 1.2em;
+  opacity: 0.9;
+}
+
+.faq-content {
+  padding: 30px;
+}
+
+.faq-item {
+  margin-bottom: 25px;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 20px;
+}
+
+.faq-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.faq-question {
+  color: #667eea;
+  font-size: 1.3em;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.faq-question:hover {
+  color: #764ba2;
+}
+
+.faq-question:before {
+  content: "❓ ";
+  margin-right: 10px;
+}
+
+.faq-answer {
+  color: #333;
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin: 0;
+  padding-left: 35px;
+}
+
+.contact-section {
+  background: #f8f9fa;
+  padding: 40px 30px;
+  text-align: center;
+  border-top: 1px solid #e9ecef;
+}
+
+.contact-section h2 {
+  color: #333;
+  margin: 0 0 15px 0;
+  font-size: 1.8em;
+}
+
+.contact-section p {
+  color: #666;
+  margin: 0 0 25px 0;
+  font-size: 1.1em;
+}
+
+.contact-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.contact-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+@media (max-width: 768px) {
+  .faq-page {
+    padding: 10px;
+  }
+  
+  .faq-header {
+    padding: 30px 20px;
+  }
+  
+  .faq-header h1 {
+    font-size: 2em;
+  }
+  
+  .faq-content {
+    padding: 20px;
+  }
+  
+  .faq-question {
+    font-size: 1.2em;
+  }
+  
+  .faq-answer {
+    font-size: 1em;
+    padding-left: 30px;
+  }
+  
+  .contact-section {
+    padding: 30px 20px;
+  }
+}

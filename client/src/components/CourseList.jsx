@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { api, quickApi } from '../services/apiService';
-import '../styles/CourseList.css';
+
 
 const CourseList = ({ userRole }) => {
   const [courses, setCourses] = useState([]);

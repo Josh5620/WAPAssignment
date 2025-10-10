@@ -23,7 +23,7 @@ builder.Services.AddHttpClient("Gemini", client =>
 
 //  Register Services
 builder.Services.AddScoped<GeminiService>(sp =>
-    new GeminiService(sp.GetRequiredService<IHttpClientFactory>().CreateClient("Gemini"), geminiKey ?? string.Empty));
+    new GeminiService(sp.GetRequiredService<IHttpClientFactory>().CreateClient("Gemini"), geminiKey));
 
 //  CORS for React
 builder.Services.AddCors(options =>

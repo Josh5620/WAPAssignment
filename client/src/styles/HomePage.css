@@ -235,7 +235,7 @@ html, body {
 }
 
 .course-card {
-  background: rgba(55, 61, 32, 0.2); /* Updated: 20% opacity of #373D20 */
+  background: rgba(55, 61, 32, 0.2); 
   border-radius: 15px;
   padding: 2.5rem 2rem;
   text-align: center;

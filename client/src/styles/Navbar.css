@@ -148,7 +148,7 @@ body { min-height: 100vh; padding-top: calc(var(--nav-height, 4.2rem) + 0.4rem);
 .dropdown-item:hover {
   background: rgba(239, 241, 237, 0.1);
   color: #EFF1ED;
-  transition: background 0.3s, color 0.3s; 
+  transition: background 0.3s, color 0.3s;
 }
 
 /* Arrow rotation */

@@ -8,7 +8,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import UserDashboard from "./pages/UserDashboard";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import ManageCourse from "./pages/ManageCourse";
-import CourseViewer from "./pages/CourseViewer";
+import CourseViewerPage from "./pages/CourseViewerPage";
 import ChatBotPopup from "./components/ChatBotPopup";
 import ExplainTest from "./pages/ExplainTest";
 import About from "./pages/About";
@@ -80,7 +80,7 @@ function App() {
             path="/courses/:courseId/view"
             element={(
               <RequireTeacher>
-                <CourseViewer />
+                <CourseViewerPage />
               </RequireTeacher>
             )}
           />

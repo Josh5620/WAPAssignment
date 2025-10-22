@@ -7,9 +7,9 @@ import {
   chapterManagementService,
   resourceManagementService,
 } from '../services/apiService';
-import '../styles/CourseViewer.css';
+import '../styles/CourseViewerPage.css';
 
-const CourseViewer = () => {
+const CourseViewerPage = () => {
   const { courseId } = useParams();
   const navigate = useNavigate();
   const [course, setCourse] = useState(null);
@@ -158,23 +158,22 @@ const CourseViewer = () => {
             </aside>
 
             <main className="course-viewer__content">
-              {selectedChapterId ? (
-                resourcesLoading ? (
-                  <div className="course-viewer__loading">Loading resources...</div>
-                ) : resources.length ? (
-                  resources.map((resource) => (
-                    <article key={resource.id || resource.Id} className="course-viewer__resource">
+              {resourcesLoading ? (
+                <div className="course-viewer__loading">Loading resources...</div>
+              ) : resources.length ? (
+                resources.map((resource) => {
+                  const id = resource.id || resource.Id;
+                  return (
+                    <article key={id} className="course-viewer__resource">
                       <header>
-                        <h3>{(resource.title || resource.Title || resource.type || resource.Type || 'Resource').toString()}</h3>
+                        <h3>{resource.title || resource.Title || 'Resource'}</h3>
                       </header>
                       <div className="course-viewer__resource-body">{renderResource(resource)}</div>
                     </article>
-                  ))
-                ) : (
-                  <div className="course-viewer__empty">No resources for this chapter.</div>
-                )
+                  );
+                })
               ) : (
-                <div className="course-viewer__empty">Select a chapter to preview its content.</div>
+                <div className="course-viewer__empty">No resources for this chapter yet.</div>
               )}
             </main>
           </div>
@@ -184,4 +183,4 @@ const CourseViewer = () => {
   );
 };
 
-export default CourseViewer;
+export default CourseViewerPage;

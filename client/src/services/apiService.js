@@ -1,4 +1,10 @@
 import { getToken, clear as clearAuth } from '../utils/auth';
+import {
+  getFallbackTeacherCourses,
+  getFallbackTeacherCourseById,
+  getFallbackChaptersForCourse,
+  getFallbackResourcesForChapter,
+} from '../data/teacherFallbackData';
 
 /**
  * Comprehensive API Service for CodeSage Learning Platform
@@ -38,6 +44,15 @@ const parsePayload = async (response) => {
   }
 
   return response.text();
+};
+
+const isServerError = (error) => {
+  if (!error) return false;
+  if (typeof error.status === 'number') {
+    return error.status >= 500;
+  }
+  // Fetch network failures surface as TypeError instances without a status code
+  return error.name === 'TypeError';
 };
 
 const requestWithAuth = async (path, options = {}) => {
@@ -558,7 +573,17 @@ export const adminService = {
 };
 
 // ===== TEACHER COURSE MANAGEMENT HELPERS =====
-const listMyCourses = () => requestWithAuth('/Courses');
+const listMyCourses = async () => {
+  try {
+    return await requestWithAuth('/Courses');
+  } catch (error) {
+    if (isServerError(error)) {
+      console.warn('Falling back to sample teacher courses because the API request failed.', error);
+      return getFallbackTeacherCourses();
+    }
+    throw error;
+  }
+};
 
 const getManagedCourse = async (courseId) => {
   if (!courseId) return null;
@@ -575,6 +600,13 @@ const getManagedCourse = async (courseId) => {
         }) ?? null
       );
     }
+    if (isServerError(error)) {
+      const fallback = getFallbackTeacherCourseById(courseId);
+      if (fallback) {
+        console.warn('Returning fallback course because the API request failed.', error);
+        return fallback;
+      }
+    }
     throw error;
   }
 };
@@ -583,7 +615,17 @@ const createManagedCourse = (payload) => requestWithAuth('/Courses', { method: '
 
 const deleteManagedCourse = (courseId) => requestWithAuth(`/Courses/${courseId}`, { method: 'DELETE' });
 
-const listManagedChapters = (courseId) => requestWithAuth(`/Chapters/course/${courseId}`);
+const listManagedChapters = async (courseId) => {
+  try {
+    return await requestWithAuth(`/Chapters/course/${courseId}`);
+  } catch (error) {
+    if (isServerError(error)) {
+      console.warn('Falling back to sample chapters because the API request failed.', error);
+      return getFallbackChaptersForCourse(courseId);
+    }
+    throw error;
+  }
+};
 
 const createManagedChapter = (courseId, payload) =>
   requestWithAuth('/Chapters', {
@@ -604,7 +646,17 @@ const updateManagedChapter = (chapterId, payload) =>
 
 const deleteManagedChapter = (chapterId) => requestWithAuth(`/Chapters/${chapterId}`, { method: 'DELETE' });
 
-const listManagedResources = (chapterId) => requestWithAuth(`/Resources?chapterId=${chapterId}`);
+const listManagedResources = async (chapterId) => {
+  try {
+    return await requestWithAuth(`/Resources?chapterId=${chapterId}`);
+  } catch (error) {
+    if (isServerError(error)) {
+      console.warn('Falling back to sample resources because the API request failed.', error);
+      return getFallbackResourcesForChapter(chapterId);
+    }
+    throw error;
+  }
+};
 
 const createManagedResource = (chapterId, payload) =>
   requestWithAuth('/Resources', {

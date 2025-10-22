@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 import ReturnHome from '../components/ReturnHome';
 import TestingNav from '../components/TestingNav';
-import { login } from '../services/apiService';
+import { login as loginRequest } from '../services/apiService';
+import { setToken, setUser } from '../utils/auth';
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -32,14 +33,14 @@ const Login = () => {
         setError('');
 
         try {
-            const userData = await login(formData.identifier, formData.password);
+            const userData = await loginRequest(formData.identifier, formData.password);
             
             console.log("Login success:", userData);
             
-            // Store the token in localStorage for future API calls
-            localStorage.setItem('access_token', userData.access_token);
-            localStorage.setItem('user_profile', JSON.stringify(userData));
-            
+            const token = userData.access_token || userData.token || userData.accessToken || '';
+            setToken(token);
+            setUser(userData);
+
             // Redirect based on user role
             if (userData.role === 'admin') {
                 navigate('/admin-dashboard');

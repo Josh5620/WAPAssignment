@@ -1,16 +1,90 @@
+import { getToken, clear as clearAuth } from '../utils/auth';
+
 /**
  * Comprehensive API Service for CodeSage Learning Platform
  * Connects React frontend to ASP.NET Core backend
- * 
+ *
  * Available Endpoints:
  * - Authentication: /api/Profiles/login, /api/Profiles/register
  * - Courses: /api/Courses (GET, POST, PUT, DELETE)
  * - Chapters: /api/Chapters
- * - Enrollments: /api/Enrolments  
+ * - Enrollments: /api/Enrolments
  * - Test Data: /api/TestData
  */
 
 const API_BASE_URL = 'http://localhost:5245/api';
+
+const buildUrl = (path) => {
+  if (!path) return API_BASE_URL;
+  if (/^https?:/i.test(path)) return path;
+  return `${API_BASE_URL}${path.startsWith('/') ? path : `/${path}`}`;
+};
+
+const parsePayload = async (response) => {
+  if (response.status === 204) {
+    return null;
+  }
+
+  const contentType = response.headers.get('Content-Type');
+  const isJson = contentType && contentType.includes('application/json');
+
+  if (isJson) {
+    try {
+      return await response.json();
+    } catch (error) {
+      console.warn('Failed to parse JSON response', error);
+      return null;
+    }
+  }
+
+  return response.text();
+};
+
+const requestWithAuth = async (path, options = {}) => {
+  const { method = 'GET', headers, body, ...rest } = options;
+  const fetchConfig = {
+    method,
+    ...rest,
+    headers: new Headers(headers || {}),
+  };
+
+  const token = getToken();
+  if (token && !fetchConfig.headers.has('Authorization')) {
+    fetchConfig.headers.set('Authorization', `Bearer ${token}`);
+  }
+
+  if (body !== undefined) {
+    if (body instanceof FormData || body instanceof Blob || typeof body === 'string') {
+      fetchConfig.body = body;
+    } else {
+      fetchConfig.body = JSON.stringify(body);
+      if (!fetchConfig.headers.has('Content-Type')) {
+        fetchConfig.headers.set('Content-Type', 'application/json');
+      }
+    }
+  }
+
+  if (!fetchConfig.headers.has('Accept')) {
+    fetchConfig.headers.set('Accept', 'application/json');
+  }
+
+  const response = await fetch(buildUrl(path), fetchConfig);
+  const payload = await parsePayload(response);
+
+  if (!response.ok) {
+    if (response.status === 401) {
+      clearAuth();
+    }
+
+    const message = payload?.message || payload?.error || `Request failed with status ${response.status}`;
+    const error = new Error(message);
+    error.status = response.status;
+    error.data = payload;
+    throw error;
+  }
+
+  return payload;
+};
 
 // Login function: POST to /profiles/login with correct JSON body format
 export const login = async (identifier, password) => {
@@ -483,6 +557,96 @@ export const adminService = {
   }
 };
 
+// ===== TEACHER COURSE MANAGEMENT HELPERS =====
+const listMyCourses = () => requestWithAuth('/Courses');
+
+const getManagedCourse = async (courseId) => {
+  if (!courseId) return null;
+  try {
+    return await requestWithAuth(`/Courses/${courseId}`);
+  } catch (error) {
+    if (error.status === 404 || error.status === 405) {
+      const courses = await listMyCourses();
+      const normalizedId = courseId ? courseId.toString().toLowerCase() : '';
+      return (
+        (courses || []).find((course) => {
+          const id = course.id || course.Id;
+          return id && id.toString().toLowerCase() === normalizedId;
+        }) ?? null
+      );
+    }
+    throw error;
+  }
+};
+
+const createManagedCourse = (payload) => requestWithAuth('/Courses', { method: 'POST', body: payload });
+
+const deleteManagedCourse = (courseId) => requestWithAuth(`/Courses/${courseId}`, { method: 'DELETE' });
+
+const listManagedChapters = (courseId) => requestWithAuth(`/Chapters/course/${courseId}`);
+
+const createManagedChapter = (courseId, payload) =>
+  requestWithAuth('/Chapters', {
+    method: 'POST',
+    body: {
+      courseId,
+      number: payload.number,
+      title: payload.title,
+      summary: payload.summary,
+    },
+  });
+
+const updateManagedChapter = (chapterId, payload) =>
+  requestWithAuth(`/Chapters/${chapterId}`, {
+    method: 'PATCH',
+    body: payload,
+  });
+
+const deleteManagedChapter = (chapterId) => requestWithAuth(`/Chapters/${chapterId}`, { method: 'DELETE' });
+
+const listManagedResources = (chapterId) => requestWithAuth(`/Resources?chapterId=${chapterId}`);
+
+const createManagedResource = (chapterId, payload) =>
+  requestWithAuth('/Resources', {
+    method: 'POST',
+    body: {
+      id: payload.id,
+      chapterId,
+      type: payload.type,
+      content: payload.content,
+    },
+  });
+
+const updateManagedResource = (resourceId, payload) =>
+  requestWithAuth(`/Resources/${resourceId}`, {
+    method: 'PATCH',
+    body: payload,
+  });
+
+const deleteManagedResource = (resourceId) =>
+  requestWithAuth(`/Resources/${resourceId}`, { method: 'DELETE' });
+
+export const teacherCourseService = {
+  listMyCourses,
+  getCourse: getManagedCourse,
+  createCourse: createManagedCourse,
+  deleteCourse: deleteManagedCourse,
+};
+
+export const chapterManagementService = {
+  list: listManagedChapters,
+  create: createManagedChapter,
+  update: updateManagedChapter,
+  deleteChapter: deleteManagedChapter,
+};
+
+export const resourceManagementService = {
+  list: listManagedResources,
+  create: createManagedResource,
+  update: updateManagedResource,
+  deleteResource: deleteManagedResource,
+};
+
 // ===== COMPREHENSIVE API OBJECT =====
 // Main API object that contains all services organized by category
 export const api = {
@@ -504,7 +668,11 @@ export const api = {
     create: createCourse,
     update: updateCourse,
     delete: deleteCourse,
-    getChapters: getCourseChapters
+    getChapters: getCourseChapters,
+    listMyCourses,
+    getManagedCourse,
+    createForTeacher: createManagedCourse,
+    deleteForTeacher: deleteManagedCourse
   },
 
   // Enrollment management
@@ -512,6 +680,21 @@ export const api = {
     enroll: enrolCourse,
     getUserEnrollments: getUserEnrollments,
     checkEnrollment: checkEnrollment
+  },
+
+  // Teacher management helpers
+  chapters: {
+    list: listManagedChapters,
+    create: createManagedChapter,
+    update: updateManagedChapter,
+    delete: deleteManagedChapter
+  },
+
+  resources: {
+    list: listManagedResources,
+    create: createManagedResource,
+    update: updateManagedResource,
+    delete: deleteManagedResource
   },
 
   // Development & testing

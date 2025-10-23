@@ -53,9 +53,9 @@ function App() {
           <Route
             path="/teacher-dashboard"
             element={(
-              <RequireTeacher>
+              
                 <TeacherDashboard />
-              </RequireTeacher>
+              
             )}
           />
           <Route path="/register" element={<Register />} />
@@ -71,17 +71,16 @@ function App() {
           <Route
             path="/teacher/courses/:courseId"
             element={(
-              <RequireTeacher>
+              
                 <ManageCourse />
-              </RequireTeacher>
+              
             )}
           />
           <Route
             path="/courses/:courseId/view"
             element={(
-              <RequireTeacher>
+
                 <CourseViewerPage />
-              </RequireTeacher>
             )}
           />
         </Routes>

@@ -1,35 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;500;600;700&display=swap');
 
-/* CSS Variables from your homepage */
-:root {
-    --cs-beige: #eff1ed;
-    --cs-slate8: #939787;
-    --cs-olive9: #373d20;
-    --cs-olive6: #545a32;
-    --cs-olive7: #717744;
-    --cs-sage4: #979a68;
-    --cs-sage3: #bcbd8b;
-    --cs-sage2: #998f6f;
-    --cs-slate7: #766153;
-    --cs-brown: #766153;
-    --cs-brown-hover: #645447;
-    --cs-card-bg: #CACDC5; /* Add new variable for the card background */
-
-    /* semantics */
-    --bg: var(--cs-beige);
-    --text: var(--cs-olive9);
-    --muted: var(--cs-slate7);
-    --primary: var(--cs-olive9);
-    --primary-hover: var(--cs-olive7);
-    --card: #CACDC5; /* Updated to use the new color */
-    --chip: var(--cs-sage3);
-    --accent: var(--cs-sage4);
-    --border: var(--cs-olive6);
-
-    /* shadows (olive‑tinted) */
-    --shadow-1: 0 2px 10px rgba(0, 0, 0, 0.12), 0 2px 10px rgba(0, 0, 0, 0.24);
-    --shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-}
 
 .login-container {
     display: flex;

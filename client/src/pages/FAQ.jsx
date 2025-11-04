@@ -5,7 +5,7 @@ const FAQ = () => {
   const faqs = [
     {
       question: "What is CodeSage?",
-      answer: "CodeSage is an interactive learning platform designed to help students master programming languages like HTML, Python, and Java through hands-on tutorials and interactive exercises."
+      answer: "CodeSage is an interactive learning platform designed to help students master Python programming through hands-on tutorials and interactive exercises."
     },
     {
       question: "How do I enroll in a course?",
@@ -25,7 +25,7 @@ const FAQ = () => {
     },
     {
       question: "What programming languages do you offer?",
-      answer: "We currently offer courses in HTML, Python, and Java, with more languages planned for future releases."
+      answer: "We currently focus on Python programming, providing comprehensive courses from basics to advanced topics."
     },
     {
       question: "Is there a mobile app?",

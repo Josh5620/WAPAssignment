@@ -9,8 +9,8 @@ const About = () => (
     <Navbar />
     <TestingNav />
     <div className="about-page-wrapper">
-      <h1>CodeSage: Coding for All!</h1>
-      <h2 className="about-tagline">Learn coding step by step, anywhere, anytime.</h2>
+      <h1>CodeSage: Your Python Mentor</h1>
+      <h2 className="about-tagline">Learn Python step by step, anywhere, anytime.</h2>
 
       <section className="about-section">
       <h3>Our Mission</h3>
@@ -22,7 +22,7 @@ const About = () => (
     <section className="about-section">
       <h3>Who Is CodeSage For?</h3>
       <p>
-        CodeSage is designed for beginners, students, teachers, hobbyists, and professionals looking to upskill in programming.
+        CodeSage is designed for beginners, students, teachers, hobbyists, and professionals looking to master Python programming.
       </p>
     </section>
 
@@ -51,14 +51,14 @@ const About = () => (
     <section className="about-section">
       <h3>Future Goals</h3>
       <p>
-        We aim to expand our tutorials, add new programming languages, and introduce AI-powered coding buddies to help you learn even faster!
+        We aim to expand our Python tutorials, add advanced topics and specializations, and introduce AI-powered coding buddies to help you learn even faster!
       </p>
     </section>
 
     <section className="about-section">
       <h3>Join Us!</h3>
       <p>
-        Start your coding journey today! <a href="/register" className="about-cta">Sign up for free</a> and begin learning.
+        Start your Python journey today! <a href="/register" className="about-cta">Sign up for free</a> and begin learning.
       </p>
     </section>
   </div>

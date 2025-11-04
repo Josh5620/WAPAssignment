@@ -56,16 +56,7 @@ const Navbar = () => {
         </div>
         <div className="nav-links">
           <Link to="/" className="nav-link home-link">Home</Link>
-          <div className="nav-item-dropdown">
-            <span className="nav-link">
-              Courses <span className="dropdown-arrow">▼</span>
-            </span>
-            <div className="dropdown-menu">
-              <Link to="/html" className="dropdown-item">HTML Basics</Link>
-              <Link to="/java" className="dropdown-item">Java Essentials</Link>
-              <Link to="/python" className="dropdown-item">Python Basics</Link>
-            </div>
-          </div>
+          <Link to="/python" className="nav-link">Python Course</Link>
           <Link to="/about" className="nav-link about-link">About</Link>
           <a href="#faq" className="nav-link">FAQ</a>
         </div>

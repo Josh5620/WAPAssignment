@@ -233,7 +233,7 @@ const TeacherDashboard = () => {
                   type="text"
                   value={form.tagsCsv}
                   onChange={handleChange}
-                  placeholder="javascript, web, frontend"
+                  placeholder="python, programming, data science"
                 />
               </label>
               <div className="td-modal-actions">

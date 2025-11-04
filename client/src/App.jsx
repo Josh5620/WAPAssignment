@@ -14,9 +14,7 @@ import ExplainTest from "./pages/ExplainTest";
 import About from "./pages/About";
 import CoursesPage from "./pages/CoursesPage";
 import FAQ from "./pages/FAQ";
-import LearnHTML from "./pages/LearnHTML";
 import LearnPython from "./pages/LearnPython";
-import LearnJava from "./pages/LearnJava";
 import ApiTest from './components/ApiTest';
 import { isTeacher } from './utils/auth';
 
@@ -64,9 +62,7 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/about" element={<About />} />
           <Route path="/faq" element={<FAQ />} />
-          <Route path="/html" element={<LearnHTML />} />
           <Route path="/python" element={<LearnPython />} />
-          <Route path="/java" element={<LearnJava />} />
           <Route path="/api-test" element={<ApiTest />} />
           <Route
             path="/teacher/courses/:courseId"

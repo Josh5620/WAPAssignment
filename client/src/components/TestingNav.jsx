@@ -22,9 +22,7 @@ const TestingNav = () => {
     { path: "/user-dashboard", label: "User Dashboard" },
     { path: "/teacher-dashboard", label: "Teacher Dashboard" },
     { path: "/courses", label: "Courses" },
-    { path: "/html", label: "Learn HTML" },
     { path: "/python", label: "Learn Python" },
-    { path: "/java", label: "Learn Java" },
     { path: "/explainTest", label: "Explain Test" },
     { path: "/about", label: "About" },
   ];

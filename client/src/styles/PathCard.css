@@ -1,0 +1,62 @@
+.path-card {
+  background: var(--card-bg-transparent);
+  border: 2px solid var(--border);
+  border-radius: 24px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-1);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.path-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-2);
+  border-color: var(--primary);
+}
+
+.path-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.path-card-icon {
+  font-size: 1.5rem;
+}
+
+.path-card-level {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.9rem;
+  color: var(--cs-brown);
+}
+
+.path-card-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.1rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.path-card-topics {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1rem;
+  color: var(--cs-brown);
+}
+
+.path-card-topics li {
+  margin-bottom: 0.5rem;
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.path-card-topics li::before {
+  content: '🌱';
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 0.8rem;
+}

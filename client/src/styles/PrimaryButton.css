@@ -1,0 +1,27 @@
+.btn-primary-garden {
+  display: inline-block;
+  padding: 0.8rem 1.75rem;
+  background: var(--primary);
+  color: var(--bg);
+  border: none;
+  border-radius: 99px;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-1);
+}
+
+.btn-primary-garden:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
+}
+
+.btn-primary-garden:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}

@@ -5,7 +5,7 @@ import HomePage from "./pages/HomePage";
 import Register from "./pages/Register";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
-import UserDashboard from "./pages/UserDashboard";
+import StudentDashboard from "./pages/StudentDashboard";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import ManageCourse from "./pages/ManageCourse";
 import CourseViewerPage from "./pages/CourseViewerPage";
@@ -14,7 +14,7 @@ import ExplainTest from "./pages/ExplainTest";
 import About from "./pages/About";
 import CoursesPage from "./pages/CoursesPage";
 import FAQ from "./pages/FAQ";
-import LearnPython from "./pages/LearnPython";
+import VisitorPage from "./pages/VisitorPage";
 import ApiTest from './components/ApiTest';
 import { isTeacher } from './utils/auth';
 
@@ -47,7 +47,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
-          <Route path="/user-dashboard" element={<UserDashboard />} />
+          <Route path="/student-dashboard" element={<StudentDashboard />} />
           <Route
             path="/teacher-dashboard"
             element={(
@@ -62,7 +62,7 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/about" element={<About />} />
           <Route path="/faq" element={<FAQ />} />
-          <Route path="/python" element={<LearnPython />} />
+          <Route path="/python" element={<VisitorPage />} />
           <Route path="/api-test" element={<ApiTest />} />
           <Route
             path="/teacher/courses/:courseId"

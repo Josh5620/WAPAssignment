@@ -19,10 +19,10 @@ const TestingNav = () => {
     { path: "/register", label: "Register" },
     { path: "/admin", label: "Admin Login" },
     { path: "/admin-dashboard", label: "Admin Dashboard" },
-    { path: "/user-dashboard", label: "User Dashboard" },
+    { path: "/student-dashboard", label: "Student Dashboard" },
     { path: "/teacher-dashboard", label: "Teacher Dashboard" },
     { path: "/courses", label: "Courses" },
-    { path: "/python", label: "Learn Python" },
+    { path: "/python", label: "Visitor Page (Python)" },
     { path: "/explainTest", label: "Explain Test" },
     { path: "/about", label: "About" },
   ];

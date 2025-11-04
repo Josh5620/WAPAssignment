@@ -1,4 +1,4 @@
-.user-dashboard-page {
+.student-dashboard-page {
   width: 100%;
   padding: 1rem 2rem 4rem 2rem;
   padding-top: 100px;
@@ -6,20 +6,20 @@
   margin: 0 auto;
 }
 
-.user-dashboard-header {
+.student-dashboard-header {
   text-align: center;
   padding: 3rem 1rem;
   margin-bottom: 2rem;
 }
 
-.user-dashboard-header h1 {
+.student-dashboard-header h1 {
   font-family: 'Press Start 2P', cursive;
   font-size: 2.5rem;
   color: var(--primary);
   margin-bottom: 1rem;
 }
 
-.user-dashboard-header p {
+.student-dashboard-header p {
   font-family: 'Pixelify Sans', cursive;
   font-size: 1.1rem;
   color: var(--cs-brown);
@@ -109,17 +109,17 @@
 }
 
 @media (max-width: 768px) {
-  .user-dashboard-page {
+  .student-dashboard-page {
     padding: 1rem;
     padding-top: 90px;
   }
 
-  .user-dashboard-header {
+  .student-dashboard-header {
     padding: 2rem 1rem;
     margin-bottom: 1.5rem;
   }
 
-  .user-dashboard-header h1 {
+  .student-dashboard-header h1 {
     font-size: 2rem;
   }
 

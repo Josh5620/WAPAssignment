@@ -3,11 +3,11 @@ import Navbar from '../components/Navbar';
 import TestingNav from '../components/TestingNav';
 import PathCard from '../components/PathCard';
 import PrimaryButton from '../components/PrimaryButton';
-import '../styles/LearnPython.css';
+import '../styles/VisitorPage.css';
 
 /*
- * The /learn page for "Python Garden".
- * Shows the curriculum map based on the user's sketch.
+ * The Visitor Page for "Python Garden".
+ * Shows a preview of the curriculum for non-logged-in users.
  */
 
 const gardenPathData = [
@@ -77,7 +77,7 @@ const gardenPathData = [
   },
 ];
 
-const LearnPython = () => {
+const VisitorPage = () => {
   return (
     <>
       <Navbar />
@@ -142,4 +142,4 @@ const LearnPython = () => {
   );
 };
 
-export default LearnPython;
+export default VisitorPage;

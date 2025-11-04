@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import TestingNav from '../components/TestingNav';
 import PathCard from '../components/PathCard';
-import '../styles/UserDashboard.css';
+import '../styles/StudentDashboard.css';
 
 /*
  * This is the main "Python Garden" dashboard for a logged-in student.
@@ -93,7 +93,7 @@ const gardenPathData = [
   },
 ];
 
-const UserDashboard = () => {
+const StudentDashboard = () => {
   const navigate = useNavigate();
   const [progress] = useState({
     completedChapterIds: [1, 2],
@@ -135,8 +135,8 @@ const UserDashboard = () => {
     <>
       <Navbar />
       <TestingNav />
-      <main className="user-dashboard-page">
-        <section className="user-dashboard-header">
+      <main className="student-dashboard-page">
+        <section className="student-dashboard-header">
           <h1>Your Garden</h1>
           <p>
             Welcome back, student. Pick up where you left off and continue your
@@ -168,4 +168,4 @@ const UserDashboard = () => {
   );
 };
 
-export default UserDashboard;
+export default StudentDashboard;

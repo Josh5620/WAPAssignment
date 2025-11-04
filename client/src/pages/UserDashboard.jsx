@@ -1,59 +1,170 @@
-import React from 'react';
-import '../styles/UserDashboard.css';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 import TestingNav from '../components/TestingNav';
-import ReturnHome from '../components/ReturnHome';
+import PathCard from '../components/PathCard';
+import '../styles/UserDashboard.css';
+
+/*
+ * This is the main "Python Garden" dashboard for a logged-in student.
+ * It displays their progress on the "Garden Path".
+ */
+
+const gardenPathData = [
+  {
+    id: 1,
+    icon: '🌱',
+    level: 'Seedling Path',
+    title: 'Chapter 1: Planting Your First Seed',
+    topics: ['What is Python?', 'Running your first line of code.'],
+    gridClass: 'chapter-1',
+  },
+  {
+    id: 2,
+    icon: '🌱',
+    level: 'Seedling Path',
+    title: 'Chapter 2: Variables',
+    topics: ['Storing data', 'Strings, Numbers, Booleans.'],
+    gridClass: 'chapter-2',
+  },
+  {
+    id: 3,
+    icon: '🌱',
+    level: 'Seedling Path',
+    title: 'Chapter 3: Data Types',
+    topics: ['Lists, Dictionaries', 'Organizing your data.'],
+    gridClass: 'chapter-3',
+  },
+  {
+    id: 4,
+    icon: '🌿',
+    level: 'Sprout Path',
+    title: 'Chapter 4: Conditionals',
+    topics: ['If/Else logic', 'Making decisions.'],
+    gridClass: 'chapter-4',
+  },
+  {
+    id: 5,
+    icon: '🌿',
+    level: 'Sprout Path',
+    title: 'Chapter 5: Loops',
+    topics: ['For Loops', 'While Loops', 'Repeating tasks.'],
+    gridClass: 'chapter-5',
+  },
+  {
+    id: 6,
+    icon: '🌿',
+    level: 'Sprout Path',
+    title: 'Chapter 6: Functions',
+    topics: ['Creating reusable code', 'Parameters & Arguments.'],
+    gridClass: 'chapter-6',
+  },
+  {
+    id: 7,
+    icon: '🌳',
+    level: 'Canopy Path',
+    title: 'Chapter 7: File Handling',
+    topics: ['Reading from files', 'Writing to files.'],
+    gridClass: 'chapter-7',
+  },
+  {
+    id: 8,
+    icon: '🌳',
+    level: 'Canopy Path',
+    title: 'Chapter 8: OOP Basics',
+    topics: ['Classes & Objects', 'Understanding `self`.'],
+    gridClass: 'chapter-8',
+  },
+  {
+    id: 9,
+    icon: '🌳',
+    level: 'Canopy Path',
+    title: 'Chapter 9: Modules',
+    topics: ['Importing code', 'Using libraries like `math`.'],
+    gridClass: 'chapter-9',
+  },
+  {
+    id: 10,
+    icon: '🌳',
+    level: 'Canopy Path',
+    title: 'Chapter 10: Final Project',
+    topics: ['Build a complete garden app!'],
+    gridClass: 'chapter-10',
+  },
+];
 
 const UserDashboard = () => {
+  const navigate = useNavigate();
+  const [progress] = useState({
+    completedChapterIds: [1, 2],
+    currentChapterId: 3,
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
+  const getChapterStatusClass = (chapterId) => {
+    if (progress.completedChapterIds.includes(chapterId)) {
+      return 'is-completed';
+    }
+    if (chapterId === progress.currentChapterId) {
+      return 'is-current';
+    }
+    if (chapterId > progress.currentChapterId) {
+      return 'is-locked';
+    }
+    return '';
+  };
+
+  const handleChapterClick = (chapterId) => {
+    const status = getChapterStatusClass(chapterId);
+    if (status === 'is-locked') {
+      alert("You haven't unlocked this chapter yet!");
+      return;
+    }
+    navigate(`/courses/python-basics/view`);
+  };
+
+  if (loading) {
+    return <div>Loading your garden...</div>;
+  }
+
   return (
-    <div className="user-dashboard">
+    <>
+      <Navbar />
       <TestingNav />
-      <ReturnHome />
-      
-      <div className="dashboard-container">
-        <header className="dashboard-header">
-          <h1>User Dashboard</h1>
-          <p>Welcome back! Manage your learning progress and account settings.</p>
-        </header>
+      <main className="user-dashboard-page">
+        <section className="user-dashboard-header">
+          <h1>Your Garden</h1>
+          <p>
+            Welcome back, student. Pick up where you left off and continue your
+            journey.
+          </p>
+        </section>
 
-        <div className="dashboard-grid">
-          <div className="dashboard-card">
-            <h3>My Courses</h3>
-            <p>Track your enrolled courses and progress</p>
-            <button className="dashboard-btn">View Courses</button>
-          </div>
-
-          <div className="dashboard-card">
-            <h3>Recent Activity</h3>
-            <p>See your latest learning activities</p>
-            <button className="dashboard-btn">View Activity</button>
-          </div>
-
-          <div className="dashboard-card">
-            <h3>Achievements</h3>
-            <p>Check your badges and certificates</p>
-            <button className="dashboard-btn">View Achievements</button>
-          </div>
-
-          <div className="dashboard-card">
-            <h3>Profile Settings</h3>
-            <p>Update your profile and preferences</p>
-            <button className="dashboard-btn">Edit Profile</button>
-          </div>
-
-          <div className="dashboard-card">
-            <h3>Learning Stats</h3>
-            <p>View your learning statistics and trends</p>
-            <button className="dashboard-btn">View Stats</button>
-          </div>
-
-          <div className="dashboard-card">
-            <h3>Support</h3>
-            <p>Get help and contact support</p>
-            <button className="dashboard-btn">Get Help</button>
-          </div>
+        <div className="garden-path-grid">
+          {gardenPathData.map((chapter) => {
+            const statusClass = getChapterStatusClass(chapter.id);
+            return (
+              <div
+                key={chapter.id}
+                className={`${chapter.gridClass} path-card-wrapper ${statusClass}`}
+                onClick={() => handleChapterClick(chapter.id)}
+              >
+                <PathCard
+                  icon={chapter.icon}
+                  level={chapter.level}
+                  title={chapter.title}
+                  topics={chapter.topics}
+                />
+              </div>
+            );
+          })}
         </div>
-      </div>
-    </div>
+      </main>
+    </>
   );
 };
 

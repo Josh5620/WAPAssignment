@@ -8,19 +8,34 @@ const AdminDashboard = () => {
     const [dashboardData, setDashboardData] = useState(null);
     const [users, setUsers] = useState([]);
     const [forumPosts, setForumPosts] = useState([]);
+    const [courses, setCourses] = useState([]);
+    const [announcements, setAnnouncements] = useState([]);
+    const [reports, setReports] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
     const [activeTab, setActiveTab] = useState('overview');
     const [selectedUser, setSelectedUser] = useState(null);
     const [newRole, setNewRole] = useState('');
+    const [showAnnouncementModal, setShowAnnouncementModal] = useState(false);
+    const [newAnnouncement, setNewAnnouncement] = useState({ title: '', content: '', priority: 'medium' });
     const navigate = useNavigate();
 
     useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('user') || '{}');
-        if (!user.isAdmin) {
+        const user = JSON.parse(localStorage.getItem('user_profile') || '{}');
+        console.log('Admin dashboard - checking user:', user);
+        console.log('User role:', user.role);
+        console.log('User properties:', Object.keys(user));
+        
+        // Check for admin role (case-insensitive)
+        const isAdmin = user.role && user.role.toLowerCase() === 'admin';
+        
+        if (!isAdmin) {
+            console.log('User is not admin, redirecting to home. Role found:', user.role);
             navigate('/');
             return;
         }
+        console.log('User is admin, loading dashboard data');
         loadDashboardData();
     }, [navigate]);
 
@@ -42,14 +57,22 @@ const AdminDashboard = () => {
 
     const loadUsers = async () => {
         try {
+            console.log('Loading users...');
             const response = await adminService.getAllUsers();
+            console.log('Users API response:', response);
             if (response.success) {
-                setUsers(response.data);
+                // Ensure we always set an array
+                console.log('Setting users:', response.data);
+                setUsers(Array.isArray(response.data) ? response.data : []);
             } else {
+                console.error('API error:', response.message);
                 setError(response.message);
+                setUsers([]); // Ensure users is always an array
             }
         } catch (err) {
+            console.error('Failed to load users:', err);
             setError('Failed to load users');
+            setUsers([]); // Ensure users is always an array
         }
     };
 
@@ -66,12 +89,63 @@ const AdminDashboard = () => {
         }
     };
 
+    const loadCourses = async () => {
+        try {
+            const response = await adminService.getAllCourses();
+            if (response.success) {
+                setCourses(response.data);
+            } else {
+                setError(response.message);
+            }
+        } catch (err) {
+            setError('Failed to load courses');
+        }
+    };
+
+    const loadAnnouncements = async () => {
+        try {
+            const response = await adminService.getAllAnnouncements();
+            if (response.success) {
+                setAnnouncements(response.data);
+            } else {
+                setError(response.message);
+            }
+        } catch (err) {
+            setError('Failed to load announcements');
+        }
+    };
+
+    const loadReports = async () => {
+        try {
+            const response = await adminService.getReports();
+            if (response.success) {
+                setReports(response.data);
+            } else {
+                setError(response.message);
+            }
+        } catch (err) {
+            setError('Failed to load reports');
+        }
+    };
+
     const handleTabChange = (tab) => {
+        console.log('Tab changed to:', tab);
+        console.log('Current users length:', users.length);
         setActiveTab(tab);
+        setError('');
+        setSuccess('');
+        
         if (tab === 'users' && users.length === 0) {
+            console.log('Loading users because tab is users and users.length is 0');
             loadUsers();
         } else if (tab === 'posts' && forumPosts.length === 0) {
             loadForumPosts();
+        } else if (tab === 'content' && courses.length === 0) {
+            loadCourses();
+        } else if (tab === 'announcements' && announcements.length === 0) {
+            loadAnnouncements();
+        } else if (tab === 'reports' && !reports) {
+            loadReports();
         }
     };
 
@@ -113,12 +187,83 @@ const AdminDashboard = () => {
                 const response = await adminService.deleteForumPost(postId);
                 if (response.success) {
                     setForumPosts(forumPosts.filter(post => post.id !== postId));
+                    setSuccess('Forum post deleted successfully');
                 } else {
                     setError(response.message);
                 }
             } catch (err) {
                 setError('Failed to delete forum post');
             }
+        }
+    };
+
+    const handleCreateAnnouncement = async () => {
+        if (!newAnnouncement.title || !newAnnouncement.content) {
+            setError('Please fill in all announcement fields');
+            return;
+        }
+
+        try {
+            const response = await adminService.createAnnouncement(newAnnouncement);
+            if (response.success) {
+                setAnnouncements([response.data, ...announcements]);
+                setNewAnnouncement({ title: '', content: '', priority: 'medium' });
+                setShowAnnouncementModal(false);
+                setSuccess('Announcement created successfully');
+            } else {
+                setError(response.message);
+            }
+        } catch (err) {
+            setError('Failed to create announcement');
+        }
+    };
+
+    const handleDeleteAnnouncement = async (announcementId) => {
+        if (window.confirm('Are you sure you want to delete this announcement?')) {
+            try {
+                const response = await adminService.deleteAnnouncement(announcementId);
+                if (response.success) {
+                    setAnnouncements(announcements.filter(ann => ann.id !== announcementId));
+                    setSuccess('Announcement deleted successfully');
+                } else {
+                    setError(response.message);
+                }
+            } catch (err) {
+                setError('Failed to delete announcement');
+            }
+        }
+    };
+
+    const handleToggleCoursePublished = async (courseId, currentStatus) => {
+        try {
+            const response = await adminService.updateCourseStatus(courseId, !currentStatus);
+            if (response.success) {
+                setCourses(courses.map(course => 
+                    course.id === courseId ? { ...course, published: !currentStatus } : course
+                ));
+                setSuccess(`Course ${!currentStatus ? 'published' : 'unpublished'} successfully`);
+            } else {
+                setError(response.message);
+            }
+        } catch (err) {
+            setError('Failed to update course status');
+        }
+    };
+
+    const handleGenerateReport = async () => {
+        try {
+            setLoading(true);
+            const response = await adminService.generateReport();
+            if (response.success) {
+                setReports(response.data);
+                setSuccess('Report generated successfully');
+            } else {
+                setError(response.message);
+            }
+        } catch (err) {
+            setError('Failed to generate report');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -158,6 +303,13 @@ const AdminDashboard = () => {
                 </div>
             )}
 
+            {success && (
+                <div className="success-message">
+                    {success}
+                    <button onClick={() => setSuccess('')} className="success-close">×</button>
+                </div>
+            )}
+
             <nav className="admin-nav">
                 <button 
                     className={`nav-tab ${activeTab === 'overview' ? 'active' : ''}`}
@@ -169,13 +321,31 @@ const AdminDashboard = () => {
                     className={`nav-tab ${activeTab === 'users' ? 'active' : ''}`}
                     onClick={() => handleTabChange('users')}
                 >
-                    Users
+                    Manage Users
+                </button>
+                <button 
+                    className={`nav-tab ${activeTab === 'content' ? 'active' : ''}`}
+                    onClick={() => handleTabChange('content')}
+                >
+                    Manage Content
+                </button>
+                <button 
+                    className={`nav-tab ${activeTab === 'announcements' ? 'active' : ''}`}
+                    onClick={() => handleTabChange('announcements')}
+                >
+                    Announcements
                 </button>
                 <button 
                     className={`nav-tab ${activeTab === 'posts' ? 'active' : ''}`}
                     onClick={() => handleTabChange('posts')}
                 >
-                    Forum Posts
+                    Review Feedback
+                </button>
+                <button 
+                    className={`nav-tab ${activeTab === 'reports' ? 'active' : ''}`}
+                    onClick={() => handleTabChange('reports')}
+                >
+                    Generate Reports
                 </button>
             </nav>
 
@@ -258,7 +428,7 @@ const AdminDashboard = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {users.map(user => (
+                                    {Array.isArray(users) && users.map(user => (
                                         <tr key={user.id}>
                                             <td>{user.fullName}</td>
                                             <td>{user.email}</td>
@@ -287,15 +457,102 @@ const AdminDashboard = () => {
                                             </td>
                                         </tr>
                                     ))}
+                                    {(!Array.isArray(users) || users.length === 0) && (
+                                        <tr>
+                                            <td colSpan="5" style={{ textAlign: 'center', padding: '20px', color: '#666' }}>
+                                                {Array.isArray(users) ? 'No users found' : 'Loading users...'}
+                                            </td>
+                                        </tr>
+                                    )}
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 )}
 
+                {activeTab === 'content' && (
+                    <div className="content-tab">
+                        <div className="tab-header">
+                            <h2>Manage Content</h2>
+                            <button className="btn-primary">
+                                + Add New Course
+                            </button>
+                        </div>
+                        <div className="content-grid">
+                            {courses.map(course => (
+                                <div key={course.id} className="content-card">
+                                    <div className="content-header">
+                                        <h4>{course.title}</h4>
+                                        <span className={`status-badge ${course.published ? 'published' : 'draft'}`}>
+                                            {course.published ? 'Published' : 'Draft'}
+                                        </span>
+                                    </div>
+                                    <p className="content-description">{course.description}</p>
+                                    <div className="content-stats">
+                                        <span>Chapters: {course.chapterCount || 0}</span>
+                                        <span>Students: {course.enrollmentCount || 0}</span>
+                                    </div>
+                                    <div className="content-actions">
+                                        <button className="btn-secondary btn-sm">
+                                            Edit Course
+                                        </button>
+                                        <button 
+                                            onClick={() => handleToggleCoursePublished(course.id, course.published)}
+                                            className={`btn-sm ${course.published ? 'btn-warning' : 'btn-success'}`}
+                                        >
+                                            {course.published ? 'Unpublish' : 'Publish'}
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {activeTab === 'announcements' && (
+                    <div className="announcements-tab">
+                        <div className="tab-header">
+                            <h2>Announcements</h2>
+                            <button 
+                                onClick={() => setShowAnnouncementModal(true)}
+                                className="btn-primary"
+                            >
+                                + Create Announcement
+                            </button>
+                        </div>
+                        <div className="announcements-list">
+                            {announcements.map(announcement => (
+                                <div key={announcement.id} className="announcement-item">
+                                    <div className="announcement-header">
+                                        <h4>{announcement.title}</h4>
+                                        <span className={`priority-badge ${announcement.priority}`}>
+                                            {announcement.priority}
+                                        </span>
+                                        <span className="announcement-date">
+                                            {new Date(announcement.createdAt).toLocaleDateString()}
+                                        </span>
+                                    </div>
+                                    <p className="announcement-content">{announcement.content}</p>
+                                    <div className="announcement-actions">
+                                        <button className="btn-secondary btn-sm">
+                                            Edit
+                                        </button>
+                                        <button 
+                                            onClick={() => handleDeleteAnnouncement(announcement.id)}
+                                            className="btn-danger btn-sm"
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
                 {activeTab === 'posts' && (
                     <div className="posts-tab">
-                        <h2>Forum Posts Management</h2>
+                        <h2>Review Feedback</h2>
                         <div className="posts-list">
                             {forumPosts.map(post => (
                                 <div key={post.id} className="post-item">
@@ -306,6 +563,9 @@ const AdminDashboard = () => {
                                     </div>
                                     <p className="post-content">{post.content}</p>
                                     <div className="post-actions">
+                                        <button className="btn-secondary btn-sm">
+                                            Reply
+                                        </button>
                                         <button 
                                             onClick={() => handleDeletePost(post.id)}
                                             className="btn-danger btn-sm"
@@ -316,6 +576,50 @@ const AdminDashboard = () => {
                                 </div>
                             ))}
                         </div>
+                    </div>
+                )}
+
+                {activeTab === 'reports' && (
+                    <div className="reports-tab">
+                        <div className="tab-header">
+                            <h2>Generate Reports</h2>
+                            <button 
+                                onClick={handleGenerateReport}
+                                className="btn-primary"
+                                disabled={loading}
+                            >
+                                {loading ? 'Generating...' : 'Generate New Report'}
+                            </button>
+                        </div>
+                        {reports && (
+                            <div className="reports-content">
+                                <div className="report-summary">
+                                    <h3>Platform Statistics</h3>
+                                    <div className="report-stats">
+                                        <div className="report-stat">
+                                            <strong>Total Users:</strong> {reports.totalUsers}
+                                        </div>
+                                        <div className="report-stat">
+                                            <strong>Active Students:</strong> {reports.activeStudents}
+                                        </div>
+                                        <div className="report-stat">
+                                            <strong>Total Courses:</strong> {reports.totalCourses}
+                                        </div>
+                                        <div className="report-stat">
+                                            <strong>Completion Rate:</strong> {reports.completionRate}%
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="report-actions">
+                                    <button className="btn-secondary">
+                                        Download PDF
+                                    </button>
+                                    <button className="btn-secondary">
+                                        Export CSV
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
             </main>
@@ -346,6 +650,70 @@ const AdminDashboard = () => {
                             </button>
                             <button 
                                 onClick={() => setSelectedUser(null)}
+                                className="btn-secondary"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Announcement Creation Modal */}
+            {showAnnouncementModal && (
+                <div className="modal-overlay">
+                    <div className="modal">
+                        <h3>Create New Announcement</h3>
+                        <div className="form-group">
+                            <label>Title:</label>
+                            <input 
+                                type="text"
+                                value={newAnnouncement.title}
+                                onChange={(e) => setNewAnnouncement({
+                                    ...newAnnouncement, 
+                                    title: e.target.value
+                                })}
+                                placeholder="Announcement title..."
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Content:</label>
+                            <textarea 
+                                value={newAnnouncement.content}
+                                onChange={(e) => setNewAnnouncement({
+                                    ...newAnnouncement, 
+                                    content: e.target.value
+                                })}
+                                placeholder="Announcement content..."
+                                rows="4"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Priority:</label>
+                            <select 
+                                value={newAnnouncement.priority}
+                                onChange={(e) => setNewAnnouncement({
+                                    ...newAnnouncement, 
+                                    priority: e.target.value
+                                })}
+                            >
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                        <div className="modal-actions">
+                            <button 
+                                onClick={handleCreateAnnouncement}
+                                className="btn-primary"
+                            >
+                                Create Announcement
+                            </button>
+                            <button 
+                                onClick={() => {
+                                    setShowAnnouncementModal(false);
+                                    setNewAnnouncement({ title: '', content: '', priority: 'medium' });
+                                }}
                                 className="btn-secondary"
                             >
                                 Cancel

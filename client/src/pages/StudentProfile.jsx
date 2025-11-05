@@ -4,7 +4,7 @@ import { api } from '../services/apiService';
 import { quickApi } from '../services/apiService';
 import Navbar from '../components/Navbar';
 import TestingNav from '../components/TestingNav';
-import Leaderboard from '../components/Leaderboard';
+import StudentLeaderboard from '../components/StudentLeaderboard';
 import StudentProgress from '../components/StudentProgress';
 
 const StudentProfile = () => {
@@ -227,7 +227,7 @@ const StudentProfile = () => {
 
           <div className="profile-section">
             <h2>Leaderboard</h2>
-            <Leaderboard />
+            <StudentLeaderboard />
           </div>
 
           <div className="profile-section">

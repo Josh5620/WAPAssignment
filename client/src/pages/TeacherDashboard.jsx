@@ -4,6 +4,7 @@ import '../styles/TeacherDashboard.css';
 import TestingNav from '../components/TestingNav';
 import ReturnHome from '../components/ReturnHome';
 import { teacherCourseService } from '../services/apiService';
+import TeacherForumManager from '../components/TeacherForumManager';
 
 const initialForm = { title: '', description: '', level: '', tagsCsv: '' };
 
@@ -13,6 +14,7 @@ const TeacherDashboard = () => {
   const [error, setError] = useState('');
   const [showCreate, setShowCreate] = useState(false);
   const [form, setForm] = useState(initialForm);
+  const [activeTab, setActiveTab] = useState('courses');
   const navigate = useNavigate();
 
   const loadCourses = useCallback(async () => {
@@ -104,11 +106,23 @@ const TeacherDashboard = () => {
     navigate(`/courses/${courseId}/view`);
   };
 
+  const gotoProgress = (courseId) => {
+    if (!courseId) return;
+    navigate(`/teacher/course-progress/${courseId}`);
+  };
+
+  const headerTitle = activeTab === 'courses' ? 'My Courses' : 'Forum Moderation';
+
   const headerSubtitle = useMemo(() => {
+    if (activeTab === 'forum') {
+      if (courses.length === 0) return 'Create a course to unlock forum discussions.';
+      return 'Review discussions and keep your classroom community on track.';
+    }
+
     if (loading) return 'Loading your courses...';
     if (courses.length === 0) return 'Create your first course to get started.';
     return `You have ${courses.length} course${courses.length === 1 ? '' : 's'} ready.`;
-  }, [courses.length, loading]);
+  }, [activeTab, courses.length, loading]);
 
   const renderCourses = () => {
     if (loading) {
@@ -157,8 +171,9 @@ const TeacherDashboard = () => {
                   <td>{level || 'N/A'}</td>
                   <td>{chapterCount ?? 0}</td>
                   <td className="td-course-actions">
-                    <button type="button" onClick={() => gotoManage(id)}>Manage</button>
+                    <button type="button" onClick={() => gotoManage(id)}>Edit Content</button>
                     <button type="button" onClick={() => gotoPreview(id)}>Preview</button>
+                    <button type="button" onClick={() => gotoProgress(id)}>View Progress</button>
                     <button type="button" className="td-danger" onClick={() => handleDeleteCourse(id)}>
                       Delete
                     </button>
@@ -179,20 +194,41 @@ const TeacherDashboard = () => {
       <div className="dashboard-container">
         <header className="dashboard-header td-header">
           <div>
-            <h1>My Courses</h1>
+            <h1>{headerTitle}</h1>
             <p>{headerSubtitle}</p>
           </div>
-          <button type="button" className="td-primary" onClick={openCreate}>
-            Create Course
-          </button>
+          {activeTab === 'courses' && (
+            <button type="button" className="td-primary" onClick={openCreate}>
+              Create Course
+            </button>
+          )}
         </header>
 
-        {error && courses.length > 0 && <div className="td-alert td-error">{error}</div>}
+        <nav className="td-tabs">
+          <button
+            type="button"
+            className={`td-tab ${activeTab === 'courses' ? 'active' : ''}`}
+            onClick={() => setActiveTab('courses')}
+          >
+            My Courses
+          </button>
+          <button
+            type="button"
+            className={`td-tab ${activeTab === 'forum' ? 'active' : ''}`}
+            onClick={() => setActiveTab('forum')}
+          >
+            Forum Moderation
+          </button>
+        </nav>
 
-        {renderCourses()}
+        {activeTab === 'courses' && error && courses.length > 0 && (
+          <div className="td-alert td-error">{error}</div>
+        )}
+
+        {activeTab === 'courses' ? renderCourses() : <TeacherForumManager courses={courses} />}
       </div>
 
-      {showCreate && (
+      {showCreate && activeTab === 'courses' && (
         <div className="td-modal-backdrop" role="dialog" aria-modal="true">
           <div className="td-modal">
             <h2>Create Course</h2>

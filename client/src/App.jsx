@@ -8,6 +8,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import StudentDashboard from "./pages/StudentDashboard";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import ManageCourse from "./pages/ManageCourse";
+import TeacherCourseProgress from "./pages/TeacherCourseProgress";
 import CourseViewerPage from "./pages/CourseViewerPage";
 import ChatBotPopup from "./components/ChatBotPopup";
 import ExplainTest from "./pages/ExplainTest";
@@ -51,9 +52,9 @@ function App() {
           <Route
             path="/teacher-dashboard"
             element={(
-              
+              <RequireTeacher>
                 <TeacherDashboard />
-              
+              </RequireTeacher>
             )}
           />
           <Route path="/register" element={<Register />} />
@@ -67,9 +68,17 @@ function App() {
           <Route
             path="/teacher/courses/:courseId"
             element={(
-              
+              <RequireTeacher>
                 <ManageCourse />
-              
+              </RequireTeacher>
+            )}
+          />
+          <Route
+            path="/teacher/course-progress/:courseId"
+            element={(
+              <RequireTeacher>
+                <TeacherCourseProgress />
+              </RequireTeacher>
             )}
           />
           <Route

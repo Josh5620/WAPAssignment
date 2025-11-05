@@ -21,6 +21,7 @@ const TestingNav = () => {
     { path: "/admin-dashboard", label: "Admin Dashboard" },
     { path: "/student-dashboard", label: "Student Dashboard" },
     { path: "/teacher-dashboard", label: "Teacher Dashboard" },
+    { path: "/teacher/course-progress/example-course-id", label: "Teacher Course Progress (Sample)" },
     { path: "/courses", label: "Courses" },
     { path: "/python", label: "Visitor Page (Python)" },
     { path: "/explainTest", label: "Explain Test" },

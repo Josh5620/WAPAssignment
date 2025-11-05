@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectAPI.Data;
@@ -582,9 +583,86 @@ public class ChapterProgressController : ControllerBase
     }
 }
 
+[ApiController]
+[Route("api/[controller]")]
+[Authorize(Roles = "Teacher")]
+public sealed class TeacherAnalyticsController : ControllerBase
+{
+    private readonly ApplicationDbContext _context;
+
+    public TeacherAnalyticsController(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    public sealed record CourseProgressDto(Guid StudentId, string StudentName, string StudentEmail, int CompletedChapters, int TotalChapters);
+
+    public sealed record FeedbackDto(Guid StudentId, string Message);
+
+    [HttpGet("course-progress/{courseId:guid}")]
+    public async Task<IActionResult> GetCourseProgress(Guid courseId, CancellationToken ct = default)
+    {
+        var course = await _context.Courses
+            .Where(c => c.CourseId == courseId)
+            .Include(c => c.Chapters)
+            .FirstOrDefaultAsync(ct);
+
+        if (course == null)
+        {
+            return NotFound(new { message = "Course not found" });
+        }
+
+        var enrolments = await _context.Enrolments
+            .Where(e => e.CourseId == courseId)
+            .Include(e => e.Profile)
+            .ToListAsync(ct);
+
+        var progressLookup = await _context.ChapterProgress
+            .Where(cp => cp.Completed && cp.Chapter.CourseId == courseId)
+            .GroupBy(cp => cp.UserId)
+            .Select(group => new
+            {
+                UserId = group.Key,
+                Completed = group.Count()
+            })
+            .ToDictionaryAsync(x => x.UserId, x => x.Completed, ct);
+
+        var totalChapters = course.Chapters.Count;
+
+        var results = enrolments.Select(enrolment =>
+        {
+            var profile = enrolment.Profile;
+            progressLookup.TryGetValue(enrolment.UserId, out var completedCount);
+
+            return new CourseProgressDto(
+                enrolment.UserId,
+                profile?.FullName ?? string.Empty,
+                profile?.Email ?? string.Empty,
+                completedCount,
+                totalChapters
+            );
+        });
+
+        return Ok(results);
+    }
+
+    [HttpPost("send-feedback")]
+    public IActionResult SendFeedback([FromBody] FeedbackDto dto)
+    {
+        if (dto.StudentId == Guid.Empty || string.IsNullOrWhiteSpace(dto.Message))
+        {
+            return BadRequest(new { message = "StudentId and Message are required" });
+        }
+
+        Console.WriteLine($"Feedback for {dto.StudentId}: {dto.Message}");
+        return Accepted();
+    }
+}
+
 // ForumPostsController
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Roles = "Admin, Teacher")]
 public class ForumPostsController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
@@ -614,6 +692,22 @@ public class ForumPostsController : ControllerBase
         await _context.SaveChangesAsync();
 
         return CreatedAtAction(nameof(GetForumPosts), new { courseId = forumPost.CourseId }, forumPost);
+    }
+
+    [HttpDelete("{postId:guid}")]
+    public async Task<IActionResult> DeleteForumPost(Guid postId, CancellationToken ct = default)
+    {
+        var post = await _context.ForumPosts.FindAsync(new object?[] { postId }, ct);
+
+        if (post == null)
+        {
+            return NotFound();
+        }
+
+        _context.ForumPosts.Remove(post);
+        await _context.SaveChangesAsync(ct);
+
+        return NoContent();
     }
 }
 

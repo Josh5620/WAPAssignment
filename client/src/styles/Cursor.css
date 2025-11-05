@@ -1,0 +1,105 @@
+/* ============================================
+   Pixel-Style Custom Cursors for CodeSage
+   Created using CSS/SVG - No PNG files needed!
+   Cursors adapt to theme colors automatically
+   ============================================ */
+
+/* Note: Actual cursor colors are set dynamically by ThemeContext
+   This file provides fallback cursors and additional cursor styles */
+
+/* Default Cursor - Pixel Seedling 🌱 (fallback - will be overridden by theme) */
+html, 
+body {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect width="20" height="20" fill="none"/><path d="M10 18 L10 12 M8 14 L10 12 L12 14 M6 10 L10 12 L14 10 M8 8 L10 6 L12 8" stroke="%23717744" stroke-width="2" fill="none" stroke-linecap="square"/><circle cx="10" cy="6" r="2" fill="%23717744"/></svg>') 10 10, auto;
+}
+
+/* Interactive Elements - Pixel Python Snake 🐍 (fallback) */
+a, 
+button, 
+.clickable, 
+[role="button"],
+input[type="submit"],
+input[type="button"],
+.nav-link,
+.nav-login,
+.nav-register {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><circle cx="12" cy="8" r="3" fill="%23373d20"/><circle cx="12" cy="14" r="3" fill="%23373d20"/><circle cx="12" cy="20" r="2" fill="%23373d20"/><rect x="10" y="6" width="4" height="2" fill="%23373d20"/><rect x="10" y="12" width="4" height="2" fill="%23373d20"/></svg>') 12 12, pointer;
+}
+
+/* Text Inputs - Pixel Leaf 🍃 */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+textarea,
+[contenteditable="true"],
+select {
+cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect width="20" height="20" fill="none"/><path d="M10 4 L6 8 L10 12 L14 8 Z M6 8 L6 14 L10 18 L14 14 L14 8" stroke="%23717744" stroke-width="2" fill="%23717744" fill-opacity="0.3" stroke-linecap="square" stroke-linejoin="miter"/></svg>') 10 10, text;
+}
+
+/* Loading/Waiting - Pixel Growing Plant */
+.loading,
+[disabled],
+button:disabled,
+input:disabled {
+cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect width="20" height="20" fill="none"/><rect x="8" y="12" width="4" height="6" fill="%23939787" stroke="%23373d20" stroke-width="1"/><circle cx="10" cy="8" r="3" fill="%23939787" stroke="%23373d20" stroke-width="1"/></svg>') 10 10, wait;
+}
+
+/* Not Allowed - Pixel Crossed Seedling */
+.not-allowed,
+a[disabled],
+button[disabled] {
+cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect width="20" height="20" fill="none"/><path d="M10 18 L10 12 M8 14 L10 12 L12 14 M6 10 L10 12 L14 10 M8 8 L10 6 L12 8" stroke="%23939787" stroke-width="2" fill="none" stroke-linecap="square"/><line x1="4" y1="4" x2="16" y2="16" stroke="%23d32f2f" stroke-width="2" stroke-linecap="square"/></svg>') 10 10, not-allowed;
+}
+
+/* Drag - Pixel Hand with Seedling */
+.draggable,
+[draggable="true"],
+.sortable-item {
+cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><rect x="6" y="12" width="8" height="10" rx="1" fill="%23766153" stroke="%23373d20" stroke-width="1"/><rect x="8" y="8" width="4" height="6" rx="1" fill="%23766153" stroke="%23373d20" stroke-width="1"/><circle cx="10" cy="6" r="2" fill="%23717744"/></svg>') 12 12, grab;
+}
+
+.draggable:active,
+[draggable="true"]:active {
+cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><rect x="6" y="12" width="8" height="10" rx="1" fill="%23545a32" stroke="%23373d20" stroke-width="1"/><rect x="8" y="8" width="4" height="6" rx="1" fill="%23545a32" stroke="%23373d20" stroke-width="1"/><circle cx="10" cy="6" r="2" fill="%23373d20"/></svg>') 12 12, grabbing;
+}
+
+/* Resize - Pixel Corner Indicator */
+.resize-handle,
+.resize-handle-horizontal {
+cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect width="20" height="20" fill="none"/><path d="M4 4 L8 8 M4 8 L8 4 M12 4 L16 8 M12 8 L16 4" stroke="%23717744" stroke-width="2" stroke-linecap="square"/></svg>') 10 10, nw-resize;
+}
+
+/* Progress/Loading Spinner - Pixel Spinning Seedling (animated) */
+@keyframes pixel-grow {
+0% { transform: scale(0.8); }
+50% { transform: scale(1.2); }
+100% { transform: scale(0.8); }
+}
+
+.processing,
+.uploading {
+cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect width="20" height="20" fill="none"/><path d="M10 18 L10 12 M8 14 L10 12 L12 14 M6 10 L10 12 L14 10 M8 8 L10 6 L12 8" stroke="%23717744" stroke-width="2" fill="none" stroke-linecap="square"/><circle cx="10" cy="6" r="2" fill="%23717744"/></svg>') 10 10, progress;
+}
+
+/* Special: Quiz/Flashcard Interactive Areas */
+.quiz-option,
+.flashcard,
+.path-card {
+cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><circle cx="12" cy="8" r="3" fill="%23373d20"/><circle cx="12" cy="14" r="3" fill="%23373d20"/><circle cx="12" cy="20" r="2" fill="%23373d20"/><rect x="10" y="6" width="4" height="2" fill="%23373d20"/><rect x="10" y="12" width="4" height="2" fill="%23373d20"/></svg>') 12 12, pointer;
+}
+
+/* Links in Navigation */
+.nav-link,
+.nav-login,
+.nav-register {
+cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><circle cx="12" cy="8" r="3" fill="%23373d20"/><circle cx="12" cy="14" r="3" fill="%23373d20"/><circle cx="12" cy="20" r="2" fill="%23373d20"/><rect x="10" y="6" width="4" height="2" fill="%23373d20"/><rect x="10" y="12" width="4" height="2" fill="%23373d20"/></svg>') 12 12, pointer;
+}
+
+/* Hover effects for cards */
+.path-card:hover,
+.course-card:hover {
+cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><circle cx="12" cy="8" r="3" fill="%23717744"/><circle cx="12" cy="14" r="3" fill="%23717744"/><circle cx="12" cy="20" r="2" fill="%23717744"/><rect x="10" y="6" width="4" height="2" fill="%23717744"/><rect x="10" y="12" width="4" height="2" fill="%23717744"/></svg>') 12 12, pointer;
+}
+

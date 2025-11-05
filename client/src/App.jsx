@@ -1,16 +1,19 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { ThemeProvider } from './contexts/ThemeContext';
 import Login from "./pages/Login";
 import HomePage from "./pages/HomePage";
 import Register from "./pages/Register";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import StudentDashboard from "./pages/StudentDashboard";
+import StudentProfile from "./pages/StudentProfile";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import ManageCourse from "./pages/ManageCourse";
 import TeacherCourseProgress from "./pages/TeacherCourseProgress";
 import CourseViewerPage from "./pages/CourseViewerPage";
 import ChatBotPopup from "./components/ChatBotPopup";
+import ThemeSelector from "./components/ThemeSelector";
 import ExplainTest from "./pages/ExplainTest";
 import About from "./pages/About";
 import CoursesPage from "./pages/CoursesPage";
@@ -29,7 +32,7 @@ const RequireTeacher = ({ children }) => {
 function App() {
   console.log("App mounted ✅");
   return (
-    <>
+    <ThemeProvider>
       <div
         style={{
           position: 'fixed',
@@ -42,6 +45,16 @@ function App() {
         }}
         onMouseEnter={() => window.dispatchEvent(new Event('showNavbar'))}
       />
+      <div
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          zIndex: 2000,
+        }}
+      >
+        <ThemeSelector />
+      </div>
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -49,6 +62,7 @@ function App() {
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/student-dashboard" element={<StudentDashboard />} />
+          <Route path="/student-profile" element={<StudentProfile />} />
           <Route
             path="/teacher-dashboard"
             element={(
@@ -92,8 +106,7 @@ function App() {
       </Router>
 
       <ChatBotPopup />
-
-    </>
+    </ThemeProvider>
   );
 }
 

@@ -782,6 +782,23 @@ export const api = {
   testData: {
     seed: seedTestData,
     getStatus: getDatabaseStatus
+  },
+
+  // Student learning activities
+  students: {
+    getChapterContent,
+    getFlashcards,
+    getQuizQuestions,
+    submitQuiz,
+    getQuestionHint,
+    getStudentProgress,
+    getChapterProgress,
+    markChapterComplete,
+    getStudentProfile,
+    updateStudentProfile,
+    getForumPosts,
+    createForumPost,
+    getLeaderboard
   }
 };
 
@@ -815,6 +832,204 @@ export const quickApi = {
   clearUserData: () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('user_profile');
+  }
+};
+
+// ===== STUDENT SERVICE FUNCTIONS =====
+// Student-specific API functions for learning activities
+const getChapterContent = async (chapterId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/students/chapters/${chapterId}/content`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Get chapter content error:', error);
+    throw error;
+  }
+};
+
+const getFlashcards = async (chapterId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/students/chapters/${chapterId}/flashcards`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Get flashcards error:', error);
+    throw error;
+  }
+};
+
+const getQuizQuestions = async (chapterId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/students/chapters/${chapterId}/quizzes`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Get quiz questions error:', error);
+    throw error;
+  }
+};
+
+const submitQuiz = async (userId, chapterId, answers) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/students/quizzes/submit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId,
+        chapterId,
+        answers
+      })
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Submit quiz error:', error);
+    throw error;
+  }
+};
+
+const getQuestionHint = async (questionId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/students/questions/${questionId}/hint`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Get question hint error:', error);
+    throw error;
+  }
+};
+
+const getStudentProgress = async (userId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/students/${userId}/progress`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Get student progress error:', error);
+    throw error;
+  }
+};
+
+const getChapterProgress = async (userId, chapterId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/students/${userId}/chapters/${chapterId}/progress`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Get chapter progress error:', error);
+    throw error;
+  }
+};
+
+const markChapterComplete = async (userId, chapterId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/students/${userId}/chapters/${chapterId}/complete`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Mark chapter complete error:', error);
+    throw error;
+  }
+};
+
+const getStudentProfile = async (userId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/students/${userId}/profile`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Get student profile error:', error);
+    throw error;
+  }
+};
+
+const updateStudentProfile = async (userId, profileData) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/students/${userId}/profile`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(profileData)
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Update student profile error:', error);
+    throw error;
+  }
+};
+
+const getForumPosts = async (courseId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/students/forums/courses/${courseId}/posts`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Get forum posts error:', error);
+    throw error;
+  }
+};
+
+const createForumPost = async (userId, courseId, content) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/students/forums/posts`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId,
+        courseId,
+        content
+      })
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Create forum post error:', error);
+    throw error;
+  }
+};
+
+const getLeaderboard = async (userId = null) => {
+  try {
+    const url = userId 
+      ? `${API_BASE_URL}/students/leaderboard?userId=${userId}`
+      : `${API_BASE_URL}/students/leaderboard`;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Get leaderboard error:', error);
+    throw error;
   }
 };
 

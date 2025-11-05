@@ -2,7 +2,7 @@ namespace ProjectAPI.Models
 {
     public class Resource
     {
-        public Guid Id { get; set; }
+        public Guid ResourceId { get; set; }
         public Guid ChapterId { get; set; }
         public string Type { get; set; } = string.Empty; // "note", "flashcard", "mcq"
         public string? Content { get; set; }

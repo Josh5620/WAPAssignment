@@ -38,7 +38,7 @@ public class TestDataController : ControllerBase
             // Admin users
             testProfiles.Add(new Profile
             {
-                Id = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
                 FullName = "Admin User",
                 Email = "admin@codesage.com",
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("admin123"),
@@ -47,7 +47,7 @@ public class TestDataController : ControllerBase
             });
             testProfiles.Add(new Profile
             {
-                Id = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
                 FullName = "Sarah Administrator",
                 Email = "sarah.admin@codesage.com",
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("password123"),
@@ -58,7 +58,7 @@ public class TestDataController : ControllerBase
             // Teacher users
             testProfiles.Add(new Profile
             {
-                Id = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
                 FullName = "Dr. Michael Johnson",
                 Email = "teacher@codesage.com",
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("teacher123"),
@@ -67,7 +67,7 @@ public class TestDataController : ControllerBase
             });
             testProfiles.Add(new Profile
             {
-                Id = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
                 FullName = "Prof. Emily Chen",
                 Email = "emily.chen@codesage.com",
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("password123"),
@@ -76,7 +76,7 @@ public class TestDataController : ControllerBase
             });
             testProfiles.Add(new Profile
             {
-                Id = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
                 FullName = "David Rodriguez",
                 Email = "david.teacher@codesage.com",
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("teacher456"),
@@ -87,7 +87,7 @@ public class TestDataController : ControllerBase
             // Student users
             testProfiles.Add(new Profile
             {
-                Id = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
                 FullName = "John Student",
                 Email = "student@codesage.com",
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("student123"),
@@ -96,7 +96,7 @@ public class TestDataController : ControllerBase
             });
             testProfiles.Add(new Profile
             {
-                Id = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
                 FullName = "Alice Williams",
                 Email = "alice.student@codesage.com",
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("password123"),
@@ -105,7 +105,7 @@ public class TestDataController : ControllerBase
             });
             testProfiles.Add(new Profile
             {
-                Id = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
                 FullName = "Bob Smith",
                 Email = "bob.smith@codesage.com",
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("student456"),
@@ -114,7 +114,7 @@ public class TestDataController : ControllerBase
             });
             testProfiles.Add(new Profile
             {
-                Id = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
                 FullName = "Emma Thompson",
                 Email = "emma.t@codesage.com",
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("emma123"),
@@ -123,7 +123,7 @@ public class TestDataController : ControllerBase
             });
             testProfiles.Add(new Profile
             {
-                Id = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
                 FullName = "Carlos Martinez",
                 Email = "carlos.m@codesage.com",
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("carlos789"),
@@ -132,7 +132,7 @@ public class TestDataController : ControllerBase
             });
             testProfiles.Add(new Profile
             {
-                Id = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
                 FullName = "Sophia Lee",
                 Email = "sophia.lee@codesage.com",
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("sophia321"),
@@ -141,7 +141,7 @@ public class TestDataController : ControllerBase
             });
             testProfiles.Add(new Profile
             {
-                Id = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
                 FullName = "James Wilson",
                 Email = "james.w@codesage.com",
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("james654"),
@@ -163,18 +163,16 @@ public class TestDataController : ControllerBase
             if (!coursesExist)
             {
                 // Create test courses
-                jsCourse = new Course
-                {
-                    Id = Guid.NewGuid(),
+                jsCourse = new Course {
+                    CourseId = Guid.NewGuid(),
                     Title = "JavaScript Fundamentals",
                     Description = "Learn the basics of JavaScript programming",
                     PreviewContent = "Introduction to variables, functions, and control structures",
                     Published = true
                 };
 
-                pythonCourse = new Course
-                {
-                    Id = Guid.NewGuid(),
+                pythonCourse = new Course {
+                    CourseId = Guid.NewGuid(),
                     Title = "Python for Beginners",
                     Description = "Start your Python journey with this comprehensive course",
                     PreviewContent = "Learn Python syntax, data types, and basic programming concepts",
@@ -192,19 +190,17 @@ public class TestDataController : ControllerBase
             }
 
             // Create test chapters
-            var jsChapter1 = new Chapter
-            {
-                Id = Guid.NewGuid(),
-                CourseId = jsCourse.Id,
+            var jsChapter1 = new Chapter {
+                ChapterId = Guid.NewGuid(),
+                CourseId = jsCourse.CourseId,
                 Number = 1,
                 Title = "Variables and Data Types",
                 Summary = "Learn about JavaScript variables and different data types"
             };
 
-            var pythonChapter1 = new Chapter
-            {
-                Id = Guid.NewGuid(),
-                CourseId = pythonCourse.Id,
+            var pythonChapter1 = new Chapter {
+                ChapterId = Guid.NewGuid(),
+                CourseId = pythonCourse.CourseId,
                 Number = 1,
                 Title = "Python Basics",
                 Summary = "Introduction to Python programming fundamentals"
@@ -216,8 +212,8 @@ public class TestDataController : ControllerBase
             // Create test enrollment
             var enrollment = new Enrolment
             {
-                UserId = studentProfile.Id,
-                CourseId = jsCourse.Id,
+                UserId = studentProfile.UserId,
+                CourseId = jsCourse.CourseId,
                 Status = "active"
             };
 
@@ -263,7 +259,7 @@ public class TestDataController : ControllerBase
             {
                 new Profile
                 {
-                    Id = Guid.NewGuid(),
+                    UserId = Guid.NewGuid(),
                     FullName = "Test Student",
                     Email = "student@test.com",
                     PasswordHash = BCrypt.Net.BCrypt.HashPassword("password"),
@@ -272,7 +268,7 @@ public class TestDataController : ControllerBase
                 },
                 new Profile
                 {
-                    Id = Guid.NewGuid(),
+                    UserId = Guid.NewGuid(),
                     FullName = "Test Admin",
                     Email = "admin@test.com",
                     PasswordHash = BCrypt.Net.BCrypt.HashPassword("password"),
@@ -311,7 +307,7 @@ public class TestDataController : ControllerBase
             {
                 new Profile
                 {
-                    Id = Guid.NewGuid(),
+                    UserId = Guid.NewGuid(),
                     FullName = "Simple Student",
                     Email = "simple@test.com",
                     PasswordHash = "test123", // Plain text for debugging
@@ -386,3 +382,5 @@ public class TestDataController : ControllerBase
         }
     }
 }
+
+

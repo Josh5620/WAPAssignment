@@ -2,7 +2,7 @@ namespace ProjectAPI.Models
 {
     public class Question
     {
-        public Guid Id { get; set; }
+        public Guid QuestionId { get; set; }
         public Guid ResourceId { get; set; }
         public required string Stem { get; set; }
         public required string Difficulty { get; set; } // easy, medium, hard

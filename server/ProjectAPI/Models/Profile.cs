@@ -4,7 +4,7 @@ namespace ProjectAPI.Models
 {
     public class Profile
     {
-        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
 
         [Required]
         public string FullName { get; set; } = string.Empty;

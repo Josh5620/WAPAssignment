@@ -24,6 +24,33 @@ namespace ProjectAPI.Data
             base.OnModelCreating(modelBuilder);
 
             // ======================
+            // Primary Keys
+            // ======================
+            modelBuilder.Entity<Profile>()
+                .HasKey(p => p.UserId);
+                
+            modelBuilder.Entity<Course>()
+                .HasKey(c => c.CourseId);
+                
+            modelBuilder.Entity<Chapter>()
+                .HasKey(ch => ch.ChapterId);
+                
+            modelBuilder.Entity<Resource>()
+                .HasKey(r => r.ResourceId);
+                
+            modelBuilder.Entity<Question>()
+                .HasKey(q => q.QuestionId);
+                
+            modelBuilder.Entity<QuestionOption>()
+                .HasKey(qo => qo.OptionId);
+                
+            modelBuilder.Entity<Flashcard>()
+                .HasKey(f => f.FcId);
+                
+            modelBuilder.Entity<ForumPost>()
+                .HasKey(fp => fp.ForumId);
+
+            // ======================
             // Composite Keys
             // ======================
             modelBuilder.Entity<Enrolment>()

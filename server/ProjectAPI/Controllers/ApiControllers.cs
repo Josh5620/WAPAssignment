@@ -38,7 +38,7 @@ public class ProfilesController : ControllerBase
     {
         try
         {
-            var profile = await _context.Profiles.FindAsync(id);
+            var profile = await _context.Profiles.FirstOrDefaultAsync(p => p.UserId == id);
             if (profile == null)
                 return NotFound(new { error = "Profile not found" });
 
@@ -74,7 +74,7 @@ public class ProfilesController : ControllerBase
         {
             var profile = new Profile
             {
-                Id = request.Id,
+                UserId = request.Id,
                 FullName = request.FullName,
                 Email = request.Email,
                 Role = request.Role ?? "student",
@@ -85,7 +85,7 @@ public class ProfilesController : ControllerBase
             _context.Profiles.Add(profile);
             await _context.SaveChangesAsync(ct);
 
-            return CreatedAtAction(nameof(GetProfileById), new { id = profile.Id }, profile);
+            return CreatedAtAction(nameof(GetProfileById), new { id = profile.UserId }, profile);
         }
         catch (Exception ex)
         {
@@ -185,14 +185,14 @@ public class ProfilesController : ControllerBase
             // Return profile with mock token structure (similar to Supabase response)
             var loginResponse = new
             {
-                id = profile.Id,
+                id = profile.UserId,
                 full_name = profile.FullName,
                 email = profile.Email,
                 role = profile.Role,
                 created_at = profile.CreatedAt,
                 access_token = "mock_access_token", // In real implementation, generate JWT
                 refresh_token = "mock_refresh_token",
-                auth_user = new { id = profile.Id, email = profile.Email }
+                auth_user = new { id = profile.UserId, email = profile.Email }
             };
 
             return Ok(loginResponse);
@@ -236,14 +236,14 @@ public class ProfilesController : ControllerBase
             // Return success response
             var loginResponse = new
             {
-                id = profile.Id,
+                id = profile.UserId,
                 full_name = profile.FullName,
                 email = profile.Email,
                 role = profile.Role,
                 created_at = profile.CreatedAt,
                 access_token = "simple_access_token",
                 refresh_token = "simple_refresh_token",
-                auth_user = new { id = profile.Id, email = profile.Email }
+                auth_user = new { id = profile.UserId, email = profile.Email }
             };
 
             return Ok(loginResponse);
@@ -283,7 +283,7 @@ public sealed class CoursesController : ControllerBase
         
         var course = new Course
         {
-            Id = Guid.NewGuid(),
+            CourseId = Guid.NewGuid(),
             Title = dto.Title,
             Description = dto.Description ?? string.Empty,
             PreviewContent = string.Empty,
@@ -300,7 +300,7 @@ public sealed class CoursesController : ControllerBase
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateDto dto, CancellationToken ct)
     {
-        var course = await _context.Courses.FindAsync(id);
+        var course = await _context.Courses.FirstOrDefaultAsync(c => c.CourseId == id);
         if (course == null)
             return NotFound();
 
@@ -361,7 +361,7 @@ public sealed class ChaptersController : ControllerBase
     {
         try
         {
-            var chapter = await _context.Chapters.FindAsync(id);
+            var chapter = await _context.Chapters.FirstOrDefaultAsync(c => c.ChapterId == id);
             if (chapter == null)
                 return NotFound(new { error = "Chapter not found" });
 
@@ -380,7 +380,7 @@ public sealed class ChaptersController : ControllerBase
         {
             var chapter = new Chapter
             {
-                Id = Guid.NewGuid(),
+                ChapterId = Guid.NewGuid(),
                 CourseId = request.CourseId,
                 Number = request.Number,
                 Title = request.Title,
@@ -390,7 +390,7 @@ public sealed class ChaptersController : ControllerBase
             _context.Chapters.Add(chapter);
             await _context.SaveChangesAsync(ct);
 
-            return CreatedAtAction(nameof(GetChapterById), new { id = chapter.Id }, chapter);
+            return CreatedAtAction(nameof(GetChapterById), new { id = chapter.ChapterId }, chapter);
         }
         catch (Exception ex)
         {

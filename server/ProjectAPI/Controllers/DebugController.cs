@@ -22,7 +22,7 @@ public class DebugController : ControllerBase
         {
             var profiles = await _context.Profiles
                 .Select(p => new {
-                    p.Id,
+                    p.UserId,
                     p.Email,
                     p.FullName,
                     p.Role,

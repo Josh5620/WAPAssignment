@@ -678,6 +678,25 @@ const updateManagedResource = (resourceId, payload) =>
 const deleteManagedResource = (resourceId) =>
   requestWithAuth(`/Resources/${resourceId}`, { method: 'DELETE' });
 
+const getCourseProgressReport = async (courseId) => {
+  if (!courseId) return [];
+  return requestWithAuth(`/TeacherAnalytics/course-progress/${courseId}`);
+};
+
+const sendTeacherFeedback = (payload) =>
+  requestWithAuth('/TeacherAnalytics/send-feedback', {
+    method: 'POST',
+    body: payload,
+  });
+
+const listForumPostsForCourse = async (courseId) => {
+  if (!courseId) return [];
+  return requestWithAuth(`/ForumPosts?courseId=${courseId}`);
+};
+
+const deleteForumPostForCourse = (postId) =>
+  requestWithAuth(`/ForumPosts/${postId}`, { method: 'DELETE' });
+
 export const teacherCourseService = {
   listMyCourses,
   getCourse: getManagedCourse,
@@ -697,6 +716,16 @@ export const resourceManagementService = {
   create: createManagedResource,
   update: updateManagedResource,
   deleteResource: deleteManagedResource,
+};
+
+export const teacherAnalyticsService = {
+  getCourseProgress: getCourseProgressReport,
+  sendFeedback: sendTeacherFeedback,
+};
+
+export const forumModerationService = {
+  listForCourse: listForumPostsForCourse,
+  deletePost: deleteForumPostForCourse,
 };
 
 // ===== COMPREHENSIVE API OBJECT =====

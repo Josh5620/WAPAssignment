@@ -52,7 +52,6 @@ const FAQ = () => {
       <Navbar />
       <TestingNav />
       <div className="faq-page">
-        <div className="faq-container">
         <header className="faq-header">
           <h1>Frequently Asked Questions</h1>
           <p>Find answers to common questions about CodeSage</p>
@@ -73,7 +72,6 @@ const FAQ = () => {
           <button className="contact-btn">Contact Support</button>
         </div>
       </div>
-    </div>
     </>
   );
 };

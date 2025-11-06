@@ -33,9 +33,12 @@ const HomePage = () => {
                 </p>
             </section>
 
-            {/* Featured Course Section */}
+            {/* Start Your Journey Section */}
             <section className="featured-courses">
-                <h2 className="featured-title">Featured Course</h2>
+                <h2 className="featured-title">Start Your Python Journey</h2>
+                <p style={{ textAlign: 'center', fontSize: '1.1rem', marginBottom: '2rem', color: 'var(--cs-brown)' }}>
+                    Master Python from the ground up with our comprehensive course
+                </p>
                 <div className="courses-grid">
                     <div className="course-card">
                         <img
@@ -43,28 +46,17 @@ const HomePage = () => {
                             alt="Python Logo"
                             className="course-icon"
                         />
-                        <h3 className="course-title">The Gardener's Assistant: Python Basics</h3>
-                        <p className="course-description">Chapter 1: Planting Your First Seed</p>
+                        <h3 className="course-title">Python Basics: The Garden Path</h3>
+                        <p className="course-description">
+                            10 chapters from beginner to confident coder. Learn variables, loops, functions, and more!
+                        </p>
                         <button
                             className="course-button"
                             onClick={() => navigate('/python')}
                         >
-                            Start Planting
+                            Explore the Course
                         </button>
                     </div>
-                </div>
-                <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-                    <button
-                        className="course-button"
-                        onClick={() => navigate('/guest/courses')}
-                        style={{ 
-                            padding: '0.75rem 2rem',
-                            fontSize: '1.1rem',
-                            cursor: 'pointer'
-                        }}
-                    >
-                        Browse All Courses
-                    </button>
                 </div>
             </section>
 

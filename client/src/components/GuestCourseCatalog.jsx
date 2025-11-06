@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../services/apiService';
-import GuestRestrictionBanner from './GuestRestrictionBanner';
-import GuestAccessPrompt from './GuestAccessPrompt';
 
 const GuestCourseCatalog = () => {
   const [courses, setCourses] = useState([]);
@@ -47,15 +45,8 @@ const GuestCourseCatalog = () => {
 
   return (
     <div className="guest-course-catalog">
-      <GuestRestrictionBanner 
-        message="You're viewing courses in preview mode. Register or log in to access full course content, quizzes, flashcards, and track your progress."
-      />
-      
       <div className="catalog-header">
         <h2>Course Catalog</h2>
-        <p className="preview-notice">
-          <strong>Preview Mode:</strong> Limited content available. Register for full access!
-        </p>
       </div>
 
       {courses.length === 0 ? (
@@ -110,19 +101,6 @@ const GuestCourseCatalog = () => {
           ))}
         </div>
       )}
-
-      <GuestAccessPrompt
-        title="Ready to Start Learning?"
-        message="Register now to unlock all courses, quizzes, flashcards, progress tracking, and more!"
-        featureList={[
-          'Full access to all course content',
-          'Interactive quizzes and flashcards',
-          'Progress tracking and achievements',
-          'XP points and leaderboard',
-          'Community forums',
-          'Personalized learning dashboard'
-        ]}
-      />
     </div>
   );
 };

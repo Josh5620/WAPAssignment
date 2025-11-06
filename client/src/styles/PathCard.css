@@ -2,12 +2,14 @@
   background: var(--card-bg-transparent);
   border: 2px solid var(--border);
   border-radius: 24px;
-  padding: 1.5rem;
+  padding: 1rem;
   box-shadow: var(--shadow-1);
   transition: all 0.3s ease;
-  aspect-ratio: 1 / 1;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .path-card:hover {
@@ -20,25 +22,26 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .path-card-icon {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .path-card-level {
   font-family: 'Pixelify Sans', cursive;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   color: var(--cs-brown);
 }
 
 .path-card-title {
   font-family: 'Press Start 2P', cursive;
-  font-size: 1.1rem;
+  font-size: 0.85rem;
   color: var(--primary);
-  margin-bottom: 1rem;
+  margin-bottom: 0.6rem;
   flex-grow: 1;
+  line-height: 1.3;
 }
 
 .path-card-topics {
@@ -46,14 +49,15 @@
   padding-left: 0;
   margin: 0;
   font-family: 'Pixelify Sans', cursive;
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: var(--cs-brown);
 }
 
 .path-card-topics li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
   position: relative;
-  padding-left: 1.2rem;
+  padding-left: 1rem;
+  line-height: 1.3;
 }
 
 .path-card-topics li::before {
@@ -61,5 +65,5 @@
   position: absolute;
   left: 0;
   top: 0;
-  font-size: 0.8rem;
+  font-size: 0.65rem;
 }

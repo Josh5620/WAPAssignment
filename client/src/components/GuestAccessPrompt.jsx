@@ -1,18 +1,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getUser } from '../utils/auth';
+import '../styles/GuestCoursesPage.css';
 
 const GuestAccessPrompt = ({ 
-  title = "Want Full Access?", 
+  title = "Ready to Start Learning?", 
   message = "Register now to unlock all features!",
   featureList = []
 }) => {
   const navigate = useNavigate();
   const isLoggedIn = getUser() !== null;
 
-  if (isLoggedIn) {
-    return null; // Don't show prompt if user is logged in
-  }
+  if (isLoggedIn) return null;
 
   return (
     <div className="guest-access-prompt">
@@ -26,7 +25,7 @@ const GuestAccessPrompt = ({
           <h4>Full Access Includes:</h4>
           <ul>
             {featureList.map((feature, index) => (
-              <li key={index}>✓ {feature}</li>
+              <li key={index}>{feature}</li>
             ))}
           </ul>
         </div>
@@ -37,13 +36,13 @@ const GuestAccessPrompt = ({
           className="prompt-register-button"
           onClick={() => navigate('/register')}
         >
-          Register for Free
+          Register Free
         </button>
         <button
           className="prompt-login-button"
           onClick={() => navigate('/login')}
         >
-          Already have an account? Log In
+          Log In
         </button>
       </div>
     </div>

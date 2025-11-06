@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../services/apiService';
-import GuestRestrictionBanner from './GuestRestrictionBanner';
 import GuestAccessPrompt from './GuestAccessPrompt';
+import '../styles/GuestCoursesPage.css';
 
 const GuestSearch = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -39,15 +39,8 @@ const GuestSearch = () => {
 
   return (
     <div className="guest-search">
-      <GuestRestrictionBanner 
-        message="Search results are limited to public content only. Register or log in to search and access all course materials, quizzes, and resources."
-      />
-
       <div className="search-header">
         <h2>Search Courses</h2>
-        <p className="search-notice">
-          <strong>Limited Search:</strong> Results show only public course information. Register for full search access.
-        </p>
       </div>
 
       <form className="search-form" onSubmit={handleSearch}>
@@ -59,11 +52,7 @@ const GuestSearch = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <button
-            type="submit"
-            className="search-button"
-            disabled={loading}
-          >
+          <button type="submit" className="search-button" disabled={loading}>
             {loading ? 'Searching...' : 'Search'}
           </button>
         </div>
@@ -81,9 +70,6 @@ const GuestSearch = () => {
             <h3>Search Results</h3>
             <p className="results-count">
               Found {results.results.totalResults} result(s) for "{results.query}"
-            </p>
-            <p className="results-notice">
-              <strong>⚠️ Limited Results:</strong> {results.message}
             </p>
           </div>
 
@@ -117,20 +103,16 @@ const GuestSearch = () => {
                 {results.results.chapters.map((chapter) => (
                   <div key={chapter.chapterId} className="result-card chapter-result">
                     <div className="chapter-result-header">
-                      <span className="chapter-number">
-                        Chapter {chapter.chapterNumber}
-                      </span>
+                      <span className="chapter-number">Chapter {chapter.chapterNumber}</span>
                       <span className="course-name">{chapter.courseTitle}</span>
                     </div>
                     <h5>{chapter.chapterTitle}</h5>
-                    {chapter.chapterSummary && (
-                      <p>{chapter.chapterSummary}</p>
-                    )}
+                    {chapter.chapterSummary && <p>{chapter.chapterSummary}</p>}
                     <button
                       className="view-button"
                       onClick={() => handleViewCourse(chapter.courseId)}
                     >
-                      View Course Preview
+                      View Course
                     </button>
                   </div>
                 ))}
@@ -145,19 +127,6 @@ const GuestSearch = () => {
             </div>
           )}
         </div>
-      )}
-
-      {results && results.results.totalResults > 0 && (
-        <GuestAccessPrompt
-          title="Want to See More?"
-          message="Register to access full course content, detailed search results, and all learning materials!"
-          featureList={[
-            'Full course content search',
-            'Search within quizzes and flashcards',
-            'Access to all course materials',
-            'Advanced search filters'
-          ]}
-        />
       )}
     </div>
   );

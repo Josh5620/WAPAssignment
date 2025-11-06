@@ -3,10 +3,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getUser } from '../utils/auth';
 import TestingNav from '../components/TestingNav';
 import ReturnHome from '../components/ReturnHome';
+import StudentQuizComponent from '../components/StudentQuizComponent';
+import StudentFlashcardComponent from '../components/StudentFlashcardComponent';
 import {
   teacherCourseService,
   chapterManagementService,
   resourceManagementService,
+  api,
 } from '../services/apiService';
 import '../styles/CourseViewerPage.css';
 
@@ -103,8 +106,35 @@ const CourseViewerPage = () => {
   const renderResource = (resource) => {
     const type = resource.type || resource.Type || 'text';
     const content = resource.content || resource.Content || '';
+    const user = getUser();
+    const isStudent = user && user.role === 'student';
 
-    if (type === 'text') {
+    // Render quiz component for MCQ resources (students only)
+    if (type === 'mcq' && isStudent && selectedChapterId) {
+      return (
+        <div className="course-viewer__quiz-container">
+          <StudentQuizComponent 
+            chapterId={selectedChapterId}
+            onQuizComplete={(result) => {
+              console.log('Quiz completed:', result);
+              // Optionally refresh progress or show success message
+            }}
+          />
+        </div>
+      );
+    }
+
+    // Render flashcard component for flashcard resources (students only)
+    if (type === 'flashcard' && isStudent && selectedChapterId) {
+      return (
+        <div className="course-viewer__flashcard-container">
+          <StudentFlashcardComponent chapterId={selectedChapterId} />
+        </div>
+      );
+    }
+
+    // For teachers or non-interactive resources, show content
+    if (type === 'text' || type === 'note') {
       return <div className="course-viewer__text" dangerouslySetInnerHTML={{ __html: content }} />;
     }
 
@@ -124,6 +154,15 @@ const CourseViewerPage = () => {
       );
     }
 
+    // For MCQ/flashcard resources when not a student, show a message
+    if ((type === 'mcq' || type === 'flashcard') && !isStudent) {
+      return (
+        <div className="course-viewer__restricted">
+          <p>This is a {type === 'mcq' ? 'quiz' : 'flashcard'} resource. Interactive content is available to students only.</p>
+        </div>
+      );
+    }
+
     return <pre className="course-viewer__text">{content}</pre>;
   };
 
@@ -137,7 +176,17 @@ const CourseViewerPage = () => {
             <h1>{course?.title || course?.Title || 'Course Preview'}</h1>
             {(course?.description || course?.Description) && <p>{course.description || course.Description}</p>}
           </div>
-          <button type="button" onClick={() => navigate('/teacher-dashboard')}>
+          <button 
+            type="button" 
+            onClick={() => {
+              const user = getUser();
+              if (user?.role === 'teacher') {
+                navigate('/teacher-dashboard');
+              } else {
+                navigate('/student-dashboard');
+              }
+            }}
+          >
             Back to Dashboard
           </button>
         </header>

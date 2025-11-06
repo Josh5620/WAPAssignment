@@ -59,7 +59,7 @@ const Navbar = () => {
   }, [visible]);
 
   const handleLogin = () => {
-    navigate('/Login');
+    navigate('/login');
   };
 
   const handleRegister = () => {

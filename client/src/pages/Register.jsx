@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/Register.css';
 import ReturnHome from '../components/ReturnHome';
 import TestingNav from '../components/TestingNav';
-import { authService } from '../services/apiService';
+import { api } from '../services/apiService';
 
 const Register = () => {
     const [formData, setFormData] = useState({
-        username: '',
+        email: '',
         password: '',
         confirmPassword: '',
         fullName: '',
@@ -17,13 +17,37 @@ const Register = () => {
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [emailChecking, setEmailChecking] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
+        const { name, value } = e.target;
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [name]: value
         });
+        
+        // Clear error when user types
+        if (error) {
+            setError('');
+        }
+    };
+
+    const handleEmailBlur = async () => {
+        if (!formData.email) return;
+        
+        try {
+            setEmailChecking(true);
+            const result = await api.guests.checkEmailAvailability(formData.email);
+            if (!result.available) {
+                setError('This email is already registered');
+            }
+        } catch (err) {
+            console.error('Email check error:', err);
+            // Don't show error for check failures, just log
+        } finally {
+            setEmailChecking(false);
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -39,29 +63,19 @@ const Register = () => {
         }
 
         try {
-            const result = await authService.register({
+            const result = await api.guests.register({
+                fullName: formData.fullName,
                 email: formData.email,
                 password: formData.password,
-                fullName: formData.fullName,
                 role: formData.role
             });
             
-            if (result.success) {
-                // Redirect based on user role
-                const user = result.data.user;
-                if (user.isAdmin) {
-                    navigate('/admin-dashboard');
-                } else if (user.isTeacher) {
-                    navigate('/teacher-dashboard');
-                } else {
-                    navigate('/student-dashboard');
-                }
-            } else {
-                setError(result.message || 'Registration failed');
-            }
-        } catch (error) {
-            setError('An error occurred during registration');
-            console.error('Registration error:', error);
+            // Registration successful
+            alert('Registration successful! You can now log in.');
+            navigate('/login');
+        } catch (err) {
+            setError(err.message || 'Registration failed. Please try again.');
+            console.error('Registration error:', err);
         } finally {
             setLoading(false);
         }
@@ -100,13 +114,15 @@ const Register = () => {
                     
                     <div className="form-group">
                         <input 
-                            type="text" 
-                            name="username"
-                            placeholder="username"
-                            value={formData.username}
+                            type="email" 
+                            name="email"
+                            placeholder="email"
+                            value={formData.email}
                             onChange={handleChange}
+                            onBlur={handleEmailBlur}
                             required
                         />
+                        {emailChecking && <span className="checking-indicator">Checking...</span>}
                     </div>
                     
                     <div className="form-group">

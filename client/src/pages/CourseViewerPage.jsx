@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { getUser } from '../utils/auth';
 import TestingNav from '../components/TestingNav';
 import ReturnHome from '../components/ReturnHome';
 import {
@@ -12,6 +13,14 @@ import '../styles/CourseViewerPage.css';
 const CourseViewerPage = () => {
   const { courseId } = useParams();
   const navigate = useNavigate();
+  
+  // Redirect guests to guest preview page
+  useEffect(() => {
+    const user = getUser();
+    if (!user && courseId) {
+      navigate(`/guest/courses/${courseId}/preview`, { replace: true });
+    }
+  }, [courseId, navigate]);
   const [course, setCourse] = useState(null);
   const [chapters, setChapters] = useState([]);
   const [selectedChapterId, setSelectedChapterId] = useState(null);

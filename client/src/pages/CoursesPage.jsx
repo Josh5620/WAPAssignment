@@ -1,23 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getUser } from '../utils/auth';
 import CourseList from '../components/CourseList';
 import CourseDetails from '../components/CourseDetails';
 import CourseViewer from '../components/CourseViewer';
 import '../styles/CoursesPage.css';
 
 const CoursesPage = () => {
+  const navigate = useNavigate();
   const [currentView, setCurrentView] = useState('list'); // 'list', 'details', 'viewer'
   const [selectedCourseId, setSelectedCourseId] = useState(null);
   const [userRole, setUserRole] = useState('student');
   const [breadcrumb, setBreadcrumb] = useState(['Courses']);
 
-  // Get user role from localStorage or auth context
+  // Redirect guests to guest courses page
   useEffect(() => {
-    const storedUser = localStorage.getItem('user_profile');
-    if (storedUser) {
-      const user = JSON.parse(storedUser);
-      setUserRole(user.role || 'student');
+    const user = getUser();
+    if (!user) {
+      // User is not logged in, redirect to guest courses page
+      navigate('/guest/courses', { replace: true });
+      return;
     }
-  }, []);
+    
+    // Get user role from localStorage or auth context
+    setUserRole(user.role || user.Role || 'student');
+  }, [navigate]);
 
   const handleCourseSelect = (courseId, courseName) => {
     setSelectedCourseId(courseId);

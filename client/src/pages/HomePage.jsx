@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import Navbar from '../components/Navbar';
 import TestingNav from '../components/TestingNav';
+import GuestTestimonials from '../components/GuestTestimonials';
 import '../styles/HomePage.css';
 
 const HomePage = () => {
@@ -57,26 +58,7 @@ const HomePage = () => {
             {/* Testimonials Section */}
             <section className="testimonials">
                 <h2 className="testimonials-title">Testimonials</h2>
-                <div className="testimonials-grid">
-                    <div className="testimonial-card">
-                        <div className="testimonial-photo">
-                            {/* Removed photo SVG */}
-                        </div>
-                        <p className="testimonial-text">CodeSage has helped me grow so much!</p>
-                    </div>
-                    <div className="testimonial-card">
-                        <div className="testimonial-photo">
-                            {/* Removed photo SVG */}
-                        </div>
-                        <p className="testimonial-text">CodeSage has helped me grow so much!</p>
-                    </div>
-                    <div className="testimonial-card">
-                        <div className="testimonial-photo">
-                            {/* Removed photo SVG */}
-                        </div>
-                        <p className="testimonial-text">CodeSage has helped me grow so much!</p>
-                    </div>
-                </div>
+                <GuestTestimonials />
             </section>
         </div>
     );

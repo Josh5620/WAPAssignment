@@ -1159,6 +1159,138 @@ const getLeaderboard = async (userId = null) => {
   }
 };
 
+// ===== GUEST SERVICE FUNCTIONS =====
+// Guest (unregistered user) API functions for public content access
+const getGuestCourseCatalog = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/guests/courses`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Get guest course catalog error:', error);
+    throw error;
+  }
+};
+
+const getGuestCoursePreview = async (courseId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/guests/courses/${courseId}/preview`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Get guest course preview error:', error);
+    throw error;
+  }
+};
+
+const getGuestSampleChapter = async (courseId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/guests/courses/${courseId}/sample-chapter`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Get guest sample chapter error:', error);
+    throw error;
+  }
+};
+
+const searchGuestContent = async (query) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/guests/search?query=${encodeURIComponent(query)}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Search guest content error:', error);
+    throw error;
+  }
+};
+
+const registerGuest = async (userData) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/guests/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userData)
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Register guest error:', error);
+    throw error;
+  }
+};
+
+const checkEmailAvailability = async (email) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/guests/check-email?email=${encodeURIComponent(email)}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Check email availability error:', error);
+    throw error;
+  }
+};
+
+const getGuestAbout = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/guests/about`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Get guest about error:', error);
+    throw error;
+  }
+};
+
+const getGuestFAQs = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/guests/faq`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Get guest FAQs error:', error);
+    throw error;
+  }
+};
+
+const getGuestTestimonials = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/guests/testimonials`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Get guest testimonials error:', error);
+    throw error;
+  }
+};
+
 // ===== COMPREHENSIVE API OBJECT =====
 // Main API object that contains all services organized by category
 export const api = {
@@ -1230,6 +1362,19 @@ export const api = {
     getForumPosts,
     createForumPost,
     getLeaderboard
+  },
+
+  // Guest (unregistered user) public content access
+  guests: {
+    getCourseCatalog: getGuestCourseCatalog,
+    getCoursePreview: getGuestCoursePreview,
+    getSampleChapter: getGuestSampleChapter,
+    searchContent: searchGuestContent,
+    register: registerGuest,
+    checkEmailAvailability,
+    getAbout: getGuestAbout,
+    getFAQs: getGuestFAQs,
+    getTestimonials: getGuestTestimonials
   }
 };
 

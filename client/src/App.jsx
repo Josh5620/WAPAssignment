@@ -16,11 +16,9 @@ import ChatBotPopup from "./components/ChatBotPopup";
 import ThemeSelector from "./components/ThemeSelector";
 import ExplainTest from "./pages/ExplainTest";
 import About from "./pages/About";
-import GuestAbout from "./pages/GuestAbout";
 import CoursesPage from "./pages/CoursesPage";
 import GuestCoursesPage from "./pages/GuestCoursesPage";
 import FAQ from "./pages/FAQ";
-import GuestFAQ from "./pages/GuestFAQ";
 import VisitorPage from "./pages/VisitorPage";
 import GuestCoursePreviewPage from "./pages/GuestCoursePreviewPage";
 import ApiTest from './components/ApiTest';
@@ -80,9 +78,7 @@ function App() {
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/about" element={<About />} />
-          <Route path="/guest/about" element={<GuestAbout />} />
           <Route path="/faq" element={<FAQ />} />
-          <Route path="/guest/faq" element={<GuestFAQ />} />
           <Route path="/guest/courses" element={<GuestCoursesPage />} />
           <Route path="/guest/courses/:courseId/preview" element={<GuestCoursePreviewPage />} />
           <Route path="/python" element={<VisitorPage />} />

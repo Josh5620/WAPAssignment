@@ -20,12 +20,15 @@ const TestingNav = () => {
     { path: "/admin", label: "Admin Login" },
     { path: "/admin-dashboard", label: "Admin Dashboard" },
     { path: "/student-dashboard", label: "Student Dashboard" },
+    { path: "/student-profile", label: "Student Profile" },
     { path: "/teacher-dashboard", label: "Teacher Dashboard" },
     { path: "/teacher/course-progress/example-course-id", label: "Teacher Course Progress (Sample)" },
-    { path: "/courses", label: "Courses" },
+    { path: "/courses", label: "Courses (Logged In)" },
+    { path: "/guest/courses", label: "Courses (Guest)" },
+    { path: "/about", label: "About" },
+    { path: "/faq", label: "FAQ" },
     { path: "/python", label: "Visitor Page (Python)" },
     { path: "/explainTest", label: "Explain Test" },
-    { path: "/about", label: "About" },
   ];
 
   return (

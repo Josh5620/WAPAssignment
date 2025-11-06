@@ -1,11 +1,34 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { getUser } from '../utils/auth';
 import '../styles/Navbar.css';
 
 const Navbar = () => {
   const [visible, setVisible] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const timerRef = useRef(null);
   const navigate = useNavigate();
+
+  // Check login status and update on mount and when storage changes
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      const user = getUser();
+      setIsLoggedIn(user !== null);
+    };
+
+    checkLoginStatus();
+    
+    // Listen for storage changes (when user logs in/out in another tab)
+    window.addEventListener('storage', checkLoginStatus);
+    
+    // Also check periodically in case login happens in same tab
+    const interval = setInterval(checkLoginStatus, 1000);
+    
+    return () => {
+      window.removeEventListener('storage', checkLoginStatus);
+      clearInterval(interval);
+    };
+  }, []);
 
   // Always show navbar at top, auto-hide when scrolled down
   useEffect(() => {
@@ -50,20 +73,55 @@ const Navbar = () => {
       onClick={showNavbar}
     >
       <div className="nav-left">
-        <div className="logo">
+        <Link to="/" className="logo" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
           <img src="/CodeSage.svg" alt="CodeSage" className="logo-text" />
           <img src="/CodeSageLogo.svg" alt="CodeSage Hat" className="logo-hat" />
-        </div>
+        </Link>
         <div className="nav-links">
           <Link to="/" className="nav-link home-link">Home</Link>
-          <Link to="/python" className="nav-link">Python Course</Link>
-          <Link to="/about" className="nav-link about-link">About</Link>
-          <a href="#faq" className="nav-link">FAQ</a>
+          <Link 
+            to={isLoggedIn ? "/courses" : "/guest/courses"} 
+            className="nav-link"
+          >
+            Courses
+          </Link>
+          <Link to="/about" className="nav-link about-link">
+            About
+          </Link>
+          <Link to="/faq" className="nav-link">
+            FAQ
+          </Link>
+          {isLoggedIn && (
+            <Link to="/student-dashboard" className="nav-link">
+              Dashboard
+            </Link>
+          )}
         </div>
       </div>
       <div className="nav-right">
-        <button onClick={handleLogin} className="nav-login">Login</button>
-        <button onClick={handleRegister} className="nav-register">Register</button>
+        {isLoggedIn ? (
+          <>
+            <Link to="/student-profile" className="nav-link">
+              Profile
+            </Link>
+            <button 
+              onClick={() => {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('user_profile');
+                navigate('/');
+                window.location.reload();
+              }} 
+              className="nav-login"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <button onClick={handleLogin} className="nav-login">Login</button>
+            <button onClick={handleRegister} className="nav-register">Register</button>
+          </>
+        )}
       </div>
     </nav>
   );

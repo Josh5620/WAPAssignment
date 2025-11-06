@@ -4,7 +4,8 @@ import Navbar from '../components/Navbar';
 import TestingNav from '../components/TestingNav';
 
 
-const About = () => (
+const About = () => {
+  return (
   <>
     <Navbar />
     <TestingNav />
@@ -63,7 +64,7 @@ const About = () => (
     </section>
   </div>
 </>
-
-);
+  );
+};
 
 export default About;

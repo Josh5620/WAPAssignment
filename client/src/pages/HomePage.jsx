@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import Navbar from '../components/Navbar';
 import TestingNav from '../components/TestingNav';
-import GuestTestimonials from '../components/GuestTestimonials';
+import Testimonials from '../components/Testimonials';
 import '../styles/HomePage.css';
 
 const HomePage = () => {
@@ -53,12 +53,25 @@ const HomePage = () => {
                         </button>
                     </div>
                 </div>
+                <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+                    <button
+                        className="course-button"
+                        onClick={() => navigate('/guest/courses')}
+                        style={{ 
+                            padding: '0.75rem 2rem',
+                            fontSize: '1.1rem',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        Browse All Courses
+                    </button>
+                </div>
             </section>
 
             {/* Testimonials Section */}
             <section className="testimonials">
                 <h2 className="testimonials-title">Testimonials</h2>
-                <GuestTestimonials />
+                <Testimonials />
             </section>
         </div>
     );

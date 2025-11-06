@@ -8,12 +8,37 @@ const StudentProgress = ({ courseId }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    loadProgress();
-  }, []);
+    const loadProgress = async () => {
+      try {
+        setLoading(true);
+        const userProfile = quickApi.getUserProfile();
+        if (!userProfile || !userProfile.id) {
+          setError('Please log in to view your progress.');
+          return;
+        }
 
-  const loadProgress = async () => {
+        const data = await api.students.getStudentProgress(userProfile.id);
+        setProgress(data);
+        setError(null);
+      } catch (err) {
+        console.error('Failed to load progress:', err);
+        setError('Failed to load progress. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProgress();
+  }, [courseId]); // Include courseId so data reloads when courseId changes
+
+  if (loading) {
+    return <div className="progress-loading">Loading your progress...</div>;
+  }
+
+  const handleRetry = async () => {
     try {
       setLoading(true);
+      setError(null);
       const userProfile = quickApi.getUserProfile();
       if (!userProfile || !userProfile.id) {
         setError('Please log in to view your progress.');
@@ -22,7 +47,6 @@ const StudentProgress = ({ courseId }) => {
 
       const data = await api.students.getStudentProgress(userProfile.id);
       setProgress(data);
-      setError(null);
     } catch (err) {
       console.error('Failed to load progress:', err);
       setError('Failed to load progress. Please try again.');
@@ -31,15 +55,11 @@ const StudentProgress = ({ courseId }) => {
     }
   };
 
-  if (loading) {
-    return <div className="progress-loading">Loading your progress...</div>;
-  }
-
   if (error) {
     return (
       <div className="progress-error">
         <p>{error}</p>
-        <button onClick={loadProgress}>Retry</button>
+        <button onClick={handleRetry}>Retry</button>
       </div>
     );
   }

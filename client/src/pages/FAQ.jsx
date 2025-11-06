@@ -1,4 +1,6 @@
 import React from 'react';
+import Navbar from '../components/Navbar';
+import TestingNav from '../components/TestingNav';
 import '../styles/FAQ.css';
 
 const FAQ = () => {
@@ -46,8 +48,11 @@ const FAQ = () => {
   ];
 
   return (
-    <div className="faq-page">
-      <div className="faq-container">
+    <>
+      <Navbar />
+      <TestingNav />
+      <div className="faq-page">
+        <div className="faq-container">
         <header className="faq-header">
           <h1>Frequently Asked Questions</h1>
           <p>Find answers to common questions about CodeSage</p>
@@ -69,6 +74,7 @@ const FAQ = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

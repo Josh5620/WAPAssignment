@@ -61,9 +61,12 @@ const AdminDashboard = () => {
             const response = await adminService.getAllUsers();
             console.log('Users API response:', response);
             if (response.success) {
-                // Ensure we always set an array
-                console.log('Setting users:', response.data);
-                setUsers(Array.isArray(response.data) ? response.data : []);
+                // Extract just the data array from the response
+                const usersData = response.data || [];
+                console.log('Setting users:', usersData);
+                console.log('Users data is array:', Array.isArray(usersData));
+                console.log('Users count:', usersData.length);
+                setUsers(Array.isArray(usersData) ? usersData : []);
             } else {
                 console.error('API error:', response.message);
                 setError(response.message);

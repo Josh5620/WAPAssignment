@@ -51,6 +51,10 @@ namespace ProjectAPI.Controllers
         {
             try
             {
+                // First check if we can connect to database and if there are any profiles
+                var profileCount = await _context.Profiles.CountAsync();
+                Console.WriteLine($"Total profiles in database: {profileCount}");
+
                 var users = await _context.Profiles
                     .Select(u => new
                     {
@@ -63,10 +67,14 @@ namespace ProjectAPI.Controllers
                     .OrderByDescending(u => u.CreatedAt)
                     .ToListAsync();
 
-                return Ok(new { success = true, data = users });
+                Console.WriteLine($"Retrieved {users.Count} users from database");
+                
+                return Ok(new { success = true, data = users, count = users.Count });
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error in GetAllUsers: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
                 return StatusCode(500, new { success = false, message = "Failed to load users", error = ex.Message });
             }
         }

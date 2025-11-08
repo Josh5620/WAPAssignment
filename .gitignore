@@ -459,3 +459,4 @@ storybook-static/
 
 # ESBuild cache
 .esbuild/
+server/ProjectAPI/obj/Debug/net9.0/ProjectAPI.assets.cache

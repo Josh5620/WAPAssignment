@@ -57,7 +57,7 @@ body {
   padding: 1rem 1.5rem;
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  width: 100%;
 }
 
 .navbar__logo {
@@ -65,15 +65,18 @@ body {
   align-items: center;
   gap: 0.55rem;
   text-decoration: none;
+  order: 1;
+}
+
+.navbar__logo-text {
+  height: 18px;
+  order: 1;
 }
 
 .navbar__logo-icon {
   width: 40px;
   height: 40px;
-}
-
-.navbar__logo-text {
-  height: 18px;
+  order: 2;
 }
 
 .navbar__toggle {
@@ -112,6 +115,7 @@ body {
   align-items: center;
   gap: 1.5rem;
   margin-left: 2rem;
+  order: 2;
 }
 
 .navbar__link {
@@ -158,10 +162,24 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  order: 3;
 }
 
 .navbar__auth-btn {
   min-width: 96px;
+}
+
+.navbar__auth-btn.btn-garden--ghost {
+  position: relative;
+  color: var(--text);
+  background: transparent;
+  border: none;
+}
+
+.navbar__auth-btn.btn-garden--ghost:hover {
+  color: var(--primary);
+  background: transparent;
+  border: none;
 }
 
 .navbar__profile-link {

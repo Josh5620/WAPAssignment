@@ -1,0 +1,336 @@
+.student-profile-page {
+  min-height: 100vh;
+  padding: 6.5rem 2rem 4rem;
+  background: var(--cs-beige);
+}
+
+.profile-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+/* Loading and Error States */
+.profile-loading,
+.profile-error {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  font-family: 'Pixelify Sans', cursive;
+  color: var(--cs-olive9);
+  font-size: 1.1rem;
+}
+
+.profile-error button {
+  background: var(--cs-brown);
+  color: var(--cs-beige);
+  border: none;
+  border-radius: 12px;
+  padding: 0.9rem 2rem;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.profile-error button:hover {
+  background: var(--cs-olive9);
+  transform: translateY(-2px);
+}
+
+/* Profile Header */
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 3px solid var(--cs-olive6);
+}
+
+.profile-header h1 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--cs-olive9);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.edit-profile-button {
+  background: var(--cs-olive7);
+  color: var(--cs-beige);
+  border: none;
+  border-radius: 12px;
+  padding: 0.9rem 2rem;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-profile-button:hover {
+  background: var(--cs-olive9);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(55, 61, 32, 0.3);
+}
+
+/* Messages */
+.error-message,
+.success-message {
+  padding: 1.25rem 1.75rem;
+  border-radius: 16px;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.error-message {
+  background: rgba(239, 68, 68, 0.1);
+  border: 2px solid rgba(239, 68, 68, 0.5);
+  color: #991b1b;
+}
+
+.success-message {
+  background: rgba(34, 197, 94, 0.1);
+  border: 2px solid rgba(34, 197, 94, 0.5);
+  color: #166534;
+}
+
+.error-message p,
+.success-message p {
+  margin: 0;
+}
+
+/* Profile Sections */
+.profile-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 28px;
+  border: 2px solid var(--cs-olive6);
+  padding: 3rem;
+  box-shadow: 0 12px 48px rgba(55, 61, 32, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.profile-section:hover {
+  box-shadow: 0 16px 64px rgba(55, 61, 32, 0.15);
+}
+
+.profile-section h2 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  color: var(--cs-olive9);
+  margin: 0 0 2rem 0;
+  line-height: 1.4;
+}
+
+/* Profile Info (View Mode) */
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.info-item {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: rgba(188, 189, 139, 0.15);
+  border-radius: 16px;
+  border: 2px solid var(--cs-sage3);
+  transition: all 0.3s ease;
+}
+
+.info-item:hover {
+  background: rgba(188, 189, 139, 0.25);
+  border-color: var(--cs-olive6);
+  transform: translateX(4px);
+}
+
+.info-label {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--cs-olive7);
+}
+
+.info-value {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1.05rem;
+  color: var(--cs-olive9);
+  word-break: break-word;
+}
+
+/* Profile Form (Edit Mode) */
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.form-group label {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--cs-olive9);
+}
+
+.form-group input {
+  width: 100%;
+  max-width: 600px;
+  border: 2px solid var(--cs-olive6);
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--cs-olive9);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--cs-olive7);
+  box-shadow: 0 0 0 4px rgba(113, 119, 68, 0.2);
+  background: rgba(255, 255, 255, 1);
+}
+
+.form-group input:hover {
+  border-color: var(--cs-olive7);
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+}
+
+.save-button,
+.cancel-button {
+  padding: 1rem 2.5rem;
+  border-radius: 12px;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.save-button {
+  background: var(--cs-brown);
+  color: var(--cs-beige);
+  box-shadow: 0 4px 12px rgba(118, 97, 83, 0.3);
+}
+
+.save-button:hover:not(:disabled) {
+  background: var(--cs-olive9);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(55, 61, 32, 0.4);
+}
+
+.save-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cancel-button {
+  background: transparent;
+  color: var(--cs-olive7);
+  border: 2px solid var(--cs-olive7);
+}
+
+.cancel-button:hover:not(:disabled) {
+  background: var(--cs-olive7);
+  color: var(--cs-beige);
+  border-color: var(--cs-olive7);
+}
+
+.cancel-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .student-profile-page {
+    padding: 6rem 1.5rem 3rem;
+  }
+
+  .profile-container {
+    gap: 2rem;
+  }
+
+  .profile-section {
+    padding: 2.5rem 1.75rem;
+    border-radius: 24px;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .info-item {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding: 1.25rem;
+  }
+
+  .info-label {
+    font-weight: 700;
+  }
+
+  .form-group input {
+    max-width: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .save-button,
+  .cancel-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .student-profile-page {
+    padding: 6rem 1rem 2.5rem;
+  }
+
+  .profile-section {
+    padding: 2rem 1.5rem;
+  }
+
+  .profile-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .profile-section h2 {
+    font-size: 1.2rem;
+  }
+
+  .info-item {
+    padding: 1rem;
+  }
+}

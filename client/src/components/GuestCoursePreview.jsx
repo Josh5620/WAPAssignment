@@ -190,10 +190,7 @@ const GuestCoursePreview = () => {
         </div>
         {additionalChapterCount > 0 && (
           <div className="preview-more">
-            …and {additionalChapterCount} more chapters waiting in the full course.
-            <PrimaryButton variant="ghost" size="sm" onClick={() => navigate('/register')}>
-              Sign up to see the full curriculum
-            </PrimaryButton>
+            🔒 {additionalChapterCount} more chapters waiting in the full course. Sign up to unlock!
           </div>
         )}
       </section>
@@ -240,21 +237,6 @@ const GuestCoursePreview = () => {
           <p>These learners previewed the course and decided to grow with CodeSage.</p>
         </div>
         <Testimonials courseId={courseId} limit={3} />
-      </section>
-
-      <section className="guest-preview__cta" aria-labelledby="preview-cta-heading">
-        <div className="final-cta__card">
-          <h2 id="preview-cta-heading">Ready to cultivate your Python skills?</h2>
-          <p>Join CodeSage to unlock the complete course library, interactive practice, and progress tracking.</p>
-          <div className="final-cta__actions">
-            <PrimaryButton size="lg" onClick={() => navigate('/register')}>
-              Enroll in this course
-            </PrimaryButton>
-            <PrimaryButton variant="ghost" size="sm" onClick={() => navigate('/login')}>
-              Already a member? Log in
-            </PrimaryButton>
-          </div>
-        </div>
       </section>
     </div>
   );

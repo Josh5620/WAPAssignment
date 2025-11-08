@@ -84,8 +84,13 @@ const Login = () => {
       <main className="auth-page__container">
         <section className="auth-card">
           <div className="auth-card__header">
-            <img src="/CodeSageLogo.svg" alt="CodeSage sprout" className="auth-card__icon" />
+            <div className="auth-card__logo">
+              <span className="auth-card__logo-text">CodeSage</span>
+              <img src="/CodeSageLogo.svg" alt="CodeSage sprout" className="auth-card__logo-icon" />
+            </div>
+            <div className="auth-card__divider"></div>
             <h1>Welcome Back</h1>
+            <div className="auth-card__divider"></div>
             <p>Log in to continue your learning journey.</p>
           </div>
 
@@ -98,7 +103,7 @@ const Login = () => {
                 id="login-email"
                 type="email"
                 name="email"
-                placeholder="Enter your email"
+                placeholder="yingxinn18@gmail.com"
                 value={formData.email}
                 onChange={handleChange}
                 autoComplete="email"
@@ -107,14 +112,14 @@ const Login = () => {
               {errors.email && <span className="auth-field__error">{errors.email}</span>}
             </div>
 
-            <div className={`auth-field auth-field--password${errors.password ? ' has-error' : ''}`}>
+            <div className={`auth-field${errors.password ? ' has-error' : ''}`}>
               <label htmlFor="login-password">Password</label>
               <div className="auth-password">
                 <input
                   id="login-password"
                   type={showPassword ? 'text' : 'password'}
                   name="password"
-                  placeholder="Enter your password"
+                  placeholder="••••••••••"
                   value={formData.password}
                   onChange={handleChange}
                   autoComplete="current-password"
@@ -141,36 +146,36 @@ const Login = () => {
                   checked={formData.rememberMe}
                   onChange={handleChange}
                 />
-                Remember me
+                Remember Me
               </label>
-              <a href="#" className="auth-link">
-                Forgot password?
-              </a>
+              <Link to="#" className="auth-link">
+                Forgot Password?
+              </Link>
             </div>
 
-            <PrimaryButton type="submit" fullWidth disabled={loading}>
-              {loading ? 'Logging in…' : 'Log In'}
-            </PrimaryButton>
+            <div className="auth-submit">
+              <button type="submit" disabled={loading}>
+                {loading ? 'LOGGING IN...' : 'LOGIN'}
+              </button>
+            </div>
           </form>
 
-          <div className="auth-divider">
-            <span>Or continue with</span>
-          </div>
+          <div className="auth-divider">Or</div>
 
           <div className="auth-social">
-            <button type="button" aria-label="Continue with Google">
+            <button type="button" className="auth-social__button" aria-label="Continue with Google">
               <img src="/google.svg" alt="Google" />
             </button>
-            <button type="button" aria-label="Continue with Apple">
+            <button type="button" className="auth-social__button" aria-label="Continue with Apple">
               <img src="/apple.svg" alt="Apple" />
             </button>
-            <button type="button" aria-label="Continue with Facebook">
+            <button type="button" className="auth-social__button" aria-label="Continue with Facebook">
               <img src="/facebook.svg" alt="Facebook" />
             </button>
           </div>
 
-          <p className="auth-switch">
-            Don&apos;t have an account? <Link to="/register">Sign up</Link>
+          <p className="auth-footer">
+            Don&apos;t have an account? <Link to="/register">Sign Up</Link>
           </p>
         </section>
       </main>

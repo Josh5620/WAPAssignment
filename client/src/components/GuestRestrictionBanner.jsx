@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getUser } from '../utils/auth';
+import '../styles/GuestRestrictionBanner.css';
 
 const GuestRestrictionBanner = ({ message, showLogin = true }) => {
   const navigate = useNavigate();

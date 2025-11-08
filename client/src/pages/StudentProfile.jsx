@@ -5,6 +5,7 @@ import { quickApi } from '../services/apiService';
 import Navbar from '../components/Navbar';
 import StudentLeaderboard from '../components/StudentLeaderboard';
 import StudentProgress from '../components/StudentProgress';
+import '../styles/StudentProfile.css';
 
 const StudentProfile = () => {
   const navigate = useNavigate();

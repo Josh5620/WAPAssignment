@@ -1,93 +1,156 @@
 .register-card {
-  gap: 1.25rem;
+  gap: 1.5rem;
+}
+
+.register-card .auth-card__header h1 {
+  font-size: 1.4rem;
 }
 
 .auth-card__success {
   background: rgba(103, 117, 74, 0.15);
   border: 1px solid rgba(103, 117, 74, 0.35);
   color: var(--primary);
-  padding: 0.85rem 1rem;
-  border-radius: 16px;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
   font-family: 'Pixelify Sans', cursive;
+  font-size: 0.9rem;
 }
 
 .auth-field__hint,
 .auth-field__note {
   font-family: 'Pixelify Sans', cursive;
-  font-size: 0.85rem;
-  color: rgba(55, 61, 32, 0.65);
+  font-size: 0.8rem;
+  color: rgba(55, 61, 32, 0.6);
+  line-height: 1.4;
+  margin-top: 0.35rem;
 }
 
 .register-role {
-  display: grid;
-  gap: 0.75rem;
-  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
 }
 
 .register-role__label {
   font-family: 'Pixelify Sans', cursive;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: rgba(55, 61, 32, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
 }
 
 .register-role__option {
   display: flex;
-  gap: 0.85rem;
-  padding: 0.85rem 1rem;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem;
   border-radius: 16px;
-  border: 1px solid rgba(103, 117, 74, 0.22);
-  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.75);
   cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.register-role__option:hover {
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .register-role__option.is-active {
   border-color: var(--primary);
-  box-shadow: 0 12px 24px rgba(55, 61, 32, 0.12);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 12px rgba(55, 61, 32, 0.12);
 }
 
-.register-role__option input {
-  margin-top: 0.35rem;
+.register-role__option input[type="radio"] {
+  margin-top: 0.15rem;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+
+.register-role__content {
+  flex: 1;
 }
 
 .register-role__option strong {
   display: block;
   font-family: 'Press Start 2P', cursive;
-  font-size: 0.85rem;
-  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+  margin-bottom: 0.35rem;
+  color: var(--text);
+  letter-spacing: 0.5px;
 }
 
 .register-role__option p {
   font-family: 'Pixelify Sans', cursive;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: rgba(55, 61, 32, 0.65);
+  line-height: 1.4;
+  margin: 0;
 }
 
 .register-terms {
-  display: inline-flex;
+  display: flex;
   align-items: flex-start;
-  gap: 0.65rem;
+  gap: 0.6rem;
   font-family: 'Pixelify Sans', cursive;
+  font-size: 0.85rem;
   color: rgba(55, 61, 32, 0.75);
+  margin-top: 0.5rem;
+}
+
+.register-terms input[type="checkbox"] {
+  margin-top: 0.15rem;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+
+.register-terms label {
+  flex: 1;
+  cursor: pointer;
+  user-select: none;
 }
 
 .register-terms a {
   color: var(--primary);
   font-weight: 600;
-  text-decoration: none;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.register-terms a:hover {
+  color: var(--primary-hover);
 }
 
 .register-terms.has-error {
   color: #6d2f1a;
 }
 
+.register-terms.has-error input[type="checkbox"] {
+  outline: 2px solid rgba(195, 122, 99, 0.5);
+}
+
 @media (max-width: 540px) {
-  .register-role__option {
-    flex-direction: column;
-    align-items: flex-start;
+  .register-card .auth-card__header h1 {
+    font-size: 1.2rem;
   }
 
-  .register-role__option input {
-    margin-top: 0;
+  .register-role__option {
+    padding: 0.9rem 1rem;
+  }
+
+  .register-role__option strong {
+    font-size: 0.8rem;
+  }
+
+  .register-role__option p {
+    font-size: 0.8rem;
   }
 }

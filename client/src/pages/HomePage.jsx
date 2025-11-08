@@ -125,7 +125,7 @@ const HomePage = () => {
           </div>
           <div className="hero__visual" aria-hidden>
             <div className="hero__illustration">
-              <img src="/code.gif" alt="Animated code editor" />
+              <img src="/garden.jpg" alt="garden" />
               <div className="hero__badge">🌿 150K+ garden actions logged</div>
             </div>
           </div>
@@ -215,7 +215,6 @@ const HomePage = () => {
           <a href="/guest/courses">Courses</a>
           <a href="mailto:hello@codesage.com">Contact</a>
         </div>
-        <ThemeSelector />
         <p className="footer__copy">© {new Date().getFullYear()} CodeSage. All rights reserved.</p>
       </footer>
     </div>

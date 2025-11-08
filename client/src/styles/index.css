@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;500;600;700&display=swap');
+
 :root {
   --cs-beige:  #eff1ed;
   --cs-slate8: #939787;
@@ -31,7 +33,7 @@
 
   color-scheme: light dark;
   color: var(--text);
-  background-color: var(--bg);
+  background: linear-gradient(180deg, rgba(239, 241, 237, 1) 0%, rgba(239, 241, 237, 0.75) 50%, rgba(239, 241, 237, 1) 100%);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

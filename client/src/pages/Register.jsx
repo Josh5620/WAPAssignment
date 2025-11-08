@@ -127,8 +127,10 @@ const Register = () => {
       <main className="auth-page__container">
         <section className="auth-card register-card">
           <div className="auth-card__header">
-            <img src="/CodeSageLogo.svg" alt="CodeSage sprout" className="auth-card__icon" />
-            <h1>Join CodeSage</h1>
+            <img src="/CodeSageLogo.svg" alt="CodeSage sprout" className="auth-card__logo-icon" />
+            <div className="auth-card__divider"></div>
+            <h1>Register</h1>
+            <div className="auth-card__divider"></div>
             <p>Start your Python learning journey today.</p>
           </div>
 
@@ -142,7 +144,7 @@ const Register = () => {
                 id="register-name"
                 type="text"
                 name="fullName"
-                placeholder="Enter your full name"
+                placeholder="Enter your Full name"
                 value={formData.fullName}
                 onChange={handleChange}
                 autoComplete="name"
@@ -160,15 +162,13 @@ const Register = () => {
                 placeholder="Enter your email"
                 value={formData.email}
                 onChange={handleChange}
-                onBlur={handleEmailBlur}
                 autoComplete="email"
                 required
               />
-              {checkingEmail && <span className="auth-field__note">Checking availability…</span>}
               {errors.email && <span className="auth-field__error">{errors.email}</span>}
             </div>
 
-            <div className={`auth-field auth-field--password${errors.password ? ' has-error' : ''}`}>
+            <div className={`auth-field${errors.password ? ' has-error' : ''}`}>
               <label htmlFor="register-password">Password</label>
               <div className="auth-password">
                 <input
@@ -180,6 +180,7 @@ const Register = () => {
                   onChange={handleChange}
                   autoComplete="new-password"
                   required
+                  minLength={8}
                 />
                 <button
                   type="button"
@@ -190,15 +191,19 @@ const Register = () => {
                   <img src={showPassword ? '/eye.svg' : '/crosseye.svg'} alt="Toggle password visibility" />
                 </button>
               </div>
-              <p className="auth-field__hint">Use at least 8 characters with uppercase, lowercase, and a number.</p>
               {errors.password && <span className="auth-field__error">{errors.password}</span>}
+              {!errors.password && (
+                <span className="auth-field__hint">
+                  Use at least 8 characters with uppercase, lowercase, and a number.
+                </span>
+              )}
             </div>
 
-            <div className={`auth-field auth-field--password${errors.confirmPassword ? ' has-error' : ''}`}>
-              <label htmlFor="register-confirm">Confirm Password</label>
+            <div className={`auth-field${errors.confirmPassword ? ' has-error' : ''}`}>
+              <label htmlFor="register-confirm-password">Confirm Password</label>
               <div className="auth-password">
                 <input
-                  id="register-confirm"
+                  id="register-confirm-password"
                   type={showConfirmPassword ? 'text' : 'password'}
                   name="confirmPassword"
                   placeholder="Re-enter your password"
@@ -213,14 +218,14 @@ const Register = () => {
                   onClick={() => setShowConfirmPassword((prev) => !prev)}
                   aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
                 >
-                  <img src={showConfirmPassword ? '/eye.svg' : '/crosseye.svg'} alt="Toggle confirm password visibility" />
+                  <img src={showConfirmPassword ? '/eye.svg' : '/crosseye.svg'} alt="Toggle password visibility" />
                 </button>
               </div>
               {errors.confirmPassword && <span className="auth-field__error">{errors.confirmPassword}</span>}
             </div>
 
             <div className="register-role">
-              <span className="register-role__label">I am a…</span>
+              <label className="register-role__label">I am a...</label>
               <label className={`register-role__option${formData.role === 'student' ? ' is-active' : ''}`}>
                 <input
                   type="radio"
@@ -228,8 +233,9 @@ const Register = () => {
                   value="student"
                   checked={formData.role === 'student'}
                   onChange={handleChange}
+                  required
                 />
-                <div>
+                <div className="register-role__content">
                   <strong>Student</strong>
                   <p>Learn Python at your own pace</p>
                 </div>
@@ -241,8 +247,9 @@ const Register = () => {
                   value="teacher"
                   checked={formData.role === 'teacher'}
                   onChange={handleChange}
+                  required
                 />
-                <div>
+                <div className="register-role__content">
                   <strong>Teacher</strong>
                   <p>Create and manage courses</p>
                 </div>
@@ -256,32 +263,34 @@ const Register = () => {
                 checked={formData.agreeToTerms}
                 onChange={handleChange}
               />
-              I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+              <span>
+                I agree to the <Link to="#">Terms of Service</Link> and <Link to="#">Privacy Policy</Link>.
+              </span>
             </label>
             {errors.agreeToTerms && <span className="auth-field__error">{errors.agreeToTerms}</span>}
 
-            <PrimaryButton type="submit" fullWidth disabled={loading || success}>
-              {loading ? 'Creating account…' : 'Create Account'}
-            </PrimaryButton>
+            <div className="auth-submit">
+              <button type="submit" disabled={loading || success}>
+                {loading ? 'CREATING ACCOUNT...' : success ? 'ACCOUNT CREATED' : 'CREATE ACCOUNT'}
+              </button>
+            </div>
           </form>
 
-          <div className="auth-divider">
-            <span>Or sign up with</span>
-          </div>
+          <div className="auth-divider">Or sign up with</div>
 
           <div className="auth-social">
-            <button type="button" aria-label="Sign up with Google">
+            <button type="button" className="auth-social__button" aria-label="Continue with Google">
               <img src="/google.svg" alt="Google" />
             </button>
-            <button type="button" aria-label="Sign up with Apple">
+            <button type="button" className="auth-social__button" aria-label="Continue with Apple">
               <img src="/apple.svg" alt="Apple" />
             </button>
-            <button type="button" aria-label="Sign up with Facebook">
+            <button type="button" className="auth-social__button" aria-label="Continue with Facebook">
               <img src="/facebook.svg" alt="Facebook" />
             </button>
           </div>
 
-          <p className="auth-switch">
+          <p className="auth-footer">
             Already have an account? <Link to="/login">Log in</Link>
           </p>
         </section>

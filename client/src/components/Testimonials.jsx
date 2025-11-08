@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { api } from '../services/apiService';
 import { getUser } from '../utils/auth';
+import '../styles/Testimonials.css';  
 
 const Testimonials = ({ courseId, limit }) => {
   const user = getUser();
@@ -90,7 +91,6 @@ const Testimonials = ({ courseId, limit }) => {
   return (
     <div className="testimonials">
       <div className="testimonials-header">
-        <h2>What Our Students Say</h2>
         {isLoggedIn && (
           <button
             className="add-testimonial-btn"

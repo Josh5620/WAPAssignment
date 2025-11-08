@@ -3,7 +3,6 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import ThemeSelector from './ThemeSelector';
 import PrimaryButton from './PrimaryButton';
 import { useAuth } from '../context/AuthContext.jsx';
-import ThemeSelector from './ThemeSelector.jsx';
 import '../styles/Navbar.css';
 
 const getDashboardPath = (role) => {
@@ -52,8 +51,8 @@ const Navbar = () => {
     <header className={`navbar ${isScrolled ? 'navbar--scrolled' : ''}`}>
       <div className="navbar__inner">
         <Link to="/" className="navbar__logo" aria-label="CodeSage Home">
-          <img src="/CodeSageLogo.svg" alt="CodeSage sprout" className="navbar__logo-icon" />
           <img src="/CodeSage.svg" alt="CodeSage" className="navbar__logo-text" />
+          <img src="/CodeSageLogo.svg" alt="CodeSage sprout" className="navbar__logo-icon" />
         </Link>
 
         <button
@@ -142,14 +141,6 @@ const Navbar = () => {
               >
                 Log Out
               </PrimaryButton>
-              <PrimaryButton
-                size="sm"
-                variant="primary"
-                className="navbar__auth-btn"
-                to={dashboardPath}
-              >
-                Dashboard
-              </PrimaryButton>
             </>
           ) : (
             <>
@@ -172,29 +163,7 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      <div className="nav-right">
-        <ThemeSelector />
-        {isLoggedIn ? (
-          <>
-            <Link to="/student-profile" className="nav-link">
-              Profile
-            </Link>
-            <button onClick={handleLogout} className="nav-login">
-              Logout
-            </button>
-          </>
-        ) : (
-          <>
-            <button onClick={handleLogin} className="nav-login">
-              LOGIN
-            </button>
-            <button onClick={handleRegister} className="nav-register">
-              REGISTER
-            </button>
-          </>
-        )}
-      </div>
-    </nav>
+    </header>
   );
 };
 

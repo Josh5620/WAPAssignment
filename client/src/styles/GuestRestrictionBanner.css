@@ -1,0 +1,141 @@
+.guest-restriction-banner {
+  background: linear-gradient(135deg, var(--cs-olive9) 0%, var(--cs-olive7) 100%);
+  color: var(--cs-beige);
+  padding: 1.25rem 2rem;
+  border-radius: 0 0 24px 24px;
+  box-shadow: 0 8px 32px rgba(55, 61, 32, 0.2);
+  position: sticky;
+  top: var(--navbar-height, 72px);
+  z-index: 100;
+  margin-bottom: 2rem;
+}
+
+.banner-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.banner-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.banner-text {
+  flex: 1;
+  min-width: 250px;
+}
+
+.banner-text strong {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--cs-beige);
+}
+
+.banner-text p {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.95rem;
+  margin: 0;
+  color: rgba(239, 241, 237, 0.9);
+  line-height: 1.5;
+}
+
+.banner-actions {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.banner-register-button,
+.banner-login-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  white-space: nowrap;
+}
+
+.banner-register-button {
+  background: var(--cs-brown);
+  color: var(--cs-beige);
+  box-shadow: 0 4px 12px rgba(118, 97, 83, 0.4);
+}
+
+.banner-register-button:hover {
+  background: var(--cs-beige);
+  color: var(--cs-olive9);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(239, 241, 237, 0.3);
+}
+
+.banner-login-button {
+  background: transparent;
+  color: var(--cs-beige);
+  border: 2px solid var(--cs-beige);
+}
+
+.banner-login-button:hover {
+  background: var(--cs-beige);
+  color: var(--cs-olive9);
+  border-color: var(--cs-beige);
+}
+
+@media (max-width: 768px) {
+  .guest-restriction-banner {
+    padding: 1rem 1.5rem;
+    border-radius: 0 0 20px 20px;
+  }
+
+  .banner-content {
+    gap: 1rem;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .banner-icon {
+    font-size: 1.75rem;
+  }
+
+  .banner-text {
+    flex: 1 1 100%;
+    min-width: auto;
+  }
+
+  .banner-actions {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  .banner-text strong {
+    font-size: 0.8rem;
+  }
+
+  .banner-text p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .guest-restriction-banner {
+    padding: 1rem;
+  }
+
+  .banner-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .banner-register-button,
+  .banner-login-button {
+    width: 100%;
+  }
+}

@@ -1,5 +1,4 @@
 .homepage {
-  background: linear-gradient(180deg, rgba(239, 241, 237, 1) 0%, rgba(239, 241, 237, 0.65) 60%, rgba(239, 241, 237, 1) 100%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -24,7 +23,7 @@
 
 .hero h1 {
   font-family: 'Press Start 2P', cursive;
-  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  font-size: clamp(1.7rem, 4vw, 3rem);
   line-height: 1.2;
   margin-bottom: 1.5rem;
 }
@@ -295,9 +294,6 @@
 }
 
 @media (max-width: 768px) {
-  .homepage__content {
-    padding-top: 6rem;
-  }
 
   .hero {
     grid-template-columns: 1fr;

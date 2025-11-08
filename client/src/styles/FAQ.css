@@ -1,6 +1,5 @@
 .faq-page {
   min-height: 100vh;
-  background: linear-gradient(180deg, rgba(239, 241, 237, 1) 0%, rgba(239, 241, 237, 0.75) 50%, rgba(239, 241, 237, 1) 100%);
   display: flex;
   flex-direction: column;
 }

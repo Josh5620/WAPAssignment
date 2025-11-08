@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getUser } from '../utils/auth';
-import '../styles/GuestCoursesPage.css';
+import '../styles/GuestAccessPrompt.css';
 
 const GuestAccessPrompt = ({ 
   title = "Ready to Start Learning?", 

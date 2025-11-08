@@ -21,7 +21,6 @@ const ThemeSelector = () => {
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Change theme"
       >
-        <span className="theme-icon">🎨</span>
         <span className="theme-label">Theme</span>
       </button>
 

@@ -50,6 +50,7 @@ const GardenPath = ({ chapters, progress, onChapterClick }) => {
               level={chapter.level}
               title={chapter.title}
               topics={chapter.topics}
+              status={statusClass}
             />
           </div>
         );

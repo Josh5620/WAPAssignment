@@ -96,37 +96,32 @@ const TeacherFeedbackQueue = ({ onReplyClick, refreshToken = 0 }) => {
           request.Message ||
           '';
 
-        const createdAtRaw = request.createdAt || request.CreatedAt || request.timestamp;
-        const createdAt = createdAtRaw ? new Date(createdAtRaw) : null;
-
         return (
           <article key={requestId || question} className="feedback-item">
-            <header className="feedback-header">
-              <span className="feedback-student">{studentName}</span>
-              <span className="feedback-chapter">Chapter: {chapterName}</span>
-              {createdAt && (
-                <time className="feedback-time" dateTime={createdAt.toISOString()}>
-                  {createdAt.toLocaleString()}
-                </time>
+            <h4>{studentName}</h4>
+            <div className="feedback-meta">
+              <span>Chapter: {chapterName}</span>
+              {request.createdAt && (
+                <span>
+                  {new Date(request.createdAt || request.CreatedAt).toLocaleString()}
+                </span>
               )}
-            </header>
-            <p className="feedback-question">{question}</p>
-            <div className="feedback-actions">
-              <PrimaryButton
-                size="sm"
-                onClick={() => onReplyClick?.({
-                  ...request,
-                  id: requestId,
-                  studentName,
-                  chapterName,
-                  question,
-                  context: question,
-                  type: 'help',
-                })}
-              >
-                Reply
-              </PrimaryButton>
             </div>
+            <p className="feedback-question">{question}</p>
+            <PrimaryButton
+              size="sm"
+              onClick={() => onReplyClick?.({
+                ...request,
+                id: requestId,
+                studentName,
+                chapterName,
+                question,
+                context: question,
+                type: 'help',
+              })}
+            >
+              Reply
+            </PrimaryButton>
           </article>
         );
       })}

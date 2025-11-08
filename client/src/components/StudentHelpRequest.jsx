@@ -54,11 +54,7 @@ const StudentHelpRequest = ({ chapterId }) => {
           rows={5}
         />
         {status && (
-          <div
-            className={`help-alert ${
-              status.type === 'error' ? 'help-error' : 'help-success'
-            }`}
-          >
+          <div className={`help-status ${status.type === 'error' ? 'error' : 'success'}`}>
             {status.message}
           </div>
         )}

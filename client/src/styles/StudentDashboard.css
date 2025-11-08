@@ -31,7 +31,7 @@
   display: grid;
   grid-template-columns: repeat(7, minmax(180px, 180px));
   grid-template-rows: repeat(2, minmax(180px, 180px));
-  gap: 1rem;
+  gap: 0;
   max-width: 1500px;
   margin: 0 auto;
   padding: 0 1rem;
@@ -61,7 +61,6 @@
 
 .path-card-wrapper.is-current .path-card {
   border-color: var(--accent);
-  box-shadow: var(--shadow-2);
 }
 
 .path-card-wrapper.is-locked .path-card {
@@ -71,7 +70,6 @@
 
 .path-card-wrapper.is-locked .path-card:hover {
   transform: none;
-  box-shadow: var(--shadow-1);
 }
 
 /* Snake pattern: starts bottom-left, goes up, then right across top, then down */
@@ -162,7 +160,6 @@
   .garden-path-grid {
     grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
     grid-template-rows: auto;
-    gap: 1.5rem;
     justify-content: center;
   }
 

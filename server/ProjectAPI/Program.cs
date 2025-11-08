@@ -169,8 +169,7 @@ static async Task SeedTestCourses(ApplicationDbContext context, ILogger logger)
     {
         var courses = new List<Course>
         {
-            new() { CourseId = Guid.NewGuid(), Title = "Introduction to Python", Description = "Learn Python basics", Published = true },
-            new() { CourseId = Guid.NewGuid(), Title = "Web Development", Description = "Learn HTML, CSS, JavaScript", Published = true }
+            new() { CourseId = Guid.NewGuid(), Title = "Introduction to Python", Description = "Learn Python basics", Published = true }
         };
         
         context.Courses.AddRange(courses);

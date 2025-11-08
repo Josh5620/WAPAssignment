@@ -60,7 +60,7 @@ const faqCategories = [
       {
         question: 'How many courses are available?',
         answer:
-          'We curate a growing library covering fundamentals, data structures, OOP, web development, automation, and data science.',
+          'We curate a growing library covering fundamentals, data structures, OOP, automation, and data science.',
       },
       {
         question: 'Can I preview a course before enrolling?',

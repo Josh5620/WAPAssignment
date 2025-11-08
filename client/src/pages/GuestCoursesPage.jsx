@@ -22,7 +22,6 @@ const CATEGORY_OPTIONS = [
   { value: 'basics', label: 'Basics' },
   { value: 'data-structures', label: 'Data Structures' },
   { value: 'oop', label: 'Object-Oriented Programming' },
-  { value: 'web-development', label: 'Web Development' },
   { value: 'automation', label: 'Automation' },
   { value: 'data-science', label: 'Data Science' },
 ];

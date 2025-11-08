@@ -127,7 +127,10 @@ const Register = () => {
       <main className="auth-page__container">
         <section className="auth-card register-card">
           <div className="auth-card__header">
-            <img src="/CodeSageLogo.svg" alt="CodeSage sprout" className="auth-card__logo-icon" />
+            <div className="auth-card__logo">
+              <span className="auth-card__logo-text">CodeSage</span>
+              <img src="/CodeSageLogo.svg" alt="CodeSage sprout" className="auth-card__logo-icon" />
+            </div>
             <div className="auth-card__divider"></div>
             <h1>Register</h1>
             <div className="auth-card__divider"></div>

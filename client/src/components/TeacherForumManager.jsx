@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import PrimaryButton from './PrimaryButton';
 import { forumModerationService } from '../services/apiService';
 
-const TeacherForumManager = ({ courses }) => {
+const TeacherForumManager = ({ courses, onReplyClick }) => {
   const [selectedCourseId, setSelectedCourseId] = useState('');
   const [forumPosts, setForumPosts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -23,13 +24,7 @@ const TeacherForumManager = ({ courses }) => {
     }
   }, [courseOptions, selectedCourseId]);
 
-  useEffect(() => {
-    if (selectedCourseId) {
-      loadForumPosts(selectedCourseId);
-    }
-  }, [selectedCourseId]);
-
-  const loadForumPosts = async (courseId) => {
+  const loadForumPosts = useCallback(async (courseId) => {
     setLoading(true);
     try {
       const posts = await forumModerationService.listForCourse(courseId);
@@ -42,7 +37,13 @@ const TeacherForumManager = ({ courses }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (selectedCourseId) {
+      loadForumPosts(selectedCourseId);
+    }
+  }, [loadForumPosts, selectedCourseId]);
 
   const handleDeletePost = async (postId) => {
     if (!postId) return;
@@ -67,9 +68,9 @@ const TeacherForumManager = ({ courses }) => {
 
   return (
     <div className="posts-tab">
-      <div className="td-form" style={{ maxWidth: '320px' }}>
+      <div className="td-form" style={{ maxWidth: '360px' }}>
         <label>
-          Select Course
+          <span>Select Course</span>
           <select
             value={selectedCourseId}
             onChange={(event) => setSelectedCourseId(event.target.value)}
@@ -85,10 +86,14 @@ const TeacherForumManager = ({ courses }) => {
 
       {error && (
         <div className="td-alert td-error">
-          {error}
-          <button type="button" onClick={() => setError('')}>
-            ×
-          </button>
+          <span>{error}</span>
+          <PrimaryButton
+            variant="ghost"
+            size="sm"
+            onClick={() => setError('')}
+          >
+            Dismiss
+          </PrimaryButton>
         </div>
       )}
 
@@ -117,13 +122,27 @@ const TeacherForumManager = ({ courses }) => {
                 </div>
                 <p className="post-content">{content}</p>
                 <div className="post-actions">
-                  <button
-                    type="button"
+                  <PrimaryButton
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => onReplyClick?.({
+                      ...post,
+                      id: post.profileId || post.ProfileId,
+                      studentName: author,
+                      context: content,
+                      type: 'forum',
+                    })}
+                  >
+                    Reply Privately
+                  </PrimaryButton>
+                  <PrimaryButton
+                    variant="ghost"
+                    size="sm"
+                    className="td-btn-danger"
                     onClick={() => handleDeletePost(postId)}
-                    className="btn-danger btn-sm"
                   >
                     Delete Post
-                  </button>
+                  </PrimaryButton>
                 </div>
               </div>
             );

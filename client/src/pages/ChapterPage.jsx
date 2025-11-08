@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import StudentHelpRequest from '../components/StudentHelpRequest';
 import { gardenPathData } from '../data/curriculum.js';
 import { getChapterDetails } from '../data/chapterDetails.js';
 import '../styles/ChapterPage.css';
@@ -117,6 +118,13 @@ const ChapterPage = () => {
           >
             Challenges
           </button>
+          <button
+            type="button"
+            className={`chapter-tab ${activeTab === 'help' ? 'active' : ''}`}
+            onClick={() => setActiveTab('help')}
+          >
+            Ask for Help
+          </button>
         </div>
 
         <div className="chapter-content-panel">
@@ -225,6 +233,10 @@ const ChapterPage = () => {
                 )}
               </div>
             </section>
+          )}
+
+          {activeTab === 'help' && (
+            <StudentHelpRequest chapterId={numericId} />
           )}
         </div>
 

@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getUser } from '../utils/auth';
-import TestingNav from '../components/TestingNav';
 import ReturnHome from '../components/ReturnHome';
 import StudentQuizComponent from '../components/StudentQuizComponent';
 import StudentFlashcardComponent from '../components/StudentFlashcardComponent';
@@ -168,7 +167,6 @@ const CourseViewerPage = () => {
 
   return (
     <div className="course-viewer-page">
-      <TestingNav />
       <ReturnHome />
       <div className="course-viewer__container">
         <header className="course-viewer__header">

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { adminService } from '../services/apiService';
-import TestingNav from '../components/TestingNav';
 import '../styles/AdminDashboard.css';
 
 const AdminDashboard = () => {
@@ -286,7 +285,6 @@ const AdminDashboard = () => {
 
     return (
         <div className="admin-dashboard">
-            <TestingNav />
             <header className="admin-header">
                 <h1>Admin Dashboard</h1>
                 <div className="admin-header-actions">

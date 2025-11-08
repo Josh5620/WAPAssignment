@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getUser } from '../utils/auth';
 import Navbar from '../components/Navbar';
-import TestingNav from '../components/TestingNav';
 import GuestCourseCatalog from '../components/GuestCourseCatalog';
 import GuestSearch from '../components/GuestSearch';
 import GuestAccessPrompt from '../components/GuestAccessPrompt';
@@ -27,7 +26,6 @@ const GuestCoursesPage = () => {
   return (
     <>
       <Navbar />
-      <TestingNav />
       <div className="guest-courses-page">
         <div className="page-header">
           <h1>Explore Our Courses</h1>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import Navbar from '../components/Navbar';
-import TestingNav from '../components/TestingNav';
 import Testimonials from '../components/Testimonials';
 import '../styles/HomePage.css';
 
@@ -11,7 +10,6 @@ const HomePage = () => {
     return (
         <div className="homepage">
             <Navbar /> {/* <-- Use Navbar component here */}
-            <TestingNav />
 
             {/* Hero Section */}
             <section className="hero">

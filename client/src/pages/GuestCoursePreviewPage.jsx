@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getUser } from '../utils/auth';
 import Navbar from '../components/Navbar';
-import TestingNav from '../components/TestingNav';
 import GuestCoursePreview from '../components/GuestCoursePreview';
 
 const GuestCoursePreviewPage = () => {
@@ -24,7 +23,6 @@ const GuestCoursePreviewPage = () => {
   return (
     <>
       <Navbar />
-      <TestingNav />
       <GuestCoursePreview />
     </>
   );

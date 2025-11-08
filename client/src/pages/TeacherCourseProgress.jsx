@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import TestingNav from '../components/TestingNav';
 import ReturnHome from '../components/ReturnHome';
 import FeedbackModal from '../components/FeedbackModal';
 import { teacherAnalyticsService, teacherCourseService } from '../services/apiService';
@@ -134,7 +133,6 @@ const TeacherCourseProgress = () => {
 
   return (
     <div className="teacher-dashboard">
-      <TestingNav />
       <ReturnHome />
       <div className="dashboard-container">
         <header className="dashboard-header td-header">

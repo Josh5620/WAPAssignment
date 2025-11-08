@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { api } from '../services/apiService';
 import { quickApi } from '../services/apiService';
 import Navbar from '../components/Navbar';
-import TestingNav from '../components/TestingNav';
 import StudentLeaderboard from '../components/StudentLeaderboard';
 import StudentProgress from '../components/StudentProgress';
 
@@ -112,7 +111,6 @@ const StudentProfile = () => {
     return (
       <>
         <Navbar />
-        <TestingNav />
         <div className="profile-loading">Loading profile...</div>
       </>
     );
@@ -122,7 +120,6 @@ const StudentProfile = () => {
     return (
       <>
         <Navbar />
-        <TestingNav />
         <div className="profile-error">
           <p>Failed to load profile.</p>
           <button onClick={() => navigate('/login')}>Go to Login</button>
@@ -134,7 +131,6 @@ const StudentProfile = () => {
   return (
     <>
       <Navbar />
-      <TestingNav />
       <div className="student-profile-page">
         <div className="profile-container">
           <div className="profile-header">

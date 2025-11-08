@@ -1,6 +1,5 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
-import TestingNav from '../components/TestingNav';
 import '../styles/FAQ.css';
 
 const FAQ = () => {
@@ -50,7 +49,6 @@ const FAQ = () => {
   return (
     <>
       <Navbar />
-      <TestingNav />
       <div className="faq-page">
         <header className="faq-header">
           <h1>Frequently Asked Questions</h1>

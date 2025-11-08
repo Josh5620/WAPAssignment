@@ -1,0 +1,64 @@
+.feedback-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.feedback-empty-note {
+  padding: 3rem 1.5rem;
+  border: 2px dashed var(--border);
+  border-radius: 20px;
+  background: var(--card-bg-transparent);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(0, 0, 0, 0.65);
+  text-align: center;
+}
+
+.feedback-item {
+  background: rgba(255, 255, 255, 0.78);
+  border: 2px solid var(--border);
+  border-radius: 22px;
+  padding: 1.75rem;
+  box-shadow: var(--shadow-2);
+  display: grid;
+  gap: 0.85rem;
+}
+
+.feedback-item h4 {
+  margin: 0;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+  text-transform: uppercase;
+}
+
+.feedback-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: 0.95rem;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.feedback-question {
+  margin: 0;
+  padding: 1rem 1.1rem;
+  background: var(--card-bg-transparent);
+  border-radius: 16px;
+  border: 1px dashed var(--border);
+  font-family: 'Pixelify Sans', sans-serif;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.feedback-item .btn-garden {
+  justify-self: flex-start;
+}
+
+@media (max-width: 640px) {
+  .feedback-item {
+    padding: 1.25rem;
+  }
+}

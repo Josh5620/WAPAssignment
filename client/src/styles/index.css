@@ -11,6 +11,7 @@
   --cs-brown:  #766153; /* same as slate7 */
 
   /* --- Semantics (what the colors are *for*) --- */
+  /* These are set dynamically by ThemeContext.jsx */
   --bg: var(--cs-beige);
   --text: var(--cs-olive9);
   --muted: var(--cs-slate7);
@@ -86,16 +87,6 @@ button:focus-visible {
   outline: 4px solid #373d20;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #373d20;
-    background-color: #eff1ed;
-  }
-  a:hover {
-    color: #979a68;
-  }
-  button {
-    background-color: #bcbd8b;
-    color: #373d20;
-  }
-}
+/* REMOVED the @media (prefers-color-scheme: light) block
+as it is now fully controlled by ThemeContext.jsx
+*/

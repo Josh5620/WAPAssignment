@@ -1,36 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getUser } from '../utils/auth';
+import { useAuth } from '../context/AuthContext.jsx';
 import '../styles/Navbar.css';
+
+const getDashboardPath = (role) => {
+  const normalized = typeof role === 'string' ? role.toLowerCase() : null;
+  if (normalized === 'teacher') return '/teacher-dashboard';
+  if (normalized === 'admin') return '/admin-dashboard';
+  return '/student-dashboard';
+};
 
 const Navbar = () => {
   const [visible, setVisible] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const timerRef = useRef(null);
   const navigate = useNavigate();
+  const { isLoggedIn, role, logout } = useAuth();
 
-  // Check login status and update on mount and when storage changes
-  useEffect(() => {
-    const checkLoginStatus = () => {
-      const user = getUser();
-      setIsLoggedIn(user !== null);
-    };
-
-    checkLoginStatus();
-    
-    // Listen for storage changes (when user logs in/out in another tab)
-    window.addEventListener('storage', checkLoginStatus);
-    
-    // Also check periodically in case login happens in same tab
-    const interval = setInterval(checkLoginStatus, 1000);
-    
-    return () => {
-      window.removeEventListener('storage', checkLoginStatus);
-      clearInterval(interval);
-    };
-  }, []);
-
-  // Always show navbar at top, auto-hide when scrolled down
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY === 0) {
@@ -38,6 +23,7 @@ const Navbar = () => {
         clearTimeout(timerRef.current);
       }
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -50,7 +36,12 @@ const Navbar = () => {
     }
   };
 
-  // Hide after 3s when not at top
+  useEffect(() => {
+    const handleShowNavbar = () => showNavbar();
+    window.addEventListener('showNavbar', handleShowNavbar);
+    return () => window.removeEventListener('showNavbar', handleShowNavbar);
+  }, []);
+
   useEffect(() => {
     if (visible && window.scrollY !== 0) {
       timerRef.current = setTimeout(() => setVisible(false), 3000);
@@ -58,13 +49,15 @@ const Navbar = () => {
     return () => clearTimeout(timerRef.current);
   }, [visible]);
 
-  const handleLogin = () => {
-    navigate('/login');
+  const handleLogin = () => navigate('/login');
+  const handleRegister = () => navigate('/register');
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
-  const handleRegister = () => {
-    navigate('/register');
-  };
+  const dashboardPath = getDashboardPath(role);
 
   return (
     <nav
@@ -79,10 +72,7 @@ const Navbar = () => {
         </Link>
         <div className="nav-links">
           <Link to="/" className="nav-link home-link">Home</Link>
-          <Link 
-            to={isLoggedIn ? "/courses" : "/guest/courses"} 
-            className="nav-link"
-          >
+          <Link to={isLoggedIn ? '/courses' : '/guest/courses'} className="nav-link">
             Courses
           </Link>
           <Link to="/about" className="nav-link about-link">
@@ -92,7 +82,7 @@ const Navbar = () => {
             FAQ
           </Link>
           {isLoggedIn && (
-            <Link to="/student-dashboard" className="nav-link">
+            <Link to={dashboardPath} className="nav-link">
               Dashboard
             </Link>
           )}
@@ -104,15 +94,7 @@ const Navbar = () => {
             <Link to="/student-profile" className="nav-link">
               Profile
             </Link>
-            <button 
-              onClick={() => {
-                localStorage.removeItem('access_token');
-                localStorage.removeItem('user_profile');
-                navigate('/');
-                window.location.reload();
-              }} 
-              className="nav-login"
-            >
+            <button onClick={handleLogout} className="nav-login">
               Logout
             </button>
           </>

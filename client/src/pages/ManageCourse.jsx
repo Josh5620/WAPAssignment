@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import TestingNav from '../components/TestingNav';
 import ReturnHome from '../components/ReturnHome';
 import {
   teacherCourseService,
@@ -235,7 +234,6 @@ const ManageCourse = () => {
 
   return (
     <div className="manage-course">
-      <TestingNav />
       <ReturnHome />
       <div className="manage-course__container">
         <header className="manage-course__header">

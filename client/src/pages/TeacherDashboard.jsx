@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/TeacherDashboard.css';
-import TestingNav from '../components/TestingNav';
 import ReturnHome from '../components/ReturnHome';
 import { teacherCourseService } from '../services/apiService';
 import TeacherForumManager from '../components/TeacherForumManager';
@@ -189,7 +188,6 @@ const TeacherDashboard = () => {
 
   return (
     <div className="teacher-dashboard">
-      <TestingNav />
       <ReturnHome />
       <div className="dashboard-container">
         <header className="dashboard-header td-header">

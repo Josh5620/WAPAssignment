@@ -1,21 +1,23 @@
 .theme-selector {
   position: relative;
+  z-index: 1;
 }
 
 .theme-toggle-button {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.9rem;
   background: var(--primary);
   color: var(--bg);
   border: 2px solid var(--border);
   border-radius: 25px;
   font-family: 'Pixelify Sans', cursive;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: var(--shadow-1);
+  white-space: nowrap;
 }
 
 .theme-toggle-button:hover {
@@ -25,7 +27,7 @@
 }
 
 .theme-icon {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .theme-overlay {
@@ -35,7 +37,7 @@
   right: 0;
   bottom: 0;
   background: var(--theme-overlay, rgba(0, 0, 0, 0.45));
-  z-index: 1998;
+  z-index: 2000;
   animation: fadeIn 0.2s ease;
 }
 
@@ -44,7 +46,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--bg);
   backdrop-filter: blur(10px);
   border: 3px solid var(--border);
   border-radius: 24px;
@@ -53,7 +55,7 @@
   width: 90%;
   max-height: 80vh;
   overflow-y: auto;
-  z-index: 1999;
+  z-index: 2001;
   box-shadow: var(--shadow-3);
   animation: slideIn 0.3s ease;
 }
@@ -122,7 +124,7 @@
   align-items: center;
   gap: 1.25rem;
   padding: 1rem 1.5rem;
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--card-bg);
   border: 2px solid var(--border);
   border-radius: 16px;
   cursor: pointer;
@@ -139,7 +141,7 @@
 .theme-option.active {
   border-color: var(--primary);
   border-width: 3px;
-  background: rgba(255, 255, 255, 0.98);
+  background: var(--accent);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
 }
 

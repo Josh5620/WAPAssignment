@@ -1,13 +1,49 @@
-header.navbar {
-  position: sticky;
+/* =========================
+   NAVIGATION
+   ========================= */
+
+:root { 
+  --gutter: 2rem; 
+  --navbar-height: 4.2rem;
+}       
+html, body { height: 100%; margin: 0; }
+body { 
+  min-height: 100vh; 
+  padding-top: calc(var(--navbar-height) + 0.4rem) !important;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1rem 0.5rem 2rem;
+  background: #EFF1ED; 
+  box-shadow: none;
+  border: none;
+  margin: 0;
+  padding-top: 1.5rem;
+  padding-bottom: 0.2rem;
+  flex-shrink: 0;
+  width: 100%;
+  position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  z-index: 1000;
-  background: rgba(239, 241, 237, 0.95);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(103, 117, 74, 0.18);
-  transition: box-shadow 0.2s ease, background 0.2s ease;
+  width: 100%;
+  z-index: 1001;
+  border-bottom: 0.1px solid #717744; 
+  padding-bottom: 1rem; 
+  transition: opacity 0.5s;
+  opacity: 1;
+  pointer-events: auto; 
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+  height: var(--navbar-height);
+  overflow: visible;                    
+}
+
+.navbar.navbar-hidden {
+  opacity: 0;
+  pointer-events: auto; 
 }
 
 .navbar--scrolled {

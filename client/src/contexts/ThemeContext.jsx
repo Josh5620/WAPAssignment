@@ -173,6 +173,13 @@ export const ThemeProvider = ({ children }) => {
       document.body.style.backgroundColor = validTheme.bg;
       document.body.style.color = validTheme.text;
       
+      // Apply theme to #root as well
+      const rootElement = document.getElementById('root');
+      if (rootElement) {
+        rootElement.style.backgroundColor = validTheme.bg;
+        rootElement.style.color = validTheme.text;
+      }
+      
       updateCursorStyles(validTheme);
     } catch (error) {
       console.error('Error applying theme:', error);

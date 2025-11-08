@@ -209,14 +209,32 @@
   gap: 1rem;
 }
 
-@media (max-width: 1024px) {
-  .about-hero {
-    grid-template-columns: 1fr;
-  }
-}
-
+/* Responsive styles */
 @media (max-width: 768px) {
-  .about-content {
-    padding: 5.5rem 1.1rem 3rem;
+  h1 {
+    font-size: 1.2rem;
+    margin-top: 2rem;
+  }
+  .about-tagline {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .about-section h3 {
+    font-size: 1rem;
+    margin-top: 1.5rem;
+  }
+  .about-section p {
+    font-size: 1rem;
+  }
+  .about-container {
+    padding: 1.5rem;
+    max-width: 95vw;
+    margin: 2rem auto;
+  }
+  .about-container h1 {
+    font-size: 1.2rem;
+  }
+  .about-container p {
+    font-size: 1rem;
   }
 }

@@ -43,7 +43,13 @@
   gap: 1rem;
 }
 
-.hero__visual {
+/* =========================
+   HERO
+   ========================= */
+.hero {
+  padding: 4rem 2rem 3rem 2rem;
+  background: var(--bg);
+  flex: 1;
   display: flex;
   justify-content: center;
 }

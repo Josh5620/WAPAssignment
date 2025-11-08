@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import ThemeSelector from './ThemeSelector';
 import PrimaryButton from './PrimaryButton';
 import { useAuth } from '../context/AuthContext.jsx';
+import ThemeSelector from './ThemeSelector.jsx';
 import '../styles/Navbar.css';
 
 const getDashboardPath = (role) => {
@@ -171,8 +172,29 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      {isMenuOpen && <div className="navbar__overlay" onClick={() => setIsMenuOpen(false)} />}
-    </header>
+      <div className="nav-right">
+        <ThemeSelector />
+        {isLoggedIn ? (
+          <>
+            <Link to="/student-profile" className="nav-link">
+              Profile
+            </Link>
+            <button onClick={handleLogout} className="nav-login">
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <button onClick={handleLogin} className="nav-login">
+              LOGIN
+            </button>
+            <button onClick={handleRegister} className="nav-register">
+              REGISTER
+            </button>
+          </>
+        )}
+      </div>
+    </nav>
   );
 };
 

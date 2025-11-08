@@ -1,22 +1,22 @@
 /* ============================================
-   Pixel-Style Custom Cursors for CodeSage
-   Created using CSS/SVG - No PNG files needed!
-   Cursors adapt to theme colors automatically
+  Pixel-Style Custom Cursors for CodeSage
+  Created using CSS/SVG - No PNG files needed!
+  Cursors adapt to theme colors automatically
    ============================================ */
 
 /* Note: Actual cursor colors are set dynamically by ThemeContext
    This file provides fallback cursors and additional cursor styles */
 
 /* Default Cursor - Pixel Seedling 🌱 (fallback - will be overridden by theme) */
-html, 
+html,
 body {
   cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect width="20" height="20" fill="none"/><path d="M10 18 L10 12 M8 14 L10 12 L12 14 M6 10 L10 12 L14 10 M8 8 L10 6 L12 8" stroke="%23717744" stroke-width="2" fill="none" stroke-linecap="square"/><circle cx="10" cy="6" r="2" fill="%23717744"/></svg>') 10 10, auto;
 }
 
 /* Interactive Elements - Pixel Python Snake 🐍 (fallback) */
-a, 
-button, 
-.clickable, 
+a,
+button,
+.clickable,
 [role="button"],
 input[type="submit"],
 input[type="button"],

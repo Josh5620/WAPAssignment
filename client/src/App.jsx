@@ -46,7 +46,7 @@ function App() {
         <div
           style={{
             position: 'fixed',
-            bottom: '20px',
+            top: '20px',
             right: '20px',
             zIndex: 2000,
           }}

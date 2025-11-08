@@ -27,22 +27,6 @@ const themes = {
       cursorInteractive: '#373D20',
     }
   },
-  forest: {
-    name: 'Deep Forest',
-    light: {
-      bg: '#EFF1ED',
-      text: '#373D20',
-      primary: '#545A32',
-      primaryHover: '#717744',
-      secondary: '#979A68',
-      accent: '#BCBD8B',
-      border: '#545A32',
-      cardBg: 'rgba(188, 189, 139, 0.3)',
-      muted: '#939787',
-      cursor: '#545A32',
-      cursorInteractive: '#545A32',
-    }
-  },
   sage: {
     name: 'Sage Garden',
     light: {
@@ -72,22 +56,6 @@ const themes = {
       cardBg: 'rgba(188, 189, 139, 0.3)',
       muted: '#939787',
       cursor: '#766153',
-      cursorInteractive: '#766153',
-    }
-  },
-  khaki: {
-    name: 'Khaki Classic',
-    light: {
-      bg: '#EFF1ED',
-      text: '#373D20',
-      primary: '#998F6F',
-      primaryHover: '#766153',
-      secondary: '#BCBD8B',
-      accent: '#979A68',
-      border: '#998F6F',
-      cardBg: 'rgba(188, 189, 139, 0.3)',
-      muted: '#939787',
-      cursor: '#998F6F',
       cursorInteractive: '#766153',
     }
   }

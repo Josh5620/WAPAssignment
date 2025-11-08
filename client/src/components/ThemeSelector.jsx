@@ -7,11 +7,9 @@ const ThemeSelector = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const themeColors = {
-    garden: { light: '#717744', dark: '#373D20' },
-    forest: { light: '#545A32', dark: '#545A32' },
-    sage: { light: '#979A68', dark: '#373D20' },
-    earth: { light: '#766153', dark: '#373D20' },
-    khaki: { light: '#998F6F', dark: '#373D20' },
+    garden: '#717744',
+    sage: '#979A68',
+    earth: '#766153',
   };
 
   return (
@@ -41,46 +39,31 @@ const ThemeSelector = () => {
             </div>
 
             <div className="theme-options">
-              <h4>Select Theme:</h4>
-              <div className="theme-grid">
-                {themeNames.map(({ key, name }) => {
-                  const colors = themeColors[key];
-                  const isActive = currentTheme === key;
-                  
-                  return (
-                    <button
-                      key={key}
-                      className={`theme-option ${isActive ? 'active' : ''}`}
-                      onClick={() => {
-                        changeTheme(key);
-                        setIsOpen(false);
-                      }}
+              {themeNames.map(({ key, name }) => {
+                const color = themeColors[key];
+                const isActive = currentTheme === key;
+                
+                return (
+                  <button
+                    key={key}
+                    className={`theme-option ${isActive ? 'active' : ''}`}
+                    onClick={() => {
+                      changeTheme(key);
+                      setIsOpen(false);
+                    }}
+                  >
+                    <div 
+                      className="theme-circle"
+                      style={{ backgroundColor: color }}
                     >
-                      <div
-                        className="theme-preview"
-                        style={{
-                          background: `linear-gradient(135deg, ${colors.light} 0%, ${colors.dark} 100%)`
-                        }}
-                      />
-                      <span className="theme-name">{name}</span>
-                      {isActive && <span className="active-indicator">✓</span>}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="theme-preview-section">
-              <h4>Preview:</h4>
-              <div className="theme-preview-card">
-                <div className="preview-header">
-                  <div className="preview-title">Sample Card</div>
-                </div>
-                <div className="preview-content">
-                  <p>This is how your theme will look.</p>
-                  <button className="preview-button">Sample Button</button>
-                </div>
-              </div>
+                      {isActive && <span className="check-icon">✓</span>}
+                    </div>
+                    <span className="theme-name" style={{ color: color }}>
+                      {name}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </>

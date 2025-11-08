@@ -1,0 +1,92 @@
+.student-help-request {
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: var(--shadow-2);
+  display: grid;
+  gap: 1.5rem;
+}
+
+.student-help-request header {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.student-help-request h3 {
+  margin: 0;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.95rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.student-help-request p {
+  margin: 0;
+  font-size: 1rem;
+  color: rgba(0, 0, 0, 0.75);
+  font-family: 'Pixelify Sans', sans-serif;
+}
+
+.student-help-request form {
+  display: grid;
+  gap: 1rem;
+}
+
+.student-help-request label {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: 'Pixelify Sans', sans-serif;
+}
+
+.student-help-request textarea {
+  border: 2px solid var(--border);
+  border-radius: 18px;
+  padding: 1rem 1.1rem;
+  min-height: 160px;
+  resize: vertical;
+  font-family: 'Pixelify Sans', sans-serif;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--text);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.student-help-request textarea:focus {
+  outline: 3px solid var(--accent);
+}
+
+.help-status {
+  padding: 0.85rem 1rem;
+  border-radius: 16px;
+  font-weight: 600;
+  font-family: 'Pixelify Sans', sans-serif;
+  letter-spacing: 0.04em;
+  border: 2px solid transparent;
+}
+
+.help-status.success {
+  background: rgba(118, 173, 110, 0.16);
+  border-color: rgba(118, 173, 110, 0.45);
+  color: #325a37;
+}
+
+.help-status.error {
+  background: rgba(196, 55, 55, 0.12);
+  border-color: rgba(196, 55, 55, 0.45);
+  color: #7a1d1d;
+}
+
+.student-help-request .btn-garden {
+  justify-self: flex-start;
+}
+
+@media (max-width: 640px) {
+  .student-help-request {
+    padding: 1.5rem;
+  }
+
+  .student-help-request h3 {
+    font-size: 0.85rem;
+  }
+}

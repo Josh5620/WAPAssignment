@@ -1,9 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/TeacherDashboard.css';
-import ReturnHome from '../components/ReturnHome';
-import { teacherCourseService } from '../services/apiService';
+import Navbar from '../components/Navbar';
+import PrimaryButton from '../components/PrimaryButton';
+import FeedbackModal from '../components/FeedbackModal';
 import TeacherForumManager from '../components/TeacherForumManager';
+import TeacherFeedbackQueue from '../components/TeacherFeedbackQueue';
+import '../styles/TeacherDashboard.css';
+import { teacherCourseService, teacherAnalyticsService, adminService } from '../services/apiService';
 import { useAuth } from '../context/AuthContext.jsx';
 
 const initialForm = { title: '', description: '', level: '', tagsCsv: '' };
@@ -16,6 +19,9 @@ const TeacherDashboard = () => {
   const [showCreate, setShowCreate] = useState(false);
   const [form, setForm] = useState(initialForm);
   const [activeTab, setActiveTab] = useState('courses');
+  const [feedbackTarget, setFeedbackTarget] = useState(null);
+  const [feedbackNotice, setFeedbackNotice] = useState(null);
+  const [feedbackRefreshKey, setFeedbackRefreshKey] = useState(0);
   const navigate = useNavigate();
 
   const loadCourses = useCallback(async () => {
@@ -112,8 +118,6 @@ const TeacherDashboard = () => {
     navigate(`/teacher/course-progress/${courseId}`);
   };
 
-  const headerTitle = activeTab === 'courses' ? 'My Courses' : 'Forum Moderation';
-
   const displayName = useMemo(() => {
     if (!user) return 'Teacher';
     return (
@@ -126,23 +130,130 @@ const TeacherDashboard = () => {
     );
   }, [user]);
 
+  const headerTitle = useMemo(() => {
+    switch (activeTab) {
+      case 'forum':
+        return 'Forum Monitoring';
+      case 'feedback':
+        return 'Feedback Queue';
+      default:
+        return 'My Courses';
+    }
+  }, [activeTab]);
+
   const welcomeMessage = useMemo(
-    () => `Hi ${displayName}, welcome back to your classroom.`,
+    () => `Hi ${displayName}, welcome back to your classroom garden.`,
     [displayName],
   );
 
   const headerSubtitle = useMemo(() => {
     if (activeTab === 'forum') {
       if (courses.length === 0) return 'Create a course to unlock forum discussions.';
-      return 'Review discussions and keep your classroom community on track.';
+      return 'Review discussions and keep your classroom community blooming.';
+    }
+
+    if (activeTab === 'feedback') {
+      return 'Respond to student help requests and keep the learning path clear.';
     }
 
     if (loading) return 'Loading your courses...';
-    if (courses.length === 0) return 'Create your first course to get started.';
-    return `You have ${courses.length} course${courses.length === 1 ? '' : 's'} ready.`;
+    if (courses.length === 0) return 'Plant your first course to begin mentoring.';
+    return `You have ${courses.length} course${courses.length === 1 ? '' : 's'} ready to grow.`;
   }, [activeTab, courses.length, loading]);
 
-  const renderCourses = () => {
+  const setTransientNotice = (notice) => {
+    setFeedbackNotice(notice);
+    if (notice) {
+      setTimeout(() => {
+        setFeedbackNotice(null);
+      }, 4000);
+    }
+  };
+
+  const openFeedbackModal = useCallback((target) => {
+    if (!target) return;
+    const rawId =
+      target.id ??
+      target.Id ??
+      target.requestId ??
+      target.RequestId ??
+      target.helpRequestId ??
+      target.HelpRequestId ??
+      target.profileId ??
+      target.ProfileId ??
+      target.studentId ??
+      target.StudentId ??
+      null;
+
+    const studentName =
+      target.studentName ||
+      target.StudentName ||
+      target.profile?.fullName ||
+      target.Profile?.FullName ||
+      target.profile?.full_name ||
+      target.student?.fullName ||
+      'Student';
+
+    const context =
+      target.context ||
+      target.question ||
+      target.Question ||
+      target.content ||
+      target.Content ||
+      '';
+
+    const chapterName = target.chapterName || target.ChapterName || target.chapter?.Title || '';
+
+    const type =
+      target.type ||
+      (chapterName || target.question || target.Question ? 'help' : 'forum');
+
+    setFeedbackTarget({
+      id: rawId,
+      studentName,
+      context,
+      chapterName,
+      type,
+      raw: target,
+    });
+  }, []);
+
+  const closeFeedbackModal = () => {
+    setFeedbackTarget(null);
+  };
+
+  const handleFeedbackSubmit = async (message) => {
+    if (!feedbackTarget) return;
+
+    try {
+      if (feedbackTarget.type === 'help') {
+        const requestId = feedbackTarget.id;
+        if (!requestId) {
+          throw new Error('Help request is missing an identifier.');
+        }
+        await adminService.replyToHelpRequest(requestId, message);
+        setTransientNotice({ type: 'success', message: 'Reply sent to the help request.' });
+        setFeedbackRefreshKey((prev) => prev + 1);
+      } else {
+        if (!feedbackTarget.id) {
+          throw new Error('Student information missing for feedback message.');
+        }
+        await teacherAnalyticsService.sendFeedback({
+          studentId: feedbackTarget.id,
+          message,
+          context: feedbackTarget.context,
+        });
+        setTransientNotice({ type: 'success', message: 'Feedback sent successfully.' });
+      }
+    } catch (err) {
+      console.error('Failed to send feedback', err);
+      setTransientNotice({ type: 'error', message: err.message || 'Failed to send feedback.' });
+    } finally {
+      closeFeedbackModal();
+    }
+  };
+
+  const renderCoursesTab = () => {
     if (loading) {
       return <div className="td-state">Loading courses...</div>;
     }
@@ -152,7 +263,7 @@ const TeacherDashboard = () => {
     }
 
     if (courses.length === 0) {
-      return <div className="td-state">No courses yet. Click "Create Course" to begin.</div>;
+      return <div className="td-state">No courses yet. Tap "Create Course" to begin.</div>;
     }
 
     return (
@@ -163,7 +274,7 @@ const TeacherDashboard = () => {
               <th>Title</th>
               <th>Level</th>
               <th>Chapters</th>
-              <th>Actions</th>
+              <th className="td-actions-heading">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -189,12 +300,23 @@ const TeacherDashboard = () => {
                   <td>{level || 'N/A'}</td>
                   <td>{chapterCount ?? 0}</td>
                   <td className="td-course-actions">
-                    <button type="button" onClick={() => gotoManage(id)}>Edit Content</button>
-                    <button type="button" onClick={() => gotoPreview(id)}>Preview</button>
-                    <button type="button" onClick={() => gotoProgress(id)}>View Progress</button>
-                    <button type="button" className="td-danger" onClick={() => handleDeleteCourse(id)}>
+                    <PrimaryButton size="sm" variant="secondary" onClick={() => gotoManage(id)}>
+                      Edit Content
+                    </PrimaryButton>
+                    <PrimaryButton size="sm" variant="ghost" onClick={() => gotoPreview(id)}>
+                      Preview
+                    </PrimaryButton>
+                    <PrimaryButton size="sm" onClick={() => gotoProgress(id)}>
+                      View Progress
+                    </PrimaryButton>
+                    <PrimaryButton
+                      size="sm"
+                      variant="ghost"
+                      className="td-btn-danger"
+                      onClick={() => handleDeleteCourse(id)}
+                    >
                       Delete
-                    </button>
+                    </PrimaryButton>
                   </td>
                 </tr>
               );
@@ -205,54 +327,94 @@ const TeacherDashboard = () => {
     );
   };
 
-  return (
-    <div className="teacher-dashboard">
-      <ReturnHome />
-      <div className="dashboard-container">
-        <header className="dashboard-header td-header">
-          <div>
-            <h1>{welcomeMessage}</h1>
-            <p className="td-subheading">{headerTitle}</p>
-            <p>{headerSubtitle}</p>
+  const renderActiveTab = () => {
+    switch (activeTab) {
+      case 'forum':
+        return (
+          <div className="td-content">
+            <TeacherForumManager courses={courses} onReplyClick={openFeedbackModal} />
           </div>
-          {activeTab === 'courses' && (
-            <button type="button" className="td-primary" onClick={openCreate}>
-              Create Course
-            </button>
+        );
+      case 'feedback':
+        return (
+          <div className="td-content">
+            <TeacherFeedbackQueue
+              onReplyClick={openFeedbackModal}
+              refreshToken={feedbackRefreshKey}
+            />
+          </div>
+        );
+      default:
+        return <div className="td-content">{renderCoursesTab()}</div>;
+    }
+  };
+
+  return (
+    <>
+      <Navbar />
+      <main className="teacher-dashboard-page">
+        <div className="teacher-dashboard-shell">
+          <header className="dashboard-header">
+            <div className="dashboard-heading">
+              <p className="dashboard-kicker">{welcomeMessage}</p>
+              <h1>{headerTitle}</h1>
+              <p className="dashboard-subtitle">{headerSubtitle}</p>
+            </div>
+            {activeTab === 'courses' && (
+              <PrimaryButton size="md" onClick={openCreate}>
+                Create New Course
+              </PrimaryButton>
+            )}
+          </header>
+
+          <nav className="td-tabs" aria-label="Teacher dashboard sections">
+            <PrimaryButton
+              variant={activeTab === 'courses' ? 'primary' : 'ghost'}
+              size="sm"
+              className={`td-tab ${activeTab === 'courses' ? 'is-active' : ''}`}
+              onClick={() => setActiveTab('courses')}
+            >
+              My Courses
+            </PrimaryButton>
+            <PrimaryButton
+              variant={activeTab === 'forum' ? 'primary' : 'ghost'}
+              size="sm"
+              className={`td-tab ${activeTab === 'forum' ? 'is-active' : ''}`}
+              onClick={() => setActiveTab('forum')}
+            >
+              Forum Monitoring
+            </PrimaryButton>
+            <PrimaryButton
+              variant={activeTab === 'feedback' ? 'primary' : 'ghost'}
+              size="sm"
+              className={`td-tab ${activeTab === 'feedback' ? 'is-active' : ''}`}
+              onClick={() => setActiveTab('feedback')}
+            >
+              Feedback Queue
+            </PrimaryButton>
+          </nav>
+
+          {activeTab === 'courses' && error && courses.length > 0 && (
+            <div className="td-alert td-error">{error}</div>
           )}
-        </header>
 
-        <nav className="td-tabs">
-          <button
-            type="button"
-            className={`td-tab ${activeTab === 'courses' ? 'active' : ''}`}
-            onClick={() => setActiveTab('courses')}
-          >
-            My Courses
-          </button>
-          <button
-            type="button"
-            className={`td-tab ${activeTab === 'forum' ? 'active' : ''}`}
-            onClick={() => setActiveTab('forum')}
-          >
-            Forum Moderation
-          </button>
-        </nav>
+          {feedbackNotice && (
+            <div className={`td-alert ${feedbackNotice.type === 'error' ? 'td-error' : 'td-success'}`}>
+              {feedbackNotice.message}
+            </div>
+          )}
 
-        {activeTab === 'courses' && error && courses.length > 0 && (
-          <div className="td-alert td-error">{error}</div>
-        )}
+          {renderActiveTab()}
+        </div>
+      </main>
 
-        {activeTab === 'courses' ? renderCourses() : <TeacherForumManager courses={courses} />}
-      </div>
-
-      {showCreate && activeTab === 'courses' && (
+      {(showCreate && activeTab === 'courses') && (
         <div className="td-modal-backdrop" role="dialog" aria-modal="true">
           <div className="td-modal">
             <h2>Create Course</h2>
             <form onSubmit={handleCreateCourse} className="td-form">
               <label>
-                Title
+                <span>Title</span>
                 <input
                   name="title"
                   type="text"
@@ -262,7 +424,7 @@ const TeacherDashboard = () => {
                 />
               </label>
               <label>
-                Description
+                <span>Description</span>
                 <textarea
                   name="description"
                   value={form.description}
@@ -271,7 +433,7 @@ const TeacherDashboard = () => {
                 />
               </label>
               <label>
-                Level
+                <span>Level</span>
                 <input
                   name="level"
                   type="text"
@@ -281,7 +443,7 @@ const TeacherDashboard = () => {
                 />
               </label>
               <label>
-                Tags (comma separated)
+                <span>Tags (comma separated)</span>
                 <input
                   name="tagsCsv"
                   type="text"
@@ -291,18 +453,29 @@ const TeacherDashboard = () => {
                 />
               </label>
               <div className="td-modal-actions">
-                <button type="button" onClick={closeCreate}>
+                <PrimaryButton variant="ghost" onClick={closeCreate}>
                   Cancel
-                </button>
-                <button type="submit" className="td-primary">
-                  Create
-                </button>
+                </PrimaryButton>
+                <PrimaryButton type="submit">
+                  Create Course
+                </PrimaryButton>
               </div>
             </form>
           </div>
         </div>
       )}
-    </div>
+
+      <FeedbackModal
+        isOpen={Boolean(feedbackTarget)}
+        onClose={closeFeedbackModal}
+        onSubmit={handleFeedbackSubmit}
+        studentName={feedbackTarget?.studentName || 'Student'}
+        context={feedbackTarget ? [
+          feedbackTarget.chapterName ? `Chapter: ${feedbackTarget.chapterName}` : null,
+          feedbackTarget.context,
+        ].filter(Boolean).join('\n') : ''}
+      />
+    </>
   );
 };
 

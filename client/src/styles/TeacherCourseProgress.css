@@ -1,0 +1,155 @@
+.teacher-progress-page {
+  min-height: 100vh;
+  background: var(--bg);
+  padding: 2.75rem 1.5rem 4rem;
+  display: flex;
+  justify-content: center;
+}
+
+.teacher-dashboard {
+  width: min(1120px, 100%);
+  color: var(--text);
+  font-family: 'Pixelify Sans', sans-serif;
+}
+
+.dashboard-container {
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  border-radius: 28px;
+  padding: clamp(1.75rem, 2vw + 1.25rem, 2.75rem);
+  box-shadow: var(--shadow-2);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.teacher-progress__header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.teacher-progress__heading {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 640px;
+}
+
+.teacher-progress__eyebrow {
+  margin: 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--cs-brown);
+}
+
+.teacher-progress__header h1 {
+  margin: 0;
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(1.1rem, 2vw + 0.9rem, 1.7rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.teacher-progress__header p {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text);
+  opacity: 0.78;
+}
+
+.td-state {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  border-radius: 22px;
+  border: 2px dashed var(--border);
+  background: var(--card-bg-transparent);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.td-state.td-error {
+  border-color: var(--cs-brown);
+  color: var(--cs-brown);
+}
+
+.td-alert {
+  padding: 0.95rem 1.25rem;
+  border-radius: 18px;
+  border: 2px solid transparent;
+  font-weight: 600;
+  box-shadow: var(--shadow-1);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.td-alert--success {
+  background: var(--card-bg-transparent);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.td-alert--error {
+  background: var(--card-bg-transparent);
+  border-color: var(--cs-brown);
+  color: var(--cs-brown);
+}
+
+.td-table-wrapper {
+  overflow-x: auto;
+  border-radius: 20px;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  box-shadow: var(--shadow-2);
+}
+
+.td-course-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Pixelify Sans', sans-serif;
+}
+
+.td-course-table th,
+.td-course-table td {
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 55%, transparent);
+  text-align: left;
+}
+
+.td-course-table th {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: var(--card-bg);
+}
+
+.td-course-table tbody tr:hover {
+  background: var(--card-bg-transparent);
+}
+
+.td-course-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+@media (max-width: 720px) {
+  .teacher-progress-page {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .teacher-progress__header {
+    flex-direction: column;
+  }
+
+  .td-course-actions {
+    flex-direction: column;
+  }
+}

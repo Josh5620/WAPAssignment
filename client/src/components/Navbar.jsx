@@ -71,12 +71,14 @@ const Navbar = () => {
           <img src="/CodeSageLogo.svg" alt="CodeSage Hat" className="logo-hat" />
         </Link>
         <div className="nav-links">
-          <Link to="/" className="nav-link home-link">Home</Link>
+          <Link to="/" className="nav-link home-link">
+            HOME
+          </Link>
           <Link to={isLoggedIn ? '/courses' : '/guest/courses'} className="nav-link">
-            Courses
+            COURSES
           </Link>
           <Link to="/about" className="nav-link about-link">
-            About
+            ABOUT
           </Link>
           <Link to="/faq" className="nav-link">
             FAQ
@@ -100,8 +102,12 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            <button onClick={handleLogin} className="nav-login">Login</button>
-            <button onClick={handleRegister} className="nav-register">Register</button>
+            <button onClick={handleLogin} className="nav-login">
+              LOGIN
+            </button>
+            <button onClick={handleRegister} className="nav-register">
+              REGISTER
+            </button>
           </>
         )}
       </div>

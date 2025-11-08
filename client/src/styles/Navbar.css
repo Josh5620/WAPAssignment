@@ -2,7 +2,7 @@
    NAVIGATION
    ========================= */
 
-:root { --gutter: 2rem; }                 /* side padding you want */
+:root { --gutter: 2rem; }       
 html, body { height: 100%; margin: 0; }
 body { min-height: 100vh; padding-top: calc(var(--nav-height, 4.2rem) + 0.4rem); }
 
@@ -11,11 +11,11 @@ body { min-height: 100vh; padding-top: calc(var(--nav-height, 4.2rem) + 0.4rem);
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1rem 0.5rem 2rem;
-  background: #EFF1ED; /* Updated background */
+  background: #EFF1ED; 
   box-shadow: none;
   border: none;
   margin: 0;
-  padding-top: 1.2rem;
+  padding-top: 1.5rem;
   padding-bottom: 0.2rem;
   flex-shrink: 0;
   width: 100%;
@@ -24,15 +24,15 @@ body { min-height: 100vh; padding-top: calc(var(--nav-height, 4.2rem) + 0.4rem);
   left: 0;
   width: 100%;
   z-index: 1001;
-  border-bottom: 0.2px solid #717744; /* Olive line under navbar */
-  padding-bottom: 0.2rem; 
+  border-bottom: 0.1px solid #717744; 
+  padding-bottom: 0.7rem; 
   transition: opacity 0.5s;
   opacity: 1;
   pointer-events: auto; 
   padding-left: var(--gutter);
   padding-right: var(--gutter);
-  --nav-height: 4.2rem;                   /* set your navbar height once */
-  overflow: visible;                      /* allow dropdown to escape */
+  --nav-height: 4.2rem;                  
+  overflow: visible;                    
 }
 
 .navbar.navbar-hidden {
@@ -66,20 +66,20 @@ body { min-height: 100vh; padding-top: calc(var(--nav-height, 4.2rem) + 0.4rem);
 
 /* Custom gaps */
 .nav-link.home-link {
-  margin-right: 1.4rem; /* Home to Courses - closer */
+  margin-right: 2rem; /
 }
 
 .nav-item-dropdown {
-  margin-right: 0rem; /* Courses to About - closer */
+  margin-right: 2rem; 
   position: static;  
 }
 
 .nav-link.about-link {
-  margin-right: 2rem; /* About to FAQ - normal */
+  margin-right: 2rem; 
 }
 
 .nav-link:last-child {
-  margin-right: 1rem; /* FAQ to Login - closer */
+  margin-right: 2rem; 
 }
 
 /* Dropdown container */

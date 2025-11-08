@@ -1124,6 +1124,11 @@ export const testDataService = {
 
 // Legacy adminService object for backward compatibility
 export const adminService = {
+  getHelpRequests: () => getAdminHelpRequests(),
+
+  replyToHelpRequest: (requestId, replyMessage) =>
+    replyToAdminHelpRequest(requestId, replyMessage),
+
   getDashboardData: async () => {
     try {
       const courses = await getCourses();
@@ -1551,6 +1556,20 @@ const listForumPostsForCourse = async (courseId) => {
 const deleteForumPostForCourse = (postId) =>
   requestWithAuth(`/ForumPosts/${postId}`, { method: 'DELETE' });
 
+const createStudentHelpRequest = (chapterId, question) =>
+  requestWithAuth('/students/help-request', {
+    method: 'POST',
+    body: { chapterId, question },
+  });
+
+const getAdminHelpRequests = () => requestWithAuth('/admin/help-requests');
+
+const replyToAdminHelpRequest = (requestId, replyMessage) =>
+  requestWithAuth(`/admin/help-requests/${requestId}/reply`, {
+    method: 'POST',
+    body: { message: replyMessage },
+  });
+
 export const teacherCourseService = {
   listMyCourses,
   getCourse: getManagedCourse,
@@ -1860,6 +1879,7 @@ export const api = {
     updateStudentProfile,
     getForumPosts,
     createForumPost,
+    createHelpRequest: createStudentHelpRequest,
     getLeaderboard
   }
 };

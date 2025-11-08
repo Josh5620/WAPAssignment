@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import ReturnHome from '../components/ReturnHome';
+import Navbar from '../components/Navbar';
 import FeedbackModal from '../components/FeedbackModal';
+import PrimaryButton from '../components/PrimaryButton';
 import { teacherAnalyticsService, teacherCourseService } from '../services/apiService';
-import '../styles/TeacherDashboard.css';
+import '../styles/TeacherCourseProgress.css';
 
 const TeacherCourseProgress = () => {
   const { courseId } = useParams();
@@ -13,7 +14,7 @@ const TeacherCourseProgress = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [feedbackTarget, setFeedbackTarget] = useState(null);
-  const [feedbackStatus, setFeedbackStatus] = useState('');
+  const [feedbackStatus, setFeedbackStatus] = useState(null);
 
   useEffect(() => {
     if (!courseId) return;
@@ -62,13 +63,13 @@ const TeacherCourseProgress = () => {
         studentId: feedbackTarget.studentId,
         message,
       });
-      setFeedbackStatus('Feedback sent successfully.');
+      setFeedbackStatus({ type: 'success', message: 'Feedback sent successfully.' });
     } catch (err) {
       console.error('Failed to send feedback', err);
-      setFeedbackStatus(err.message || 'Failed to send feedback');
+      setFeedbackStatus({ type: 'error', message: err.message || 'Failed to send feedback' });
     } finally {
       setFeedbackTarget(null);
-      setTimeout(() => setFeedbackStatus(''), 3000);
+      setTimeout(() => setFeedbackStatus(null), 3000);
     }
   };
 
@@ -111,16 +112,14 @@ const TeacherCourseProgress = () => {
                   <td>
                     {completed}/{total}
                   </td>
-                  <td>
-                    <button
-                      type="button"
-                      className="td-primary"
-                      onClick={() =>
-                        handleOpenFeedback({ studentId, studentName })
-                      }
+                  <td className="td-course-actions">
+                    <PrimaryButton
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleOpenFeedback({ studentId, studentName })}
                     >
                       Send Feedback
-                    </button>
+                    </PrimaryButton>
                   </td>
                 </tr>
               );
@@ -132,38 +131,44 @@ const TeacherCourseProgress = () => {
   };
 
   return (
-    <div className="teacher-dashboard">
-      <ReturnHome />
-      <div className="dashboard-container">
-        <header className="dashboard-header td-header">
-          <div>
-            <h1>{courseTitle}</h1>
-            <p>Monitor student completion and share targeted feedback.</p>
+    <>
+      <Navbar />
+      <main className="teacher-progress-page">
+        <div className="teacher-dashboard">
+          <div className="dashboard-container">
+            <header className="dashboard-header teacher-progress__header">
+              <div className="teacher-progress__heading">
+                <p className="teacher-progress__eyebrow">Growth Tracker</p>
+                <h1>{courseTitle}</h1>
+                <p>Monitor student completion and share targeted feedback.</p>
+              </div>
+              <PrimaryButton variant="ghost" size="sm" onClick={() => navigate(-1)}>
+                Back
+              </PrimaryButton>
+            </header>
+
+            {feedbackStatus && (
+              <div
+                className={`td-alert ${
+                  feedbackStatus.type === 'error' ? 'td-alert--error' : 'td-alert--success'
+                }`}
+              >
+                {feedbackStatus.message}
+              </div>
+            )}
+
+            {renderContent()}
           </div>
-          <button type="button" onClick={() => navigate(-1)}>
-            Back
-          </button>
-        </header>
+        </div>
 
-        {feedbackStatus && (
-          <div
-            className="td-alert"
-            style={{ background: '#dcfce7', color: '#166534' }}
-          >
-            {feedbackStatus}
-          </div>
-        )}
-
-        {renderContent()}
-      </div>
-
-      <FeedbackModal
-        isOpen={Boolean(feedbackTarget)}
-        onClose={handleCloseFeedback}
-        onSubmit={handleSendFeedback}
-        studentName={feedbackTarget?.studentName || 'Student'}
-      />
-    </div>
+        <FeedbackModal
+          isOpen={Boolean(feedbackTarget)}
+          onClose={handleCloseFeedback}
+          onSubmit={handleSendFeedback}
+          studentName={feedbackTarget?.studentName || 'Student'}
+        />
+      </main>
+    </>
   );
 };
 

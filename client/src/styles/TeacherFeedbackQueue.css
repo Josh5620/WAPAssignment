@@ -1,0 +1,85 @@
+.feedback-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.feedback-empty-note {
+  padding: 3rem 1.5rem;
+  border: 2px dashed var(--border);
+  border-radius: 20px;
+  background: var(--card-bg-transparent);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  opacity: 0.8;
+  text-align: center;
+}
+
+.feedback-item {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 24px;
+  padding: 1.75rem;
+  box-shadow: var(--shadow-2);
+  display: grid;
+  gap: 1rem;
+  color: var(--text);
+}
+
+.feedback-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.feedback-student {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.feedback-chapter {
+  font-family: 'Pixelify Sans', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--cs-brown);
+}
+
+.feedback-time {
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: 0.85rem;
+  color: var(--text);
+  opacity: 0.68;
+}
+
+.feedback-question {
+  margin: 0;
+  padding: 1rem 1.1rem;
+  background: var(--card-bg-transparent);
+  border-radius: 16px;
+  border: 1px dashed var(--border);
+  font-family: 'Pixelify Sans', sans-serif;
+  line-height: 1.5;
+}
+
+.feedback-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .feedback-item {
+    padding: 1.25rem;
+  }
+
+  .feedback-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import PrimaryButton from './PrimaryButton';
 
-const FeedbackModal = ({ isOpen, onClose, onSubmit, studentName }) => {
+const FeedbackModal = ({ isOpen, onClose, onSubmit, studentName, context }) => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -27,6 +28,11 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit, studentName }) => {
       <div className="td-modal">
         <h2>Send Feedback</h2>
         <p>To: {studentName}</p>
+        {context && (
+          <div className="feedback-context">
+            <p>{context}</p>
+          </div>
+        )}
         <form className="td-form" onSubmit={handleSend}>
           <label>
             <span>Message</span>
@@ -39,12 +45,12 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit, studentName }) => {
             />
           </label>
           <div className="td-modal-actions">
-            <button type="button" onClick={onClose}>
+            <PrimaryButton variant="ghost" onClick={onClose}>
               Cancel
-            </button>
-            <button type="submit" className="td-primary">
+            </PrimaryButton>
+            <PrimaryButton type="submit">
               Send
-            </button>
+            </PrimaryButton>
           </div>
         </form>
       </div>

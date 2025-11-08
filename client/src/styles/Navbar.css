@@ -2,9 +2,15 @@
    NAVIGATION
    ========================= */
 
-:root { --gutter: 2rem; }       
+:root { 
+  --gutter: 2rem; 
+  --navbar-height: 4.2rem;
+}       
 html, body { height: 100%; margin: 0; }
-body { min-height: 100vh; padding-top: calc(var(--nav-height, 4.2rem) + 0.4rem); }
+body { 
+  min-height: 100vh; 
+  padding-top: calc(var(--navbar-height) + 0.4rem) !important;
+}
 
 .navbar {
   display: flex;
@@ -25,13 +31,13 @@ body { min-height: 100vh; padding-top: calc(var(--nav-height, 4.2rem) + 0.4rem);
   width: 100%;
   z-index: 1001;
   border-bottom: 0.1px solid #717744; 
-  padding-bottom: 0.7rem; 
+  padding-bottom: 1rem; 
   transition: opacity 0.5s;
   opacity: 1;
   pointer-events: auto; 
   padding-left: var(--gutter);
   padding-right: var(--gutter);
-  --nav-height: 4.2rem;                  
+  height: var(--navbar-height);
   overflow: visible;                    
 }
 

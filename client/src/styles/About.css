@@ -2,11 +2,9 @@
 
 /* Page background and base font */
 body, #root {
-  background: #EFF1ED;
+  background: var(--bg);
   font-family: 'Pixelify Sans', cursive;
-  color: #373D20;
-  padding-left: 4rem;   /* Add horizontal padding */
-  padding-right: 4rem;  /* Add horizontal padding */
+  color: var(--text);
 }
 
 /* Main heading */
@@ -155,11 +153,6 @@ a:hover {
 
 /* Responsive styles */
 @media (max-width: 768px) {
-  body, #root {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-
   h1 {
     font-size: 1.2rem;
     margin-top: 2rem;

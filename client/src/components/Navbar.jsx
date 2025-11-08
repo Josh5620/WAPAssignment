@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
+import ThemeSelector from './ThemeSelector.jsx';
 import '../styles/Navbar.css';
 
 const getDashboardPath = (role) => {
@@ -91,6 +92,7 @@ const Navbar = () => {
         </div>
       </div>
       <div className="nav-right">
+        <ThemeSelector />
         {isLoggedIn ? (
           <>
             <Link to="/student-profile" className="nav-link">

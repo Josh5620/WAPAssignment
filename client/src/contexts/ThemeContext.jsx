@@ -10,35 +10,21 @@ export const useTheme = () => {
   return context;
 };
 
-// --- NEW HIGH-CONTRAST THEMES OBJECT ---
 const themes = {
   garden: {
     name: 'Garden Path',
     light: {
-      bg: '#EFF1ED', // White smoke
-      text: '#373D20', // Drab dark brown
+      bg: '#EFF1ED',
+      text: '#373D20',
       primary: '#373D20',
       primaryHover: '#717744',
       secondary: '#979A68',
       accent: '#BCBD8B',
       border: '#545A32',
-      cardBg: 'rgba(188, 189, 139, 0.3)', // Transparent Sage
+      cardBg: 'rgba(188, 189, 139, 0.3)',
       muted: '#939787',
       cursor: '#717744',
       cursorInteractive: '#373D20',
-    },
-    dark: {
-      bg: '#373D20', // Darkest Brown (Page BG)
-      text: '#EFF1ED', // Lightest (Text)
-      primary: '#BCBD8B', // Bright Sage (Primary Accent)
-      primaryHover: '#979A68', // Moss Green
-      secondary: '#717744',
-      accent: '#998F6F', // Khaki
-      border: '#717744', // Reseda Green (Borders)
-      cardBg: '#545A32', // Dark Moss (Lighter than BG for cards)
-      muted: '#939787',
-      cursor: '#BCBD8B',
-      cursorInteractive: '#BCBD8B',
     }
   },
   forest: {
@@ -55,19 +41,6 @@ const themes = {
       muted: '#939787',
       cursor: '#545A32',
       cursorInteractive: '#545A32',
-    },
-    dark: {
-      bg: '#373D20',
-      text: '#EFF1ED',
-      primary: '#979A68', // Moss Green
-      primaryHover: '#BCBD8B',
-      secondary: '#717744',
-      accent: '#545A32',
-      border: '#717744',
-      cardBg: '#545A32', // Dark Moss
-      muted: '#939787',
-      cursor: '#979A68',
-      cursorInteractive: '#979A68',
     }
   },
   sage: {
@@ -84,19 +57,6 @@ const themes = {
       muted: '#939787',
       cursor: '#979A68',
       cursorInteractive: '#717744',
-    },
-    dark: {
-      bg: '#373D20',
-      text: '#EFF1ED',
-      primary: '#979A68', // Moss Green
-      primaryHover: '#BCBD8B',
-      secondary: '#717744',
-      accent: '#545A32',
-      border: '#717744',
-      cardBg: '#545A32', // Dark Moss
-      muted: '#939787',
-      cursor: '#979A68',
-      cursorInteractive: '#979A68',
     }
   },
   earth: {
@@ -113,19 +73,6 @@ const themes = {
       muted: '#939787',
       cursor: '#766153',
       cursorInteractive: '#766153',
-    },
-    dark: {
-      bg: '#373D20',
-      text: '#EFF1ED',
-      primary: '#998F6F', // Khaki
-      primaryHover: '#766153', // Umber
-      secondary: '#717744',
-      accent: '#545A32',
-      border: '#766153',
-      cardBg: '#545A32', // Dark Moss
-      muted: '#939787',
-      cursor: '#998F6F',
-      cursorInteractive: '#998F6F',
     }
   },
   khaki: {
@@ -142,38 +89,18 @@ const themes = {
       muted: '#939787',
       cursor: '#998F6F',
       cursorInteractive: '#766153',
-    },
-    dark: {
-      bg: '#373D20',
-      text: '#EFF1ED',
-      primary: '#998F6F', // Khaki
-      primaryHover: '#BCBD8B',
-      secondary: '#766153',
-      accent: '#545A32',
-      border: '#766153',
-      cardBg: '#545A32', // Dark Moss
-      muted: '#939787',
-      cursor: '#998F6F',
-      cursorInteractive: '#998F6F',
     }
   }
 };
-// --- END OF NEW THEMES OBJECT ---
 
 export const ThemeProvider = ({ children }) => {
-  // (Your existing getValidTheme function is fine)
-  const getValidTheme = (themeName, mode) => {
+  const getValidTheme = (themeName) => {
     const validThemeName = themes[themeName] ? themeName : 'garden';
-    const validMode = (mode === 'light' || mode === 'dark') ? mode : 'light';
     const themeObj = themes[validThemeName];
     if (!themeObj) {
       return themes.garden.light;
     }
-    const modeObj = themeObj[validMode];
-    if (!modeObj) {
-      return themeObj.light || themes.garden.light;
-    }
-    return modeObj;
+    return themeObj.light;
   };
 
   const [currentTheme, setCurrentTheme] = useState(() => {
@@ -182,10 +109,9 @@ export const ThemeProvider = ({ children }) => {
       if (saved) {
         const parsed = JSON.parse(saved);
         const themeName = parsed?.theme;
-        const mode = parsed?.mode;
         
-        if (themes[themeName] && (mode === 'light' || mode === 'dark')) {
-          return { theme: themeName, mode };
+        if (themes[themeName]) {
+          return { theme: themeName, mode: 'light' };
         }
         return { theme: 'garden', mode: 'light' };
       }
@@ -196,15 +122,14 @@ export const ThemeProvider = ({ children }) => {
     }
   });
 
-  const theme = getValidTheme(currentTheme.theme, currentTheme.mode);
+  const theme = getValidTheme(currentTheme.theme);
   
   useEffect(() => {
-    const isValidTheme = themes[currentTheme.theme] && 
-                        (currentTheme.mode === 'light' || currentTheme.mode === 'dark');
+    const isValidTheme = themes[currentTheme.theme];
     if (!isValidTheme) {
       setCurrentTheme({ theme: 'garden', mode: 'light' });
     }
-  }, [currentTheme.theme, currentTheme.mode]); // Fixed dependency array
+  }, [currentTheme.theme]);
 
   useEffect(() => {
     const validTheme = theme && typeof theme === 'object' ? theme : themes.garden.light;
@@ -215,8 +140,7 @@ export const ThemeProvider = ({ children }) => {
     }
     
     try {
-      const isValidTheme = themes[currentTheme.theme] && 
-                          (currentTheme.mode === 'light' || currentTheme.mode === 'dark');
+      const isValidTheme = themes[currentTheme.theme];
       if (isValidTheme) {
         localStorage.setItem('theme', JSON.stringify(currentTheme));
       }
@@ -234,8 +158,6 @@ export const ThemeProvider = ({ children }) => {
       root.style.setProperty('--cursor-color', validTheme.cursor);
       root.style.setProperty('--cursor-interactive', validTheme.cursorInteractive);
       
-      // NEW: Set card-bg-transparent based on the cardBg
-      // This is a guess; you may need to adjust the opacity
       const cardBg = validTheme.cardBg || '#BCBD8B';
       const transparentColor = cardBg.startsWith('#') ? 
         `rgba(${parseInt(cardBg.slice(1, 3), 16)}, ${parseInt(cardBg.slice(3, 5), 16)}, ${parseInt(cardBg.slice(5, 7), 16)}, 0.3)` :
@@ -248,30 +170,20 @@ export const ThemeProvider = ({ children }) => {
       updateCursorStyles(validTheme);
     } catch (error) {
       console.error('Error applying theme:', error);
-      // Fallback to default theme on error
       const fallbackTheme = themes.garden.light;
       const root = document.documentElement;
-      // (Fallback styles...)
     }
-  }, [currentTheme, theme]); // theme was missing from deps
+  }, [currentTheme, theme]);
 
   const changeTheme = (themeName) => {
     if (themes[themeName]) {
-      setCurrentTheme(prev => ({ ...prev, theme: themeName }));
+      setCurrentTheme({ theme: themeName, mode: 'light' });
     } else {
       console.warn(`Invalid theme name: ${themeName}, using default`);
-      setCurrentTheme(prev => ({ ...prev, theme: 'garden' }));
+      setCurrentTheme({ theme: 'garden', mode: 'light' });
     }
   };
 
-  const toggleMode = () => {
-    setCurrentTheme(prev => ({
-      ...prev,
-      mode: prev.mode === 'light' ? 'dark' : 'light'
-    }));
-  };
-
-  // (Your existing updateCursorStyles function is fine)
   const updateCursorStyles = (theme) => {
     const cursorColor = theme.cursor;
     const cursorInteractive = theme.cursorInteractive;
@@ -297,14 +209,12 @@ export const ThemeProvider = ({ children }) => {
       value={{
         theme,
         currentTheme: currentTheme.theme,
-        mode: currentTheme.mode, // Keep this, as ThemeSelector uses it
         themes: Object.keys(themes),
         themeNames: Object.entries(themes).map(([key, value]) => ({
           key,
           name: value.name
         })),
         changeTheme,
-        toggleMode, // Keep this, as ThemeSelector uses it
       }}
     >
       {children}

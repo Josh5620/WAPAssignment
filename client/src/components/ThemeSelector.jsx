@@ -3,7 +3,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import '../styles/ThemeSelector.css';
 
 const ThemeSelector = () => {
-  const { currentTheme, mode, themeNames, changeTheme, toggleMode } = useTheme();
+  const { currentTheme, themeNames, changeTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
   const themeColors = {
@@ -37,22 +37,6 @@ const ThemeSelector = () => {
                 aria-label="Close theme selector"
               >
                 ×
-              </button>
-            </div>
-
-            <div className="theme-mode-toggle">
-              <span className="mode-label">Mode:</span>
-              <button
-                className={`mode-button ${mode === 'light' ? 'active' : ''}`}
-                onClick={() => mode !== 'light' && toggleMode()}
-              >
-                ☀️ Light
-              </button>
-              <button
-                className={`mode-button ${mode === 'dark' ? 'active' : ''}`}
-                onClick={() => mode !== 'dark' && toggleMode()}
-              >
-                🌙 Dark
               </button>
             </div>
 

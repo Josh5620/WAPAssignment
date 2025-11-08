@@ -1,5 +1,4 @@
 :root {
-  /* --- Your Full Python Garden Palette --- */
   --cs-beige:  #eff1ed;
   --cs-slate8: #939787;
   --cs-olive9: #373d20;
@@ -8,10 +7,8 @@
   --cs-sage4:  #979a68;
   --cs-sage3:  #bcbd8b;
   --cs-sage2:  #998f6f;
-  --cs-brown:  #766153; /* same as slate7 */
+  --cs-brown:  #766153; 
 
-  /* --- Semantics (what the colors are *for*) --- */
-  /* These are set dynamically by ThemeContext.jsx */
   --bg: var(--cs-beige);
   --text: var(--cs-olive9);
   --muted: var(--cs-slate7);
@@ -22,14 +19,12 @@
   --accent: var(--cs-sage4);
   --border: var(--cs-olive6);
   --button-brown: var(--cs-brown);
-  --button-brown-hover: #645447; /* A darker brown */
+  --button-brown-hover: #645447;
 
-  /* --- Shadows (olive-tinted) --- */
   --shadow-1: 0 2px 10px rgba(55,61,32,.08);
   --shadow-2: 0 6px 18px rgba(55,61,32,.12);
   --shadow-3: 0 8px 22px rgba(55,61,32,.18);
 
-  /* --- Original index.css content --- */
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -87,6 +82,4 @@ button:focus-visible {
   outline: 4px solid #373d20;
 }
 
-/* REMOVED the @media (prefers-color-scheme: light) block
-as it is now fully controlled by ThemeContext.jsx
-*/
+

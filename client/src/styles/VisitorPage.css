@@ -7,7 +7,6 @@
   margin: 0 auto;
 }
 
-/* --- Section 1: Header --- */
 .learn-header {
   text-align: center;
   padding: 3rem 1rem;
@@ -30,7 +29,6 @@
   line-height: 1.6;
 }
 
-/* --- Section 2: Curriculum Map (Your NEW Sketch) --- */
 .curriculum-map {
   margin-bottom: 4rem;
 }
@@ -83,7 +81,6 @@
   grid-row: 1 / 2;
 }
 
-/* --- Section 3: How We Teach --- */
 .how-we-teach {
   text-align: center;
   margin-bottom: 4rem;
@@ -123,13 +120,11 @@
   line-height: 1.5;
 }
 
-/* --- Section 4: Final CTA --- */
 .learn-cta {
   text-align: center;
   padding: 3rem 1rem;
 }
 
-/* --- Responsive --- */
 @media (max-width: 768px) {
   .learn-page {
     padding: 1rem;

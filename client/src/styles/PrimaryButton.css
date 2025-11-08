@@ -1,27 +1,84 @@
-.btn-primary-garden {
-  display: inline-block;
-  padding: 0.8rem 1.75rem;
-  background: var(--primary);
-  color: var(--bg);
+.btn-garden {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   border: none;
-  border-radius: 99px;
+  border-radius: 999px;
   font-family: 'Pixelify Sans', cursive;
-  font-size: 1.1rem;
   font-weight: 600;
   text-decoration: none;
-  text-align: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
   box-shadow: var(--shadow-1);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
 }
 
-.btn-primary-garden:hover {
-  background: var(--primary-hover);
+.btn-garden--primary {
+  background: var(--primary);
+  color: var(--cs-beige);
+}
+
+.btn-garden--secondary {
+  background: transparent;
+  color: var(--text);
+  border: 2px solid currentColor;
+  box-shadow: none;
+}
+
+.btn-garden--outline {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  box-shadow: none;
+}
+
+.btn-garden--ghost {
+  background: transparent;
+  color: var(--text);
+  box-shadow: none;
+}
+
+.btn-garden--primary:hover,
+.btn-garden--outline:hover,
+.btn-garden--secondary:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-2);
 }
 
-.btn-primary-garden:focus-visible {
+.btn-garden--primary:hover,
+.btn-garden--outline:hover {
+  background: var(--primary-hover);
+  color: var(--cs-beige);
+  border-color: var(--primary-hover);
+}
+
+.btn-garden--secondary:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.btn-garden--ghost:hover {
+  color: var(--primary);
+}
+
+.btn-garden--sm { padding: 0.55rem 1.35rem; font-size: 0.9rem; }
+.btn-garden--md { padding: 0.8rem 1.9rem; font-size: 1rem; }
+.btn-garden--lg { padding: 1rem 2.8rem; font-size: 1.1rem; }
+
+.btn-garden--full { width: 100%; }
+
+.btn-garden--disabled,
+.btn-garden--disabled:hover,
+.btn-garden[disabled],
+.btn-garden[aria-disabled='true'] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-garden:focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 4px;
 }

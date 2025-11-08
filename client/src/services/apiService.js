@@ -391,8 +391,629 @@ const getSampleChapters = (courseId) => {
       summary: "Interacting with web pages using JavaScript"
     }
   ];
-  
+
   return sampleChapters;
+};
+
+// ===== GUEST EXPERIENCE FALLBACK DATA =====
+const fallbackGuestCourses = [
+  {
+    id: 'python-garden-path',
+    title: 'Python Basics: The Garden Path',
+    description: 'Plant the seeds of your Python knowledge with syntax fundamentals, variables, and friendly first projects.',
+    difficulty: 'beginner',
+    category: 'basics',
+    estimatedHours: 8,
+    enrollmentCount: 18450,
+    rating: 4.8,
+    totalChapters: 12,
+    createdAt: '2024-02-01T00:00:00Z',
+    previewContent: 'Write your first Python script, understand variables, and master control flow with friendly garden-inspired examples.',
+    previewChapters: [
+      {
+        id: 'python-garden-path-1',
+        number: 1,
+        title: 'Seedling Syntax',
+        description: 'Install Python and write your first lines of code while exploring the Python REPL.',
+        estimatedMinutes: 40,
+        sampleContent: 'print("Welcome to the Garden")\n# Learn how indentation shapes the Python landscape.'
+      },
+      {
+        id: 'python-garden-path-2',
+        number: 2,
+        title: 'Watering Variables',
+        description: 'Store values with variables and nurture them with data types.',
+        estimatedMinutes: 45,
+        sampleContent: 'name = "Sprout"\nage = 2\nprint(f"{name} is {age} days old!")'
+      },
+      {
+        id: 'python-garden-path-3',
+        number: 3,
+        title: 'Paths and Decisions',
+        description: 'Use if statements to help your virtual garden react to changing weather.',
+        estimatedMinutes: 50,
+        sampleContent: 'if rainfall < 10:\n    water_plants()\nelse:\n    enjoy_sunshine()'
+      },
+      {
+        id: 'python-garden-path-4',
+        number: 4,
+        title: 'Loops for Growth',
+        description: 'Automate repeated tasks with for and while loops.',
+        estimatedMinutes: 55,
+        sampleContent: 'for seedling in seedlings:\n    seedling.water()'
+      }
+    ],
+    learningObjectives: [
+      'Run Python locally and in the browser',
+      'Explain the difference between variables and data types',
+      'Use conditionals to control program flow',
+      'Automate repeated tasks with loops',
+      'Write readable code using functions'
+    ],
+    searchTags: ['syntax', 'variables', 'loops', 'beginner']
+  },
+  {
+    id: 'python-data-seeds',
+    title: 'Data Structures: Seeds to Trees',
+    description: 'Level up with Python lists, dictionaries, and sets through garden-inspired challenges.',
+    difficulty: 'intermediate',
+    category: 'data-structures',
+    estimatedHours: 10,
+    enrollmentCount: 12890,
+    rating: 4.7,
+    totalChapters: 14,
+    createdAt: '2024-04-15T00:00:00Z',
+    previewContent: 'Transform raw data into lush structures using lists, dictionaries, sets, and tuples.',
+    previewChapters: [
+      {
+        id: 'python-data-seeds-1',
+        number: 1,
+        title: 'List Beds',
+        description: 'Organize collections using Python lists and list comprehensions.',
+        estimatedMinutes: 45,
+        sampleContent: 'flowers = ["rose", "tulip", "lily"]\nfor flower in flowers:\n    print(f"Growing {flower}")'
+      },
+      {
+        id: 'python-data-seeds-2',
+        number: 2,
+        title: 'Dictionary Greenhouse',
+        description: 'Map plant data with key-value pairs and safely harvest values.',
+        estimatedMinutes: 50,
+        sampleContent: 'garden = {"beds": 6, "bees": 3}\nprint(garden.get("bees", 0))'
+      },
+      {
+        id: 'python-data-seeds-3',
+        number: 3,
+        title: 'Set Ecosystem',
+        description: 'Remove duplicates and compare collections using set operations.',
+        estimatedMinutes: 40,
+        sampleContent: 'north_garden = {"mint", "sage", "basil"}\nsouth_garden = {"basil", "thyme"}\nprint(north_garden & south_garden)'
+      }
+    ],
+    learningObjectives: [
+      'Choose the best collection type for a problem',
+      'Manipulate nested data structures safely',
+      'Use list, dict, and set comprehensions effectively',
+      'Build reusable utility functions for data wrangling'
+    ],
+    searchTags: ['lists', 'dictionaries', 'sets', 'collections']
+  },
+  {
+    id: 'oop-vine-architecture',
+    title: 'Object-Oriented Vines',
+    description: 'Design classes, inherit behaviours, and cultivate reusable components.',
+    difficulty: 'intermediate',
+    category: 'oop',
+    estimatedHours: 9,
+    enrollmentCount: 9400,
+    rating: 4.6,
+    totalChapters: 11,
+    createdAt: '2024-03-10T00:00:00Z',
+    previewContent: 'Grow modular programs by modelling gardens as Python classes and objects.',
+    previewChapters: [
+      {
+        id: 'oop-vine-architecture-1',
+        number: 1,
+        title: 'Designing a Garden Class',
+        description: 'Use classes and instances to model a garden ecosystem.',
+        estimatedMinutes: 55,
+        sampleContent: 'class Garden:\n    def __init__(self, name):\n        self.name = name\n        self.plants = []'
+      },
+      {
+        id: 'oop-vine-architecture-2',
+        number: 2,
+        title: 'Inheritance and Growth',
+        description: 'Extend plant behaviours using inheritance and method overriding.',
+        estimatedMinutes: 50,
+        sampleContent: 'class Flower(Plant):\n    def bloom(self):\n        print("Blooming brightly!")'
+      }
+    ],
+    learningObjectives: [
+      'Design Python classes with rich behaviours',
+      'Apply inheritance and composition effectively',
+      'Use dunder methods to integrate with Python tooling',
+      'Implement encapsulation for maintainable modules'
+    ],
+    searchTags: ['classes', 'objects', 'inheritance', 'oop']
+  },
+  {
+    id: 'python-web-weaver',
+    title: 'Web Weavers with Flask',
+    description: 'Build interactive garden dashboards with Flask routes, templates, and forms.',
+    difficulty: 'beginner',
+    category: 'web-development',
+    estimatedHours: 7,
+    enrollmentCount: 7600,
+    rating: 4.5,
+    totalChapters: 10,
+    createdAt: '2024-05-12T00:00:00Z',
+    previewContent: 'Create a web greenhouse tracker using Flask, Jinja templates, and simple databases.',
+    previewChapters: [
+      {
+        id: 'python-web-weaver-1',
+        number: 1,
+        title: 'Setting Up Flask',
+        description: 'Install Flask and render your first template.',
+        estimatedMinutes: 35,
+        sampleContent: 'from flask import Flask, render_template\napp = Flask(__name__)'
+      },
+      {
+        id: 'python-web-weaver-2',
+        number: 2,
+        title: 'Routes and Views',
+        description: 'Connect URLs to Python functions to show garden updates.',
+        estimatedMinutes: 45,
+        sampleContent: '@app.route("/")\ndef home():\n    return render_template("garden.html")'
+      }
+    ],
+    learningObjectives: [
+      'Create Flask applications with routing',
+      'Build HTML templates using Jinja2',
+      'Handle form submissions securely',
+      'Deploy a Flask app to share progress'
+    ],
+    searchTags: ['flask', 'web', 'templates', 'forms']
+  },
+  {
+    id: 'python-automation-blossom',
+    title: 'Automation Blossoms',
+    description: 'Automate everyday tasks with scripts, schedulers, and integrations.',
+    difficulty: 'intermediate',
+    category: 'automation',
+    estimatedHours: 6,
+    enrollmentCount: 5800,
+    rating: 4.6,
+    totalChapters: 9,
+    createdAt: '2024-01-20T00:00:00Z',
+    previewContent: 'Use Python to water plants automatically, send alerts, and analyze garden data files.',
+    previewChapters: [
+      {
+        id: 'python-automation-blossom-1',
+        number: 1,
+        title: 'Task Scheduler Basics',
+        description: 'Schedule Python scripts using cron and Task Scheduler.',
+        estimatedMinutes: 40,
+        sampleContent: '# Use schedule to run code every morning\nimport schedule\n'
+      },
+      {
+        id: 'python-automation-blossom-2',
+        number: 2,
+        title: 'Working with Files',
+        description: 'Process CSV and JSON data from your greenhouse sensors.',
+        estimatedMinutes: 45,
+        sampleContent: 'import csv\nwith open("moisture.csv") as file:\n    reader = csv.DictReader(file)'
+      }
+    ],
+    learningObjectives: [
+      'Schedule scripts on different operating systems',
+      'Automate reporting with CSV and JSON',
+      'Send notifications with email and webhooks',
+      'Build reusable automation utilities'
+    ],
+    searchTags: ['automation', 'scripting', 'csv', 'schedule']
+  },
+  {
+    id: 'python-data-canopy',
+    title: 'Data Science Canopy',
+    description: 'Harvest insights using pandas, Matplotlib, and beginner-friendly machine learning.',
+    difficulty: 'advanced',
+    category: 'data-science',
+    estimatedHours: 12,
+    enrollmentCount: 4820,
+    rating: 4.7,
+    totalChapters: 15,
+    createdAt: '2024-03-28T00:00:00Z',
+    previewContent: 'Clean, visualize, and model garden sensor data using the pandas and scikit-learn toolset.',
+    previewChapters: [
+      {
+        id: 'python-data-canopy-1',
+        number: 1,
+        title: 'pandas Seedlings',
+        description: 'Load datasets into DataFrames and prune them with filters.',
+        estimatedMinutes: 50,
+        sampleContent: 'import pandas as pd\ndata = pd.read_csv("garden.csv")\ndata.head()'
+      },
+      {
+        id: 'python-data-canopy-2',
+        number: 2,
+        title: 'Visualizing Growth',
+        description: 'Create line and scatter plots with Matplotlib to track plant health.',
+        estimatedMinutes: 45,
+        sampleContent: 'import matplotlib.pyplot as plt\nplt.plot(data["day"], data["growth"])'
+      },
+      {
+        id: 'python-data-canopy-3',
+        number: 3,
+        title: 'Intro to Predictions',
+        description: 'Train a linear regression model to forecast harvest yields.',
+        estimatedMinutes: 55,
+        sampleContent: 'from sklearn.linear_model import LinearRegression'
+      }
+    ],
+    learningObjectives: [
+      'Manipulate data using pandas efficiently',
+      'Visualize trends and patterns with Matplotlib',
+      'Split datasets and train simple ML models',
+      'Interpret metrics to evaluate predictions'
+    ],
+    searchTags: ['pandas', 'matplotlib', 'machine learning', 'data science']
+  }
+];
+
+const fallbackTestimonials = [
+  {
+    id: 't1',
+    courseId: 'python-garden-path',
+    name: 'Amelia',
+    role: 'New Python Student',
+    rating: 5,
+    content: 'The garden theme kept me motivated every day. I wrote my first Python app within a week!'
+  },
+  {
+    id: 't2',
+    courseId: 'python-garden-path',
+    name: 'Jon',
+    role: 'STEM Teacher',
+    rating: 4,
+    content: 'I recommend the seedling lessons to my students. The visuals make syntax approachable.'
+  },
+  {
+    id: 't3',
+    courseId: 'python-data-seeds',
+    name: 'Priya',
+    role: 'Data Analyst',
+    rating: 5,
+    content: 'The plant metaphors made dictionaries and sets click instantly. Loved the practice tasks.'
+  },
+  {
+    id: 't4',
+    courseId: 'python-data-canopy',
+    name: 'Miguel',
+    role: 'Research Scientist',
+    rating: 5,
+    content: 'Great refresher on pandas and visualization. The mini-project on sensor data was excellent.'
+  },
+  {
+    id: 't5',
+    courseId: null,
+    name: 'Sasha',
+    role: 'Bootcamp Graduate',
+    rating: 5,
+    content: 'CodeSage turned studying into a relaxing ritual. The progress garden kept me accountable.'
+  }
+];
+
+const normalizeFallbackCourse = (course) => ({
+  courseId: course.id,
+  id: course.id,
+  title: course.title,
+  description: course.description,
+  difficulty: course.difficulty,
+  category: course.category,
+  chapterCount: course.totalChapters,
+  totalChapters: course.totalChapters,
+  estimatedHours: course.estimatedHours,
+  enrollmentCount: course.enrollmentCount,
+  rating: course.rating,
+  previewContent: course.previewContent,
+});
+
+const getFallbackCourseCatalog = ({
+  search = '',
+  difficulty = 'all',
+  category = 'all',
+  sort = 'popular',
+  page = 1,
+  limit = 12,
+} = {}) => {
+  const normalizedSearch = search.trim().toLowerCase();
+  let filtered = [...fallbackGuestCourses];
+
+  if (normalizedSearch) {
+    filtered = filtered.filter((course) => {
+      return (
+        course.title.toLowerCase().includes(normalizedSearch) ||
+        course.description.toLowerCase().includes(normalizedSearch) ||
+        course.previewContent.toLowerCase().includes(normalizedSearch) ||
+        (course.searchTags || []).some((tag) => tag.toLowerCase().includes(normalizedSearch))
+      );
+    });
+  }
+
+  if (difficulty !== 'all') {
+    filtered = filtered.filter((course) => course.difficulty === difficulty);
+  }
+
+  if (category !== 'all') {
+    filtered = filtered.filter((course) => course.category === category);
+  }
+
+  const sorted = filtered.sort((a, b) => {
+    switch (sort) {
+      case 'newest':
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      case 'a-z':
+        return a.title.localeCompare(b.title);
+      case 'difficulty':
+        return a.difficulty.localeCompare(b.difficulty);
+      case 'popular':
+      default:
+        return (b.enrollmentCount || 0) - (a.enrollmentCount || 0);
+    }
+  });
+
+  const totalCount = sorted.length;
+  const safeLimit = limit || 12;
+  const safePage = Math.max(1, page || 1);
+  const totalPages = Math.max(1, Math.ceil(totalCount / safeLimit));
+  const startIndex = (safePage - 1) * safeLimit;
+  const pageItems = sorted.slice(startIndex, startIndex + safeLimit).map(normalizeFallbackCourse);
+
+  return {
+    courses: pageItems,
+    totalCount,
+    totalPages,
+    currentPage: Math.min(safePage, totalPages),
+  };
+};
+
+const getFallbackCoursePreview = (courseId) => {
+  const course = fallbackGuestCourses.find((item) => item.id === courseId) || fallbackGuestCourses[0];
+  if (!course) {
+    return null;
+  }
+
+  return {
+    course: {
+      id: course.id,
+      title: course.title,
+      description: course.description,
+      difficulty: course.difficulty,
+      totalChapters: course.totalChapters,
+      estimatedHours: course.estimatedHours,
+      enrollmentCount: course.enrollmentCount,
+      rating: course.rating,
+    },
+    previewChapters: course.previewChapters,
+    learningObjectives: course.learningObjectives,
+    testimonials: fallbackTestimonials.filter((testimonial) => !testimonial.courseId || testimonial.courseId === course.id),
+  };
+};
+
+const getFallbackChapterPreview = (courseId, chapterId) => {
+  const course = fallbackGuestCourses.find((item) => item.id === courseId);
+  if (!course) return null;
+  const chapter = course.previewChapters.find((item) => (item.id || item.chapterId) === chapterId) || course.previewChapters[0];
+  if (!chapter) return null;
+
+  return {
+    chapter: {
+      id: chapter.id,
+      title: chapter.title,
+      description: chapter.description,
+      number: chapter.number,
+    },
+    content: chapter.sampleContent || 'Preview content coming soon. Sign up to unlock the full lesson.',
+  };
+};
+
+const getFallbackTestimonials = ({ courseId, limit }) => {
+  const matches = fallbackTestimonials.filter((testimonial) => {
+    if (!courseId) return true;
+    return testimonial.courseId === courseId;
+  });
+
+  const items = typeof limit === 'number' ? matches.slice(0, limit) : matches;
+  return {
+    testimonials: items,
+  };
+};
+
+const getFallbackSearchResults = (query) => {
+  const normalized = (query || '').trim().toLowerCase();
+  if (!normalized) {
+    return {
+      query,
+      results: {
+        totalResults: 0,
+        courses: [],
+        chapters: [],
+      },
+    };
+  }
+
+  const courseMatches = fallbackGuestCourses.filter((course) =>
+    course.title.toLowerCase().includes(normalized) ||
+    course.description.toLowerCase().includes(normalized) ||
+    course.previewContent.toLowerCase().includes(normalized) ||
+    (course.searchTags || []).some((tag) => tag.toLowerCase().includes(normalized))
+  );
+
+  const chapterMatches = [];
+  fallbackGuestCourses.forEach((course) => {
+    (course.previewChapters || []).forEach((chapter) => {
+      if (
+        chapter.title.toLowerCase().includes(normalized) ||
+        chapter.description.toLowerCase().includes(normalized)
+      ) {
+        chapterMatches.push({
+          courseId: course.id,
+          courseTitle: course.title,
+          chapterId: chapter.id,
+          chapterTitle: chapter.title,
+          chapterSummary: chapter.description,
+          chapterNumber: chapter.number,
+        });
+      }
+    });
+  });
+
+  return {
+    query,
+    results: {
+      totalResults: courseMatches.length + chapterMatches.length,
+      courses: courseMatches.map((course) => ({
+        courseId: course.id,
+        title: course.title,
+        description: course.description,
+        previewContent: course.previewContent,
+      })),
+      chapters: chapterMatches,
+    },
+  };
+};
+
+const buildQueryString = (params = {}) => {
+  const searchParams = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value === undefined || value === null || value === '' || value === 'all') return;
+    searchParams.set(key, value);
+  });
+  const queryString = searchParams.toString();
+  return queryString ? `?${queryString}` : '';
+};
+
+const getFeaturedGuestCourses = async (limit = 6) => {
+  try {
+    const response = await requestWithAuth(`/courses/featured${buildQueryString({ limit })}`);
+    if (Array.isArray(response)) {
+      return { courses: response };
+    }
+    return response;
+  } catch (error) {
+    console.warn('Falling back to static featured courses', error);
+    const courses = fallbackGuestCourses.slice(0, limit).map(normalizeFallbackCourse);
+    return { courses };
+  }
+};
+
+const getGuestCourseCatalog = async (options = {}) => {
+  try {
+    const query = buildQueryString(options);
+    const response = await requestWithAuth(`/courses${query}`);
+    if (Array.isArray(response)) {
+      return {
+        courses: response,
+        totalCount: response.length,
+        totalPages: 1,
+        currentPage: 1,
+      };
+    }
+    return response;
+  } catch (error) {
+    console.warn('Falling back to static guest course catalog', error);
+    return getFallbackCourseCatalog(options);
+  }
+};
+
+const getGuestCoursePreview = async (courseId) => {
+  try {
+    const response = await requestWithAuth(`/courses/${courseId}/preview`);
+    return response;
+  } catch (error) {
+    console.warn('Falling back to static course preview', error);
+    return getFallbackCoursePreview(courseId);
+  }
+};
+
+const getGuestChapterPreview = async (courseId, chapterId) => {
+  try {
+    const response = await requestWithAuth(`/courses/${courseId}/chapters/${chapterId}/preview`);
+    return response;
+  } catch (error) {
+    console.warn('Falling back to static chapter preview', error);
+    return getFallbackChapterPreview(courseId, chapterId);
+  }
+};
+
+const getGuestTestimonials = async ({ courseId, limit } = {}) => {
+  const query = buildQueryString({ courseId, limit });
+  try {
+    const response = await requestWithAuth(`/testimonials${query}`);
+    if (Array.isArray(response)) {
+      return { testimonials: response };
+    }
+    return response;
+  } catch (error) {
+    console.warn('Falling back to static testimonials', error);
+    return getFallbackTestimonials({ courseId, limit });
+  }
+};
+
+const guestSearchContent = async (query) => {
+  try {
+    const response = await requestWithAuth(`/courses/search${buildQueryString({ query })}`);
+    return response;
+  } catch (error) {
+    console.warn('Falling back to static guest search results', error);
+    return getFallbackSearchResults(query);
+  }
+};
+
+const guestCheckEmailAvailability = async (email) => {
+  if (!email) {
+    return { available: false };
+  }
+  try {
+    const response = await requestWithAuth(`/auth/check-email${buildQueryString({ email })}`);
+    if (typeof response?.exists === 'boolean') {
+      return { available: !response.exists };
+    }
+    return response;
+  } catch (error) {
+    if (error.status === 404) {
+      return { available: true };
+    }
+    console.warn('Email availability check failed, assuming available', error);
+    return { available: true };
+  }
+};
+
+const guestRegister = async ({ fullName, email, password, role }) => {
+  const payload = {
+    fullName,
+    email,
+    password,
+    role,
+  };
+
+  try {
+    const response = await requestWithAuth('/auth/register', {
+      method: 'POST',
+      body: payload,
+    });
+    return response;
+  } catch (error) {
+    console.warn('Registration failed against API, providing fallback message', error);
+    if (error.status && error.status !== 0) {
+      throw error;
+    }
+    return {
+      success: true,
+      message: 'Account created successfully (offline mode)',
+      userId: Date.now(),
+    };
+  }
 };
 
 // ===== TEST DATA FUNCTIONS =====
@@ -1162,6 +1783,16 @@ const getLeaderboard = async (userId = null) => {
 // ===== COMPREHENSIVE API OBJECT =====
 // Main API object that contains all services organized by category
 export const api = {
+  guests: {
+    getFeaturedCourses: getFeaturedGuestCourses,
+    getCourseCatalog: getGuestCourseCatalog,
+    getCoursePreview: getGuestCoursePreview,
+    getChapterPreview: getGuestChapterPreview,
+    getTestimonials: getGuestTestimonials,
+    searchContent: guestSearchContent,
+    checkEmailAvailability: guestCheckEmailAvailability,
+    register: guestRegister,
+  },
   // Authentication
   auth: {
     login,

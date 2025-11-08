@@ -1,214 +1,263 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { api } from '../services/apiService';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import GuestRestrictionBanner from './GuestRestrictionBanner';
 import GuestAccessPrompt from './GuestAccessPrompt';
+import PrimaryButton from './PrimaryButton';
+import Testimonials from './Testimonials';
+import { api } from '../services/apiService';
+import '../styles/GuestCoursePreview.css';
 
 const GuestCoursePreview = () => {
   const { courseId } = useParams();
   const navigate = useNavigate();
   const [preview, setPreview] = useState(null);
-  const [sampleChapter, setSampleChapter] = useState(null);
+  const [chapterPreview, setChapterPreview] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [showSample, setShowSample] = useState(false);
+  const [chapterLoading, setChapterLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [chapterError, setChapterError] = useState('');
 
   useEffect(() => {
-    if (courseId) {
-      loadCoursePreview();
-    }
+    if (!courseId) return;
+    let isMounted = true;
+
+    const loadPreview = async () => {
+      try {
+        setLoading(true);
+        const data = await api.guests.getCoursePreview(courseId);
+        if (!isMounted) return;
+        setPreview(data);
+        setError('');
+      } catch (err) {
+        console.error('Failed to load course preview:', err);
+        if (isMounted) {
+          setError('We could not load this course preview right now. Please try again.');
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadPreview();
+    return () => {
+      isMounted = false;
+    };
   }, [courseId]);
 
-  const loadCoursePreview = async () => {
+  const handlePreviewChapter = async (chapterId) => {
+    if (!courseId || !chapterId) return;
     try {
-      setLoading(true);
-      const data = await api.guests.getCoursePreview(courseId);
-      setPreview(data);
-      setError(null);
+      setChapterLoading(true);
+      setChapterError('');
+      const data = await api.guests.getChapterPreview(courseId, chapterId);
+      setChapterPreview(data);
     } catch (err) {
-      console.error('Failed to load course preview:', err);
-      setError(err.message || 'Failed to load course preview. Please try again.');
+      console.error('Failed to load chapter preview:', err);
+      setChapterError('Unable to load this chapter preview right now.');
     } finally {
-      setLoading(false);
+      setChapterLoading(false);
     }
   };
 
-  const loadSampleChapter = async () => {
-    try {
-      setLoading(true);
-      const data = await api.guests.getSampleChapter(courseId);
-      setSampleChapter(data);
-      setShowSample(true);
-    } catch (err) {
-      console.error('Failed to load sample chapter:', err);
-      alert('Failed to load sample chapter. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
+  const previewChapters = useMemo(() => preview?.previewChapters || [], [preview]);
+  const additionalChapterCount = Math.max((preview?.course?.totalChapters || 0) - previewChapters.length, 0);
 
-  if (loading && !preview) {
-    return <div className="guest-preview-loading">Loading course preview...</div>;
-  }
-
-  if (error) {
+  if (loading) {
     return (
-      <div className="guest-preview-error">
-        <p>{error}</p>
-        <button onClick={() => navigate('/guest/courses')}>Back to Catalog</button>
+      <div className="guest-preview guest-preview--loading">
+        <GuestRestrictionBanner message="Preview mode active – sign up to unlock the complete experience." />
+        <div className="guest-preview__loading-card">Loading course preview…</div>
       </div>
     );
   }
 
-  if (!preview) {
+  if (error || !preview || !preview.course) {
     return (
-      <div className="guest-preview-not-found">
-        <p>Course preview not found.</p>
-        <button onClick={() => navigate('/guest/courses')}>Back to Catalog</button>
+      <div className="guest-preview guest-preview--error">
+        <GuestRestrictionBanner message="Preview mode active – sign up to unlock the complete experience." />
+        <div className="guest-preview__error-card">
+          <p>{error || 'Course preview not found.'}</p>
+          <PrimaryButton variant="outline" onClick={() => navigate('/guest/courses')}>
+            Back to courses
+          </PrimaryButton>
+        </div>
       </div>
     );
   }
+
+  const { course, learningObjectives = [] } = preview;
+  const difficultyLabel = course.difficulty
+    ? course.difficulty.charAt(0).toUpperCase() + course.difficulty.slice(1)
+    : 'Beginner';
 
   return (
-    <div className="guest-course-preview">
-      <GuestRestrictionBanner 
-        message="This is a preview. Register or log in to access full course content, quizzes, flashcards, and track your progress."
-      />
+    <div className="guest-preview">
+      <GuestRestrictionBanner message="Preview mode active – sign up to unlock the complete experience." />
 
-      <div className="preview-header">
-        <button
-          className="back-button"
-          onClick={() => navigate('/guest/courses')}
-        >
-          ← Back to Catalog
+      <header className="guest-preview__hero">
+        <button className="guest-preview__back" onClick={() => navigate('/guest/courses')}>
+          ← Back to catalog
         </button>
-        <div className="preview-title-section">
-          <h1>{preview.title}</h1>
-          <span className="preview-badge">🔒 Preview Mode - Limited Content</span>
-        </div>
-      </div>
-
-      <div className="preview-content">
-        <div className="preview-main">
-          <div className="preview-section">
-            <h2>Course Description</h2>
-            <p>{preview.description || 'No description available'}</p>
-          </div>
-
-          {preview.previewContent && (
-            <div className="preview-section">
-              <h2>What You'll Learn</h2>
-              <p>{preview.previewContent}</p>
-            </div>
-          )}
-
-          <div className="preview-section">
-            <h2>Course Content ({preview.totalChapters} Chapters)</h2>
-            {preview.chapterTitles && preview.chapterTitles.length > 0 ? (
-              <div className="chapters-preview">
-                {preview.chapterTitles.map((chapter) => (
-                  <div key={chapter.chapterId} className="chapter-preview-item">
-                    <span className="chapter-number">Chapter {chapter.number}</span>
-                    <div className="chapter-info">
-                      <h3>{chapter.title}</h3>
-                      {chapter.summary && <p>{chapter.summary}</p>}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p>No chapters available yet.</p>
+        <div className="guest-preview__headline">
+          <span className="guest-preview__difficulty">{difficultyLabel}</span>
+          <h1>{course.title}</h1>
+          <p>{course.description}</p>
+          <ul className="guest-preview__meta">
+            <li>
+              <strong>{course.totalChapters}</strong>
+              <span>Chapters</span>
+            </li>
+            {course.estimatedHours && (
+              <li>
+                <strong>{course.estimatedHours}</strong>
+                <span>Estimated hours</span>
+              </li>
             )}
+            {typeof course.enrollmentCount === 'number' && (
+              <li>
+                <strong>{course.enrollmentCount.toLocaleString()}</strong>
+                <span>Learners</span>
+              </li>
+            )}
+            {course.rating && (
+              <li>
+                <strong>{course.rating.toFixed(1)}</strong>
+                <span>Average rating</span>
+              </li>
+            )}
+          </ul>
+          <div className="guest-preview__actions">
+            <PrimaryButton size="md" onClick={() => navigate('/register')}>
+              Get Started
+            </PrimaryButton>
+            <PrimaryButton variant="ghost" size="sm" onClick={() => navigate('/login')}>
+              Already a member? Log in
+            </PrimaryButton>
           </div>
-
-          {!showSample && (
-            <div className="preview-section">
-              <div className="sample-chapter-prompt">
-                <p className="sample-notice">
-                  <strong>Preview Only:</strong> You can view a sample chapter to get a taste of the course content.
-                </p>
-                <button
-                  className="sample-chapter-button"
-                  onClick={loadSampleChapter}
-                  disabled={loading}
-                >
-                  {loading ? 'Loading...' : 'View Sample Chapter (Limited)'}
-                </button>
-                <p className="sample-upgrade-note">
-                  Register to access all chapters and full content!
-                </p>
-              </div>
-            </div>
-          )}
-
-          {showSample && sampleChapter && (
-            <div className="preview-section sample-chapter-section">
-              <div className="sample-header">
-                <h2>📖 Sample Chapter Preview</h2>
-                <span className="sample-badge">Limited Preview - Register for Full Access</span>
-              </div>
-              <div className="sample-chapter-content">
-                <h3>
-                  Chapter {sampleChapter.chapter.number}: {sampleChapter.chapter.title}
-                </h3>
-                {sampleChapter.chapter.summary && (
-                  <p className="chapter-summary">{sampleChapter.chapter.summary}</p>
-                )}
-
-                {sampleChapter.chapter.sampleResources &&
-                  sampleChapter.chapter.sampleResources.length > 0 && (
-                    <div className="sample-resources">
-                      <h4>Sample Content:</h4>
-                      {sampleChapter.chapter.sampleResources.map((resource) => (
-                        <div key={resource.resourceId} className="sample-resource">
-                          <div className="resource-content">
-                            {resource.content}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-              </div>
-            </div>
-          )}
         </div>
-
-        <div className="preview-sidebar">
+        <div className="guest-preview__prompt">
           <GuestAccessPrompt
-            title="Unlock Full Course Access"
-            message="Register now to access all chapters, quizzes, flashcards, and track your learning progress!"
+            title="Unlock Full Access"
+            message="Register to unlock the complete curriculum, quizzes, flashcards, and personalized progress tracking."
             featureList={[
-              'All course chapters and content',
+              'All course chapters',
+              'Hands-on coding challenges',
               'Interactive quizzes with feedback',
-              'Flashcards for practice',
-              'Progress tracking',
-              'XP points and achievements',
-              'Community forum access'
+              'Achievement badges and XP',
+              'Community discussions',
             ]}
           />
+        </div>
+      </header>
 
-          <div className="preview-info-card">
-            <h3>⚠️ Preview Limitations</h3>
-            <ul>
-              <li>❌ Limited chapter content (sample only)</li>
-              <li>❌ No quizzes or flashcards</li>
-              <li>❌ No progress tracking</li>
-              <li>❌ No forum access</li>
-              <li>❌ No XP points or achievements</li>
-            </ul>
-            <p className="upgrade-note">
-              <strong>Register to unlock all features!</strong>
-            </p>
+      <section className="guest-preview__curriculum" aria-labelledby="curriculum-heading">
+        <div className="section-heading">
+          <h2 id="curriculum-heading">What you will learn</h2>
+          <p>Preview the opening chapters before joining the full course.</p>
+        </div>
+        <div className="guest-preview__chapters">
+          {previewChapters.map((chapter, index) => {
+            const chapterNumber = chapter.number || index + 1;
+            const isUnlocked = index === 0;
+            return (
+              <article
+                key={chapter.id || chapter.chapterId || chapterNumber}
+                className={`preview-chapter${isUnlocked ? ' preview-chapter--open' : ' preview-chapter--locked'}`}
+              >
+                <div className="preview-chapter__meta">
+                  <span className="chapter-index">Chapter {chapterNumber}</span>
+                  {chapter.estimatedMinutes && <span>{chapter.estimatedMinutes} mins</span>}
+                </div>
+                <h3>{chapter.title}</h3>
+                <p>{chapter.description}</p>
+                <div className="preview-chapter__actions">
+                  {isUnlocked ? (
+                    <PrimaryButton
+                      size="sm"
+                      onClick={() => handlePreviewChapter(chapter.id || chapter.chapterId)}
+                    >
+                      Preview chapter
+                    </PrimaryButton>
+                  ) : (
+                    <span className="preview-chapter__locked">Log in to access this chapter</span>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+        {additionalChapterCount > 0 && (
+          <div className="preview-more">
+            …and {additionalChapterCount} more chapters waiting in the full course.
+            <PrimaryButton variant="ghost" size="sm" onClick={() => navigate('/register')}>
+              Sign up to see the full curriculum
+            </PrimaryButton>
+          </div>
+        )}
+      </section>
+
+      {learningObjectives.length > 0 && (
+        <section className="guest-preview__objectives" aria-labelledby="objectives-heading">
+          <div className="section-heading">
+            <h2 id="objectives-heading">Learning objectives</h2>
+            <p>By the end of the course you will be able to:</p>
+          </div>
+          <ul className="objective-list">
+            {learningObjectives.map((objective, index) => (
+              <li key={index}>{objective}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {chapterPreview && (
+        <section className="guest-preview__chapter" aria-labelledby="chapter-preview-heading">
+          <div className="section-heading">
+            <h2 id="chapter-preview-heading">Chapter preview</h2>
+            <p>{chapterPreview.chapter?.title}</p>
+          </div>
+          {chapterError && <div className="chapter-preview__error">{chapterError}</div>}
+          {chapterLoading && <div className="chapter-preview__loading">Loading chapter preview…</div>}
+          {!chapterLoading && (
+            <div className="chapter-preview__content">
+              <p>{chapterPreview.chapter?.description}</p>
+              {chapterPreview.content && <pre>{chapterPreview.content}</pre>}
+            </div>
+          )}
+          <div className="chapter-preview__cta">
+            <PrimaryButton size="md" onClick={() => navigate('/register')}>
+              Continue learning
+            </PrimaryButton>
+          </div>
+        </section>
+      )}
+
+      <section className="guest-preview__testimonials" aria-labelledby="preview-testimonials">
+        <div className="section-heading">
+          <h2 id="preview-testimonials">What students say about this course</h2>
+          <p>These learners previewed the course and decided to grow with CodeSage.</p>
+        </div>
+        <Testimonials courseId={courseId} limit={3} />
+      </section>
+
+      <section className="guest-preview__cta" aria-labelledby="preview-cta-heading">
+        <div className="final-cta__card">
+          <h2 id="preview-cta-heading">Ready to cultivate your Python skills?</h2>
+          <p>Join CodeSage to unlock the complete course library, interactive practice, and progress tracking.</p>
+          <div className="final-cta__actions">
+            <PrimaryButton size="lg" onClick={() => navigate('/register')}>
+              Enroll in this course
+            </PrimaryButton>
+            <PrimaryButton variant="ghost" size="sm" onClick={() => navigate('/login')}>
+              Already a member? Log in
+            </PrimaryButton>
           </div>
         </div>
-      </div>
-
-      <div className="preview-footer">
-        <p className="preview-message">{preview.message}</p>
-      </div>
+      </section>
     </div>
   );
 };
 
 export default GuestCoursePreview;
-

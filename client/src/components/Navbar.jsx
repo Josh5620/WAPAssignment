@@ -1,5 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import ThemeSelector from './ThemeSelector';
+import PrimaryButton from './PrimaryButton';
 import { useAuth } from '../context/AuthContext.jsx';
 import '../styles/Navbar.css';
 
@@ -11,107 +13,166 @@ const getDashboardPath = (role) => {
 };
 
 const Navbar = () => {
-  const [visible, setVisible] = useState(true);
-  const timerRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
   const { isLoggedIn, role, logout } = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY === 0) {
-        setVisible(true);
-        clearTimeout(timerRef.current);
-      }
+      setIsScrolled(window.scrollY > 12);
     };
 
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const showNavbar = () => {
-    setVisible(true);
-    clearTimeout(timerRef.current);
-    if (window.scrollY !== 0) {
-      timerRef.current = setTimeout(() => setVisible(false), 3000);
-    }
-  };
-
   useEffect(() => {
-    const handleShowNavbar = () => showNavbar();
-    window.addEventListener('showNavbar', handleShowNavbar);
-    return () => window.removeEventListener('showNavbar', handleShowNavbar);
-  }, []);
+    setIsMenuOpen(false);
+  }, [location.pathname]);
 
-  useEffect(() => {
-    if (visible && window.scrollY !== 0) {
-      timerRef.current = setTimeout(() => setVisible(false), 3000);
-    }
-    return () => clearTimeout(timerRef.current);
-  }, [visible]);
+  const dashboardPath = getDashboardPath(role);
 
-  const handleLogin = () => navigate('/login');
-  const handleRegister = () => navigate('/register');
+  const navLinks = [
+    { label: 'Home', to: '/' },
+    { label: 'Courses', to: isLoggedIn ? '/courses' : '/guest/courses' },
+    { label: 'About', to: '/about' },
+    { label: 'FAQ', to: '/faq' },
+  ];
 
   const handleLogout = () => {
     logout();
     navigate('/');
   };
 
-  const dashboardPath = getDashboardPath(role);
-
   return (
-    <nav
-      className={`navbar${visible ? '' : ' navbar-hidden'}`}
-      onMouseEnter={showNavbar}
-      onClick={showNavbar}
-    >
-      <div className="nav-left">
-        <Link to="/" className="logo" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-          <img src="/CodeSage.svg" alt="CodeSage" className="logo-text" />
-          <img src="/CodeSageLogo.svg" alt="CodeSage Hat" className="logo-hat" />
+    <header className={`navbar ${isScrolled ? 'navbar--scrolled' : ''}`}>
+      <div className="navbar__inner">
+        <Link to="/" className="navbar__logo" aria-label="CodeSage Home">
+          <img src="/CodeSageLogo.svg" alt="CodeSage sprout" className="navbar__logo-icon" />
+          <img src="/CodeSage.svg" alt="CodeSage" className="navbar__logo-text" />
         </Link>
-        <div className="nav-links">
-          <Link to="/" className="nav-link home-link">
-            HOME
-          </Link>
-          <Link to={isLoggedIn ? '/courses' : '/guest/courses'} className="nav-link">
-            COURSES
-          </Link>
-          <Link to="/about" className="nav-link about-link">
-            ABOUT
-          </Link>
-          <Link to="/faq" className="nav-link">
-            FAQ
-          </Link>
+
+        <button
+          className={`navbar__toggle ${isMenuOpen ? 'is-open' : ''}`}
+          onClick={() => setIsMenuOpen((prev) => !prev)}
+          aria-expanded={isMenuOpen}
+          aria-controls="primary-navigation"
+          aria-label="Toggle navigation"
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+
+        <nav
+          id="primary-navigation"
+          className={`navbar__links ${isMenuOpen ? 'is-open' : ''}`}
+          aria-label="Primary navigation"
+        >
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.label}
+              to={link.to}
+              className={({ isActive }) =>
+                `navbar__link${isActive ? ' navbar__link--active' : ''}`
+              }
+            >
+              {link.label}
+            </NavLink>
+          ))}
           {isLoggedIn && (
-            <Link to={dashboardPath} className="nav-link">
+            <NavLink
+              to={dashboardPath}
+              className={({ isActive }) =>
+                `navbar__link navbar__link--dashboard${isActive ? ' navbar__link--active' : ''}`
+              }
+            >
               Dashboard
-            </Link>
+            </NavLink>
+          )}
+          <div className="navbar__mobile-actions">
+            <ThemeSelector />
+            {isLoggedIn ? (
+              <PrimaryButton
+                variant="outline"
+                size="md"
+                fullWidth
+                onClick={handleLogout}
+              >
+                Log Out
+              </PrimaryButton>
+            ) : (
+              <>
+                <PrimaryButton
+                  variant="secondary"
+                  size="md"
+                  fullWidth
+                  onClick={() => navigate('/login')}
+                >
+                  Log In
+                </PrimaryButton>
+                <PrimaryButton
+                  size="md"
+                  fullWidth
+                  onClick={() => navigate('/register')}
+                >
+                  Sign Up
+                </PrimaryButton>
+              </>
+            )}
+          </div>
+        </nav>
+
+        <div className="navbar__actions">
+          <ThemeSelector />
+          {isLoggedIn ? (
+            <>
+              <Link to="/student-profile" className="navbar__profile-link">
+                Profile
+              </Link>
+              <PrimaryButton
+                variant="outline"
+                size="sm"
+                className="navbar__auth-btn"
+                onClick={handleLogout}
+              >
+                Log Out
+              </PrimaryButton>
+              <PrimaryButton
+                size="sm"
+                variant="primary"
+                className="navbar__auth-btn"
+                to={dashboardPath}
+              >
+                Dashboard
+              </PrimaryButton>
+            </>
+          ) : (
+            <>
+              <PrimaryButton
+                variant="ghost"
+                size="sm"
+                className="navbar__auth-btn"
+                onClick={() => navigate('/login')}
+              >
+                Log In
+              </PrimaryButton>
+              <PrimaryButton
+                size="sm"
+                className="navbar__auth-btn"
+                onClick={() => navigate('/register')}
+              >
+                Sign Up
+              </PrimaryButton>
+            </>
           )}
         </div>
       </div>
-      <div className="nav-right">
-        {isLoggedIn ? (
-          <>
-            <Link to="/student-profile" className="nav-link">
-              Profile
-            </Link>
-            <button onClick={handleLogout} className="nav-login">
-              Logout
-            </button>
-          </>
-        ) : (
-          <>
-            <button onClick={handleLogin} className="nav-login">
-              LOGIN
-            </button>
-            <button onClick={handleRegister} className="nav-register">
-              REGISTER
-            </button>
-          </>
-        )}
-      </div>
-    </nav>
+      {isMenuOpen && <div className="navbar__overlay" onClick={() => setIsMenuOpen(false)} />}
+    </header>
   );
 };
 

@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { api } from '../services/apiService';
 import { getUser } from '../utils/auth';
 
-const Testimonials = () => {
-  // All hooks must be declared at the top level, before any early returns
+const Testimonials = ({ courseId, limit }) => {
   const user = getUser();
   const isLoggedIn = user !== null;
   const [testimonials, setTestimonials] = useState([]);
@@ -12,18 +11,14 @@ const Testimonials = () => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [newTestimonial, setNewTestimonial] = useState({
     content: '',
-    rating: 5
+    rating: 5,
   });
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    loadTestimonials();
-  }, []);
-
-  const loadTestimonials = async () => {
+  const loadTestimonials = useCallback(async () => {
     try {
       setLoading(true);
-      const data = await api.guests.getTestimonials();
+      const data = await api.guests.getTestimonials({ courseId, limit });
       setTestimonials(data.testimonials || []);
       setError(null);
     } catch (err) {
@@ -32,7 +27,11 @@ const Testimonials = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [courseId, limit]);
+
+  useEffect(() => {
+    loadTestimonials();
+  }, [loadTestimonials]);
 
   const renderStars = (rating) => {
     return '⭐'.repeat(rating);

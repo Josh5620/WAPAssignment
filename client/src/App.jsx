@@ -13,7 +13,6 @@ import ManageCourse from './pages/ManageCourse';
 import TeacherCourseProgress from './pages/TeacherCourseProgress';
 import CourseViewerPage from './pages/CourseViewerPage';
 import ChatBotPopup from './components/ChatBotPopup';
-import ThemeSelector from './components/ThemeSelector';
 import ExplainTest from './pages/ExplainTest';
 import About from './pages/About';
 import ChapterPage from './pages/ChapterPage.jsx';
@@ -32,28 +31,6 @@ function App() {
     <ThemeProvider>
       <Router>
         <TestingNav />
-        <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '20px',
-            zIndex: 101,
-            background: 'transparent',
-          }}
-          onMouseEnter={() => window.dispatchEvent(new Event('showNavbar'))}
-        />
-        <div
-          style={{
-            position: 'fixed',
-            top: '20px',
-            right: '20px',
-            zIndex: 2000,
-          }}
-        >
-          <ThemeSelector />
-        </div>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/home" element={<HomePage />} />

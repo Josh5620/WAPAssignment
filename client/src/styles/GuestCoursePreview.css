@@ -1,0 +1,250 @@
+.guest-preview {
+  padding: 6.5rem 1.5rem 4rem;
+  background: linear-gradient(180deg, rgba(239, 241, 237, 0.95) 0%, rgba(239, 241, 237, 0.75) 60%, rgba(239, 241, 237, 1) 100%);
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.guest-preview--loading,
+.guest-preview--error {
+  align-items: center;
+}
+
+.guest-preview__loading-card,
+.guest-preview__error-card {
+  margin-top: 2.5rem;
+  padding: 2.5rem 3rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(103, 117, 74, 0.2);
+  font-family: 'Pixelify Sans', cursive;
+  color: rgba(55, 61, 32, 0.75);
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(55, 61, 32, 0.08);
+}
+
+.guest-preview__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr);
+  gap: 2.5rem;
+  align-items: flex-start;
+}
+
+.guest-preview__back {
+  grid-column: 1 / -1;
+  justify-self: flex-start;
+  background: none;
+  border: none;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.95rem;
+  color: var(--primary);
+  cursor: pointer;
+  padding: 0;
+}
+
+.guest-preview__headline h1 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  margin: 0.8rem 0 1rem;
+}
+
+.guest-preview__headline p {
+  font-family: 'Pixelify Sans', cursive;
+  color: rgba(55, 61, 32, 0.75);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.guest-preview__difficulty {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  background: rgba(103, 117, 74, 0.18);
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.guest-preview__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding: 1.25rem 0;
+  margin: 0;
+  list-style: none;
+}
+
+.guest-preview__meta li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-family: 'Pixelify Sans', cursive;
+  color: rgba(55, 61, 32, 0.7);
+}
+
+.guest-preview__meta strong {
+  font-size: 1.4rem;
+  color: var(--text);
+}
+
+.guest-preview__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.guest-preview__prompt {
+  position: sticky;
+  top: 6.5rem;
+}
+
+.guest-preview__curriculum,
+.guest-preview__objectives,
+.guest-preview__chapter,
+.guest-preview__testimonials {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 28px;
+  border: 1px solid rgba(103, 117, 74, 0.2);
+  box-shadow: 0 24px 48px rgba(55, 61, 32, 0.08);
+  padding: 2.5rem;
+}
+
+.guest-preview__chapters {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.preview-chapter {
+  border-radius: 20px;
+  padding: 1.75rem;
+  border: 1px solid rgba(103, 117, 74, 0.16);
+  background: rgba(255, 255, 255, 0.95);
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.preview-chapter--open {
+  box-shadow: 0 16px 32px rgba(55, 61, 32, 0.12);
+}
+
+.preview-chapter--locked::after {
+  content: '🔒';
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  font-size: 1.2rem;
+}
+
+.preview-chapter__meta {
+  display: flex;
+  gap: 1rem;
+  font-family: 'Pixelify Sans', cursive;
+  color: rgba(55, 61, 32, 0.6);
+  margin-bottom: 0.75rem;
+}
+
+.preview-chapter h3 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.05rem;
+  margin-bottom: 0.75rem;
+}
+
+.preview-chapter p {
+  font-family: 'Pixelify Sans', cursive;
+  color: rgba(55, 61, 32, 0.75);
+  line-height: 1.5;
+}
+
+.preview-chapter__actions {
+  margin-top: 1.25rem;
+}
+
+.preview-chapter__locked {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.9rem;
+  color: rgba(55, 61, 32, 0.6);
+}
+
+.preview-more {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border-radius: 20px;
+  background: rgba(103, 117, 74, 0.08);
+  font-family: 'Pixelify Sans', cursive;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.objective-list {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+  padding-left: 1.25rem;
+  font-family: 'Pixelify Sans', cursive;
+  color: rgba(55, 61, 32, 0.75);
+}
+
+.chapter-preview__content {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  border: 1px solid rgba(103, 117, 74, 0.16);
+  padding: 1.5rem;
+  font-family: 'Pixelify Sans', cursive;
+  color: rgba(55, 61, 32, 0.8);
+  line-height: 1.6;
+}
+
+.chapter-preview__content pre {
+  margin-top: 1.25rem;
+  background: #1e1e1e;
+  color: #f5f5f5;
+  padding: 1rem;
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+.chapter-preview__error,
+.chapter-preview__loading {
+  font-family: 'Pixelify Sans', cursive;
+  color: rgba(55, 61, 32, 0.7);
+  margin-bottom: 1rem;
+}
+
+.chapter-preview__cta {
+  margin-top: 1.5rem;
+}
+
+.guest-preview__cta {
+  padding-bottom: 3rem;
+}
+
+@media (max-width: 1024px) {
+  .guest-preview__hero {
+    grid-template-columns: 1fr;
+  }
+
+  .guest-preview__prompt {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .guest-preview {
+    padding: 6rem 1.1rem 3rem;
+  }
+
+  .guest-preview__curriculum,
+  .guest-preview__objectives,
+  .guest-preview__chapter,
+  .guest-preview__testimonials {
+    padding: 2rem 1.5rem;
+  }
+}

@@ -1,57 +1,93 @@
-.register-page {
-  min-height: calc(100vh + 6rem);
-  padding-top: 3rem;
-}
-
 .register-card {
-  background: var(--card-bg-transparent);
-  border: 1px solid rgba(84, 90, 50, 0.25);
-  backdrop-filter: blur(12px);
+  gap: 1.25rem;
 }
 
-.register-title {
-  letter-spacing: 0.25rem;
+.auth-card__success {
+  background: rgba(103, 117, 74, 0.15);
+  border: 1px solid rgba(103, 117, 74, 0.35);
+  color: var(--primary);
+  padding: 0.85rem 1rem;
+  border-radius: 16px;
+  font-family: 'Pixelify Sans', cursive;
 }
 
-.register-logo img {
-  filter: drop-shadow(0 4px 8px rgba(55, 61, 32, 0.25));
-}
-
-.role-select {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23545a32'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 1.25rem center;
-  background-size: 1rem;
-}
-
-.terms-text {
+.auth-field__hint,
+.auth-field__note {
+  font-family: 'Pixelify Sans', cursive;
   font-size: 0.85rem;
-  color: var(--muted);
-  margin: 1.25rem 0;
-  line-height: 1.5;
+  color: rgba(55, 61, 32, 0.65);
 }
 
-.terms-text a {
+.register-role {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.register-role__label {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.9rem;
+  color: rgba(55, 61, 32, 0.7);
+}
+
+.register-role__option {
+  display: flex;
+  gap: 0.85rem;
+  padding: 0.85rem 1rem;
+  border-radius: 16px;
+  border: 1px solid rgba(103, 117, 74, 0.22);
+  background: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.register-role__option.is-active {
+  border-color: var(--primary);
+  box-shadow: 0 12px 24px rgba(55, 61, 32, 0.12);
+}
+
+.register-role__option input {
+  margin-top: 0.35rem;
+}
+
+.register-role__option strong {
+  display: block;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+}
+
+.register-role__option p {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.9rem;
+  color: rgba(55, 61, 32, 0.65);
+}
+
+.register-terms {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-family: 'Pixelify Sans', cursive;
+  color: rgba(55, 61, 32, 0.75);
+}
+
+.register-terms a {
   color: var(--primary);
   font-weight: 600;
+  text-decoration: none;
 }
 
-.terms-text a:hover {
-  text-decoration: underline;
+.register-terms.has-error {
+  color: #6d2f1a;
 }
 
-.signin-link {
-  margin-top: 1.5rem;
-  font-size: 0.95rem;
-  color: var(--text);
-}
+@media (max-width: 540px) {
+  .register-role__option {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-.signin-link a {
-  color: var(--primary);
-  font-weight: 600;
-}
-
-.signin-link a:hover {
-  text-decoration: underline;
+  .register-role__option input {
+    margin-top: 0;
+  }
 }

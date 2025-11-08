@@ -1,66 +1,152 @@
 import React from 'react';
-import '../styles/About.css';
 import Navbar from '../components/Navbar';
+import PrimaryButton from '../components/PrimaryButton';
+import '../styles/About.css';
 
-const About = () => {
-  return (
-    <>
-      <Navbar />
-      <div className="about-page-wrapper">
-        <h1>CodeSage: Your Python Mentor</h1>
-        <h2 className="about-tagline">Learn Python step by step, anywhere, anytime.</h2>
+const benefits = [
+  {
+    icon: '🎮',
+    title: 'Gamified Learning',
+    description: 'Turn coding into an adventure with garden-themed progress, badges, and gentle challenges.',
+  },
+  {
+    icon: '📈',
+    title: 'Track Progress',
+    description: 'Visual dashboards let you watch your skills grow from seedling to canopy across every path.',
+  },
+  {
+    icon: '💡',
+    title: 'Interactive Content',
+    description: 'Learn by doing with hands-on code labs, walkthroughs, and practice quizzes with instant feedback.',
+  },
+  {
+    icon: '👥',
+    title: 'Supportive Community',
+    description: 'Join students and teachers who share tips, celebrate milestones, and keep each other motivated.',
+  },
+];
 
-        <section className="about-section">
-          <h3>Our Mission</h3>
+const steps = [
+  {
+    number: '01',
+    title: 'Choose Your Path',
+    description: 'Pick a course that matches your goals—from fundamentals to automation and data science.',
+  },
+  {
+    number: '02',
+    title: 'Complete Chapters',
+    description: 'Work through lessons, practice in the browser, and reinforce knowledge with garden-themed quests.',
+  },
+  {
+    number: '03',
+    title: 'Practice & Test',
+    description: 'Apply what you learn through projects, quizzes, and flashcards that adapt to your progress.',
+  },
+  {
+    number: '04',
+    title: 'Watch Your Garden Grow',
+    description: 'Every milestone nurtures your digital garden as you unlock achievements and new challenges.',
+  },
+];
+
+const stats = [
+  { value: '45K+', label: 'Students learning', detail: 'Learners exploring Python with CodeSage every month.' },
+  { value: '120+', label: 'Interactive chapters', detail: 'Crafted lessons covering fundamentals to advanced topics.' },
+  { value: '18K+', label: 'Projects completed', detail: 'Garden-inspired challenges submitted by our community.' },
+];
+
+const About = () => (
+  <div className="about-page">
+    <Navbar />
+    <main className="about-content">
+      <section className="about-hero">
+        <div className="about-hero__copy">
+          <span className="about-hero__eyebrow">About CodeSage</span>
+          <h1>Nurturing Python skills through storytelling and play</h1>
           <p>
-            Our mission is to make coding accessible to everyone by providing simple, engaging, and practical learning resources.
+            CodeSage blends structured curriculum with a vibrant garden theme to make Python approachable for every learner.
+            We believe progress feels best when it is visual, rewarding, and rooted in community.
           </p>
-        </section>
-
-        <section className="about-section">
-          <h3>Who Is CodeSage For?</h3>
+        </div>
+        <div className="about-hero__card">
+          <h2>Our Mission</h2>
           <p>
-            CodeSage is designed for beginners, students, teachers, hobbyists, and professionals looking to master Python programming.
+            To make Python learning accessible, engaging, and sustainable by combining interactive practice with mindful pacing.
           </p>
-        </section>
+          <PrimaryButton to="/register" size="md">
+            Start learning free
+          </PrimaryButton>
+        </div>
+      </section>
 
-        <section className="about-section">
-          <h3>What We Offer</h3>
-          <p>
-            Tutorials, coding exercises, self-assessments, problem-solving challenges, virtual labs, and interactive features like quizzes and projects.
-          </p>
-        </section>
+      <section className="about-benefits" aria-label="Why CodeSage">
+        {benefits.map((benefit) => (
+          <article key={benefit.title} className="about-benefit-card">
+            <span className="about-benefit-card__icon" aria-hidden>
+              {benefit.icon}
+            </span>
+            <h3>{benefit.title}</h3>
+            <p>{benefit.description}</p>
+          </article>
+        ))}
+      </section>
 
-        <section className="about-section">
-          <h3>Our Story</h3>
-          <p>
-            CodeSage was built to help students who struggle with coding basics. Our team wanted to create a supportive space for everyone to learn and grow.
-          </p>
-        </section>
+      <section className="about-how" aria-labelledby="how-it-works">
+        <div className="section-heading">
+          <h2 id="how-it-works">How CodeSage works</h2>
+          <p>Follow a clear path from your first line of code to building full projects.</p>
+        </div>
+        <div className="about-steps">
+          {steps.map((step) => (
+            <div key={step.number} className="about-step">
+              <span className="about-step__number">{step.number}</span>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
-        <section className="about-section">
-          <h3>Meet the Team</h3>
+      <section className="about-story" aria-labelledby="our-story">
+        <div className="section-heading">
+          <h2 id="our-story">Our story</h2>
+        </div>
+        <div className="about-story__content">
           <p>
-            Created by a group of Computer Science students passionate about making coding fun and accessible.
+            CodeSage began as a passion project among teachers and developers who saw students struggle with traditional coding
+            tutorials. We built a platform where practice feels playful, progress is celebrated, and every learner has space to
+            grow at their own pace. Today we continue to expand the garden with new courses, seasonal events, and community-led
+            workshops.
           </p>
-        </section>
+        </div>
+      </section>
 
-        <section className="about-section">
-          <h3>Future Goals</h3>
-          <p>
-            We aim to expand our Python tutorials, add advanced topics and specializations, and introduce AI-powered coding buddies to help you learn even faster!
-          </p>
-        </section>
+      <section className="about-stats" aria-label="CodeSage impact statistics">
+        {stats.map((stat) => (
+          <div key={stat.label} className="about-stat">
+            <span className="about-stat__value">{stat.value}</span>
+            <span className="about-stat__label">{stat.label}</span>
+            <p>{stat.detail}</p>
+          </div>
+        ))}
+      </section>
 
-        <section className="about-section">
-          <h3>Join Us!</h3>
-          <p>
-            Start your Python journey today! <a href="/register" className="about-cta">Sign up for free</a> and begin learning.
-          </p>
-        </section>
-      </div>
-    </>
-  );
-};
+      <section className="about-cta" aria-labelledby="about-cta-heading">
+        <div className="about-cta__card">
+          <h2 id="about-cta-heading">Ready to start your Python journey?</h2>
+          <p>Join CodeSage for free to unlock interactive courses, track progress, and grow with the community.</p>
+          <div className="about-cta__actions">
+            <PrimaryButton size="lg" to="/register">
+              Join CodeSage
+            </PrimaryButton>
+            <PrimaryButton variant="ghost" size="sm" to="/guest/courses">
+              Browse courses
+            </PrimaryButton>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+);
 
 export default About;

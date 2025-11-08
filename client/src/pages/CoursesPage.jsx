@@ -66,6 +66,7 @@ const CoursesPage = () => {
         <CourseList 
           userRole={userRole}
           onCourseSelect={handleCourseSelect}
+          onStartLearning={handleStartLearning}
         />
       )}
       

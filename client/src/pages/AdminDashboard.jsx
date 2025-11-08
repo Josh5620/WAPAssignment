@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { adminService } from '../services/apiService';
 import '../styles/AdminDashboard.css';
+import { useAuth } from '../context/AuthContext.jsx';
 
 const AdminDashboard = () => {
+    const { user: authUser } = useAuth();
     const [dashboardData, setDashboardData] = useState(null);
     const [users, setUsers] = useState([]);
     const [forumPosts, setForumPosts] = useState([]);
@@ -283,10 +285,30 @@ const AdminDashboard = () => {
         );
     }
 
+    const displayName = useMemo(() => {
+        if (!authUser) return 'Admin';
+        return (
+            authUser.full_name ||
+            authUser.fullName ||
+            authUser.FullName ||
+            authUser.name ||
+            authUser.displayName ||
+            'Admin'
+        );
+    }, [authUser]);
+
+    const welcomeMessage = useMemo(
+        () => `Hi ${displayName}, welcome back to mission control.`,
+        [displayName],
+    );
+
     return (
         <div className="admin-dashboard">
             <header className="admin-header">
-                <h1>Admin Dashboard</h1>
+                <div>
+                    <h1>{welcomeMessage}</h1>
+                    <p className="admin-subheading">Admin Dashboard</p>
+                </div>
                 <div className="admin-header-actions">
                     <button onClick={() => navigate('/')} className="btn-secondary">
                         Back to Site

@@ -16,6 +16,7 @@ import ChatBotPopup from './components/ChatBotPopup';
 import ThemeSelector from './components/ThemeSelector';
 import ExplainTest from './pages/ExplainTest';
 import About from './pages/About';
+import ChapterPage from './pages/ChapterPage.jsx';
 import CoursesPage from './pages/CoursesPage';
 import GuestCoursesPage from './pages/GuestCoursesPage';
 import FAQ from './pages/FAQ';
@@ -120,6 +121,14 @@ function App() {
             element={(
               <ProtectedRoute allowedRoles={['student', 'teacher']}>
                 <CourseViewerPage />
+              </ProtectedRoute>
+            )}
+          />
+          <Route
+            path="/chapters/:chapterId"
+            element={(
+              <ProtectedRoute allowedRoles={['student', 'teacher', 'admin']}>
+                <ChapterPage />
               </ProtectedRoute>
             )}
           />

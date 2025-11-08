@@ -4,10 +4,12 @@ import '../styles/TeacherDashboard.css';
 import ReturnHome from '../components/ReturnHome';
 import { teacherCourseService } from '../services/apiService';
 import TeacherForumManager from '../components/TeacherForumManager';
+import { useAuth } from '../context/AuthContext.jsx';
 
 const initialForm = { title: '', description: '', level: '', tagsCsv: '' };
 
 const TeacherDashboard = () => {
+  const { user } = useAuth();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -112,6 +114,23 @@ const TeacherDashboard = () => {
 
   const headerTitle = activeTab === 'courses' ? 'My Courses' : 'Forum Moderation';
 
+  const displayName = useMemo(() => {
+    if (!user) return 'Teacher';
+    return (
+      user.full_name ||
+      user.fullName ||
+      user.FullName ||
+      user.name ||
+      user.displayName ||
+      'Teacher'
+    );
+  }, [user]);
+
+  const welcomeMessage = useMemo(
+    () => `Hi ${displayName}, welcome back to your classroom.`,
+    [displayName],
+  );
+
   const headerSubtitle = useMemo(() => {
     if (activeTab === 'forum') {
       if (courses.length === 0) return 'Create a course to unlock forum discussions.';
@@ -192,7 +211,8 @@ const TeacherDashboard = () => {
       <div className="dashboard-container">
         <header className="dashboard-header td-header">
           <div>
-            <h1>{headerTitle}</h1>
+            <h1>{welcomeMessage}</h1>
+            <p className="td-subheading">{headerTitle}</p>
             <p>{headerSubtitle}</p>
           </div>
           {activeTab === 'courses' && (

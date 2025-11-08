@@ -7,9 +7,11 @@ const ThemeSelector = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const themeColors = {
-    garden: '#717744',
-    sage: '#979A68',
-    earth: '#766153',
+    garden: '#67754A',
+    sage: '#8FA67A',
+    earth: '#8B6F5B',
+    canopy: '#4F7A5A',
+    bloom: '#C37A63',
   };
 
   return (

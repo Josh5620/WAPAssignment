@@ -1,8 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { api, quickApi } from '../services/apiService';
+import { quickApi } from '../services/apiService';
 
+const normalizeCourse = (course) => ({
+  id: course?.id || course?.Id || course?.courseId || course?.CourseId || '',
+  title: course?.title || course?.Title || 'Untitled Course',
+  description: course?.description || course?.Description || '',
+  previewContent: course?.previewContent || course?.PreviewContent || '',
+  published:
+    typeof course?.published === 'boolean'
+      ? course.published
+      : typeof course?.Published === 'boolean'
+        ? course.Published
+        : true,
+  chapterCount:
+    course?.chapterCount ??
+    course?.ChapterCount ??
+    (Array.isArray(course?.chapters) ? course.chapters.length : null) ??
+    (Array.isArray(course?.Chapters) ? course.Chapters.length : null),
+});
 
-const CourseList = ({ userRole }) => {
+const CourseList = ({ userRole, onCourseSelect, onStartLearning }) => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,18 +40,6 @@ const CourseList = ({ userRole }) => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleEnrollClick = (courseId) => {
-    // Handle enrollment logic
-    console.log(`Enrolling in course: ${courseId}`);
-    // You would call an enrollment API here
-  };
-
-  const handleViewDetails = (courseId) => {
-    // Navigate to course details page
-    console.log(`Viewing course details: ${courseId}`);
-    // You could use React Router here: navigate(`/courses/${courseId}`)
   };
 
   if (loading) {
@@ -65,60 +70,78 @@ const CourseList = ({ userRole }) => {
         </div>
       ) : (
         <div className="courses-grid">
-          {courses.map((course) => (
-            <div key={course.id} className="course-card">
-              <div className="course-header">
-                <h3 className="course-title">{course.title}</h3>
-                {course.published && (
-                  <span className="published-badge">Published</span>
-                )}
-              </div>
-              
-              <div className="course-content">
-                <p className="course-description">
-                  {course.description || 'No description available'}
-                </p>
-                
-                {course.previewContent && (
-                  <div className="course-preview">
-                    <h4>Preview:</h4>
-                    <p>{course.previewContent}</p>
-                  </div>
-                )}
-              </div>
+          {courses.map((rawCourse) => {
+            const course = normalizeCourse(rawCourse);
+            const courseId = course.id;
+            return (
+              <div key={courseId || course.title} className="course-card">
+                <div className="course-header">
+                  <h3 className="course-title">{course.title}</h3>
+                  {course.published && (
+                    <span className="published-badge">Published</span>
+                  )}
+                </div>
 
-              <div className="course-actions">
-                <button 
-                  className="btn-primary"
-                  onClick={() => handleViewDetails(course.id)}
-                >
-                  View Details
-                </button>
-                
-                {userRole === 'student' && course.published && (
-                  <button 
-                    className="btn-secondary"
-                    onClick={() => handleEnrollClick(course.id)}
-                  >
-                    Enroll Now
-                  </button>
-                )}
-                
-                {(userRole === 'admin' || userRole === 'teacher') && (
-                  <button 
-                    className="btn-edit"
-                    onClick={() => console.log(`Edit course: ${course.id}`)}
-                  >
-                    Edit Course
-                  </button>
-                )}
-              </div>
+                <div className="course-content">
+                  <p className="course-description">
+                    {course.description || 'No description available'}
+                  </p>
 
-              <div className="course-meta">
-                <small>Course ID: {course.id.substring(0, 8)}...</small>
+                  {course.previewContent && (
+                    <div className="course-preview">
+                      <h4>Preview:</h4>
+                      <p>{course.previewContent}</p>
+                    </div>
+                  )}
+
+                  {typeof course.chapterCount === 'number' && (
+                    <div className="course-meta-line">
+                      <strong>Chapters:</strong> {course.chapterCount}
+                    </div>
+                  )}
+                </div>
+
+                <div className="course-actions">
+                  <button
+                    className="btn-primary"
+                    onClick={() => onCourseSelect && onCourseSelect(courseId, course.title)}
+                  >
+                    View Details
+                  </button>
+
+                  {userRole === 'student' && course.published && (
+                    <button
+                      className="btn-secondary"
+                      onClick={() => onStartLearning && onStartLearning(courseId, course.title)}
+                    >
+                      Enroll Now
+                    </button>
+                  )}
+
+                  {(userRole === 'admin' || userRole === 'teacher') && (
+                    <button
+                      className="btn-edit"
+                      onClick={() =>
+                        onCourseSelect
+                          ? onCourseSelect(courseId, course.title)
+                          : console.log(`Edit course: ${courseId}`)
+                      }
+                    >
+                      Edit Course
+                    </button>
+                  )}
+                </div>
+
+                <div className="course-meta">
+                  {courseId ? (
+                    <small>Course ID: {courseId.toString().slice(0, 8)}...</small>
+                  ) : (
+                    <small>Untracked course identifier</small>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

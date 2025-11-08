@@ -1,0 +1,337 @@
+.chapter-page {
+max-width: 960px;
+margin: 0 auto;
+padding: 2rem 1.5rem 4rem;
+color: var(--text);
+}
+
+.chapter-hero {
+text-align: center;
+margin-bottom: 2.5rem;
+padding: 2rem 1.5rem;
+background: var(--card-bg, rgba(255, 255, 255, 0.75));
+border: 3px solid var(--border);
+border-radius: 24px;
+box-shadow: var(--shadow-2);
+position: relative;
+}
+
+.chapter-breadcrumb {
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 0.5rem;
+font-family: 'Pixelify Sans', cursive;
+margin-bottom: 1rem;
+}
+
+.breadcrumb-link {
+background: none;
+border: none;
+color: var(--primary);
+font-size: 0.9rem;
+cursor: pointer;
+text-decoration: underline;
+}
+
+.breadcrumb-link:hover {
+color: var(--primary-hover);
+}
+
+.chapter-icon {
+font-size: 2.5rem;
+display: inline-block;
+margin-bottom: 1rem;
+}
+
+.chapter-hero h1 {
+margin: 0;
+font-family: 'Press Start 2P', cursive;
+font-size: 1.25rem;
+}
+
+.chapter-overview {
+margin: 1rem auto 1.5rem;
+max-width: 640px;
+font-size: 1rem;
+line-height: 1.6;
+color: var(--text-muted, var(--text));
+}
+
+.chapter-meta {
+display: flex;
+justify-content: center;
+gap: 1rem;
+font-size: 0.9rem;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: var(--muted);
+}
+
+.chapter-section {
+margin-bottom: 2rem;
+padding: 1.75rem;
+border: 2px dashed var(--border);
+border-radius: 20px;
+background: var(--bg);
+}
+
+.chapter-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0 1.5rem;
+}
+
+.chapter-tab {
+  padding: 0.8rem 1.6rem;
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Pixelify Sans', cursive;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chapter-tab:hover {
+  box-shadow: var(--shadow-1);
+  transform: translateY(-2px);
+}
+
+.chapter-tab.active {
+  background: var(--primary);
+  color: var(--bg);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-2);
+}
+
+.chapter-content-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.chapter-section h2 {
+margin-top: 0;
+font-family: 'Press Start 2P', cursive;
+font-size: 1rem;
+margin-bottom: 1rem;
+}
+
+.chapter-section ul {
+margin: 0;
+padding-left: 1.2rem;
+list-style: square;
+line-height: 1.7;
+}
+
+.chapter-article + .chapter-article {
+margin-top: 1.5rem;
+}
+
+.chapter-article h3 {
+font-family: 'Pixelify Sans', cursive;
+font-size: 1.1rem;
+margin-bottom: 0.5rem;
+}
+
+.chapter-article p {
+margin: 0 0 0.75rem 0;
+line-height: 1.6;
+}
+
+.flashcard-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.flashcard-progress {
+  font-family: 'Pixelify Sans', cursive;
+  color: var(--muted);
+}
+
+.flashcard {
+  width: min(480px, 100%);
+  min-height: 220px;
+  border: 3px solid var(--border);
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--card-bg, rgba(255, 255, 255, 0.9));
+  box-shadow: var(--shadow-2);
+  position: relative;
+  padding: 2rem;
+  transition: transform 0.3s ease;
+}
+
+.flashcard.show-answer {
+  background: var(--accent, rgba(255, 255, 255, 0.95));
+}
+
+.flashcard-face h3 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.flashcard-face p {
+  margin: 0;
+  line-height: 1.6;
+  font-size: 1.05rem;
+}
+
+.flashcard-answer {
+  margin-top: 1.5rem;
+  border-top: 2px dashed var(--border);
+  padding-top: 1rem;
+  color: var(--primary);
+}
+
+.flashcard-actions {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.flashcard-actions button {
+  padding: 0.6rem 1.2rem;
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Pixelify Sans', cursive;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.flashcard-actions button:hover {
+  background: var(--primary);
+  color: var(--bg);
+  box-shadow: var(--shadow-1);
+}
+
+.challenges-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.difficulty-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.difficulty-button {
+  padding: 0.6rem 1.4rem;
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Pixelify Sans', cursive;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.difficulty-button:hover {
+  background: var(--accent);
+}
+
+.difficulty-button.active {
+  background: var(--primary);
+  color: var(--bg);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-2);
+}
+
+.questions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.question-card {
+  border: 2px solid var(--border);
+  border-radius: 18px;
+  padding: 1.2rem;
+  background: var(--card-bg, rgba(255, 255, 255, 0.9));
+  box-shadow: var(--shadow-1);
+}
+
+.question-card h4 {
+  margin: 0 0 0.75rem 0;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1rem;
+}
+
+.question-card ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  line-height: 1.6;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--muted);
+  font-family: 'Pixelify Sans', cursive;
+}
+
+.chapter-navigation {
+display: flex;
+justify-content: space-between;
+gap: 1rem;
+margin-top: 3rem;
+flex-wrap: wrap;
+}
+
+.chapter-nav-button {
+flex: 1;
+min-width: 220px;
+padding: 0.85rem 1.5rem;
+border: 2px solid var(--border);
+border-radius: 16px;
+background: var(--primary);
+color: var(--bg);
+font-family: 'Pixelify Sans', cursive;
+cursor: pointer;
+transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chapter-nav-button:hover:not(:disabled) {
+transform: translateY(-2px);
+box-shadow: var(--shadow-2);
+}
+
+.chapter-nav-button:disabled {
+background: var(--muted);
+color: var(--text-muted);
+cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+.chapter-page {
+    padding: 1.5rem 1rem 3rem;
+}
+
+.chapter-hero {
+    padding: 1.5rem 1rem;
+}
+
+.chapter-navigation {
+    flex-direction: column;
+}
+
+.chapter-nav-button {
+    width: 100%;
+}
+
+  .flashcard {
+    padding: 1.5rem;
+  }
+}
+

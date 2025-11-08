@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { api, quickApi } from '../services/apiService';
 import '../styles/CourseDetails.css';
 
@@ -7,6 +7,12 @@ const CourseDetails = ({ courseId, userRole, onBack, onStartLearning }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isEnrolled, setIsEnrolled] = useState(false);
+
+  const normalizedCourseId = useMemo(
+    () =>
+      course?.id || course?.Id || course?.courseId || course?.CourseId || courseId,
+    [course, courseId],
+  );
 
   useEffect(() => {
     if (courseId) {
@@ -24,7 +30,13 @@ const CourseDetails = ({ courseId, userRole, onBack, onStartLearning }) => {
       // Check if user is enrolled
       const token = quickApi.getUserToken();
       if (token) {
-        const enrolled = await api.enrollments.checkEnrollment(courseId, token);
+        const enrollmentId =
+          courseData?.id ||
+          courseData?.Id ||
+          courseData?.courseId ||
+          courseData?.CourseId ||
+          courseId;
+        const enrolled = await api.enrollments.checkEnrollment(enrollmentId, token);
         setIsEnrolled(enrolled);
       }
     } catch (err) {
@@ -35,6 +47,26 @@ const CourseDetails = ({ courseId, userRole, onBack, onStartLearning }) => {
     }
   };
 
+  const metadata = useMemo(() => {
+    if (!course) return null;
+    return {
+      id: course.id || course.Id || course.courseId || course.CourseId || '',
+      title: course.title || course.Title || 'Untitled Course',
+      description: course.description || course.Description || '',
+      previewContent: course.previewContent || course.PreviewContent || '',
+      published:
+        typeof course.published === 'boolean'
+          ? course.published
+          : typeof course.Published === 'boolean'
+            ? course.Published
+            : true,
+      chapters:
+        course.chapters ||
+        course.Chapters ||
+        [],
+    };
+  }, [course]);
+
   const handleEnroll = async () => {
     try {
       const token = quickApi.getUserToken();
@@ -43,7 +75,7 @@ const CourseDetails = ({ courseId, userRole, onBack, onStartLearning }) => {
         return;
       }
       
-      await quickApi.enrollInCourse(courseId, token);
+      await quickApi.enrollInCourse(normalizedCourseId, token);
       setIsEnrolled(true);
       alert('Successfully enrolled in course!');
     } catch (err) {
@@ -70,7 +102,7 @@ const CourseDetails = ({ courseId, userRole, onBack, onStartLearning }) => {
     );
   }
 
-  if (!course) {
+  if (!course || !metadata) {
     return (
       <div className="course-not-found">
         <p>Course not found.</p>
@@ -89,8 +121,8 @@ const CourseDetails = ({ courseId, userRole, onBack, onStartLearning }) => {
         </button>
         
         <div className="course-title-section">
-          <h1 className="course-title">{course.title}</h1>
-          {course.published && (
+          <h1 className="course-title">{metadata.title}</h1>
+          {metadata.published && (
             <span className="published-badge">Published</span>
           )}
         </div>
@@ -101,32 +133,44 @@ const CourseDetails = ({ courseId, userRole, onBack, onStartLearning }) => {
           <div className="course-description-section">
             <h2>Course Description</h2>
             <p className="course-description">
-              {course.description || 'No description available for this course.'}
+              {metadata.description || 'No description available for this course.'}
             </p>
           </div>
 
-          {course.previewContent && (
+          {metadata.previewContent && (
             <div className="course-preview-section">
               <h2>What You'll Learn</h2>
               <div className="preview-content">
-                <p>{course.previewContent}</p>
+                <p>{metadata.previewContent}</p>
               </div>
             </div>
           )}
 
           <div className="course-chapters-section">
             <h2>Course Content</h2>
-            {course.chapters && course.chapters.length > 0 ? (
+            {metadata.chapters && metadata.chapters.length > 0 ? (
               <div className="chapters-list">
-                {course.chapters.map((chapter, index) => (
-                  <div key={chapter.id} className="chapter-item">
-                    <span className="chapter-number">{chapter.number || index + 1}</span>
-                    <div className="chapter-info">
-                      <h3>{chapter.title}</h3>
-                      {chapter.summary && <p>{chapter.summary}</p>}
+                {metadata.chapters.map((chapter, index) => {
+                  const chapterId =
+                    chapter.id ||
+                    chapter.Id ||
+                    chapter.chapterId ||
+                    chapter.ChapterId ||
+                    index;
+                  const chapterTitle = chapter.title || chapter.Title || `Chapter ${index + 1}`;
+                  const chapterSummary = chapter.summary || chapter.Summary || '';
+                  const chapterNumber = chapter.number || chapter.Number || index + 1;
+
+                  return (
+                    <div key={chapterId} className="chapter-item">
+                      <span className="chapter-number">{chapterNumber}</span>
+                      <div className="chapter-info">
+                        <h3>{chapterTitle}</h3>
+                        {chapterSummary && <p>{chapterSummary}</p>}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             ) : (
               <p className="no-chapters">Course content is being prepared...</p>
@@ -145,7 +189,10 @@ const CourseDetails = ({ courseId, userRole, onBack, onStartLearning }) => {
                     <span className="enrolled-badge">✓ Enrolled</span>
                     <button 
                       className="btn-continue"
-                      onClick={() => onStartLearning && onStartLearning(courseId)}
+                      onClick={() =>
+                        onStartLearning &&
+                        onStartLearning(normalizedCourseId, metadata.title)
+                      }
                     >
                       Continue Learning
                     </button>
@@ -159,7 +206,10 @@ const CourseDetails = ({ courseId, userRole, onBack, onStartLearning }) => {
                         </button>
                         <button 
                           className="btn-preview"
-                          onClick={() => onStartLearning && onStartLearning(courseId)}
+                          onClick={() =>
+                            onStartLearning &&
+                            onStartLearning(normalizedCourseId, metadata.title)
+                          }
                         >
                           Preview Course
                         </button>
@@ -185,13 +235,13 @@ const CourseDetails = ({ courseId, userRole, onBack, onStartLearning }) => {
             <h3>Course Information</h3>
             <div className="info-item">
               <strong>Status:</strong>
-              <span className={course.published ? 'status-published' : 'status-draft'}>
-                {course.published ? 'Published' : 'Draft'}
+              <span className={metadata.published ? 'status-published' : 'status-draft'}>
+                {metadata.published ? 'Published' : 'Draft'}
               </span>
             </div>
             <div className="info-item">
               <strong>Course ID:</strong>
-              <span className="course-id">{course.id}</span>
+              <span className="course-id">{metadata.id}</span>
             </div>
           </div>
         </div>

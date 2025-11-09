@@ -135,7 +135,10 @@ const Navbar = () => {
           <ThemeSelector />
           {isLoggedIn ? (
             <>
-              <Link to="/student-profile" className="navbar__profile-link">
+              <Link 
+                to={role === 'teacher' ? '/teacher-profile' : '/student-profile'} 
+                className="navbar__profile-link"
+              >
                 Profile
               </Link>
               <PrimaryButton

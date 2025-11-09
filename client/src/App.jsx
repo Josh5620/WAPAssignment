@@ -9,6 +9,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import StudentDashboard from './pages/StudentDashboard';
 import StudentProfile from './pages/StudentProfile';
 import TeacherDashboard from './pages/TeacherDashboard';
+import TeacherProfile from './pages/TeacherProfile';
 import ManageCourse from './pages/ManageCourse';
 import TeacherCourseProgress from './pages/TeacherCourseProgress';
 import CourseViewerPage from './pages/CourseViewerPage';
@@ -79,6 +80,14 @@ function App() {
             element={(
               <ProtectedRoute allowedRoles={['teacher']}>
                 <TeacherDashboard />
+              </ProtectedRoute>
+            )}
+          />
+          <Route
+            path="/teacher-profile"
+            element={(
+              <ProtectedRoute allowedRoles={['teacher']}>
+                <TeacherProfile />
               </ProtectedRoute>
             )}
           />

@@ -213,13 +213,63 @@ const StudentProfile = () => {
                   <span className="info-value">{profile.role}</span>
                 </div>
                 {profile.leaderboard && (
-                  <div className="info-item">
-                    <span className="info-label">XP Points:</span>
-                    <span className="info-value">{profile.leaderboard.xp}</span>
-                  </div>
+                  <>
+                    <div className="info-item">
+                      <span className="info-label">XP Points:</span>
+                      <span className="info-value">{profile.leaderboard.xp} XP</span>
+                    </div>
+                    <div className="info-item">
+                      <span className="info-label">Rank:</span>
+                      <span className="info-value">#{profile.leaderboard.rank || 'Unranked'}</span>
+                    </div>
+                  </>
                 )}
+                <div className="info-item">
+                  <span className="info-label">Member Since:</span>
+                  <span className="info-value">
+                    {profile.createdAt ? new Date(profile.createdAt).toLocaleDateString('en-US', { 
+                      year: 'numeric', 
+                      month: 'long', 
+                      day: 'numeric' 
+                    }) : 'Recently joined'}
+                  </span>
+                </div>
               </div>
             )}
+          </div>
+
+          <div className="profile-section">
+            <h2>Quick Stats</h2>
+            <div className="quick-stats">
+              <div className="stat-box">
+                <div className="stat-icon">📚</div>
+                <div className="stat-info">
+                  <div className="stat-value">{profile.completedChapters || 0}</div>
+                  <div className="stat-label">Chapters Completed</div>
+                </div>
+              </div>
+              <div className="stat-box">
+                <div className="stat-icon">🔥</div>
+                <div className="stat-info">
+                  <div className="stat-value">{profile.currentStreak || 0}</div>
+                  <div className="stat-label">Day Streak</div>
+                </div>
+              </div>
+              <div className="stat-box">
+                <div className="stat-icon">⏱️</div>
+                <div className="stat-info">
+                  <div className="stat-value">{profile.totalMinutes || 0}</div>
+                  <div className="stat-label">Minutes Learned</div>
+                </div>
+              </div>
+              <div className="stat-box">
+                <div className="stat-icon">🏆</div>
+                <div className="stat-info">
+                  <div className="stat-value">{profile.achievementsCount || 0}</div>
+                  <div className="stat-label">Achievements</div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="profile-section">

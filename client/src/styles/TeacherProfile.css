@@ -1,6 +1,6 @@
-.student-profile-page {
+.teacher-profile-page {
   min-height: 100vh;
-  padding: 6.5rem 2rem 4rem;
+  padding: 5.5rem 2rem 4rem;
   background: var(--cs-beige);
 }
 
@@ -9,7 +9,7 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 2rem;
 }
 
 /* Loading and Error States */
@@ -20,10 +20,24 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1.2rem;
   font-family: 'Pixelify Sans', cursive;
   color: var(--cs-olive9);
-  font-size: 1.1rem;
+  font-size: 1rem;
+}
+
+.loading-spinner {
+  font-size: 3.5rem;
+  animation: bounce 1.5s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 .profile-error button {
@@ -31,9 +45,9 @@
   color: var(--cs-beige);
   border: none;
   border-radius: 12px;
-  padding: 0.9rem 2rem;
+  padding: 0.75rem 1.5rem;
   font-family: 'Pixelify Sans', cursive;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -50,8 +64,8 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 1.5rem;
-  padding-bottom: 1.5rem;
+  gap: 1.2rem;
+  padding-bottom: 1.2rem;
   border-bottom: 3px solid var(--cs-olive6);
 }
 
@@ -68,9 +82,9 @@
   color: var(--cs-beige);
   border: none;
   border-radius: 12px;
-  padding: 0.9rem 2rem;
+  padding: 0.75rem 1.5rem;
   font-family: 'Pixelify Sans', cursive;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -79,170 +93,161 @@
 .edit-profile-button:hover {
   background: var(--cs-olive9);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(55, 61, 32, 0.3);
 }
 
 /* Messages */
 .error-message,
 .success-message {
-  padding: 1.25rem 1.75rem;
-  border-radius: 16px;
+  padding: 1rem 1.5rem;
+  border-radius: 14px;
   font-family: 'Pixelify Sans', cursive;
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .error-message {
   background: rgba(239, 68, 68, 0.1);
-  border: 2px solid rgba(239, 68, 68, 0.5);
-  color: #991b1b;
+  border: 2px solid rgba(239, 68, 68, 0.3);
+  color: rgb(185, 28, 28);
 }
 
 .success-message {
   background: rgba(34, 197, 94, 0.1);
-  border: 2px solid rgba(34, 197, 94, 0.5);
-  color: #166534;
-}
-
-.error-message p,
-.success-message p {
-  margin: 0;
+  border: 2px solid rgba(34, 197, 94, 0.3);
+  color: rgb(21, 128, 61);
 }
 
 /* Profile Sections */
 .profile-section {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 28px;
+  background: white;
+  border-radius: 24px;
+  padding: 2rem;
   border: 2px solid var(--cs-olive6);
-  padding: 3rem;
-  box-shadow: 0 12px 48px rgba(55, 61, 32, 0.1);
-  transition: box-shadow 0.3s ease;
-}
-
-.profile-section:hover {
-  box-shadow: 0 16px 64px rgba(55, 61, 32, 0.15);
+  box-shadow: 0 4px 12px rgba(55, 61, 32, 0.08);
 }
 
 .profile-section h2 {
   font-family: 'Press Start 2P', cursive;
-  font-size: clamp(1rem, 3vw, 1.5rem);
+  font-size: 1.1rem;
   color: var(--cs-olive9);
-  margin: 0 0 2rem 0;
+  margin: 0 0 1.5rem 0;
   line-height: 1.4;
 }
 
-/* Profile Info (View Mode) */
+/* Profile Info */
 .profile-info {
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
+  gap: 1.2rem;
 }
 
 .info-item {
   display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  background: rgba(188, 189, 139, 0.15);
-  border-radius: 16px;
-  border: 2px solid var(--cs-sage3);
-  transition: all 0.3s ease;
+  grid-template-columns: 180px 1fr;
+  gap: 1rem;
+  padding: 0.85rem;
+  background: var(--cs-sage3);
+  border-radius: 12px;
+  align-items: start;
 }
 
-.info-item:hover {
-  background: rgba(188, 189, 139, 0.25);
-  border-color: var(--cs-olive6);
+.info-item.bio-item {
+  grid-template-columns: 180px 1fr;
+  align-items: start;
 }
 
 .info-label {
   font-family: 'Pixelify Sans', cursive;
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--cs-olive7);
+  font-weight: 700;
+  color: var(--cs-olive9);
+  font-size: 0.9rem;
 }
 
 .info-value {
   font-family: 'Pixelify Sans', cursive;
-  font-size: 1.05rem;
-  color: var(--cs-olive9);
-  word-break: break-word;
+  color: var(--cs-brown);
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
-/* Profile Form (Edit Mode) */
+.bio-text {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Profile Form */
 .profile-form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
 .form-group label {
   font-family: 'Pixelify Sans', cursive;
-  font-size: 1.05rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--cs-olive9);
+  font-size: 0.9rem;
 }
 
-.form-group input {
-  width: 100%;
-  max-width: 600px;
+.form-group input,
+.form-group textarea {
+  padding: 0.85rem 1rem;
   border: 2px solid var(--cs-olive6);
-  border-radius: 16px;
-  padding: 1rem 1.25rem;
+  border-radius: 12px;
   font-family: 'Pixelify Sans', cursive;
-  font-size: 1rem;
-  background: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
   color: var(--cs-olive9);
-  transition: all 0.3s ease;
-  box-sizing: border-box;
+  background: white;
+  transition: border-color 0.3s ease;
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group textarea:focus {
   outline: none;
-  border-color: var(--cs-olive7);
-  box-shadow: 0 0 0 4px rgba(113, 119, 68, 0.2);
-  background: rgba(255, 255, 255, 1);
+  border-color: var(--cs-brown);
 }
 
-.form-group input:hover {
-  border-color: var(--cs-olive7);
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.6;
 }
 
-/* Form Actions */
 .form-actions {
   display: flex;
   gap: 1rem;
-  flex-wrap: wrap;
-  padding-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .save-button,
 .cancel-button {
-  padding: 1rem 2.5rem;
+  flex: 1;
+  padding: 0.85rem 1.5rem;
+  border: none;
   border-radius: 12px;
   font-family: 'Pixelify Sans', cursive;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  border: none;
 }
 
 .save-button {
   background: var(--cs-brown);
   color: var(--cs-beige);
-  box-shadow: 0 4px 12px rgba(118, 97, 83, 0.3);
 }
 
 .save-button:hover:not(:disabled) {
   background: var(--cs-olive9);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(55, 61, 32, 0.4);
 }
 
 .save-button:disabled {
@@ -253,95 +258,22 @@
 .cancel-button {
   background: transparent;
   color: var(--cs-olive7);
-  border: 2px solid var(--cs-olive7);
+  border: 2px solid var(--cs-olive6);
 }
 
 .cancel-button:hover:not(:disabled) {
-  background: var(--cs-olive7);
-  color: var(--cs-beige);
+  background: var(--cs-sage3);
   border-color: var(--cs-olive7);
 }
 
-.cancel-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .student-profile-page {
-    padding: 6rem 1.5rem 3rem;
-  }
-
-  .profile-container {
-    gap: 2rem;
-  }
-
-  .profile-section {
-    padding: 2.5rem 1.75rem;
-    border-radius: 24px;
-  }
-
-  .profile-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .info-item {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-    padding: 1.25rem;
-  }
-
-  .info-label {
-    font-weight: 700;
-  }
-
-  .form-group input {
-    max-width: 100%;
-  }
-
-  .form-actions {
-    flex-direction: column;
-  }
-
-  .save-button,
-  .cancel-button {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .student-profile-page {
-    padding: 6rem 1rem 2.5rem;
-  }
-
-  .profile-section {
-    padding: 2rem 1.5rem;
-  }
-
-  .profile-header h1 {
-    font-size: 1.5rem;
-  }
-
-  .profile-section h2 {
-    font-size: 1.2rem;
-  }
-
-  .info-item {
-    padding: 1rem;
-  }
-}
-
-/* Quick Stats Section */
-.quick-stats {
+/* Statistics Grid */
+.stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.2rem;
 }
 
-.stat-box {
+.stat-card {
   background: var(--cs-sage3);
   border-radius: 16px;
   padding: 1.5rem;
@@ -352,47 +284,112 @@
   transition: all 0.3s ease;
 }
 
-.stat-box:hover {
+.stat-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 6px 20px rgba(55, 61, 32, 0.12);
-  border-color: var(--cs-olive7);
 }
 
 .stat-icon {
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   flex-shrink: 0;
 }
 
-.stat-info {
+.stat-content {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.3rem;
 }
 
 .stat-value {
   font-family: 'Press Start 2P', cursive;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   color: var(--cs-olive9);
   line-height: 1;
 }
 
 .stat-label {
   font-family: 'Pixelify Sans', cursive;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--cs-olive7);
   line-height: 1.3;
 }
 
+/* Quick Actions */
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.action-button {
+  background: var(--cs-sage3);
+  border: 2px solid var(--cs-olive6);
+  border-radius: 16px;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: 'Pixelify Sans', cursive;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.action-button:hover {
+  background: white;
+  border-color: var(--cs-brown);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(55, 61, 32, 0.12);
+}
+
+.action-icon {
+  font-size: 2.2rem;
+}
+
+.action-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--cs-olive9);
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  .quick-stats {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  .teacher-profile-page {
+    padding: 5rem 1.2rem 3rem;
   }
 
-  .stat-box {
+  .profile-section {
+    padding: 1.5rem;
+  }
+
+  .profile-section h2 {
+    font-size: 0.95rem;
+  }
+
+  .info-item {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .stat-card {
     padding: 1.2rem;
   }
 
   .stat-value {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
+  }
+
+  .quick-actions {
+    grid-template-columns: 1fr;
   }
 }

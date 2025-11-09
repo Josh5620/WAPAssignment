@@ -975,7 +975,7 @@ const guestCheckEmailAvailability = async (email) => {
     return { available: false };
   }
   try {
-    const response = await requestWithAuth(`/auth/check-email${buildQueryString({ email })}`);
+    const response = await requestWithAuth(`/guests/check-email${buildQueryString({ email })}`);
     if (typeof response?.exists === 'boolean') {
       return { available: !response.exists };
     }
@@ -998,7 +998,7 @@ const guestRegister = async ({ fullName, email, password, role }) => {
   };
 
   try {
-    const response = await requestWithAuth('/auth/register', {
+    const response = await requestWithAuth('/guests/register', {
       method: 'POST',
       body: payload,
     });

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { api } from '../services/apiService';
 import { useAuth } from '../context/AuthContext';
 import '../styles/ForumPage.css';
+import useOnlineStatus from '../hooks/useOnlineStatus';
 
 const ForumPage = () => {
   const navigate = useNavigate();
@@ -15,6 +16,50 @@ const ForumPage = () => {
   const [posting, setPosting] = useState(false);
   const [error, setError] = useState(null);
   const [showPostForm, setShowPostForm] = useState(false);
+  const [info, setInfo] = useState(null);
+  const isOnline = useOnlineStatus();
+
+  const COURSE_ID = 'code-garden-python';
+  const storageKey = `forum_posts_${COURSE_ID}`;
+
+  const samplePosts = useMemo(
+    () => [
+      {
+        id: 'sample-1',
+        userName: 'Luna',
+        userRole: 'student',
+        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 8).toISOString(),
+        content: 'What’s your favorite way to remember the difference between lists and tuples?',
+      },
+      {
+        id: 'sample-2',
+        userName: 'Theo',
+        userRole: 'teacher',
+        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+        content:
+          'Try grouping related flashcards into themes. Plant metaphors work great for remembering data structures!',
+      },
+    ],
+    [],
+  );
+
+  const getLocalPosts = () => {
+    try {
+      const stored = localStorage.getItem(storageKey);
+      return stored ? JSON.parse(stored) : [];
+    } catch (storageError) {
+      console.warn('Failed to read saved forum posts', storageError);
+      return [];
+    }
+  };
+
+  const saveLocalPosts = (items) => {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(items));
+    } catch (storageError) {
+      console.warn('Failed to persist forum posts locally', storageError);
+    }
+  };
 
   useEffect(() => {
     if (!user) {
@@ -27,15 +72,31 @@ const ForumPage = () => {
   const loadForumPosts = async () => {
     try {
       setLoading(true);
-      // Load forum posts for the Python course (you can make this dynamic later)
-      const courseId = 'python-course-id'; // Replace with actual course ID
-      const data = await api.students.getForumPosts(courseId);
-      setPosts(data || []);
+      setInfo(null);
+      const data = await api.students.getForumPosts(COURSE_ID);
+      const normalized = Array.isArray(data) ? data : [];
+      setPosts(normalized);
+      saveLocalPosts(normalized);
       setError(null);
     } catch (err) {
       console.error('Failed to load forum posts:', err);
-      setError('Failed to load forum posts. Please try again.');
-      setPosts([]);
+      const local = getLocalPosts();
+      if (local.length) {
+        setPosts(local);
+        setInfo(
+          isOnline
+            ? 'The forum service is still growing. Showing saved discussions for now.'
+            : 'You are offline. Showing saved discussions until you reconnect.',
+        );
+        setError(null);
+      } else if (samplePosts.length) {
+        setPosts(samplePosts);
+        setInfo('Showing sample discussions until the community begins chatting.');
+        setError(null);
+      } else {
+        setError('Failed to load forum posts. Please try again.');
+        setPosts([]);
+      }
     } finally {
       setLoading(false);
     }
@@ -56,15 +117,37 @@ const ForumPage = () => {
 
     try {
       setPosting(true);
-      const courseId = 'python-course-id'; // Replace with actual course ID
-      await api.students.createForumPost(user.id, courseId, `**${newPostTitle}**\n\n${newPostContent}`);
+      await api.students.createForumPost(
+        user.id,
+        COURSE_ID,
+        `**${newPostTitle}**\n\n${newPostContent}`,
+      );
       setNewPostTitle('');
       setNewPostContent('');
       setShowPostForm(false);
       await loadForumPosts();
     } catch (err) {
       console.error('Failed to create post:', err);
-      alert('Failed to create post. Please try again.');
+      const local = getLocalPosts();
+      const localPost = {
+        id: `local-${Date.now()}`,
+        userName: user?.full_name || user?.email || 'You',
+        userRole: role || 'student',
+        createdAt: new Date().toISOString(),
+        content: `**${newPostTitle}**\n\n${newPostContent}`,
+        userEmail: user?.email || null,
+      };
+      const updated = [localPost, ...local];
+      saveLocalPosts(updated);
+      setPosts(updated);
+      setInfo(
+        isOnline
+          ? 'The forum service is still growing. We saved your discussion locally and will publish it once it is ready.'
+          : 'You appear to be offline. We saved your discussion locally and will send it once you reconnect.',
+      );
+      setShowPostForm(false);
+      setNewPostTitle('');
+      setNewPostContent('');
     } finally {
       setPosting(false);
     }
@@ -202,6 +285,8 @@ const ForumPage = () => {
               </button>
             </div>
           )}
+
+          {info && <div className="forum-info">{info}</div>}
 
           <div className="forum-posts">
             {posts.length === 0 ? (

@@ -1,10 +1,12 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import StudentHelpRequest from '../components/StudentHelpRequest';
 import { gardenPathData } from '../data/curriculum.js';
 import { getChapterDetails } from '../data/chapterDetails.js';
 import '../styles/ChapterPage.css';
+import StudentFlashcardComponent from '../components/StudentFlashcardComponent.jsx';
+import StudentChallengeBoard from '../components/StudentChallengeBoard.jsx';
 
 const ChapterPage = () => {
   const { chapterId } = useParams();
@@ -27,27 +29,6 @@ const ChapterPage = () => {
   );
 
   const [activeTab, setActiveTab] = useState('notes');
-  const [flashcardIndex, setFlashcardIndex] = useState(0);
-  const [showAnswer, setShowAnswer] = useState(false);
-  const [activeDifficulty, setActiveDifficulty] = useState('easy');
-
-  const flashcards = details?.flashcards ?? [];
-  const questions = details?.questions ?? { easy: [], medium: [], hard: [] };
-
-  const handleNextFlashcard = () => {
-    if (flashcards.length === 0) return;
-    setFlashcardIndex((prev) => (prev + 1) % flashcards.length);
-    setShowAnswer(false);
-  };
-
-  const handlePrevFlashcard = () => {
-    if (flashcards.length === 0) return;
-    setFlashcardIndex((prev) => (prev - 1 + flashcards.length) % flashcards.length);
-    setShowAnswer(false);
-  };
-
-  const currentFlashcard = flashcards[flashcardIndex];
-
   if (!metadata || !details) {
     return (
       <>
@@ -68,6 +49,100 @@ const ChapterPage = () => {
       </>
     );
   }
+
+  const storySeeds = [
+    {
+      badge: 'Greenhouse Brief',
+      title: 'Morning in the Garden',
+      message: [
+        'Sunlight spills through the glass roof as you check the clipboard of today’s coding chores.',
+        'Every concept you learn waters a different part of CodeSage. Ready to begin?',
+      ],
+    },
+    {
+      badge: 'Garden Whisper',
+      title: 'The Caretaker’s Tip',
+      message: [
+        '"Give every tool a name," the caretaker smiles. "When your code calls something clearly, it never gets misplaced."',
+      ],
+    },
+    {
+      badge: 'Sprout Story',
+      title: 'Sensor Row Awakens',
+      message: [
+        'Pots blink awake, waiting for instructions. You’ll teach Python to handle each task with care.',
+      ],
+    },
+  ];
+
+  const bloomCheckSeeds = [
+    {
+      prompt: 'In one sentence, explain why Python needs variables in this lesson.',
+      answer: 'Variables label data so your code can store, reuse, and update values as the program runs.',
+    },
+    {
+      prompt: 'Predict what happens if you forget to convert input text into an integer before comparing it.',
+      answer: 'The comparison fails because strings and numbers cannot be compared without conversion.',
+    },
+    {
+      prompt: 'How would you describe a loop to someone tending a row of plants?',
+      answer: 'A loop is repeating the same task for each plant until every one has been checked or a condition changes.',
+    },
+  ];
+
+  const storyCard = storySeeds[(numericId - 1) % storySeeds.length];
+  const bloomChecks = (details.sections || []).map(
+    (_, index) => bloomCheckSeeds[index % bloomCheckSeeds.length],
+  );
+
+  const [revealedChecks, setRevealedChecks] = useState({});
+  useEffect(() => {
+    setRevealedChecks({});
+  }, [numericId]);
+
+  const toggleBloomCheck = (index) => {
+    setRevealedChecks((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
+
+  const practiceItems = details.practice || [];
+  const statusCycle = {
+    seedling: 'sprouting',
+    sprouting: 'bloom',
+    bloom: 'seedling',
+  };
+  const statusLabels = {
+    seedling: 'Seedling',
+    sprouting: 'Sprouting',
+    bloom: 'In Bloom',
+  };
+
+  const createPracticeStatuses = () =>
+    practiceItems.reduce((acc, item) => {
+      acc[item] = 'seedling';
+      return acc;
+    }, {});
+
+  const practiceSignature = practiceItems.join('|');
+  const [practiceStatuses, setPracticeStatuses] = useState(createPracticeStatuses);
+
+  useEffect(() => {
+    setPracticeStatuses(createPracticeStatuses());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [numericId, practiceSignature]);
+
+  const handlePracticeStatus = (item) => {
+    setPracticeStatuses((prev) => {
+      const current = prev[item] || 'seedling';
+      const next = statusCycle[current];
+      return {
+        ...prev,
+        [item]: next,
+      };
+    });
+  };
 
   return (
     <>
@@ -130,34 +205,93 @@ const ChapterPage = () => {
         <div className="chapter-content-panel">
           {activeTab === 'notes' && (
             <>
-              <section className="chapter-section">
+              <section className="chapter-story-card">
+                <div className="chapter-story-card__badge">{storyCard.badge}</div>
+                <h2 className="chapter-story-card__title">{storyCard.title}</h2>
+                {storyCard.message.map((line) => (
+                  <p key={line}>{line}</p>
+                ))}
+              </section>
+
+              <section className="chapter-section chapter-section--objectives">
                 <h2>Learning Objectives</h2>
-                <ul>
+                <ul className="objectives-list">
                   {details.learningObjectives.map((objective) => (
-                    <li key={objective}>{objective}</li>
+                    <li key={objective}>
+                      <span className="objective-icon" aria-hidden="true">
+                        ✽
+                      </span>
+                      <span>{objective}</span>
+                    </li>
                   ))}
                 </ul>
               </section>
 
-              <section className="chapter-section">
+              <section className="chapter-section chapter-section--lesson">
                 <h2>In This Lesson</h2>
-                {details.sections.map((section) => (
-                  <article key={section.heading} className="chapter-article">
-                    <h3>{section.heading}</h3>
-                    {section.body.map((paragraph, index) => (
-                      <p key={index}>{paragraph}</p>
-                    ))}
-                  </article>
-                ))}
+                <div className="lesson-timeline">
+                  {details.sections.map((section, index) => {
+                    const bloomCheck = bloomChecks[index];
+                    return (
+                      <React.Fragment key={section.heading}>
+                        <article className="chapter-article">
+                          <div className="chapter-article__badge">Step {index + 1}</div>
+                          <div className="chapter-article__content">
+                            <h3>{section.heading}</h3>
+                            {section.body.map((paragraph, paragraphIndex) => (
+                              <p key={paragraphIndex}>{paragraph}</p>
+                            ))}
+                          </div>
+                        </article>
+                        {bloomCheck && (
+                          <div
+                            className={`bloom-check ${revealedChecks[index] ? 'is-revealed' : ''}`}
+                          >
+                            <div className="bloom-check__badge">Bloom Check</div>
+                            <p className="bloom-check__prompt">{bloomCheck.prompt}</p>
+                            {revealedChecks[index] ? (
+                              <p className="bloom-check__answer">{bloomCheck.answer}</p>
+                            ) : (
+                              <button
+                                type="button"
+                                className="bloom-check__reveal"
+                                onClick={() => toggleBloomCheck(index)}
+                              >
+                                Reveal growth tip
+                              </button>
+                            )}
+                          </div>
+                        )}
+                      </React.Fragment>
+                    );
+                  })}
+                </div>
               </section>
 
-              {details.practice && (
-                <section className="chapter-section">
+              {practiceItems.length > 0 && (
+                <section className="chapter-section chapter-section--practice">
                   <h2>Practice Ideas</h2>
-                  <ul>
-                    {details.practice.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
+                  <ul className="practice-list">
+                    {practiceItems.map((item) => {
+                      const status = practiceStatuses[item] || 'seedling';
+                      return (
+                        <li key={item} className={`practice-card status-${status}`}>
+                          <div className="practice-card__header">
+                            <span className="practice-card__status">{statusLabels[status]}</span>
+                            <button
+                              type="button"
+                              className="practice-card__action"
+                              onClick={() => handlePracticeStatus(item)}
+                            >
+                              {status === 'seedling' && 'Mark as sprouting'}
+                              {status === 'sprouting' && 'Mark as blooming'}
+                              {status === 'bloom' && 'Start over'}
+                            </button>
+                          </div>
+                          <p>{item}</p>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </section>
               )}
@@ -166,72 +300,16 @@ const ChapterPage = () => {
 
           {activeTab === 'flashcards' && (
             <section className="chapter-section flashcard-section">
-              {flashcards.length === 0 ? (
-                <p>No flashcards added yet. Check back soon!</p>
-              ) : (
-                <>
-                  <div className="flashcard-progress">
-                    Card {flashcardIndex + 1} of {flashcards.length}
-                  </div>
-                  <div className={`flashcard ${showAnswer ? 'show-answer' : ''}`}>
-                    <div className="flashcard-face">
-                      <h3>Prompt</h3>
-                      <p>{currentFlashcard?.prompt}</p>
-                    </div>
-                    <div className="flashcard-face flashcard-answer">
-                      <h3>Answer</h3>
-                      <p>{currentFlashcard?.answer}</p>
-                    </div>
-                  </div>
-                  <div className="flashcard-actions">
-                    <button type="button" onClick={handlePrevFlashcard}>
-                      ‹ Prev
-                    </button>
-                    <button type="button" onClick={() => setShowAnswer((prev) => !prev)}>
-                      {showAnswer ? 'Hide Answer' : 'Reveal Answer'}
-                    </button>
-                    <button type="button" onClick={handleNextFlashcard}>
-                      Next ›
-                    </button>
-                  </div>
-                </>
-              )}
+              <StudentFlashcardComponent
+                chapterId={metadata.id}
+                fallbackFlashcards={details.flashcards}
+              />
             </section>
           )}
 
           {activeTab === 'challenges' && (
             <section className="chapter-section challenges-section">
-              <div className="difficulty-toggle">
-                {['easy', 'medium', 'hard'].map((level) => (
-                  <button
-                    key={level}
-                    type="button"
-                    className={`difficulty-button ${
-                      activeDifficulty === level ? 'active' : ''
-                    }`}
-                    onClick={() => setActiveDifficulty(level)}
-                  >
-                    {level.charAt(0).toUpperCase() + level.slice(1)}
-                  </button>
-                ))}
-              </div>
-              <div className="questions-grid">
-                {(questions[activeDifficulty] ?? []).map((question) => (
-                  <article key={question.id} className="question-card">
-                    <h4>{question.prompt}</h4>
-                    {question.options && (
-                      <ul>
-                        {question.options.map((option) => (
-                          <li key={option}>{option}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </article>
-                ))}
-                {(questions[activeDifficulty] ?? []).length === 0 && (
-                  <p className="empty-state">Challenges coming soon.</p>
-                )}
-              </div>
+              <StudentChallengeBoard chapterId={metadata.id} />
             </section>
           )}
 

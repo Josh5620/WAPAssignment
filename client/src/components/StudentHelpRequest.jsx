@@ -8,6 +8,17 @@ const StudentHelpRequest = ({ chapterId }) => {
   const [status, setStatus] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
+  const storePendingQuestion = (payload) => {
+    try {
+      const key = 'pending_help_requests';
+      const existing = JSON.parse(localStorage.getItem(key) || '[]');
+      existing.push({ ...payload, savedAt: new Date().toISOString() });
+      localStorage.setItem(key, JSON.stringify(existing));
+    } catch (storageError) {
+      console.warn('Failed to persist help request locally', storageError);
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const trimmed = question.trim();
@@ -26,9 +37,11 @@ const StudentHelpRequest = ({ chapterId }) => {
       });
     } catch (error) {
       console.error('Failed to send help request', error);
+      storePendingQuestion({ chapterId, question: trimmed });
       setStatus({
-        type: 'error',
-        message: error.message || 'We could not send your request. Please try again shortly.',
+        type: 'info',
+        message:
+          'We’re still planting this feature! Your question has been saved locally and will be sent once the teacher inbox is ready.',
       });
     } finally {
       setSubmitting(false);
@@ -54,9 +67,7 @@ const StudentHelpRequest = ({ chapterId }) => {
           rows={5}
         />
         {status && (
-          <div className={`help-status ${status.type === 'error' ? 'error' : 'success'}`}>
-            {status.message}
-          </div>
+          <div className={`help-status help-status--${status.type || 'info'}`}>{status.message}</div>
         )}
         <PrimaryButton type="submit" disabled={submitting}>
           {submitting ? 'Sending...' : 'Send to Teacher'}

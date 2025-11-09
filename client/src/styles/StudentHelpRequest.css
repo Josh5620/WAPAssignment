@@ -77,6 +77,12 @@
   color: #7a1d1d;
 }
 
+.help-status--info {
+  background: rgba(151, 186, 120, 0.18);
+  border-color: rgba(151, 186, 120, 0.38);
+  color: var(--primary);
+}
+
 .student-help-request .btn-garden {
   justify-self: flex-start;
 }

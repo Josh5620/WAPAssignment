@@ -4,6 +4,77 @@ const emptyQuestions = () => ({
   hard: [],
 });
 
+const chapterFlashcardBank = {
+  1: [
+    { frontText: 'What does the acronym REPL stand for in Python?', backText: 'Read–Evaluate–Print Loop.' },
+    { frontText: 'Which statement displays a message on screen?', backText: 'Use `print("message")`.' },
+    { frontText: 'What file extension do Python scripts use?', backText: 'Python scripts end with `.py`.' },
+    { frontText: 'How do you start the Python interpreter from the terminal?', backText: 'Run `python` or `python3`.' },
+    { frontText: 'How can you exit the interactive interpreter?', backText: 'Type `exit()` or press `Ctrl+D` (`Ctrl+Z` on Windows).' },
+    { frontText: 'Which built-in shows quick documentation for a function?', backText: 'Call `help(function_name)`.' },
+    { frontText: 'What symbol begins a single-line comment?', backText: 'Use the hash symbol `#`.' },
+    { frontText: 'Which tool installs third-party packages?', backText: '`pip install package_name`.' },
+    { frontText: 'Is Python interpreted or compiled?', backText: 'Python is an interpreted language.' },
+    { frontText: 'What command runs a script named `garden.py`?', backText: '`python garden.py` (or `python3 garden.py`).' },
+  ],
+  2: [
+    { frontText: 'What characters are allowed in Python variable names?', backText: 'Letters, numbers, and underscores (no leading digit).' },
+    { frontText: 'What does “dynamic typing” mean in Python?', backText: 'Variables can hold values of any type and can be reassigned to different types.' },
+    { frontText: 'Which function tells you a value’s type?', backText: '`type(value)`.' },
+    { frontText: 'How do you convert a number to a string?', backText: 'Call `str(number)`.' },
+    { frontText: 'What are the two boolean values in Python?', backText: '`True` and `False`.' },
+    { frontText: 'What does `int("7")` return?', backText: 'The integer `7`.' },
+    { frontText: 'How do you swap two variables in a single statement?', backText: '`a, b = b, a`.' },
+    { frontText: 'How do you check if a variable points to `None`?', backText: 'Use `if value is None:`.' },
+    { frontText: 'Which method removes surrounding whitespace from a string?', backText: '`text.strip()`.' },
+    { frontText: 'How do you interpolate variables into a sentence cleanly?', backText: 'Use an f-string, e.g., `f"{name} waters the garden."`.' },
+  ],
+  3: [
+    { frontText: 'How do you create a list literal in Python?', backText: 'Use square brackets: `[1, 2, 3]`.' },
+    { frontText: 'Which method adds an item to the end of a list?', backText: '`list.append(item)`.' },
+    { frontText: 'What distinguishes a tuple from a list?', backText: 'Tuples are immutable (written with parentheses).' },
+    { frontText: 'How do you access dictionary values by key?', backText: '`my_dict["key"]`.' },
+    { frontText: 'Which collection automatically removes duplicates?', backText: 'A `set` keeps unique items.' },
+    { frontText: 'How do you get the number of items in a collection?', backText: '`len(collection)`.' },
+    { frontText: 'How can you slice the first three items of a list named `plants`?', backText: '`plants[:3]`.' },
+    { frontText: 'Which method returns only the keys of a dictionary?', backText: '`my_dict.keys()`.' },
+    { frontText: 'How do you check if `"rose"` is inside a list named `garden`?', backText: '`"rose" in garden`.' },
+    { frontText: 'How do you convert a list to a tuple?', backText: '`tuple(my_list)`.' },
+  ],
+  4: [
+    { frontText: 'What keywords build a basic decision in Python?', backText: '`if`, `elif`, and `else`.' },
+    { frontText: 'Which operator checks equality?', backText: '`==` compares values for equality.' },
+    { frontText: 'Why is indentation critical in conditionals?', backText: 'Indentation defines the blocks of code controlled by each condition.' },
+    { frontText: 'How do you combine conditions that must both be true?', backText: 'Use the logical operator `and`.' },
+    { frontText: 'Which operator inverts a boolean value?', backText: '`not` flips truthiness.' },
+    { frontText: 'How do you check multiple ranges cleanly, such as 0 <= x < 10?', backText: 'Use chained comparisons: `if 0 <= x < 10:`.' },
+    { frontText: 'What function collects user input as a string?', backText: '`input("Prompt")`.' },
+    { frontText: 'What function converts a string to a float for comparisons?', backText: '`float(text)`.' },
+    { frontText: 'How do you execute code only when a condition is false?', backText: 'Use the `else` block attached to the `if` statement.' },
+    { frontText: 'What keyword lets you supply a fallback when an `if` isn’t needed but a block must run afterward?', backText: '`elif` handles extra conditional branches.' },
+  ],
+  5: [
+    { frontText: 'What loop visits each item in a collection?', backText: 'A `for` loop, e.g., `for item in items:`.' },
+    { frontText: 'Which function produces a sequence of numbers for looping?', backText: '`range()` generates integer sequences.' },
+    { frontText: 'What loop repeats while a condition remains true?', backText: 'A `while` loop.' },
+    { frontText: 'Which keyword immediately exits the current loop?', backText: '`break` stops the loop.' },
+    { frontText: 'Which keyword skips the rest of the loop body and continues with the next iteration?', backText: '`continue`.' },
+    { frontText: 'How do you loop with index and value together?', backText: 'Use `enumerate(collection)`.' },
+    { frontText: 'How can you loop over two lists simultaneously?', backText: 'Use `zip(list1, list2)` in a `for` loop.' },
+    { frontText: 'What structure quickly builds a list from an iterator?', backText: 'A list comprehension: `[expr for item in items]`.' },
+    { frontText: 'Which keyword gives a fallback block when a loop finishes without `break`?', backText: 'Use `else` after a loop.' },
+    { frontText: 'How do you accumulate a running total inside a loop?', backText: 'Initialize a variable before the loop, then update it inside each iteration.' },
+  ],
+};
+
+const buildFlashcards = (chapterId) => {
+  const cards = chapterFlashcardBank[chapterId] || chapterFlashcardBank[1];
+  return cards.map((card, index) => ({
+    id: `${chapterId}-flashcard-${index + 1}`,
+    ...card,
+  }));
+};
+
 export const chapterDetails = {
   1: {
     overview:
@@ -33,7 +104,7 @@ export const chapterDetails = {
       'Personalize the hello message with your name.',
       'Experiment with printing numbers and simple math expressions.',
     ],
-    flashcards: [],
+    flashcards: buildFlashcards(1),
     questions: emptyQuestions(),
   },
   2: {
@@ -63,7 +134,7 @@ export const chapterDetails = {
       'Create three variables representing plants, their age in weeks, and whether they have been watered today.',
       'Print a friendly summary sentence using f-strings.',
     ],
-    flashcards: [],
+    flashcards: buildFlashcards(2),
     questions: emptyQuestions(),
   },
   3: {
@@ -94,7 +165,7 @@ export const chapterDetails = {
       'Build a dictionary named `garden_bed` with plant names as keys and their sunlight needs as values.',
       'Loop through the dictionary and print a formatted checklist.',
     ],
-    flashcards: [],
+    flashcards: buildFlashcards(3),
     questions: emptyQuestions(),
   },
   4: {
@@ -124,7 +195,7 @@ export const chapterDetails = {
       'Create a script that asks for soil moisture and weather forecasts, then prints advice for the gardener.',
       'Refactor the script to reuse repeated messages.',
     ],
-    flashcards: [],
+    flashcards: buildFlashcards(4),
     questions: emptyQuestions(),
   },
   5: {
@@ -154,7 +225,7 @@ export const chapterDetails = {
       'Iterate over a list of chores and mark each as done.',
       'Write a `while` loop that keeps prompting for water levels until the value is within range.',
     ],
-    flashcards: [],
+    flashcards: buildFlashcards(5),
     questions: emptyQuestions(),
   },
   6: {
@@ -184,7 +255,7 @@ export const chapterDetails = {
       'Write a function `needs_water(plant, rainfall=0)` that returns `True` or `False`.',
       'Call your function for several plants and print the results in a tidy table.',
     ],
-    flashcards: [],
+    flashcards: buildFlashcards(6),
     questions: emptyQuestions(),
   },
   7: {
@@ -214,7 +285,7 @@ export const chapterDetails = {
       'Append a new journal entry describing today\'s garden tasks.',
       'Read the journal and print only the entries that mention watering.',
     ],
-    flashcards: [],
+    flashcards: buildFlashcards(7),
     questions: emptyQuestions(),
   },
   8: {
@@ -244,7 +315,7 @@ export const chapterDetails = {
       'Instantiate several plants and simulate a weekly care schedule.',
       'Track when each plant was last watered by updating instance attributes.',
     ],
-    flashcards: [],
+    flashcards: buildFlashcards(8),
     questions: emptyQuestions(),
   },
   9: {
@@ -274,7 +345,7 @@ export const chapterDetails = {
       'Create a `garden_utils.py` module with helper functions and import it into your notebook.',
       'Install a package like `requests` (if permitted) to fetch garden tips from an API.',
     ],
-    flashcards: [],
+    flashcards: buildFlashcards(9),
     questions: emptyQuestions(),
   },
   10: {
@@ -304,7 +375,7 @@ export const chapterDetails = {
       'Outline your project structure and identify reusable code from previous chapters.',
       'Schedule time for peer review or mentor feedback before submission.',
     ],
-    flashcards: [],
+    flashcards: buildFlashcards(10),
     questions: emptyQuestions(),
   },
 };

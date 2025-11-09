@@ -435,6 +435,16 @@
   background: var(--cs-olive9);
 }
 
+.forum-info {
+  margin-top: 1rem;
+  padding: 1rem 1.3rem;
+  border-radius: 16px;
+  font-family: 'Pixelify Sans', cursive;
+  border: 2px solid rgba(151, 186, 120, 0.4);
+  background: rgba(151, 186, 120, 0.18);
+  color: var(--cs-olive9);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .forum-container {

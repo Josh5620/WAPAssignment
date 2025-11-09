@@ -207,10 +207,10 @@ export const ThemeProvider = ({ children }) => {
     
     style.textContent = `
       html, body {
-        cursor: url('data:image/svg+xml;utf8,<svg xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" width="28" height="28" viewBox="0 0 28 28"><rect width="28" height="28" fill="none"/><path d="M14 26 L14 17 M11 21 L14 17 L17 21 M9 14 L14 17 L19 14 M11 10 L14 7 L17 10" stroke="${cursorColor.replace('#', '%23')}" stroke-width="2.6" fill="none" stroke-linecap="square"/><circle cx="14" cy="7" r="2.6" fill="${cursorColor.replace('#', '%23')}"/></svg>') 14 14, auto;
+        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><rect width="28" height="28" fill="none"/><path d="M14 26 L14 17 M11 21 L14 17 L17 21 M9 14 L14 17 L19 14 M11 10 L14 7 L17 10" stroke="${cursorColor.replace('#', '%23')}" stroke-width="2.6" fill="none" stroke-linecap="square"/><circle cx="14" cy="7" r="2.6" fill="${cursorColor.replace('#', '%23')}"/></svg>') 14 14, auto !important;
       }
       a, button, .clickable, [role="button"], input[type="submit"], input[type="button"], .nav-link, .nav-login, .nav-register {
-        cursor: url('data:image/svg+xml;utf8,<svg xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" width="30" height="30" viewBox="0 0 30 30"><rect width="30" height="30" fill="none"/><circle cx="15" cy="9" r="3.5" fill="${cursorInteractive.replace('#', '%23')}"/><circle cx="15" cy="16" r="3.5" fill="${cursorInteractive.replace('#', '%23')}"/><circle cx="15" cy="23" r="2.8" fill="${cursorInteractive.replace('#', '%23')}"/><rect x="13" y="7" width="4" height="3" fill="${cursorInteractive.replace('#', '%23')}"/><rect x="13" y="14" width="4" height="3" fill="${cursorInteractive.replace('#', '%23')}"/></svg>') 15 15, pointer;
+        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><rect width="30" height="30" fill="none"/><circle cx="15" cy="9" r="3.5" fill="${cursorInteractive.replace('#', '%23')}"/><circle cx="15" cy="16" r="3.5" fill="${cursorInteractive.replace('#', '%23')}"/><circle cx="15" cy="23" r="2.8" fill="${cursorInteractive.replace('#', '%23')}"/><rect x="13" y="7" width="4" height="3" fill="${cursorInteractive.replace('#', '%23')}"/><rect x="13" y="14" width="4" height="3" fill="${cursorInteractive.replace('#', '%23')}"/></svg>') 15 15, pointer !important;
       }
     `;
     

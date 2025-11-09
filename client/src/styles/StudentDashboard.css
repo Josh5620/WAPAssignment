@@ -69,17 +69,21 @@
 
 .student-dashboard-header h1 {
   font-family: 'Press Start 2P', cursive;
-  font-size: 2rem;
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  letter-spacing: 0.12rem;
   color: var(--primary);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
+  text-transform: uppercase;
+  text-shadow: 0 3px 0 rgba(55, 61, 32, 0.15);
 }
 
 .student-dashboard-header p {
   font-family: 'Pixelify Sans', cursive;
-  font-size: 0.95rem;
+  font-size: clamp(1rem, 2.2vw, 1.15rem);
   color: var(--cs-brown);
   max-width: 600px;
-  margin: 0 auto;
+  margin: 0.25rem auto 0;
+  letter-spacing: 0.02rem;
 }
 
 .garden-path-grid {

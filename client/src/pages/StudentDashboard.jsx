@@ -65,7 +65,7 @@ const StudentDashboard = () => {
   }, [user]);
 
   const greeting = useMemo(() => {
-    return `Hi ${displayName}, welcome back to your garden!`;
+    return `Hello ${displayName}, ready to keep your garden growing today?`;
   }, [displayName]);
 
   const handleChapterSelection = (chapter, status) => {

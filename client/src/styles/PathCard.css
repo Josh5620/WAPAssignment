@@ -90,40 +90,14 @@
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
-/* Completion and Lock Badges */
-.completion-badge,
-.lock-badge {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-.completion-badge {
-  background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
-  color: white;
-}
-
-.lock-badge {
-  background: rgba(0, 0, 0, 0.6);
-  font-size: 1.2rem;
-}
-
 /* Completed Card State */
 .path-card.is-completed-card .path-card-front {
   border-color: var(--cs-olive6);
-  box-shadow: 0 0 20px rgba(113, 119, 68, 0.5);
+  box-shadow: 0 0 24px rgba(34, 197, 94, 0.4), 0 0 8px rgba(34, 197, 94, 0.2);
 }
 
 .path-card.is-completed-card .path-card-front-overlay {
-  background: rgba(113, 119, 68, 0.2);
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.15) 0%, rgba(34, 197, 94, 0.1) 100%);
 }
 
 /* Locked Card State */
@@ -132,16 +106,18 @@
 }
 
 .path-card.is-locked-card .path-card-front {
-  opacity: 0.6;
-  filter: grayscale(50%);
+  opacity: 0.7;
+  filter: grayscale(60%) brightness(0.9);
+  border-style: dashed;
+  border-color: rgba(113, 119, 68, 0.4);
 }
 
 .path-card.is-locked-card .path-card-front-overlay {
-  background: rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.3) 100%);
 }
 
 .path-card.is-locked-card:hover .path-card-front-overlay {
-  background: rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.4) 100%);
 }
 
 /* Back Side - Chapter Details */

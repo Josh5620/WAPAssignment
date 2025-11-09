@@ -155,6 +155,18 @@
   gap: 1rem;
 }
 
+.faq-contact__actions .btn-garden--outline {
+  color: var(--cs-beige);
+  border-color: var(--cs-beige);
+  background: transparent;
+}
+
+.faq-contact__actions .btn-garden--outline:hover {
+  background: rgba(239, 241, 237, 0.2);
+  color: white;
+  border-color: white;
+}
+
 @media (max-width: 768px) {
   .faq-content {
     padding: 5.5rem 1.1rem 3rem;

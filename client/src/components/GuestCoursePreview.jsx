@@ -67,7 +67,7 @@ const GuestCoursePreview = () => {
   if (loading) {
     return (
       <div className="guest-preview guest-preview--loading">
-        <GuestRestrictionBanner message="Preview mode active – sign up to unlock the complete experience." />
+        <GuestRestrictionBanner />
         <div className="guest-preview__loading-card">Loading course preview…</div>
       </div>
     );
@@ -76,7 +76,7 @@ const GuestCoursePreview = () => {
   if (error || !preview || !preview.course) {
     return (
       <div className="guest-preview guest-preview--error">
-        <GuestRestrictionBanner message="Preview mode active – sign up to unlock the complete experience." />
+        <GuestRestrictionBanner />
         <div className="guest-preview__error-card">
           <p>{error || 'Course preview not found.'}</p>
           <PrimaryButton variant="outline" onClick={() => navigate('/guest/courses')}>
@@ -94,7 +94,7 @@ const GuestCoursePreview = () => {
 
   return (
     <div className="guest-preview">
-      <GuestRestrictionBanner message="Preview mode active – sign up to unlock the complete experience." />
+      <GuestRestrictionBanner />
 
       <header className="guest-preview__hero">
         <button className="guest-preview__back" onClick={() => navigate('/guest/courses')}>

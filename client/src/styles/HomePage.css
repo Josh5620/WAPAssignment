@@ -169,7 +169,7 @@
 }
 
 .how-it-works {
-  padding: 4rem 0 1rem;
+  padding: 4rem 0 6rem;
 }
 
 .how-it-works__steps {
@@ -246,6 +246,17 @@
   flex-direction: column;
   gap: 1rem;
   align-items: center;
+}
+
+.final-cta__actions .btn-garden--ghost {
+  color: var(--cs-beige);
+  border-color: var(--cs-beige);
+}
+
+.final-cta__actions .btn-garden--ghost:hover {
+  background: rgba(239, 241, 237, 0.2);
+  color: white;
+  border-color: white;
 }
 
 .homepage__footer {

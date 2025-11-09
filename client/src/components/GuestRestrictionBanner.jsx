@@ -17,7 +17,7 @@ const GuestRestrictionBanner = ({ message, showLogin = true }) => {
         <div className="banner-icon">🔒</div>
         <div className="banner-text">
           <strong>Preview Mode</strong>
-          <p>{message || 'Register or log in to access full content and features.'}</p>
+          <p>{message || 'Sign up to access full chapters, quizzes, and personalized progress tracking.'}</p>
         </div>
         <div className="banner-actions">
           <button

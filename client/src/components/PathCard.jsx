@@ -19,8 +19,6 @@ const PathCard = ({ icon, title, level, topics = [], status = '' }) => {
         <div className="path-card-front">
           <img src="/flowerpatch.jpg" alt="Flower patch" className="path-card-image" />
           <div className="path-card-front-overlay">
-            {isCompleted && <div className="completion-badge">✓</div>}
-            {isLocked && <div className="lock-badge">🔒</div>}
           </div>
         </div>
 

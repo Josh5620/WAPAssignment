@@ -3,8 +3,8 @@
    ========================= */
 
 :root { 
-  --gutter: 2rem; 
-  --navbar-height: 4.2rem;
+  --gutter: 1.5rem; 
+  --navbar-height: 3.6rem;
 }       
 html, body { height: 100%; margin: 0; }
 body { 
@@ -16,12 +16,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1rem 0.5rem 2rem;
   background: #EFF1ED; 
   box-shadow: none;
   border: none;
   margin: 0;
-  padding-top: 1.5rem;
+  padding-top: 1rem;
   padding-bottom: 0.2rem;
   flex-shrink: 0;
   width: 100%;
@@ -31,11 +30,10 @@ body {
   width: 100%;
   z-index: 1001;
   border-bottom: 0.1px solid #717744; 
-  padding-bottom: 1rem; 
+  padding-bottom: 0.75rem; 
   transition: opacity 0.5s;
   opacity: 1;
   pointer-events: auto; 
-  padding-left: var(--gutter);
   padding-right: var(--gutter);
   height: var(--navbar-height);
   overflow: visible;                    
@@ -53,8 +51,8 @@ body {
 
 .navbar__inner {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem 1.5rem;
+  margin: auto;
+  padding: 0.5rem;
   display: flex;
   align-items: center;
   width: 100%;
@@ -63,19 +61,19 @@ body {
 .navbar__logo {
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.45rem;
   text-decoration: none;
   order: 1;
 }
 
 .navbar__logo-text {
-  height: 18px;
+  height: 16px;
   order: 1;
 }
 
 .navbar__logo-icon {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   order: 2;
 }
 
@@ -210,7 +208,7 @@ body {
 
 @media (max-width: 1024px) {
   .navbar__inner {
-    padding: 0.75rem 1rem;
+    padding: 0.75rem 0.5rem;
   }
 }
 

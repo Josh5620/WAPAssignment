@@ -49,12 +49,6 @@ const steps = [
   },
 ];
 
-const stats = [
-  { value: '45K+', label: 'Students learning', detail: 'Learners exploring Python with CodeSage every month.' },
-  { value: '120+', label: 'Interactive chapters', detail: 'Crafted lessons covering fundamentals to advanced topics.' },
-  { value: '18K+', label: 'Projects completed', detail: 'Garden-inspired challenges submitted by our community.' },
-];
-
 const About = () => (
   <div className="about-page">
     <Navbar />
@@ -119,16 +113,6 @@ const About = () => (
             workshops.
           </p>
         </div>
-      </section>
-
-      <section className="about-stats" aria-label="CodeSage impact statistics">
-        {stats.map((stat) => (
-          <div key={stat.label} className="about-stat">
-            <span className="about-stat__value">{stat.value}</span>
-            <span className="about-stat__label">{stat.label}</span>
-            <p>{stat.detail}</p>
-          </div>
-        ))}
       </section>
 
       <section className="about-cta" aria-labelledby="about-cta-heading">

@@ -42,6 +42,11 @@ const Navbar = () => {
     { label: 'FAQ', to: '/faq' },
   ];
 
+  // Add Community link only for logged-in users
+  if (isLoggedIn) {
+    navLinks.splice(2, 0, { label: 'Community', to: '/forum' });
+  }
+
   const handleLogout = () => {
     logout();
     navigate('/');

@@ -21,6 +21,7 @@ import GuestCoursesPage from './pages/GuestCoursesPage';
 import FAQ from './pages/FAQ';
 import VisitorPage from './pages/VisitorPage';
 import GuestCoursePreviewPage from './pages/GuestCoursePreviewPage';
+import ForumPage from './pages/ForumPage';
 import ApiTest from './components/ApiTest';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import TestingNav from './components/TestingNav';
@@ -85,6 +86,14 @@ function App() {
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route
+            path="/forum"
+            element={(
+              <ProtectedRoute>
+                <ForumPage />
+              </ProtectedRoute>
+            )}
+          />
           <Route path="/guest/courses" element={<GuestCoursesPage />} />
           <Route path="/guest/courses/:courseId/preview" element={<GuestCoursePreviewPage />} />
           <Route path="/python" element={<VisitorPage />} />

@@ -11,7 +11,7 @@ namespace ProjectAPI.Controllers;
 /// course previews, searching, and account registration.
 /// </summary>
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/guests")]
 public class GuestsController : ControllerBase
 {
     private readonly ApplicationDbContext _context;

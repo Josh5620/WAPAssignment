@@ -1,187 +1,310 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 .flashcard-component {
   width: 100%;
-  max-width: 720px;
+  max-width: 760px;
   margin: 0 auto;
-  padding: 2rem 1.5rem;
-  background: linear-gradient(180deg, rgba(239, 241, 237, 0.85) 0%, rgba(239, 241, 237, 0.65) 100%);
-  border: 3px solid rgba(113, 119, 68, 0.35);
-  border-radius: 28px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 14px 32px rgba(55, 61, 32, 0.18);
+  padding: 3rem 2.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.4rem;
 }
 
 .flashcard-component::before,
 .flashcard-component::after {
-  content: '';
-  position: absolute;
-  width: 110px;
-  height: 110px;
-  background: radial-gradient(circle at center, rgba(121, 143, 86, 0.35), transparent 70%);
-  z-index: 0;
-}
-
-.flashcard-component::before {
-  top: -40px;
-  left: -40px;
-}
-
-.flashcard-component::after {
-  bottom: -30px;
-  right: -30px;
-}
-
-.flashcard-component * {
-  position: relative;
-  z-index: 1;
+  display: none;
 }
 
 .flashcard-header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .flashcard-header h3 {
-font-family: 'Press Start 2P', cursive;
-font-size: 1.05rem;
-letter-spacing: 0.08em;
-color: var(--primary);
-text-transform: uppercase;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1rem;
+  letter-spacing: 0.24em;
+  color: rgba(40, 52, 34, 0.88);
+  text-transform: uppercase;
+}
+
+.flashcard-header h3::after {
+  content: '';
+  position: absolute;
+  bottom: -0.45rem;
+  left: 0;
+  width: 72px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(52, 74, 44, 0.45), transparent);
 }
 
 .flashcard-progress {
-font-family: 'Pixelify Sans', cursive;
-color: var(--muted);
-font-size: 0.95rem;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  color: rgba(60, 78, 52, 0.74);
+  text-transform: uppercase;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(128, 166, 112, 0.34);
+  background: rgba(234, 241, 229, 0.54);
 }
 
 .flashcard-fallback-note {
-  margin-top: -0.2rem;
-  margin-bottom: 1.2rem;
+  width: 100%;
   text-align: center;
-  font-family: 'Pixelify Sans', cursive;
-  font-size: 0.85rem;
-  color: rgba(55, 61, 32, 0.6);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  color: rgba(60, 78, 52, 0.65);
+  text-transform: uppercase;
+}
+
+.flashcard-fallback-note::before {
+  content: '✧';
+  font-size: 0.9rem;
+  opacity: 0.45;
 }
 
 .flashcard-container {
-  perspective: 1200px;
-  margin-bottom: 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.flashcard-progress-dots {
+  display: flex;
+  gap: 0.65rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: -0.4rem;
+}
+
+.flashcard-progress-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(130, 152, 120, 0.28);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.flashcard-progress-dot.seen {
+  background: rgba(132, 168, 118, 0.6);
+}
+
+.flashcard-progress-dot.active {
+  background: rgba(96, 130, 88, 0.95);
+  transform: scale(1.3);
 }
 
 .flashcard {
-  background: var(--card-bg);
-  border: 3px solid var(--border);
-  border-radius: 24px;
-  padding: 2.2rem;
+  position: relative;
+  width: min(520px, 100%);
   min-height: 260px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  transition: transform 0.6s ease, box-shadow 0.3s ease;
-  transform-style: preserve-3d;
+  perspective: 1200px;
   cursor: pointer;
-  box-shadow: 0 18px 28px rgba(55, 61, 32, 0.14);
+  transition: transform 0.45s ease, box-shadow 0.35s ease;
+  outline: none;
 }
 
-.flashcard.flipped {
+.flashcard:hover {
+  transform: translateY(-6px);
+}
+
+.flashcard.revealed .flashcard-face {
+  box-shadow:
+    0 12px 30px rgba(56, 90, 52, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+}
+
+.flashcard.revealed .flashcard-face::after {
+  opacity: 0.55;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.flashcard.flipped .flashcard-inner {
   transform: rotateY(180deg);
 }
 
 .flashcard-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  background: #ffffff;
+  border: 1px solid rgba(140, 175, 128, 0.45);
+  box-shadow:
+    0 12px 28px rgba(46, 68, 45, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  padding: 2.6rem 2.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.4rem;
   backface-visibility: hidden;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.flashcard-face::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg width='520' height='260' viewBox='0 0 520 260' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M44 210C90 182 130 140 180 150C230 160 246 220 318 180C390 140 420 108 472 104' stroke='%23B9D7B6' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' opacity='0.16'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 90% 100%;
+  background-size: 80% auto;
+  opacity: 0.45;
+  pointer-events: none;
 }
 
 .flashcard-back {
   transform: rotateY(180deg);
 }
 
-.flashcard-label {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.75rem;
-  color: var(--muted);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 0.85rem;
-}
-
 .flashcard-content {
-  font-family: 'Pixelify Sans', cursive;
-  font-size: 1.15rem;
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(0.86rem, 1.3vw, 1.05rem);
   line-height: 1.6;
-  color: var(--text);
+  color: rgba(36, 52, 34, 0.9);
+  letter-spacing: 0.08em;
+  word-spacing: 0.08em;
 }
 
 .flashcard-hint {
-  margin-top: 1.25rem;
-  font-size: 0.85rem;
-  color: var(--muted);
-  font-style: italic;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.52rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(70, 92, 60, 0.58);
+}
+
+.flashcard-controls {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .flashcard-actions,
 .flashcard-secondary-actions {
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 1rem;
-flex-wrap: wrap;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .flashcard-button {
-padding: 0.65rem 1.4rem;
-border-radius: 999px;
-border: 2px solid var(--border);
-background: var(--bg);
-color: var(--text);
-font-family: 'Pixelify Sans', cursive;
-letter-spacing: 0.04em;
-cursor: pointer;
-transition: all 0.2s ease;
-min-width: 140px;
+  padding: 0.72rem 1.8rem;
+  border-radius: 18px;
+  border: 1px solid rgba(130, 168, 118, 0.45);
+  background: linear-gradient(135deg, rgba(232, 242, 225, 0.95), rgba(206, 227, 198, 0.9));
+  color: rgba(48, 68, 44, 0.9);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.62rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  min-width: 142px;
+  box-shadow: 0 10px 20px rgba(52, 75, 45, 0.14), inset 0 0 0 1px rgba(255, 255, 255, 0.4);
 }
 
 .flashcard-button:hover:not(:disabled) {
-background: var(--primary);
-color: var(--bg);
-box-shadow: 0 8px 16px rgba(55, 61, 32, 0.18);
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, rgba(212, 235, 200, 0.98), rgba(186, 220, 181, 0.94));
+  box-shadow: 0 14px 24px rgba(45, 68, 42, 0.18);
 }
 
 .flashcard-button:disabled {
-opacity: 0.4;
-cursor: not-allowed;
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .flashcard-loading,
 .flashcard-error,
 .flashcard-empty {
-font-family: 'Pixelify Sans', cursive;
-color: var(--muted);
-text-align: center;
-padding: 2rem 1rem;
+  font-family: 'Press Start 2P', cursive;
+  color: rgba(72, 98, 55, 0.7);
+  text-align: center;
+  padding: 2.1rem 1rem;
 }
 
 .flashcard-error button {
-margin-top: 1rem;
+  margin-top: 1rem;
+}
+
+.flashcard-badge {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(210, 232, 202, 0.92);
+  border: 1px solid rgba(140, 175, 128, 0.45);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.48rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(58, 82, 50, 0.85);
+  z-index: 2;
+}
+
+.flashcard-reward {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+}
+
+.flashcard-reward::before,
+.flashcard-reward::after {
+  content: '';
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(200, 235, 198, 0.6), transparent 70%);
+  animation: rewardPulse 0.9s ease-in-out infinite alternate;
+}
+
+.flashcard-reward::after {
+  width: 320px;
+  height: 320px;
+  animation-delay: 0.25s;
+}
+
+@keyframes rewardPulse {
+  0% { transform: scale(0.6); opacity: 0.7; }
+  100% { transform: scale(1.1); opacity: 0; }
 }
 
 @media (max-width: 640px) {
-.flashcard-component {
-    padding: 1.5rem 1rem;
-    border-width: 2px;
-    border-radius: 22px;
-}
+  .flashcard-component {
+    padding: 2.2rem 1.4rem;
+  }
 
-.flashcard {
-    padding: 1.6rem;
-    min-height: 220px;
-}
+  .flashcard {
+    min-height: 230px;
+  }
 
-.flashcard-button {
+  .flashcard-face {
+    padding: 2.2rem 2rem;
+  }
+
+  .flashcard-button {
     width: 100%;
     min-width: unset;
-}
+  }
 }
 

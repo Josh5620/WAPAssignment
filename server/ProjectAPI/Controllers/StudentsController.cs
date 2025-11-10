@@ -11,7 +11,7 @@ namespace ProjectAPI.Controllers;
 /// progress tracking, quizzes, flashcards, and forum participation.
 /// </summary>
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/students")]
 public class StudentsController : ControllerBase
 {
     private readonly ApplicationDbContext _context;

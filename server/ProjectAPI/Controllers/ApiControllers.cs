@@ -8,7 +8,7 @@ namespace ProjectAPI.Controllers;
 
 // ProfilesController - EF Core implementation maintaining Supabase API compatibility
 [ApiController]
-[Route("api/[controller]")]
+[Route("api")]  // Changed from api/[controller] to api - provides direct /api/login, /api/register
 public class ProfilesController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
@@ -254,10 +254,60 @@ public class ProfilesController : ControllerBase
             return StatusCode(500, new { error = ex.Message });
         }
     }
+
+    /// <summary>
+    /// Register a new user account - matches frontend expectation of /api/register
+    /// </summary>
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+    {
+        try
+        {
+            // Validate required fields
+            if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password))
+            {
+                return BadRequest(new { error = "Email and password are required" });
+            }
+
+            // Check if user already exists
+            var existingUser = await _context.Profiles
+                .FirstOrDefaultAsync(p => p.Email == request.Email);
+
+            if (existingUser != null)
+            {
+                return BadRequest(new { error = "User with this email already exists" });
+            }
+
+            // Create new user profile
+            var newProfile = new Profile
+            {
+                UserId = Guid.NewGuid(),
+                FullName = request.FullName ?? request.Email.Split('@')[0], // Use email prefix if no name provided
+                Email = request.Email,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password), // Hash password securely
+                Role = "student", // Default role for new registrations
+                CreatedAt = DateTime.UtcNow
+            };
+
+            // Save to database
+            _context.Profiles.Add(newProfile);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { 
+                success = true, 
+                message = "Registration successful",
+                userId = newProfile.UserId
+            });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { error = ex.Message });
+        }
+    }
 }
 
 public record CreateProfileRequest(Guid Id, string FullName, string Email, string? Role = null);
-public record UpdateProfileRequest(string? FullName = null, string? Role = null);
+public record UpdateProfileRequest(string? FullName = null, string? Role = null);  
 public record LoginRequest(string Identifier, string Password);
 
 // CoursesController - EF Core implementation maintaining Supabase API compatibility

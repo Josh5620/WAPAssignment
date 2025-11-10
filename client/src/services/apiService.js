@@ -104,14 +104,15 @@ const requestWithAuth = async (path, options = {}) => {
 // Login function: POST to /profiles/login with correct JSON body format
 export const login = async (identifier, password) => {
   try {
-    const response = await fetch('http://localhost:5245/api/profiles/login', {
+    // Updated to use correct backend endpoint path: /api/login (not /api/profiles/login)
+    const response = await fetch('http://localhost:5245/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        identifier,
-        password
+        identifier,  // Backend expects 'identifier' field (can be email or username)
+        password     // Backend expects 'password' field
       }),
     });
 
@@ -120,6 +121,7 @@ export const login = async (identifier, password) => {
     }
 
     const data = await response.json();
+    console.log('✓ Login successful - direct to backend:', data);
     return data;
   } catch (error) {
     console.error('Login error:', error);
@@ -990,19 +992,27 @@ const guestCheckEmailAvailability = async (email) => {
 };
 
 const guestRegister = async ({ fullName, email, password, role }) => {
-  const payload = {
-    fullName,
-    email,
-    password,
-    role,
-  };
-
   try {
-    const response = await requestWithAuth('/guests/register', {
+    // Use direct backend endpoint: /api/register (not /api/guests/register)
+    const response = await fetch('http://localhost:5245/api/register', {
       method: 'POST',
-      body: payload,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email,        // Backend expects 'email' field
+        password,     // Backend expects 'password' field
+        fullName      // Backend expects 'fullName' field (optional)
+      }),
     });
-    return response;
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    console.log('✓ Registration successful - direct to backend:', data);
+    return data;
   } catch (error) {
     console.warn('Registration failed against API, providing fallback message', error);
     if (error.status && error.status !== 0) {
@@ -1238,13 +1248,151 @@ export const adminService = {
     }
   },
 
+  createCourse: async (courseData) => {
+    try {
+      const token = localStorage.getItem('authToken');
+      const response = await fetch(`${API_BASE_URL}/Admin/courses`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(courseData)
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      return { success: true, data: data };
+    } catch (error) {
+      console.error('Create course error:', error);
+      return { success: false, message: 'Course creation not available yet' };
+    }
+  },
+
+  updateCourse: async (courseId, courseData) => {
+    try {
+      const token = localStorage.getItem('authToken');
+      const response = await fetch(`${API_BASE_URL}/Admin/courses/${courseId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(courseData)
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      return { success: true, data: data };
+    } catch (error) {
+      console.error('Update course error:', error);
+      return { success: false, message: 'Course update not available yet' };
+    }
+  },
+
+  deleteCourse: async (courseId) => {
+    try {
+      const token = localStorage.getItem('authToken');
+      const response = await fetch(`${API_BASE_URL}/Admin/courses/${courseId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      return { success: true, message: 'Course deleted successfully' };
+    } catch (error) {
+      console.error('Delete course error:', error);
+      return { success: false, message: 'Course deletion not available yet' };
+    }
+  },
+
   updateCourseStatus: async (courseId, published) => {
     try {
       const token = localStorage.getItem('authToken');
-      const result = await updateCourse(courseId, { published }, token);
-      return { success: true, data: result };
+      const response = await fetch(`${API_BASE_URL}/Admin/courses/${courseId}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ published })
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      return { success: true, data: data };
     } catch (error) {
-      return { success: false, message: error.message };
+      console.error('Update course status error:', error);
+      return { success: false, message: 'Course status update not available yet' };
+    }
+  },
+
+  // === COURSE APPROVAL SYSTEM ===
+  getPendingApprovalCourses: async () => {
+    try {
+      const token = localStorage.getItem('authToken');
+      const response = await fetch(`${API_BASE_URL}/Admin/courses/pending-approval`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      return { success: true, data: data.data || [] };
+    } catch (error) {
+      console.error('Get pending courses error:', error);
+      return { success: false, message: 'Pending courses not available yet', data: [] };
+    }
+  },
+
+  approveCourse: async (courseId, approved, rejectionReason = '') => {
+    try {
+      const token = localStorage.getItem('authToken');
+      const userProfile = JSON.parse(localStorage.getItem('user_profile') || '{}');
+      
+      const response = await fetch(`${API_BASE_URL}/Admin/courses/${courseId}/approve`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          approved,
+          rejectionReason,
+          adminUserId: userProfile.id || userProfile.userId
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      return { success: true, data: data };
+    } catch (error) {
+      console.error('Approve course error:', error);
+      return { success: false, message: 'Course approval not available yet' };
     }
   },
 

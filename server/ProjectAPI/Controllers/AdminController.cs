@@ -134,6 +134,10 @@ namespace ProjectAPI.Controllers
                         c.Title,
                         c.Description,
                         c.Published,
+                        // TODO: Add these fields to Course model when ready
+                        // c.PendingApproval,
+                        // c.CreatedBy,
+                        // c.CreatedAt
                         chapterCount = c.Chapters.Count,
                         enrollmentCount = c.Enrolments.Count
                     })
@@ -144,6 +148,144 @@ namespace ProjectAPI.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { success = false, message = "Failed to load courses", error = ex.Message });
+            }
+        }
+
+        [HttpGet("courses/pending-approval")]
+        public async Task<IActionResult> GetPendingApprovalCourses()
+        {
+            try
+            {
+                // TODO: Implement when approval fields are added to Course model
+                // For now, return empty array
+                var pendingCourses = new object[] { };
+
+                return Ok(new { success = true, data = pendingCourses });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Failed to load pending courses", error = ex.Message });
+            }
+        }
+
+        [HttpPut("courses/{courseId}/approve")]
+        public async Task<IActionResult> ApproveCourse(Guid courseId, [FromBody] ApproveCourseDto dto)
+        {
+            try
+            {
+                var course = await _context.Courses.FindAsync(courseId);
+                if (course == null)
+                    return NotFound(new { success = false, message = "Course not found" });
+
+                // For now, just publish/unpublish the course
+                // TODO: Implement full approval workflow when model is updated
+                course.Published = dto.Approved;
+                await _context.SaveChangesAsync();
+
+                return Ok(new { 
+                    success = true, 
+                    message = dto.Approved ? "Course approved and published successfully" : "Course rejected"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Failed to process course approval", error = ex.Message });
+            }
+        }
+
+        [HttpPost("courses")]
+        public async Task<IActionResult> CreateCourse([FromBody] CreateCourseDto dto)
+        {
+            try
+            {
+                var course = new Course
+                {
+                    CourseId = Guid.NewGuid(),
+                    Title = dto.Title,
+                    Description = dto.Description,
+                    Published = dto.Published
+                };
+
+                _context.Courses.Add(course);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { 
+                    success = true, 
+                    data = new { 
+                        id = course.CourseId, 
+                        course.Title, 
+                        course.Description, 
+                        course.Published 
+                    }, 
+                    message = "Course created successfully" 
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Failed to create course", error = ex.Message });
+            }
+        }
+
+        [HttpPut("courses/{courseId}")]
+        public async Task<IActionResult> UpdateCourse(Guid courseId, [FromBody] UpdateCourseDto dto)
+        {
+            try
+            {
+                var course = await _context.Courses.FindAsync(courseId);
+                if (course == null)
+                    return NotFound(new { success = false, message = "Course not found" });
+
+                course.Title = dto.Title ?? course.Title;
+                course.Description = dto.Description ?? course.Description;
+                course.Published = dto.Published ?? course.Published;
+
+                await _context.SaveChangesAsync();
+
+                return Ok(new { success = true, message = "Course updated successfully" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Failed to update course", error = ex.Message });
+            }
+        }
+
+        [HttpDelete("courses/{courseId}")]
+        public async Task<IActionResult> DeleteCourse(Guid courseId)
+        {
+            try
+            {
+                var course = await _context.Courses.FindAsync(courseId);
+                if (course == null)
+                    return NotFound(new { success = false, message = "Course not found" });
+
+                _context.Courses.Remove(course);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { success = true, message = "Course deleted successfully" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Failed to delete course", error = ex.Message });
+            }
+        }
+
+        [HttpPut("courses/{courseId}/status")]
+        public async Task<IActionResult> UpdateCourseStatus(Guid courseId, [FromBody] UpdateCourseStatusDto dto)
+        {
+            try
+            {
+                var course = await _context.Courses.FindAsync(courseId);
+                if (course == null)
+                    return NotFound(new { success = false, message = "Course not found" });
+
+                course.Published = dto.Published;
+                await _context.SaveChangesAsync();
+
+                return Ok(new { success = true, message = "Course status updated successfully" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Failed to update course status", error = ex.Message });
             }
         }
 
@@ -275,6 +417,47 @@ namespace ProjectAPI.Controllers
             return await GetReports();
         }
 
+        // === HELP REQUESTS (Placeholder) ===
+        [HttpGet("help-requests")]
+        public IActionResult GetHelpRequests()
+        {
+            try
+            {
+                // TODO: Implement when HelpRequest model is created
+                var sampleRequests = new[]
+                {
+                    new
+                    {
+                        id = Guid.NewGuid(),
+                        userName = "Sample User",
+                        content = "Sample help request content",
+                        submittedDate = DateTime.UtcNow.AddDays(-1),
+                        status = "pending"
+                    }
+                };
+
+                return Ok(new { success = true, data = sampleRequests });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Failed to load help requests", error = ex.Message });
+            }
+        }
+
+        [HttpPost("help-requests/{requestId}/reply")]
+        public IActionResult ReplyToHelpRequest(Guid requestId, [FromBody] HelpRequestReplyDto dto)
+        {
+            try
+            {
+                // TODO: Implement when HelpRequest model is created
+                return Ok(new { success = true, message = "Reply sent successfully" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Failed to send reply", error = ex.Message });
+            }
+        }
+
         // === HELPER METHODS ===
         private async Task<DashboardStatsDto> GetDashboardStatistics()
         {
@@ -355,5 +538,36 @@ namespace ProjectAPI.Controllers
         public string Title { get; set; } = string.Empty;
         public string Content { get; set; } = string.Empty;
         public string Priority { get; set; } = "medium";
+    }
+
+    public class CreateCourseDto
+    {
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public bool Published { get; set; } = false;
+    }
+
+    public class UpdateCourseDto
+    {
+        public string? Title { get; set; }
+        public string? Description { get; set; }
+        public bool? Published { get; set; }
+    }
+
+    public class UpdateCourseStatusDto
+    {
+        public bool Published { get; set; }
+    }
+
+    public class ApproveCourseDto
+    {
+        public bool Approved { get; set; }
+        public string? RejectionReason { get; set; }
+        public Guid AdminUserId { get; set; }
+    }
+
+    public class HelpRequestReplyDto
+    {
+        public string Message { get; set; } = string.Empty;
     }
 }

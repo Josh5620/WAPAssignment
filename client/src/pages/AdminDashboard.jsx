@@ -1,281 +1,433 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import { useAuth } from '../context/AuthContext.jsx';
 import { adminService } from '../services/apiService';
 import '../styles/AdminDashboard.css';
-import { useAuth } from '../context/AuthContext.jsx';
 
 const AdminDashboard = () => {
     const { user: authUser } = useAuth();
-    const [dashboardData, setDashboardData] = useState(null);
     const [users, setUsers] = useState([]);
-    const [forumPosts, setForumPosts] = useState([]);
     const [courses, setCourses] = useState([]);
     const [announcements, setAnnouncements] = useState([]);
-    const [reports, setReports] = useState(null);
+    const [feedback, setFeedback] = useState([]);
+    const [reports, setReports] = useState([]);
+    const [pendingCourses, setPendingCourses] = useState([]);
+    const [dashboardStats, setDashboardStats] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-    const [activeTab, setActiveTab] = useState('overview');
-    const [selectedUser, setSelectedUser] = useState(null);
-    const [newRole, setNewRole] = useState('');
-    const [showAnnouncementModal, setShowAnnouncementModal] = useState(false);
-    const [newAnnouncement, setNewAnnouncement] = useState({ title: '', content: '', priority: 'medium' });
+    const [activeTab, setActiveTab] = useState('users');
+    // State for role editing
+    const [editingUserId, setEditingUserId] = useState(null);
+    const [selectedRole, setSelectedRole] = useState('');
+    // State for announcement creation
+    const [showAnnouncementForm, setShowAnnouncementForm] = useState(false);
+    const [announcementTitle, setAnnouncementTitle] = useState('');
+    const [announcementContent, setAnnouncementContent] = useState('');
+    
+    // Course management state
+    const [showCourseForm, setShowCourseForm] = useState(false);
+    const [editingCourseId, setEditingCourseId] = useState(null);
+    const [courseTitle, setCourseTitle] = useState('');
+    const [courseDescription, setCourseDescription] = useState('');
+    const [coursePublished, setCoursePublished] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
+        // Check if user is admin
         const user = JSON.parse(localStorage.getItem('user_profile') || '{}');
-        console.log('Admin dashboard - checking user:', user);
-        console.log('User role:', user.role);
-        console.log('User properties:', Object.keys(user));
-        
-        // Check for admin role (case-insensitive)
         const isAdmin = user.role && user.role.toLowerCase() === 'admin';
         
         if (!isAdmin) {
-            console.log('User is not admin, redirecting to home. Role found:', user.role);
             navigate('/');
             return;
         }
-        console.log('User is admin, loading dashboard data');
-        loadDashboardData();
+        
+        loadInitialData();
     }, [navigate]);
 
-    const loadDashboardData = async () => {
+    const loadInitialData = async () => {
         try {
             setLoading(true);
-            const response = await adminService.getDashboardData();
-            if (response.success) {
-                setDashboardData(response.data);
+            
+            // Load all admin data in parallel
+            const [
+                usersResult,
+                coursesResult,
+                dashboardResult,
+                announcementsResult,
+                feedbackResult,
+                reportsResult,
+                pendingCoursesResult
+            ] = await Promise.all([
+                adminService.getAllUsers(),
+                adminService.getAllCourses(),
+                adminService.getDashboardData(),
+                adminService.getAllAnnouncements(),
+                adminService.getHelpRequests(),
+                adminService.getReports(),
+                adminService.getPendingApprovalCourses()
+            ]);
+
+            // Handle users
+            if (usersResult.status === 'fulfilled' && usersResult.value.success) {
+                setUsers(usersResult.value.data || []);
             } else {
-                setError(response.message);
+                console.warn('Users not available:', usersResult.reason);
+                setUsers([]);
             }
+
+            // Handle courses
+            if (coursesResult.status === 'fulfilled' && coursesResult.value.success) {
+                setCourses(coursesResult.value.data || []);
+            } else {
+                console.warn('Courses not available:', coursesResult.reason);
+                setCourses([]);
+            }
+
+            // Handle dashboard stats
+            if (dashboardResult.status === 'fulfilled' && dashboardResult.value.success) {
+                setDashboardStats(dashboardResult.value.data.statistics || {});
+            } else {
+                console.warn('Dashboard stats not available:', dashboardResult.reason);
+                setDashboardStats({});
+            }
+
+            // Handle announcements
+            if (announcementsResult.status === 'fulfilled' && announcementsResult.value.success) {
+                setAnnouncements(announcementsResult.value.data || []);
+            } else {
+                console.warn('Announcements not available:', announcementsResult.reason);
+                setAnnouncements([]);
+            }
+
+            // Handle feedback
+            if (feedbackResult.status === 'fulfilled' && feedbackResult.value.success) {
+                setFeedback(feedbackResult.value.data || []);
+            } else {
+                console.warn('Feedback not available:', feedbackResult.reason);
+                setFeedback([]);
+            }
+
+            // Handle reports
+            if (reportsResult.status === 'fulfilled' && reportsResult.value.success) {
+                setReports(reportsResult.value.data || []);
+            } else {
+                console.warn('Reports not available:', reportsResult.reason);
+                setReports([]);
+            }
+
+            // Handle pending courses
+            if (pendingCoursesResult.status === 'fulfilled' && pendingCoursesResult.value.success) {
+                setPendingCourses(pendingCoursesResult.value.data || []);
+            } else {
+                console.warn('Pending courses not available:', pendingCoursesResult.reason);
+                setPendingCourses([]);
+            }
+
+            setError('');
         } catch (err) {
+            console.error('Failed to load dashboard data:', err);
             setError('Failed to load dashboard data');
         } finally {
             setLoading(false);
         }
     };
 
-    const loadUsers = async () => {
+    const handleUserRoleUpdate = async (userId, newRole) => {
         try {
-            console.log('Loading users...');
-            const response = await adminService.getAllUsers();
-            console.log('Users API response:', response);
-            if (response.success) {
-                // Extract just the data array from the response
-                const usersData = response.data || [];
-                console.log('Setting users:', usersData);
-                console.log('Users data is array:', Array.isArray(usersData));
-                console.log('Users count:', usersData.length);
-                setUsers(Array.isArray(usersData) ? usersData : []);
+            const result = await adminService.updateUserRole(userId, newRole);
+            if (result.success) {
+                setSuccess('User role updated successfully');
+                // Refresh users list
+                const usersResult = await adminService.getAllUsers();
+                if (usersResult.success) {
+                    setUsers(usersResult.data || []);
+                }
             } else {
-                console.error('API error:', response.message);
-                setError(response.message);
-                setUsers([]); // Ensure users is always an array
+                setError(result.message || 'Failed to update user role');
             }
         } catch (err) {
-            console.error('Failed to load users:', err);
-            setError('Failed to load users');
-            setUsers([]); // Ensure users is always an array
-        }
-    };
-
-    const loadForumPosts = async () => {
-        try {
-            const response = await adminService.getAllForumPosts();
-            if (response.success) {
-                setForumPosts(response.data);
-            } else {
-                setError(response.message);
-            }
-        } catch (err) {
-            setError('Failed to load forum posts');
-        }
-    };
-
-    const loadCourses = async () => {
-        try {
-            const response = await adminService.getAllCourses();
-            if (response.success) {
-                setCourses(response.data);
-            } else {
-                setError(response.message);
-            }
-        } catch (err) {
-            setError('Failed to load courses');
-        }
-    };
-
-    const loadAnnouncements = async () => {
-        try {
-            const response = await adminService.getAllAnnouncements();
-            if (response.success) {
-                setAnnouncements(response.data);
-            } else {
-                setError(response.message);
-            }
-        } catch (err) {
-            setError('Failed to load announcements');
-        }
-    };
-
-    const loadReports = async () => {
-        try {
-            const response = await adminService.getReports();
-            if (response.success) {
-                setReports(response.data);
-            } else {
-                setError(response.message);
-            }
-        } catch (err) {
-            setError('Failed to load reports');
-        }
-    };
-
-    const handleTabChange = (tab) => {
-        console.log('Tab changed to:', tab);
-        console.log('Current users length:', users.length);
-        setActiveTab(tab);
-        setError('');
-        setSuccess('');
-        
-        if (tab === 'users' && users.length === 0) {
-            console.log('Loading users because tab is users and users.length is 0');
-            loadUsers();
-        } else if (tab === 'posts' && forumPosts.length === 0) {
-            loadForumPosts();
-        } else if (tab === 'content' && courses.length === 0) {
-            loadCourses();
-        } else if (tab === 'announcements' && announcements.length === 0) {
-            loadAnnouncements();
-        } else if (tab === 'reports' && !reports) {
-            loadReports();
-        }
-    };
-
-    const handleUpdateUserRole = async (userId, role) => {
-        try {
-            const response = await adminService.updateUserRole(userId, role);
-            if (response.success) {
-                setUsers(users.map(user => 
-                    user.id === userId ? { ...user, role, isAdmin: role === 'admin', isTeacher: role === 'teacher', isStudent: role === 'student' } : user
-                ));
-                setSelectedUser(null);
-                setNewRole('');
-            } else {
-                setError(response.message);
-            }
-        } catch (err) {
+            console.error('Failed to update user role:', err);
             setError('Failed to update user role');
         }
+        // Reset editing state
+        setEditingUserId(null);
+        setSelectedRole('');
     };
 
-    const handleDeleteUser = async (userId) => {
-        if (window.confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
-            try {
-                const response = await adminService.deleteUser(userId);
-                if (response.success) {
-                    setUsers(users.filter(user => user.id !== userId));
-                } else {
-                    setError(response.message);
-                }
-            } catch (err) {
-                setError('Failed to delete user');
-            }
+    const startRoleEdit = (userId, currentRole) => {
+        setEditingUserId(userId);
+        setSelectedRole(currentRole);
+    };
+
+    const cancelRoleEdit = () => {
+        setEditingUserId(null);
+        setSelectedRole('');
+    };
+
+    const confirmRoleEdit = () => {
+        if (selectedRole && editingUserId) {
+            handleUserRoleUpdate(editingUserId, selectedRole);
         }
     };
 
-    const handleDeletePost = async (postId) => {
-        if (window.confirm('Are you sure you want to delete this forum post? This action cannot be undone.')) {
-            try {
-                const response = await adminService.deleteForumPost(postId);
-                if (response.success) {
-                    setForumPosts(forumPosts.filter(post => post.id !== postId));
-                    setSuccess('Forum post deleted successfully');
-                } else {
-                    setError(response.message);
-                }
-            } catch (err) {
-                setError('Failed to delete forum post');
-            }
-        }
-    };
-
-    const handleCreateAnnouncement = async () => {
-        if (!newAnnouncement.title || !newAnnouncement.content) {
-            setError('Please fill in all announcement fields');
+    const handleUserDelete = async (userId) => {
+        if (!window.confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
             return;
         }
-
+        
         try {
-            const response = await adminService.createAnnouncement(newAnnouncement);
-            if (response.success) {
-                setAnnouncements([response.data, ...announcements]);
-                setNewAnnouncement({ title: '', content: '', priority: 'medium' });
-                setShowAnnouncementModal(false);
-                setSuccess('Announcement created successfully');
+            const result = await adminService.deleteUser(userId);
+            if (result.success) {
+                setSuccess('User deleted successfully');
+                // Refresh users list
+                const usersResult = await adminService.getAllUsers();
+                if (usersResult.success) {
+                    setUsers(usersResult.data || []);
+                }
             } else {
-                setError(response.message);
+                setError(result.message || 'Failed to delete user');
             }
         } catch (err) {
+            console.error('Failed to delete user:', err);
+            setError('Failed to delete user');
+        }
+    };
+
+    const handleCreateAnnouncement = async (title, content) => {
+        try {
+            const result = await adminService.createAnnouncement({
+                title: title,
+                content: content,
+                publishedDate: new Date().toISOString()
+            });
+            
+            if (result.success) {
+                setSuccess('Announcement created successfully');
+                // Refresh announcements list
+                const announcementsResult = await adminService.getAllAnnouncements();
+                if (announcementsResult.success) {
+                    setAnnouncements(announcementsResult.value.data || []);
+                }
+            } else {
+                setError(result.message || 'Failed to create announcement');
+            }
+        } catch (err) {
+            console.error('Failed to create announcement:', err);
             setError('Failed to create announcement');
         }
+        // Reset form state
+        setShowAnnouncementForm(false);
+        setAnnouncementTitle('');
+        setAnnouncementContent('');
     };
 
-    const handleDeleteAnnouncement = async (announcementId) => {
-        if (window.confirm('Are you sure you want to delete this announcement?')) {
+    const handleAnnouncementSubmit = (e) => {
+        e.preventDefault();
+        if (announcementTitle.trim() && announcementContent.trim()) {
+            handleCreateAnnouncement(announcementTitle.trim(), announcementContent.trim());
+        } else {
+            setError('Please fill in both title and content for the announcement');
+        }
+    };
+
+    const cancelAnnouncementForm = () => {
+        setShowAnnouncementForm(false);
+        setAnnouncementTitle('');
+        setAnnouncementContent('');
+    };
+
+    // === COURSE MANAGEMENT FUNCTIONS ===
+    const handleCreateCourse = async () => {
+        try {
+            const result = await adminService.createCourse({
+                title: courseTitle,
+                description: courseDescription,
+                published: coursePublished
+            });
+            
+            if (result.success) {
+                setSuccess('Course created successfully');
+                // Refresh courses list
+                const coursesResult = await adminService.getAllCourses();
+                if (coursesResult.success) {
+                    setCourses(coursesResult.data || []);
+                }
+                // Reset form
+                setShowCourseForm(false);
+                resetCourseForm();
+            } else {
+                setError(result.message || 'Failed to create course');
+            }
+        } catch (err) {
+            console.error('Failed to create course:', err);
+            setError('Failed to create course');
+        }
+    };
+
+    const handleUpdateCourse = async (courseId) => {
+        try {
+            const result = await adminService.updateCourse(courseId, {
+                title: courseTitle,
+                description: courseDescription,
+                published: coursePublished
+            });
+            
+            if (result.success) {
+                setSuccess('Course updated successfully');
+                // Refresh courses list
+                const coursesResult = await adminService.getAllCourses();
+                if (coursesResult.success) {
+                    setCourses(coursesResult.data || []);
+                }
+                // Reset form
+                setEditingCourseId(null);
+                setShowCourseForm(false);
+                resetCourseForm();
+            } else {
+                setError(result.message || 'Failed to update course');
+            }
+        } catch (err) {
+            console.error('Failed to update course:', err);
+            setError('Failed to update course');
+        }
+    };
+
+    const handleDeleteCourse = async (courseId) => {
+        if (window.confirm('Are you sure you want to delete this course? This action cannot be undone.')) {
             try {
-                const response = await adminService.deleteAnnouncement(announcementId);
-                if (response.success) {
-                    setAnnouncements(announcements.filter(ann => ann.id !== announcementId));
-                    setSuccess('Announcement deleted successfully');
+                const result = await adminService.deleteCourse(courseId);
+                if (result.success) {
+                    setSuccess('Course deleted successfully');
+                    // Refresh courses list
+                    const coursesResult = await adminService.getAllCourses();
+                    if (coursesResult.success) {
+                        setCourses(coursesResult.data || []);
+                    }
                 } else {
-                    setError(response.message);
+                    setError(result.message || 'Failed to delete course');
                 }
             } catch (err) {
-                setError('Failed to delete announcement');
+                console.error('Failed to delete course:', err);
+                setError('Failed to delete course');
             }
         }
     };
 
-    const handleToggleCoursePublished = async (courseId, currentStatus) => {
+    const handleCourseStatusToggle = async (courseId, currentStatus) => {
         try {
-            const response = await adminService.updateCourseStatus(courseId, !currentStatus);
-            if (response.success) {
-                setCourses(courses.map(course => 
-                    course.id === courseId ? { ...course, published: !currentStatus } : course
-                ));
+            const result = await adminService.updateCourseStatus(courseId, !currentStatus);
+            if (result.success) {
                 setSuccess(`Course ${!currentStatus ? 'published' : 'unpublished'} successfully`);
+                // Refresh courses list
+                const coursesResult = await adminService.getAllCourses();
+                if (coursesResult.success) {
+                    setCourses(coursesResult.data || []);
+                }
             } else {
-                setError(response.message);
+                setError(result.message || 'Failed to update course status');
             }
         } catch (err) {
+            console.error('Failed to update course status:', err);
             setError('Failed to update course status');
+        }
+    };
+
+    const handleEditCourse = (course) => {
+        setEditingCourseId(course.id);
+        setCourseTitle(course.title);
+        setCourseDescription(course.description);
+        setCoursePublished(course.published);
+        setShowCourseForm(true);
+    };
+
+    const handleCourseSubmit = (e) => {
+        e.preventDefault();
+        if (courseTitle.trim() && courseDescription.trim()) {
+            if (editingCourseId) {
+                handleUpdateCourse(editingCourseId);
+            } else {
+                handleCreateCourse();
+            }
+        } else {
+            setError('Please fill in both title and description for the course');
+        }
+    };
+
+    const resetCourseForm = () => {
+        setCourseTitle('');
+        setCourseDescription('');
+        setCoursePublished(false);
+        setEditingCourseId(null);
+    };
+
+    const cancelCourseForm = () => {
+        setShowCourseForm(false);
+        resetCourseForm();
+    };
+
+    // === COURSE APPROVAL FUNCTIONS ===
+    const handleApproveCourse = async (courseId, approved, rejectionReason = '') => {
+        try {
+            const result = await adminService.approveCourse(courseId, approved, rejectionReason);
+            if (result.success) {
+                setSuccess(`Course ${approved ? 'approved' : 'rejected'} successfully`);
+                // Refresh pending courses and all courses
+                const [pendingResult, coursesResult] = await Promise.all([
+                    adminService.getPendingApprovalCourses(),
+                    adminService.getAllCourses()
+                ]);
+                
+                if (pendingResult.success) {
+                    setPendingCourses(pendingResult.data || []);
+                }
+                if (coursesResult.success) {
+                    setCourses(coursesResult.data || []);
+                }
+            } else {
+                setError(result.message || `Failed to ${approved ? 'approve' : 'reject'} course`);
+            }
+        } catch (err) {
+            console.error('Failed to process course approval:', err);
+            setError(`Failed to ${approved ? 'approve' : 'reject'} course`);
+        }
+    };
+
+    const showApprovalDialog = (course, isApproval) => {
+        if (isApproval) {
+            if (window.confirm(`Are you sure you want to approve the course "${course.title}"?`)) {
+                handleApproveCourse(course.id, true);
+            }
+        } else {
+            const reason = prompt(`Please provide a reason for rejecting "${course.title}":`);
+            if (reason && reason.trim()) {
+                handleApproveCourse(course.id, false, reason.trim());
+            }
         }
     };
 
     const handleGenerateReport = async () => {
         try {
-            setLoading(true);
-            const response = await adminService.generateReport();
-            if (response.success) {
-                setReports(response.data);
+            const result = await adminService.generateReport();
+            if (result.success) {
                 setSuccess('Report generated successfully');
+                // Refresh reports list
+                const reportsResult = await adminService.getReports();
+                if (reportsResult.success) {
+                    setReports(reportsResult.data || []);
+                }
             } else {
-                setError(response.message);
+                setError(result.message || 'Failed to generate report');
             }
         } catch (err) {
+            console.error('Failed to generate report:', err);
             setError('Failed to generate report');
-        } finally {
-            setLoading(false);
         }
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('user');
-        navigate('/admin-login');
-    };
+    const displayName = authUser?.fullName || authUser?.full_name || 'Administrator';
 
     if (loading) {
         return (
@@ -285,468 +437,540 @@ const AdminDashboard = () => {
         );
     }
 
-    const displayName = useMemo(() => {
-        if (!authUser) return 'Admin';
-        return (
-            authUser.full_name ||
-            authUser.fullName ||
-            authUser.FullName ||
-            authUser.name ||
-            authUser.displayName ||
-            'Admin'
-        );
-    }, [authUser]);
-
-    const welcomeMessage = useMemo(
-        () => `Hi ${displayName}, welcome back to mission control.`,
-        [displayName],
-    );
-
     return (
-        <div className="admin-dashboard">
-            <header className="admin-header">
-                <div>
-                    <h1>{welcomeMessage}</h1>
-                    <p className="admin-subheading">Admin Dashboard</p>
+        <>
+            <Navbar />
+            <div className="admin-dashboard">
+                <div className="dashboard-header">
+                    <div className="welcome-section">
+                        <h1>Hi {displayName}, Welcome back to your Administration Panel.</h1>
+                        <div className="stats-section">
+                            <h2>SYSTEM OVERVIEW</h2>
+                            <p>You have {dashboardStats.totalUsers || users.length} users and {dashboardStats.totalCourses || courses.length} courses to manage.</p>
+                            <button className="create-btn" onClick={handleGenerateReport}>
+                                GENERATE SYSTEM REPORT
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div className="admin-header-actions">
-                    <button onClick={() => navigate('/')} className="btn-secondary">
-                        Back to Site
-                    </button>
-                    <button onClick={handleLogout} className="btn-danger">
-                        Logout
-                    </button>
-                </div>
-            </header>
 
             {error && (
                 <div className="error-message">
                     {error}
-                    <button onClick={() => setError('')} className="error-close">×</button>
+                    <button onClick={() => setError('')} className="close-btn">×</button>
                 </div>
             )}
 
             {success && (
                 <div className="success-message">
                     {success}
-                    <button onClick={() => setSuccess('')} className="success-close">×</button>
+                    <button onClick={() => setSuccess('')} className="close-btn">×</button>
                 </div>
             )}
 
-            <nav className="admin-nav">
+            <div className="tab-navigation">
                 <button 
-                    className={`nav-tab ${activeTab === 'overview' ? 'active' : ''}`}
-                    onClick={() => handleTabChange('overview')}
+                    className={`tab-btn ${activeTab === 'users' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('users')}
                 >
-                    Overview
+                    MANAGE USERS
                 </button>
                 <button 
-                    className={`nav-tab ${activeTab === 'users' ? 'active' : ''}`}
-                    onClick={() => handleTabChange('users')}
+                    className={`tab-btn ${activeTab === 'courses' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('courses')}
                 >
-                    Manage Users
+                    MANAGE CONTENT
                 </button>
                 <button 
-                    className={`nav-tab ${activeTab === 'content' ? 'active' : ''}`}
-                    onClick={() => handleTabChange('content')}
+                    className={`tab-btn ${activeTab === 'pending-approval' ? 'active' : ''} ${pendingCourses.length > 0 ? 'has-notifications' : ''}`}
+                    onClick={() => setActiveTab('pending-approval')}
                 >
-                    Manage Content
+                    PENDING APPROVALS
+                    {pendingCourses.length > 0 && (
+                        <span className="notification-badge">{pendingCourses.length}</span>
+                    )}
                 </button>
                 <button 
-                    className={`nav-tab ${activeTab === 'announcements' ? 'active' : ''}`}
-                    onClick={() => handleTabChange('announcements')}
+                    className={`tab-btn ${activeTab === 'announcements' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('announcements')}
                 >
-                    Announcements
+                    ANNOUNCEMENTS
                 </button>
                 <button 
-                    className={`nav-tab ${activeTab === 'posts' ? 'active' : ''}`}
-                    onClick={() => handleTabChange('posts')}
+                    className={`tab-btn ${activeTab === 'feedback' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('feedback')}
                 >
-                    Review Feedback
+                    REVIEW FEEDBACK
                 </button>
                 <button 
-                    className={`nav-tab ${activeTab === 'reports' ? 'active' : ''}`}
-                    onClick={() => handleTabChange('reports')}
+                    className={`tab-btn ${activeTab === 'reports' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('reports')}
                 >
-                    Generate Reports
+                    GENERATE REPORTS
                 </button>
-            </nav>
+                <button 
+                    className={`tab-btn ${activeTab === 'system' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('system')}
+                >
+                    SYSTEM MONITORING
+                </button>
+            </div>
 
-            <main className="admin-content">
-                {activeTab === 'overview' && dashboardData && (
-                    <div className="overview-tab">
-                        <div className="stats-grid">
-                            <div className="stat-card">
-                                <h3>Total Users</h3>
-                                <p className="stat-number">{dashboardData.statistics.totalUsers}</p>
-                            </div>
-                            <div className="stat-card">
-                                <h3>Students</h3>
-                                <p className="stat-number">{dashboardData.statistics.totalStudents}</p>
-                            </div>
-                            <div className="stat-card">
-                                <h3>Teachers</h3>
-                                <p className="stat-number">{dashboardData.statistics.totalTeachers}</p>
-                            </div>
-                            <div className="stat-card">
-                                <h3>Admins</h3>
-                                <p className="stat-number">{dashboardData.statistics.totalAdmins}</p>
-                            </div>
-                            <div className="stat-card">
-                                <h3>Forum Posts</h3>
-                                <p className="stat-number">{dashboardData.statistics.totalForumPosts}</p>
-                            </div>
-                            <div className="stat-card">
-                                <h3>Resources</h3>
-                                <p className="stat-number">{dashboardData.statistics.totalResources}</p>
-                            </div>
-                        </div>
-
-                        <div className="recent-activities">
-                            <div className="recent-section">
-                                <h3>Recent Users</h3>
-                                <div className="recent-list">
-                                    {dashboardData.recentUsers.map(user => (
-                                        <div key={user.id} className="recent-item">
-                                            <div className="recent-info">
-                                                <strong>{user.fullName}</strong>
-                                                <span className={`role-badge ${user.role}`}>{user.role}</span>
-                                            </div>
-                                            <small>{new Date(user.createdAt).toLocaleDateString()}</small>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="recent-section">
-                                <h3>Recent Forum Posts</h3>
-                                <div className="recent-list">
-                                    {dashboardData.recentPosts.map(post => (
-                                        <div key={post.id} className="recent-item">
-                                            <div className="recent-info">
-                                                <strong>{post.title}</strong>
-                                                <small>by {post.authorName}</small>
-                                            </div>
-                                            <small>{new Date(post.createdAt).toLocaleDateString()}</small>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
-
+            <div className="content-area">
                 {activeTab === 'users' && (
-                    <div className="users-tab">
-                        <h2>User Management</h2>
-                        <div className="users-table">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
-                                        <th>Created</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {Array.isArray(users) && users.map(user => (
-                                        <tr key={user.id}>
-                                            <td>{user.fullName}</td>
-                                            <td>{user.email}</td>
-                                            <td>
-                                                <span className={`role-badge ${user.role}`}>
-                                                    {user.role}
-                                                </span>
-                                            </td>
-                                            <td>{new Date(user.createdAt).toLocaleDateString()}</td>
-                                            <td>
-                                                <button 
-                                                    onClick={() => {
-                                                        setSelectedUser(user);
-                                                        setNewRole(user.role);
-                                                    }}
-                                                    className="btn-secondary btn-sm"
-                                                >
-                                                    Edit Role
-                                                </button>
-                                                <button 
-                                                    onClick={() => handleDeleteUser(user.id)}
-                                                    className="btn-danger btn-sm"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                    {(!Array.isArray(users) || users.length === 0) && (
-                                        <tr>
-                                            <td colSpan="5" style={{ textAlign: 'center', padding: '20px', color: '#666' }}>
-                                                {Array.isArray(users) ? 'No users found' : 'Loading users...'}
-                                            </td>
-                                        </tr>
-                                    )}
-                                </tbody>
-                            </table>
+                    <div className="users-section">
+                        <div className="table-header">
+                            <div className="header-col">NAME</div>
+                            <div className="header-col">EMAIL</div>
+                            <div className="header-col">ROLE</div>
+                            <div className="header-col">ACTIONS</div>
                         </div>
-                    </div>
-                )}
-
-                {activeTab === 'content' && (
-                    <div className="content-tab">
-                        <div className="tab-header">
-                            <h2>Manage Content</h2>
-                            <button className="btn-primary">
-                                + Add New Course
-                            </button>
-                        </div>
-                        <div className="content-grid">
-                            {courses.map(course => (
-                                <div key={course.id} className="content-card">
-                                    <div className="content-header">
-                                        <h4>{course.title}</h4>
-                                        <span className={`status-badge ${course.published ? 'published' : 'draft'}`}>
-                                            {course.published ? 'Published' : 'Draft'}
-                                        </span>
+                        
+                        <div className="table-content">
+                            {users.map((user) => (
+                                <div key={user.id} className="table-row">
+                                    <div className="table-col">
+                                        <div className="user-name">{user.fullName || user.email}</div>
+                                        <div className="user-subtitle">
+                                            {user.role === 'admin' ? 'System Administrator' : 
+                                             user.role === 'teacher' ? 'Course Instructor' : 
+                                             'Student Learning'}
+                                        </div>
                                     </div>
-                                    <p className="content-description">{course.description}</p>
-                                    <div className="content-stats">
-                                        <span>Chapters: {course.chapterCount || 0}</span>
-                                        <span>Students: {course.enrollmentCount || 0}</span>
+                                    <div className="table-col">{user.email}</div>
+                                    <div className="table-col">
+                                        {editingUserId === user.id ? (
+                                            <div className="role-edit-container">
+                                                <select 
+                                                    value={selectedRole} 
+                                                    onChange={(e) => setSelectedRole(e.target.value)}
+                                                    className="role-select"
+                                                >
+                                                    <option value="student">Student</option>
+                                                    <option value="teacher">Teacher</option>
+                                                    <option value="admin">Admin</option>
+                                                </select>
+                                                <div className="role-edit-buttons">
+                                                    <button 
+                                                        className="role-btn confirm"
+                                                        onClick={confirmRoleEdit}
+                                                    >
+                                                        ✓
+                                                    </button>
+                                                    <button 
+                                                        className="role-btn cancel"
+                                                        onClick={cancelRoleEdit}
+                                                    >
+                                                        ✕
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <span className={`role-badge ${user.role}`}>
+                                                {user.role?.toUpperCase() || 'STUDENT'}
+                                            </span>
+                                        )}
                                     </div>
-                                    <div className="content-actions">
-                                        <button className="btn-secondary btn-sm">
-                                            Edit Course
-                                        </button>
+                                    <div className="table-col actions">
                                         <button 
-                                            onClick={() => handleToggleCoursePublished(course.id, course.published)}
-                                            className={`btn-sm ${course.published ? 'btn-warning' : 'btn-success'}`}
+                                            className="action-btn edit"
+                                            onClick={() => startRoleEdit(user.id, user.role)}
+                                            disabled={editingUserId === user.id}
                                         >
-                                            {course.published ? 'Unpublish' : 'Publish'}
+                                            EDIT ROLE
+                                        </button>
+                                        <button className="action-btn preview">PREVIEW</button>
+                                        <button className="action-btn progress">VIEW PROGRESS</button>
+                                        <button 
+                                            className="action-btn delete"
+                                            onClick={() => handleUserDelete(user.id)}
+                                        >
+                                            DELETE
                                         </button>
                                     </div>
                                 </div>
                             ))}
                         </div>
+                    </div>
+                )}
+
+                {activeTab === 'courses' && (
+                    <div className="courses-section">
+                        <div className="section-header">
+                            <h3>Course Management</h3>
+                            <button 
+                                className="create-btn"
+                                onClick={() => {
+                                    resetCourseForm();
+                                    setShowCourseForm(true);
+                                }}
+                            >
+                                CREATE COURSE
+                            </button>
+                        </div>
+
+                        {showCourseForm && (
+                            <div className="course-form-container">
+                                <form onSubmit={handleCourseSubmit} className="course-form">
+                                    <h4>{editingCourseId ? 'Edit Course' : 'Create New Course'}</h4>
+                                    <div className="form-group">
+                                        <label htmlFor="courseTitle">Title:</label>
+                                        <input
+                                            type="text"
+                                            id="courseTitle"
+                                            value={courseTitle}
+                                            onChange={(e) => setCourseTitle(e.target.value)}
+                                            placeholder="Enter course title"
+                                            className="form-input"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="courseDescription">Description:</label>
+                                        <textarea
+                                            id="courseDescription"
+                                            value={courseDescription}
+                                            onChange={(e) => setCourseDescription(e.target.value)}
+                                            placeholder="Enter course description"
+                                            className="form-textarea"
+                                            rows="4"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-group checkbox-group">
+                                        <label className="checkbox-label">
+                                            <input
+                                                type="checkbox"
+                                                checked={coursePublished}
+                                                onChange={(e) => setCoursePublished(e.target.checked)}
+                                                className="form-checkbox"
+                                            />
+                                            Publish immediately
+                                        </label>
+                                    </div>
+                                    <div className="form-actions">
+                                        <button type="submit" className="submit-btn">
+                                            {editingCourseId ? 'UPDATE COURSE' : 'CREATE COURSE'}
+                                        </button>
+                                        <button 
+                                            type="button" 
+                                            onClick={cancelCourseForm}
+                                            className="cancel-btn"
+                                        >
+                                            CANCEL
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        )}
+
+                        <div className="table-header">
+                            <div className="header-col">COURSE</div>
+                            <div className="header-col">STATUS</div>
+                            <div className="header-col">CHAPTERS</div>
+                            <div className="header-col">ENROLLMENTS</div>
+                            <div className="header-col">ACTIONS</div>
+                        </div>
+                        
+                        <div className="table-content">
+                            {courses.map((course) => (
+                                <div key={course.id} className="table-row">
+                                    <div className="table-col">
+                                        <div className="course-title">{course.title}</div>
+                                        <div className="course-subtitle">{course.description}</div>
+                                    </div>
+                                    <div className="table-col">
+                                        <button
+                                            className={`status-toggle ${course.published ? 'published' : 'draft'}`}
+                                            onClick={() => handleCourseStatusToggle(course.id, course.published)}
+                                        >
+                                            {course.published ? 'PUBLISHED' : 'DRAFT'}
+                                        </button>
+                                    </div>
+                                    <div className="table-col">{course.chapterCount || 0}</div>
+                                    <div className="table-col">{course.enrollmentCount || 0}</div>
+                                    <div className="table-col actions">
+                                        <button 
+                                            className="action-btn edit"
+                                            onClick={() => handleEditCourse(course)}
+                                        >
+                                            EDIT
+                                        </button>
+                                        <button 
+                                            className="action-btn delete"
+                                            onClick={() => handleDeleteCourse(course.id)}
+                                        >
+                                            DELETE
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                            {courses.length === 0 && (
+                                <div className="empty-state">
+                                    <p>No courses found. Create your first course to get started.</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+
+                {activeTab === 'pending-approval' && (
+                    <div className="pending-approval-section">
+                        <div className="section-header">
+                            <h3>Course Approval Requests</h3>
+                            <div className="approval-stats">
+                                <span className="pending-count">
+                                    {pendingCourses.length} courses awaiting approval
+                                </span>
+                            </div>
+                        </div>
+
+                        {pendingCourses.length === 0 ? (
+                            <div className="empty-state">
+                                <p>No courses pending approval at this time.</p>
+                            </div>
+                        ) : (
+                            <div className="approval-list">
+                                {pendingCourses.map((course) => (
+                                    <div key={course.id} className="approval-card">
+                                        <div className="course-info">
+                                            <h4 className="course-title">{course.title}</h4>
+                                            <p className="course-description">{course.description}</p>
+                                            <div className="course-meta">
+                                                <span className="created-by">Created by: {course.createdBy || 'Unknown'}</span>
+                                                <span className="submitted-date">
+                                                    Submitted: {course.submittedForApproval ? new Date(course.submittedForApproval).toLocaleDateString() : 'Unknown'}
+                                                </span>
+                                                <span className="chapter-count">{course.chapterCount || 0} chapters</span>
+                                            </div>
+                                        </div>
+                                        <div className="approval-actions">
+                                            <button 
+                                                className="approve-btn"
+                                                onClick={() => showApprovalDialog(course, true)}
+                                            >
+                                                APPROVE
+                                            </button>
+                                            <button 
+                                                className="reject-btn"
+                                                onClick={() => showApprovalDialog(course, false)}
+                                            >
+                                                REJECT
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 )}
 
                 {activeTab === 'announcements' && (
-                    <div className="announcements-tab">
-                        <div className="tab-header">
-                            <h2>Announcements</h2>
+                    <div className="announcements-section">
+                        <div className="section-header">
+                            <h3>Announcements Management</h3>
                             <button 
-                                onClick={() => setShowAnnouncementModal(true)}
-                                className="btn-primary"
+                                className="create-btn"
+                                onClick={() => setShowAnnouncementForm(true)}
                             >
-                                + Create Announcement
+                                CREATE ANNOUNCEMENT
                             </button>
                         </div>
-                        <div className="announcements-list">
-                            {announcements.map(announcement => (
-                                <div key={announcement.id} className="announcement-item">
-                                    <div className="announcement-header">
-                                        <h4>{announcement.title}</h4>
-                                        <span className={`priority-badge ${announcement.priority}`}>
-                                            {announcement.priority}
-                                        </span>
-                                        <span className="announcement-date">
-                                            {new Date(announcement.createdAt).toLocaleDateString()}
-                                        </span>
+
+                        {showAnnouncementForm && (
+                            <div className="announcement-form-container">
+                                <form onSubmit={handleAnnouncementSubmit} className="announcement-form">
+                                    <h4>Create New Announcement</h4>
+                                    <div className="form-group">
+                                        <label htmlFor="announcementTitle">Title:</label>
+                                        <input
+                                            type="text"
+                                            id="announcementTitle"
+                                            value={announcementTitle}
+                                            onChange={(e) => setAnnouncementTitle(e.target.value)}
+                                            placeholder="Enter announcement title"
+                                            className="form-input"
+                                            required
+                                        />
                                     </div>
-                                    <p className="announcement-content">{announcement.content}</p>
-                                    <div className="announcement-actions">
-                                        <button className="btn-secondary btn-sm">
-                                            Edit
+                                    <div className="form-group">
+                                        <label htmlFor="announcementContent">Content:</label>
+                                        <textarea
+                                            id="announcementContent"
+                                            value={announcementContent}
+                                            onChange={(e) => setAnnouncementContent(e.target.value)}
+                                            placeholder="Enter announcement content"
+                                            className="form-textarea"
+                                            rows="4"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-actions">
+                                        <button type="submit" className="form-btn submit">
+                                            CREATE ANNOUNCEMENT
                                         </button>
                                         <button 
-                                            onClick={() => handleDeleteAnnouncement(announcement.id)}
-                                            className="btn-danger btn-sm"
+                                            type="button" 
+                                            className="form-btn cancel"
+                                            onClick={cancelAnnouncementForm}
                                         >
-                                            Delete
+                                            CANCEL
                                         </button>
                                     </div>
+                                </form>
+                            </div>
+                        )}
+                        
+                        <div className="announcements-list">
+                            {announcements.length > 0 ? (
+                                announcements.map((announcement) => (
+                                    <div key={announcement.id} className="announcement-card">
+                                        <div className="announcement-header">
+                                            <h4>{announcement.title}</h4>
+                                            <span className="announcement-date">
+                                                {new Date(announcement.publishedDate).toLocaleDateString()}
+                                            </span>
+                                        </div>
+                                        <p className="announcement-content">{announcement.content}</p>
+                                        <div className="announcement-actions">
+                                            <button className="action-btn edit">EDIT</button>
+                                            <button className="action-btn delete">DELETE</button>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="empty-state">
+                                    <p>No announcements yet. Create your first announcement to inform users about important updates.</p>
                                 </div>
-                            ))}
+                            )}
                         </div>
                     </div>
                 )}
 
-                {activeTab === 'posts' && (
-                    <div className="posts-tab">
-                        <h2>Review Feedback</h2>
-                        <div className="posts-list">
-                            {forumPosts.map(post => (
-                                <div key={post.id} className="post-item">
-                                    <div className="post-header">
-                                        <h4>{post.title}</h4>
-                                        <span className="post-author">by {post.authorName}</span>
-                                        <span className="post-date">{new Date(post.createdAt).toLocaleDateString()}</span>
+                {activeTab === 'feedback' && (
+                    <div className="feedback-section">
+                        <div className="section-header">
+                            <h3>User Feedback & Help Requests</h3>
+                        </div>
+                        
+                        <div className="feedback-list">
+                            {feedback.length > 0 ? (
+                                feedback.map((item) => (
+                                    <div key={item.id} className="feedback-card">
+                                        <div className="feedback-header">
+                                            <h4>Feedback from {item.userName || 'Anonymous'}</h4>
+                                            <span className="feedback-date">
+                                                {new Date(item.submittedDate).toLocaleDateString()}
+                                            </span>
+                                        </div>
+                                        <p className="feedback-content">{item.content}</p>
+                                        <div className="feedback-actions">
+                                            <button className="action-btn preview">REPLY</button>
+                                            <button className="action-btn edit">MARK RESOLVED</button>
+                                        </div>
                                     </div>
-                                    <p className="post-content">{post.content}</p>
-                                    <div className="post-actions">
-                                        <button className="btn-secondary btn-sm">
-                                            Reply
-                                        </button>
-                                        <button 
-                                            onClick={() => handleDeletePost(post.id)}
-                                            className="btn-danger btn-sm"
-                                        >
-                                            Delete Post
-                                        </button>
-                                    </div>
+                                ))
+                            ) : (
+                                <div className="empty-state">
+                                    <p>No feedback submissions yet. User feedback will appear here when submitted.</p>
                                 </div>
-                            ))}
+                            )}
                         </div>
                     </div>
                 )}
 
                 {activeTab === 'reports' && (
-                    <div className="reports-tab">
-                        <div className="tab-header">
-                            <h2>Generate Reports</h2>
+                    <div className="reports-section">
+                        <div className="section-header">
+                            <h3>System Reports</h3>
                             <button 
+                                className="create-btn"
                                 onClick={handleGenerateReport}
-                                className="btn-primary"
-                                disabled={loading}
                             >
-                                {loading ? 'Generating...' : 'Generate New Report'}
+                                GENERATE NEW REPORT
                             </button>
                         </div>
-                        {reports && (
-                            <div className="reports-content">
-                                <div className="report-summary">
-                                    <h3>Platform Statistics</h3>
-                                    <div className="report-stats">
-                                        <div className="report-stat">
-                                            <strong>Total Users:</strong> {reports.totalUsers}
-                                        </div>
-                                        <div className="report-stat">
-                                            <strong>Active Students:</strong> {reports.activeStudents}
-                                        </div>
-                                        <div className="report-stat">
-                                            <strong>Total Courses:</strong> {reports.totalCourses}
-                                        </div>
-                                        <div className="report-stat">
-                                            <strong>Completion Rate:</strong> {reports.completionRate}%
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="report-actions">
-                                    <button className="btn-secondary">
-                                        Download PDF
-                                    </button>
-                                    <button className="btn-secondary">
-                                        Export CSV
-                                    </button>
+                        
+                        <div className="reports-stats">
+                            <div className="stat-card">
+                                <h4>User Statistics</h4>
+                                <div className="stat-details">
+                                    <p>Total Users: {dashboardStats.totalUsers || 0}</p>
+                                    <p>Students: {dashboardStats.totalStudents || 0}</p>
+                                    <p>Teachers: {dashboardStats.totalTeachers || 0}</p>
+                                    <p>Admins: {dashboardStats.totalAdmins || 0}</p>
                                 </div>
                             </div>
-                        )}
+                            
+                            <div className="stat-card">
+                                <h4>Content Statistics</h4>
+                                <div className="stat-details">
+                                    <p>Total Courses: {dashboardStats.totalCourses || 0}</p>
+                                    <p>Total Chapters: {dashboardStats.totalChapters || 0}</p>
+                                    <p>Resources: {dashboardStats.totalResources || 0}</p>
+                                </div>
+                            </div>
+                            
+                            <div className="stat-card">
+                                <h4>Community Statistics</h4>
+                                <div className="stat-details">
+                                    <p>Forum Posts: {dashboardStats.totalForumPosts || 0}</p>
+                                    <p>Active Users: {dashboardStats.activeUsers || 'N/A'}</p>
+                                    <p>User Engagement: {dashboardStats.engagementRate || 'N/A'}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="reports-list">
+                            {reports.length > 0 ? (
+                                reports.map((report) => (
+                                    <div key={report.id} className="report-card">
+                                        <div className="report-header">
+                                            <h4>{report.title}</h4>
+                                            <span className="report-date">
+                                                {new Date(report.generatedDate).toLocaleDateString()}
+                                            </span>
+                                        </div>
+                                        <p className="report-summary">{report.summary}</p>
+                                        <div className="report-actions">
+                                            <button className="action-btn preview">VIEW</button>
+                                            <button className="action-btn edit">DOWNLOAD</button>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="empty-state">
+                                    <p>No reports generated yet. Click "Generate New Report" to create your first system report.</p>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 )}
-            </main>
 
-            {/* Role Update Modal */}
-            {selectedUser && (
-                <div className="modal-overlay">
-                    <div className="modal">
-                        <h3>Update User Role</h3>
-                        <p>Updating role for: <strong>{selectedUser.fullName}</strong></p>
-                        <div className="form-group">
-                            <label>New Role:</label>
-                            <select 
-                                value={newRole} 
-                                onChange={(e) => setNewRole(e.target.value)}
-                            >
-                                <option value="student">Student</option>
-                                <option value="teacher">Teacher</option>
-                                <option value="admin">Admin</option>
-                            </select>
-                        </div>
-                        <div className="modal-actions">
-                            <button 
-                                onClick={() => handleUpdateUserRole(selectedUser.id, newRole)}
-                                className="btn-primary"
-                            >
-                                Update Role
-                            </button>
-                            <button 
-                                onClick={() => setSelectedUser(null)}
-                                className="btn-secondary"
-                            >
-                                Cancel
-                            </button>
+                {activeTab === 'system' && (
+                    <div className="system-section">
+                        <div className="system-stats">
+                            <h3>System Statistics</h3>
+                            <div className="stats-grid">
+                                <div className="stat-item">
+                                    <strong>Total Users:</strong> {dashboardStats.totalUsers || users.length}
+                                </div>
+                                <div className="stat-item">
+                                    <strong>Active Courses:</strong> {dashboardStats.totalCourses || courses.length}
+                                </div>
+                                <div className="stat-item">
+                                    <strong>System Status:</strong> Online
+                                </div>
+                                <div className="stat-item">
+                                    <strong>Database Status:</strong> Connected
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
-
-            {/* Announcement Creation Modal */}
-            {showAnnouncementModal && (
-                <div className="modal-overlay">
-                    <div className="modal">
-                        <h3>Create New Announcement</h3>
-                        <div className="form-group">
-                            <label>Title:</label>
-                            <input 
-                                type="text"
-                                value={newAnnouncement.title}
-                                onChange={(e) => setNewAnnouncement({
-                                    ...newAnnouncement, 
-                                    title: e.target.value
-                                })}
-                                placeholder="Announcement title..."
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Content:</label>
-                            <textarea 
-                                value={newAnnouncement.content}
-                                onChange={(e) => setNewAnnouncement({
-                                    ...newAnnouncement, 
-                                    content: e.target.value
-                                })}
-                                placeholder="Announcement content..."
-                                rows="4"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Priority:</label>
-                            <select 
-                                value={newAnnouncement.priority}
-                                onChange={(e) => setNewAnnouncement({
-                                    ...newAnnouncement, 
-                                    priority: e.target.value
-                                })}
-                            >
-                                <option value="low">Low</option>
-                                <option value="medium">Medium</option>
-                                <option value="high">High</option>
-                            </select>
-                        </div>
-                        <div className="modal-actions">
-                            <button 
-                                onClick={handleCreateAnnouncement}
-                                className="btn-primary"
-                            >
-                                Create Announcement
-                            </button>
-                            <button 
-                                onClick={() => {
-                                    setShowAnnouncementModal(false);
-                                    setNewAnnouncement({ title: '', content: '', priority: 'medium' });
-                                }}
-                                className="btn-secondary"
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+                )}
+            </div>
         </div>
-    );
+        </>
+    )
 };
-
 export default AdminDashboard;

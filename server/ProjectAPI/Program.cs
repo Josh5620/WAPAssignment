@@ -34,14 +34,15 @@ builder.Services.AddHttpClient("Gemini", client =>
 builder.Services.AddScoped<GeminiService>(sp =>
     new GeminiService(sp.GetRequiredService<IHttpClientFactory>().CreateClient("Gemini"), geminiKey));
 
-//  CORS for React
+//  CORS for React - Enhanced for API compatibility
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy => policy
-        .WithOrigins("http://localhost:5173", "http://localhost:5174")
+        .WithOrigins("http://localhost:5173", "http://localhost:5174", "http://127.0.0.1:5173")
         .AllowAnyHeader()
         .AllowAnyMethod()
-        .AllowCredentials());
+        .AllowCredentials()
+        .SetPreflightMaxAge(TimeSpan.FromMinutes(10)));
 });
 
 //  MVC + Swagger

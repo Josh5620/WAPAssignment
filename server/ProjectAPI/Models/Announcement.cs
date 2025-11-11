@@ -21,5 +21,6 @@ namespace ProjectAPI.Models
 
         // Navigation properties
         public Profile Admin { get; set; } = null!;
+        public ICollection<AnnouncementRead> Reads { get; set; } = new List<AnnouncementRead>();
     }
 }

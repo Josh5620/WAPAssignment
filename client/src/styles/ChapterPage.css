@@ -281,6 +281,10 @@ line-height: 1.7;
   border: 2px solid rgba(113, 119, 68, 0.25);
 }
 
+.practice-lab-section {
+  padding: 0;
+}
+
 .practice-list {
   list-style: none;
   padding: 0;
@@ -350,6 +354,82 @@ line-height: 1.7;
 .practice-card.status-bloom {
   border-color: rgba(195, 135, 110, 0.45);
   box-shadow: 0 14px 26px rgba(195, 135, 110, 0.2);
+}
+
+.system-section {
+  padding: 0;
+  margin-top: 2.5rem;
+}
+
+.system-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  margin-bottom: 1.5rem;
+  min-height: 3.5rem;
+}
+
+.system-header h3 {
+  margin: 0;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+  color: #8b5a3c;
+}
+
+.system-wrapper {
+  border: 2px solid rgba(113, 119, 68, 0.25);
+  border-radius: 18px;
+  padding: 1.75rem;
+  box-shadow: 0 16px 40px rgba(55, 61, 32, 0.12);
+  background: linear-gradient(180deg, rgba(248, 250, 242, 0.95), rgba(242, 246, 236, 0.85));
+}
+
+.system-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25rem;
+}
+
+.system-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(113, 119, 68, 0.25);
+  border-radius: 14px;
+  padding: 1.1rem 1.4rem;
+  box-shadow: 0 12px 28px rgba(55, 61, 32, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-height: 110px;
+}
+
+.system-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(55, 61, 32, 0.6);
+}
+
+.system-value {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #3b3a2f;
+}
+
+.system-subtext {
+  font-size: 0.82rem;
+  color: rgba(55, 61, 32, 0.75);
+}
+
+@media (max-width: 768px) {
+  .system-header {
+    padding: 0;
+  }
+
+  .system-wrapper {
+    padding: 1.25rem;
+  }
 }
 
 .chapter-article + .chapter-article {

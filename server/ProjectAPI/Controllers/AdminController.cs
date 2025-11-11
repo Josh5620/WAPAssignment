@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectAPI.Data;
 using ProjectAPI.Models;
+using System.Security.Claims;
 
 namespace ProjectAPI.Controllers
 {
@@ -103,6 +104,15 @@ namespace ProjectAPI.Controllers
                 course.Published = true;
                 course.RejectionReason = null;
 
+                var notificationMessage = $"🎉 Your course \"{course.Title}\" has been approved and published!";
+                _context.Notifications.Add(new Notification
+                {
+                    NotificationId = Guid.NewGuid(),
+                    UserId = course.TeacherId,
+                    Message = notificationMessage,
+                    CreatedAt = DateTime.UtcNow
+                });
+
                 _context.Courses.Update(course);
                 await _context.SaveChangesAsync();
 
@@ -113,7 +123,8 @@ namespace ProjectAPI.Controllers
                     approvalStatus = course.ApprovalStatus,
                     published = course.Published,
                     teacherName = course.Teacher.FullName,
-                    message = "Course approved successfully and is now published!"
+                    message = "Course approved successfully and is now published!",
+                    notification = notificationMessage
                 });
             }
             catch (Exception ex)
@@ -150,6 +161,15 @@ namespace ProjectAPI.Controllers
                 course.RejectionReason = request.RejectionReason.Trim();
                 course.Published = false;
 
+                var notificationMessage = $"⚠️ Your course \"{course.Title}\" was rejected: {course.RejectionReason}";
+                _context.Notifications.Add(new Notification
+                {
+                    NotificationId = Guid.NewGuid(),
+                    UserId = course.TeacherId,
+                    Message = notificationMessage,
+                    CreatedAt = DateTime.UtcNow
+                });
+
                 _context.Courses.Update(course);
                 await _context.SaveChangesAsync();
 
@@ -160,7 +180,8 @@ namespace ProjectAPI.Controllers
                     approvalStatus = course.ApprovalStatus,
                     rejectionReason = course.RejectionReason,
                     teacherName = course.Teacher.FullName,
-                    message = "Course rejected. Teacher has been notified."
+                    message = "Course rejected. Teacher has been notified.",
+                    notification = notificationMessage
                 });
             }
             catch (Exception ex)
@@ -470,26 +491,81 @@ namespace ProjectAPI.Controllers
         }
 
         [HttpPost("announcements")]
-        public IActionResult CreateAnnouncement([FromBody] CreateAnnouncementDto dto)
+        public async Task<IActionResult> CreateAnnouncement([FromBody] CreateAnnouncementDto dto, CancellationToken ct = default)
         {
-            // TODO: Implement when Announcement model is created
-            var newAnnouncement = new
+            if (dto == null || string.IsNullOrWhiteSpace(dto.Title) || string.IsNullOrWhiteSpace(dto.Content))
             {
-                id = Guid.NewGuid(),
-                title = dto.Title,
-                content = dto.Content,
-                priority = dto.Priority,
-                createdAt = DateTime.UtcNow
+                return BadRequest(new { success = false, message = "Title and content are required." });
+            }
+
+            var adminClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(adminClaim) || !Guid.TryParse(adminClaim, out var adminId))
+            {
+                return Unauthorized(new { success = false, message = "Invalid admin context." });
+            }
+
+            var announcement = new Announcement
+            {
+                AnnouncementId = Guid.NewGuid(),
+                AdminId = adminId,
+                Title = dto.Title.Trim(),
+                Message = dto.Content.Trim(),
+                CreatedAt = DateTime.UtcNow
             };
 
-            return Ok(new { success = true, data = newAnnouncement, message = "Announcement created successfully" });
+            _context.Announcements.Add(announcement);
+
+            var recipients = await _context.Profiles
+                .Where(p => p.Role != "admin")
+                .Select(p => p.UserId)
+                .ToListAsync(ct);
+
+            if (recipients.Count > 0)
+            {
+                var snippet = dto.Content.Length > 120 ? dto.Content.Substring(0, 117) + "..." : dto.Content;
+                var message = $"📣 {dto.Title.Trim()} — {snippet}";
+
+                var notifications = recipients.Select(userId => new Notification
+                {
+                    NotificationId = Guid.NewGuid(),
+                    UserId = userId,
+                    Message = message,
+                    CreatedAt = DateTime.UtcNow
+                });
+
+                _context.Notifications.AddRange(notifications);
+            }
+
+            await _context.SaveChangesAsync(ct);
+
+            return CreatedAtAction(nameof(GetAllAnnouncements), new { }, new
+            {
+                success = true,
+                data = new
+                {
+                    id = announcement.AnnouncementId,
+                    title = announcement.Title,
+                    content = announcement.Message,
+                    adminId = announcement.AdminId,
+                    createdAt = announcement.CreatedAt
+                },
+                message = "Announcement created successfully."
+            });
         }
 
         [HttpDelete("announcements/{announcementId}")]
-        public IActionResult DeleteAnnouncement(Guid announcementId)
+        public async Task<IActionResult> DeleteAnnouncement(Guid announcementId, CancellationToken ct = default)
         {
-            // TODO: Implement when Announcement model is created
-            return Ok(new { success = true, message = "Announcement deleted successfully" });
+            var announcement = await _context.Announcements.FindAsync(new object[] { announcementId }, ct);
+            if (announcement == null)
+            {
+                return NotFound(new { success = false, message = "Announcement not found." });
+            }
+
+            _context.Announcements.Remove(announcement);
+            await _context.SaveChangesAsync(ct);
+
+            return Ok(new { success = true, message = "Announcement deleted successfully." });
         }
 
         // === FORUM POSTS ===

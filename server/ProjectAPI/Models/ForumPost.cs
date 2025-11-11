@@ -22,5 +22,6 @@ namespace ProjectAPI.Models
         // Navigation properties
         public Profile Profile { get; set; } = null!;
         public Course Course { get; set; } = null!;
+        public ICollection<ForumComment> Comments { get; set; } = new List<ForumComment>();
     }
 }

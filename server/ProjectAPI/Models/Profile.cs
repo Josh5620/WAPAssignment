@@ -28,6 +28,7 @@ namespace ProjectAPI.Models
         public ICollection<Enrolment> Enrolments { get; set; } = new List<Enrolment>();
         public ICollection<ChapterProgress> ChapterProgress { get; set; } = new List<ChapterProgress>();
         public ICollection<ForumPost> ForumPosts { get; set; } = new List<ForumPost>();
+        public ICollection<ForumComment> ForumComments { get; set; } = new List<ForumComment>();
         public ICollection<Course> CoursesCreated { get; set; } = new List<Course>();
         
         // Navigation properties for HelpRequests
@@ -37,6 +38,7 @@ namespace ProjectAPI.Models
         public ICollection<HelpRequest> HelpRequestsAsTeacher { get; set; } = new List<HelpRequest>();
         
         public ICollection<Announcement> Announcements { get; set; } = new List<Announcement>();
+        public ICollection<AnnouncementRead> AnnouncementReads { get; set; } = new List<AnnouncementRead>();
         public ICollection<Testimonial> Testimonials { get; set; } = new List<Testimonial>();
         public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
         public Leaderboard? Leaderboard { get; set; }

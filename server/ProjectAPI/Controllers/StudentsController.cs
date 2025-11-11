@@ -26,6 +26,115 @@ public class StudentsController : ControllerBase
         _logger = logger;
     }
 
+    #region Announcements & Notifications
+
+    /// <summary>
+    /// Get platform announcements with read status for the current student.
+    /// </summary>
+    [HttpGet("announcements")]
+    public async Task<IActionResult> GetAnnouncements(
+        [FromQuery] bool unreadOnly = false,
+        CancellationToken ct = default)
+    {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+        {
+            return Unauthorized(new { error = "Invalid or missing user identification" });
+        }
+
+        try
+        {
+            var announcementQuery = _context.Announcements
+                .Select(a => new
+                {
+                    announcementId = a.AnnouncementId,
+                    title = a.Title,
+                    message = a.Message,
+                    createdAt = a.CreatedAt,
+                    admin = new
+                    {
+                        userId = a.AdminId,
+                        name = a.Admin.FullName
+                    },
+                    isRead = a.Reads.Any(r => r.UserId == userId)
+                });
+
+            if (unreadOnly)
+            {
+                announcementQuery = announcementQuery.Where(a => !a.isRead);
+            }
+
+            var announcements = await announcementQuery
+                .OrderByDescending(a => a.createdAt)
+                .ToListAsync(ct);
+
+            return Ok(new
+            {
+                total = announcements.Count,
+                unread = announcements.Count(a => !a.isRead),
+                announcements
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving announcements for user {UserId}", userId);
+            return StatusCode(500, new { error = "An error occurred while retrieving announcements." });
+        }
+    }
+
+    /// <summary>
+    /// Mark an announcement as read for the current student.
+    /// </summary>
+    [HttpPost("announcements/{announcementId:guid}/mark-read")]
+    public async Task<IActionResult> MarkAnnouncementRead(Guid announcementId, CancellationToken ct = default)
+    {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+        {
+            return Unauthorized(new { error = "Invalid or missing user identification" });
+        }
+
+        try
+        {
+            var announcementExists = await _context.Announcements
+                .AnyAsync(a => a.AnnouncementId == announcementId, ct);
+
+            if (!announcementExists)
+            {
+                return NotFound(new { error = "Announcement not found." });
+            }
+
+            var existingRead = await _context.AnnouncementReads
+                .FindAsync(new object[] { announcementId, userId }, ct);
+
+            if (existingRead == null)
+            {
+                _context.AnnouncementReads.Add(new AnnouncementRead
+                {
+                    AnnouncementId = announcementId,
+                    UserId = userId,
+                    ReadAt = DateTime.UtcNow
+                });
+                await _context.SaveChangesAsync(ct);
+            }
+
+            return Ok(new
+            {
+                announcementId,
+                readAt = DateTime.UtcNow
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error marking announcement {AnnouncementId} as read for user {UserId}", announcementId, userId);
+            return StatusCode(500, new { error = "An error occurred while updating announcement status." });
+        }
+    }
+
+    #endregion
+
     #region Learning Content
 
     /// <summary>
@@ -695,7 +804,8 @@ public class StudentsController : ControllerBase
                     content = fp.Content,
                     createdAt = fp.CreatedAt,
                     courseId = fp.CourseId,
-                    courseTitle = fp.Course.Title
+                    courseTitle = fp.Course.Title,
+                    commentCount = fp.Comments.Count
                 })
                 .ToListAsync(ct);
 
@@ -776,6 +886,142 @@ public class StudentsController : ControllerBase
         {
             _logger.LogError(ex, "Error creating forum post for user {UserId}", request?.UserId);
             return StatusCode(500, new { error = "An error occurred while creating the forum post" });
+        }
+    }
+
+    /// <summary>
+    /// Get comments for a forum post (nested thread).
+    /// </summary>
+    [HttpGet("forums/posts/{forumId}/comments")]
+    public async Task<IActionResult> GetForumComments(Guid forumId, CancellationToken ct = default)
+    {
+        try
+        {
+            var forumExists = await _context.ForumPosts
+                .AnyAsync(fp => fp.ForumId == forumId, ct);
+
+            if (!forumExists)
+            {
+                return NotFound(new { error = "Forum post not found" });
+            }
+
+            var comments = await _context.ForumComments
+                .Include(fc => fc.Profile)
+                .Where(fc => fc.ForumId == forumId)
+                .OrderBy(fc => fc.CreatedAt)
+                .ToListAsync(ct);
+
+            var commentTree = BuildCommentTree(comments);
+
+            return Ok(new
+            {
+                forumId,
+                total = comments.Count,
+                comments = commentTree
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving comments for forum {ForumId}", forumId);
+            return StatusCode(500, new { error = "An error occurred while retrieving comments" });
+        }
+    }
+
+    /// <summary>
+    /// Add a comment or reply to a forum post.
+    /// </summary>
+    [HttpPost("forums/posts/{forumId}/comments")]
+    public async Task<IActionResult> CreateForumComment(
+        Guid forumId,
+        [FromBody] CreateForumCommentRequest request,
+        CancellationToken ct = default)
+    {
+        if (request == null || string.IsNullOrWhiteSpace(request.Content))
+        {
+            return BadRequest(new { error = "Comment content is required" });
+        }
+
+        try
+        {
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+            {
+                return Unauthorized(new { error = "Invalid or missing user identification" });
+            }
+
+            var profile = await _context.Profiles.FindAsync(new object[] { userId }, ct);
+            if (profile == null)
+            {
+                return NotFound(new { error = "Profile not found" });
+            }
+
+            var forumPost = await _context.ForumPosts
+                .Include(fp => fp.Course)
+                .FirstOrDefaultAsync(fp => fp.ForumId == forumId, ct);
+
+            if (forumPost == null)
+            {
+                return NotFound(new { error = "Forum post not found" });
+            }
+
+            var isEnrolled = await _context.Enrolments
+                .AnyAsync(e => e.UserId == userId && e.CourseId == forumPost.CourseId, ct);
+
+            if (!isEnrolled && profile.Role == "student")
+            {
+                return Forbid("You must be enrolled in the course to comment on this forum.");
+            }
+
+            if (request.ParentCommentId.HasValue)
+            {
+                var parentComment = await _context.ForumComments
+                    .AnyAsync(fc => fc.CommentId == request.ParentCommentId.Value && fc.ForumId == forumId, ct);
+
+                if (!parentComment)
+                {
+                    return BadRequest(new { error = "Parent comment not found in this thread." });
+                }
+            }
+
+            var comment = new ForumComment
+            {
+                CommentId = Guid.NewGuid(),
+                ForumId = forumId,
+                UserId = userId,
+                ParentCommentId = request.ParentCommentId,
+                Content = request.Content.Trim(),
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _context.ForumComments.Add(comment);
+            await _context.SaveChangesAsync(ct);
+
+            await AwardXPAsync(userId, 5, ct);
+
+            return CreatedAtAction(
+                nameof(GetForumComments),
+                new { forumId },
+                new
+                {
+                    commentId = comment.CommentId,
+                    forumId = comment.ForumId,
+                    parentCommentId = comment.ParentCommentId,
+                    content = comment.Content,
+                    createdAt = comment.CreatedAt,
+                    user = new
+                    {
+                        userId = profile.UserId,
+                        name = profile.FullName,
+                        email = profile.Email
+                    },
+                    xpAwarded = 5
+                });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating comment for forum {ForumId}", forumId);
+            return StatusCode(500, new { error = "An error occurred while creating the comment" });
         }
     }
 
@@ -878,6 +1124,45 @@ public class StudentsController : ControllerBase
         }
 
         await _context.SaveChangesAsync(ct);
+    }
+
+    private static List<ForumCommentResponse> BuildCommentTree(List<ForumComment> comments)
+    {
+        var lookup = comments.ToDictionary(
+            c => c.CommentId,
+            c => new ForumCommentResponse
+            {
+                CommentId = c.CommentId,
+                ForumId = c.ForumId,
+                ParentCommentId = c.ParentCommentId,
+                Content = c.Content,
+                CreatedAt = c.CreatedAt,
+                User = new SimpleUserDto
+                {
+                    UserId = c.UserId,
+                    FullName = c.Profile.FullName,
+                    Email = c.Profile.Email
+                }
+            });
+
+        var roots = new List<ForumCommentResponse>();
+
+        foreach (var comment in lookup.Values)
+        {
+            if (comment.ParentCommentId.HasValue &&
+                lookup.TryGetValue(comment.ParentCommentId.Value, out var parent))
+            {
+                parent.Replies.Add(comment);
+            }
+            else
+            {
+                roots.Add(comment);
+            }
+        }
+
+        return roots
+            .OrderBy(c => c.CreatedAt)
+            .ToList();
     }
 
     private int CalculateXPAwarded(int correct, int total)
@@ -998,6 +1283,33 @@ public record CreateForumPostRequest
     [Required]
     [MinLength(1)]
     public string Content { get; init; } = string.Empty;
+}
+
+public record CreateForumCommentRequest
+{
+    [Required]
+    [MinLength(1)]
+    public string Content { get; init; } = string.Empty;
+
+    public Guid? ParentCommentId { get; init; }
+}
+
+public class ForumCommentResponse
+{
+    public Guid CommentId { get; init; }
+    public Guid ForumId { get; init; }
+    public Guid? ParentCommentId { get; init; }
+    public string Content { get; init; } = string.Empty;
+    public DateTime CreatedAt { get; init; }
+    public SimpleUserDto User { get; init; } = null!;
+    public List<ForumCommentResponse> Replies { get; } = new();
+}
+
+public class SimpleUserDto
+{
+    public Guid UserId { get; init; }
+    public string FullName { get; init; } = string.Empty;
+    public string Email { get; init; } = string.Empty;
 }
 
 #endregion

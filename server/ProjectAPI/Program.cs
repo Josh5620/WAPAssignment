@@ -3,6 +3,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -161,7 +162,7 @@ static async Task SeedDatabaseIfEmpty(ApplicationDbContext context, ILogger logg
 
 static async Task ExecuteSqlSeedFiles(ApplicationDbContext context, ILogger logger)
 {
-    var seedFiles = new[]
+        var seedFiles = new[]
     {
         "Data/Seeds/02-python-course.sql",
         "Data/Seeds/03-python-chapters.sql",
@@ -179,10 +180,9 @@ static async Task ExecuteSqlSeedFiles(ApplicationDbContext context, ILogger logg
             logger.LogInformation($"Executing seed file: {seedFile}");
             var sql = await File.ReadAllTextAsync(filePath);
             
-            // Split by GO statements and execute each batch
-            var batches = sql.Split(new[] { "\nGO\n", "\ngo\n", "\nGo\n", "\ngO\n", "\r\nGO\r\n" }, 
-                StringSplitOptions.RemoveEmptyEntries);
-            
+            // Split by GO statements (case-insensitive, handling different newline styles) and execute each batch
+            var batches = Regex.Split(sql, @"^\s*GO\s*$", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+
             foreach (var batch in batches)
             {
                 var trimmedBatch = batch.Trim();

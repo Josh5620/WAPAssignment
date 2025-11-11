@@ -665,15 +665,16 @@ const AdminDashboard = () => {
                             </div>
                         )}
 
-                        <div className="table-header">
-                            <div className="header-col">COURSE</div>
-                            <div className="header-col">STATUS</div>
-                            <div className="header-col">CHAPTERS</div>
-                            <div className="header-col">ENROLLMENTS</div>
-                            <div className="header-col">ACTIONS</div>
-                        </div>
-                        
-                        <div className="table-content">
+                        <div className="table-wrapper">
+                            <div className="table-header">
+                                <div className="header-col">COURSE</div>
+                                <div className="header-col">STATUS</div>
+                                <div className="header-col">CHAPTERS</div>
+                                <div className="header-col">ENROLLMENTS</div>
+                                <div className="header-col">ACTIONS</div>
+                            </div>
+                            
+                            <div className="table-content">
                             {courses.map((course) => (
                                 <div key={course.courseId} className="table-row">
                                     <div className="table-col">
@@ -711,6 +712,7 @@ const AdminDashboard = () => {
                                     <p>No courses found. Create your first course to get started.</p>
                                 </div>
                             )}
+                            </div>
                         </div>
                     </div>
                 )}
@@ -726,43 +728,54 @@ const AdminDashboard = () => {
                             </div>
                         </div>
 
-                        {pendingCourses.length === 0 ? (
-                            <div className="empty-state">
-                                <p>No courses pending approval at this time.</p>
+                        <div className="approval-wrapper">
+                            <div className="approval-table-header">
+                                <div className="header-col">COURSE</div>
+                                <div className="header-col">SUBMITTED</div>
+                                <div className="header-col">ACTIONS</div>
                             </div>
-                        ) : (
-                            <div className="approval-list">
-                                {pendingCourses.map((course) => (
-                                    <div key={course.courseId} className="approval-card">
-                                        <div className="course-info">
-                                            <h4 className="course-title">{course.title}</h4>
-                                            <p className="course-description">{course.description}</p>
-                                            <div className="course-meta">
-                                                <span className="created-by">Created by: {course.createdBy || 'Unknown'}</span>
-                                                <span className="submitted-date">
-                                                    Submitted: {course.submittedForApproval ? new Date(course.submittedForApproval).toLocaleDateString() : 'Unknown'}
-                                                </span>
-                                                <span className="chapter-count">{course.chapterCount || 0} chapters</span>
-                                            </div>
-                                        </div>
-                                        <div className="approval-actions">
-                                            <button 
-                                                className="approve-btn"
-                                                onClick={() => showApprovalDialog(course, true)}
-                                            >
-                                                APPROVE
-                                            </button>
-                                            <button 
-                                                className="reject-btn"
-                                                onClick={() => showApprovalDialog(course, false)}
-                                            >
-                                                REJECT
-                                            </button>
-                                        </div>
+                            <div className="approval-table-content">
+                                {pendingCourses.length === 0 ? (
+                                    <div className="empty-state">
+                                        <p>No courses pending approval at this time.</p>
                                     </div>
-                                ))}
+                                ) : (
+                                    <div className="approval-list">
+                                        {pendingCourses.map((course) => (
+                                            <div key={course.courseId} className="approval-card">
+                                                <div className="course-info">
+                                                    <h4>{course.title}</h4>
+                                                    <p className="course-description">{course.description}</p>
+                                                    <div className="course-meta">
+                                                        <span className="created-by">Created by: {course.createdBy || 'Unknown'}</span>
+                                                        <span className="chapter-count">{course.chapterCount || 0} chapters</span>
+                                                    </div>
+                                                </div>
+                                                <div className="table-col">
+                                                    {course.submittedForApproval
+                                                        ? new Date(course.submittedForApproval).toLocaleDateString()
+                                                        : 'Unknown'}
+                                                </div>
+                                                <div className="approval-actions">
+                                                    <button 
+                                                        className="approve-btn"
+                                                        onClick={() => showApprovalDialog(course, true)}
+                                                    >
+                                                        APPROVE
+                                                    </button>
+                                                    <button 
+                                                        className="reject-btn"
+                                                        onClick={() => showApprovalDialog(course, false)}
+                                                    >
+                                                        REJECT
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
-                        )}
+                        </div>
                     </div>
                 )}
 
@@ -822,28 +835,30 @@ const AdminDashboard = () => {
                             </div>
                         )}
                         
-                        <div className="announcements-list">
-                            {announcements.length > 0 ? (
-                                announcements.map((announcement) => (
-                                    <div key={announcement.id} className="announcement-card">
-                                        <div className="announcement-header">
-                                            <h4>{announcement.title}</h4>
-                                            <span className="announcement-date">
-                                                {new Date(announcement.publishedDate).toLocaleDateString()}
-                                            </span>
+                        <div className="announcements-wrapper">
+                            <div className="announcements-list">
+                                {announcements.length > 0 ? (
+                                    announcements.map((announcement) => (
+                                        <div key={announcement.id} className="announcement-card">
+                                            <div className="announcement-header">
+                                                <h4>{announcement.title}</h4>
+                                                <span className="announcement-date">
+                                                    {new Date(announcement.publishedDate).toLocaleDateString()}
+                                                </span>
+                                            </div>
+                                            <p className="announcement-content">{announcement.content}</p>
+                                            <div className="announcement-actions">
+                                                <button className="action-btn edit">EDIT</button>
+                                                <button className="action-btn delete">DELETE</button>
+                                            </div>
                                         </div>
-                                        <p className="announcement-content">{announcement.content}</p>
-                                        <div className="announcement-actions">
-                                            <button className="action-btn edit">EDIT</button>
-                                            <button className="action-btn delete">DELETE</button>
-                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="empty-state">
+                                        <p>No announcements yet. Create your first announcement to inform users about important updates.</p>
                                     </div>
-                                ))
-                            ) : (
-                                <div className="empty-state">
-                                    <p>No announcements yet. Create your first announcement to inform users about important updates.</p>
-                                </div>
-                            )}
+                                )}
+                            </div>
                         </div>
                     </div>
                 )}
@@ -854,28 +869,30 @@ const AdminDashboard = () => {
                             <h3>User Feedback & Help Requests</h3>
                         </div>
                         
-                        <div className="feedback-list">
-                            {feedback.length > 0 ? (
-                                feedback.map((item) => (
-                                    <div key={item.id} className="feedback-card">
-                                        <div className="feedback-header">
-                                            <h4>Feedback from {item.userName || 'Anonymous'}</h4>
-                                            <span className="feedback-date">
-                                                {new Date(item.submittedDate).toLocaleDateString()}
-                                            </span>
+                        <div className="feedback-wrapper">
+                            <div className="feedback-list">
+                                {feedback.length > 0 ? (
+                                    feedback.map((item) => (
+                                        <div key={item.id} className="feedback-card">
+                                            <div className="feedback-header">
+                                                <h4>Feedback from {item.userName || 'Anonymous'}</h4>
+                                                <span className="feedback-date">
+                                                    {new Date(item.submittedDate).toLocaleDateString()}
+                                                </span>
+                                            </div>
+                                            <p className="feedback-content">{item.content}</p>
+                                            <div className="feedback-actions">
+                                                <button className="action-btn preview">REPLY</button>
+                                                <button className="action-btn edit">MARK RESOLVED</button>
+                                            </div>
                                         </div>
-                                        <p className="feedback-content">{item.content}</p>
-                                        <div className="feedback-actions">
-                                            <button className="action-btn preview">REPLY</button>
-                                            <button className="action-btn edit">MARK RESOLVED</button>
-                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="empty-state">
+                                        <p>No feedback submissions yet. User feedback will appear here when submitted.</p>
                                     </div>
-                                ))
-                            ) : (
-                                <div className="empty-state">
-                                    <p>No feedback submissions yet. User feedback will appear here when submitted.</p>
-                                </div>
-                            )}
+                                )}
+                            </div>
                         </div>
                     </div>
                 )}
@@ -892,78 +909,86 @@ const AdminDashboard = () => {
                             </button>
                         </div>
                         
-                        <div className="reports-stats">
-                            <div className="stat-card">
-                                <h4>User Statistics</h4>
-                                <div className="stat-details">
-                                    <p>Total Users: {dashboardStats.totalUsers || 0}</p>
-                                    <p>Students: {dashboardStats.totalStudents || 0}</p>
-                                    <p>Teachers: {dashboardStats.totalTeachers || 0}</p>
-                                    <p>Admins: {dashboardStats.totalAdmins || 0}</p>
-                                </div>
-                            </div>
-                            
-                            <div className="stat-card">
-                                <h4>Content Statistics</h4>
-                                <div className="stat-details">
-                                    <p>Total Courses: {dashboardStats.totalCourses || 0}</p>
-                                    <p>Total Chapters: {dashboardStats.totalChapters || 0}</p>
-                                    <p>Resources: {dashboardStats.totalResources || 0}</p>
-                                </div>
-                            </div>
-                            
-                            <div className="stat-card">
-                                <h4>Community Statistics</h4>
-                                <div className="stat-details">
-                                    <p>Forum Posts: {dashboardStats.totalForumPosts || 0}</p>
-                                    <p>Active Users: {dashboardStats.activeUsers || 'N/A'}</p>
-                                    <p>User Engagement: {dashboardStats.engagementRate || 'N/A'}</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div className="reports-list">
-                            {reports.length > 0 ? (
-                                reports.map((report) => (
-                                    <div key={report.id} className="report-card">
-                                        <div className="report-header">
-                                            <h4>{report.title}</h4>
-                                            <span className="report-date">
-                                                {new Date(report.generatedDate).toLocaleDateString()}
-                                            </span>
-                                        </div>
-                                        <p className="report-summary">{report.summary}</p>
-                                        <div className="report-actions">
-                                            <button className="action-btn preview">VIEW</button>
-                                            <button className="action-btn edit">DOWNLOAD</button>
-                                        </div>
+                        <div className="reports-wrapper">
+                            <div className="reports-stats">
+                                <div className="stat-card">
+                                    <h4>User Statistics</h4>
+                                    <div className="stat-details">
+                                        <p>Total Users: {dashboardStats.totalUsers || 0}</p>
+                                        <p>Students: {dashboardStats.totalStudents || 0}</p>
+                                        <p>Teachers: {dashboardStats.totalTeachers || 0}</p>
+                                        <p>Admins: {dashboardStats.totalAdmins || 0}</p>
                                     </div>
-                                ))
-                            ) : (
-                                <div className="empty-state">
-                                    <p>No reports generated yet. Click "Generate New Report" to create your first system report.</p>
                                 </div>
-                            )}
+                                
+                                <div className="stat-card">
+                                    <h4>Content Statistics</h4>
+                                    <div className="stat-details">
+                                        <p>Total Courses: {dashboardStats.totalCourses || 0}</p>
+                                        <p>Total Chapters: {dashboardStats.totalChapters || 0}</p>
+                                        <p>Resources: {dashboardStats.totalResources || 0}</p>
+                                    </div>
+                                </div>
+                                
+                                <div className="stat-card">
+                                    <h4>Community Statistics</h4>
+                                    <div className="stat-details">
+                                        <p>Forum Posts: {dashboardStats.totalForumPosts || 0}</p>
+                                        <p>Active Users: {dashboardStats.activeUsers || 'N/A'}</p>
+                                        <p>User Engagement: {dashboardStats.engagementRate || 'N/A'}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="reports-list">
+                                {reports.length > 0 ? (
+                                    reports.map((report) => (
+                                        <div key={report.id} className="report-card">
+                                            <div className="report-header">
+                                                <h4>{report.title}</h4>
+                                                <span className="report-date">
+                                                    {new Date(report.generatedDate).toLocaleDateString()}
+                                                </span>
+                                            </div>
+                                            <p className="report-summary">{report.summary}</p>
+                                            <div className="report-actions">
+                                                <button className="action-btn preview">VIEW</button>
+                                                <button className="action-btn edit">DOWNLOAD</button>
+                                            </div>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="empty-state">
+                                        <p>No reports generated yet. Click "Generate New Report" to create your first system report.</p>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 )}
 
                 {activeTab === 'system' && (
                     <div className="system-section">
-                        <div className="system-stats">
+                        <div className="system-header">
                             <h3>System Statistics</h3>
-                            <div className="stats-grid">
-                                <div className="stat-item">
-                                    <strong>Total Users:</strong> {dashboardStats.totalUsers || users.length}
+                        </div>
+                        <div className="system-wrapper">
+                            <div className="system-grid">
+                                <div className="system-card">
+                                    <span className="system-label">Total Users</span>
+                                    <span className="system-value">{dashboardStats.totalUsers || users.length}</span>
                                 </div>
-                                <div className="stat-item">
-                                    <strong>Active Courses:</strong> {dashboardStats.totalCourses || courses.length}
+                                <div className="system-card">
+                                    <span className="system-label">Active Courses</span>
+                                    <span className="system-value">{dashboardStats.totalCourses || courses.length}</span>
                                 </div>
-                                <div className="stat-item">
-                                    <strong>System Status:</strong> Online
+                                <div className="system-card">
+                                    <span className="system-label">System Status</span>
+                                    <span className="system-value">Online</span>
                                 </div>
-                                <div className="stat-item">
-                                    <strong>Database Status:</strong> Connected
+                                <div className="system-card">
+                                    <span className="system-label">Database Status</span>
+                                    <span className="system-value">Connected</span>
                                 </div>
                             </div>
                         </div>

@@ -506,6 +506,21 @@ public class TeachersController : ControllerBase
             helpRequest.ResolvedByTeacherId = teacherId;
             helpRequest.ResolvedAt = DateTime.UtcNow;
 
+            var questionPreview = string.IsNullOrWhiteSpace(helpRequest.Question)
+                ? "Your help request"
+                : helpRequest.Question[..Math.Min(helpRequest.Question.Length, 60)] +
+                (helpRequest.Question.Length > 60 ? "..." : string.Empty);
+
+            var notificationMessage = $"✅ {questionPreview} has a new reply from your teacher.";
+
+            _context.Notifications.Add(new Notification
+            {
+                NotificationId = Guid.NewGuid(),
+                UserId = helpRequest.StudentId,
+                Message = notificationMessage,
+                CreatedAt = DateTime.UtcNow
+            });
+
             _context.HelpRequests.Update(helpRequest);
             await _context.SaveChangesAsync(ct);
 

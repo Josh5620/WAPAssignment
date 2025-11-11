@@ -25,6 +25,8 @@ namespace ProjectAPI.Data
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<HelpRequest> HelpRequests { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<AnnouncementRead> AnnouncementReads { get; set; }
+        public DbSet<ForumComment> ForumComments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -191,6 +193,41 @@ namespace ProjectAPI.Data
                 .HasForeignKey(n => n.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // AnnouncementRead composite key and relationships
+            modelBuilder.Entity<AnnouncementRead>()
+                .HasKey(ar => new { ar.AnnouncementId, ar.UserId });
+
+            modelBuilder.Entity<AnnouncementRead>()
+                .HasOne(ar => ar.Announcement)
+                .WithMany(a => a.Reads)
+                .HasForeignKey(ar => ar.AnnouncementId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<AnnouncementRead>()
+                .HasOne(ar => ar.Profile)
+                .WithMany(p => p.AnnouncementReads)
+                .HasForeignKey(ar => ar.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Forum comments relationships
+            modelBuilder.Entity<ForumComment>()
+                .HasOne(fc => fc.ForumPost)
+                .WithMany(fp => fp.Comments)
+                .HasForeignKey(fc => fc.ForumId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ForumComment>()
+                .HasOne(fc => fc.Profile)
+                .WithMany(p => p.ForumComments)
+                .HasForeignKey(fc => fc.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ForumComment>()
+                .HasOne(fc => fc.ParentComment)
+                .WithMany(pc => pc.Replies)
+                .HasForeignKey(fc => fc.ParentCommentId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             // ======================
             // Indexes for Performance
             // ======================
@@ -213,6 +250,9 @@ namespace ProjectAPI.Data
 
             modelBuilder.Entity<Notification>()
                 .HasIndex(n => new { n.UserId, n.IsRead });
+
+            modelBuilder.Entity<ForumComment>()
+                .HasIndex(fc => fc.CreatedAt);
         }
     }
 }

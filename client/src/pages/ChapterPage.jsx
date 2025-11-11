@@ -9,6 +9,7 @@ import { api } from '../services/apiService.js';
 import '../styles/ChapterPage.css';
 import StudentFlashcardComponent from '../components/StudentFlashcardComponent.jsx';
 import StudentChallengeBoard from '../components/StudentChallengeBoard.jsx';
+import ChapterPracticeLab from '../components/ChapterPracticeLab.jsx';
 
 const ChapterPage = () => {
   const { chapterId } = useParams();
@@ -161,6 +162,7 @@ const ChapterPage = () => {
   };
 
   const practiceItems = details.practice || [];
+  const practiceLab = chapterData?.practiceLab || details.practiceLab;
   const statusCycle = {
     seedling: 'sprouting',
     sprouting: 'bloom',
@@ -343,6 +345,18 @@ const ChapterPage = () => {
                   </div>
                 ) : null}
               </section>
+
+              {practiceLab && (
+                <section className="chapter-section practice-lab-section">
+                  <h2>Code Garden Lab</h2>
+                  <ChapterPracticeLab
+                    instructions={practiceLab.instructions}
+                    starterCode={practiceLab.starterCode}
+                    language={practiceLab.language}
+                    title={practiceLab.title}
+                  />
+                </section>
+              )}
 
               {practiceItems.length > 0 && (
                 <section className="chapter-section chapter-section--practice">

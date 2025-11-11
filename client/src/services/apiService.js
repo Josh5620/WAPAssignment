@@ -2117,6 +2117,50 @@ const createForumPost = async (userId, courseId, content) => {
   }
 };
 
+const getForumComments = async (forumId) => {
+  try {
+    return await requestWithAuth(`/students/forums/posts/${forumId}/comments`);
+  } catch (error) {
+    console.error('Get forum comments error:', error);
+    throw error;
+  }
+};
+
+const createForumComment = async (forumId, content, parentCommentId = null) => {
+  try {
+    const token = getToken();
+    const response = await fetch(`${API_BASE_URL}/students/forums/posts/${forumId}/comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token ? `Bearer ${token}` : '',
+      },
+      body: JSON.stringify({
+        content,
+        parentCommentId,
+      }),
+    });
+
+    if (!response.ok) {
+      const payload = await parsePayload(response);
+      const message =
+        payload?.error ||
+        payload?.message ||
+        (typeof payload === 'string' && payload.trim().length ? payload : null) ||
+        `HTTP ${response.status}: ${response.statusText}`;
+      const error = new Error(message);
+      error.status = response.status;
+      error.data = payload;
+      throw error;
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Create forum comment error:', error);
+    throw error;
+  }
+};
+
 const getLeaderboard = async (userId = null) => {
   try {
     const token = getToken();
@@ -2134,6 +2178,39 @@ const getLeaderboard = async (userId = null) => {
     return await response.json();
   } catch (error) {
     console.error('Get leaderboard error:', error);
+    throw error;
+  }
+};
+
+const getNotifications = async (unreadOnly = false) => {
+  const query = unreadOnly ? '?unreadOnly=true' : '';
+  try {
+    return await requestWithAuth(`/notifications${query}`);
+  } catch (error) {
+    console.error('Get notifications error:', error);
+    throw error;
+  }
+};
+
+const markNotificationRead = async (notificationId) => {
+  if (!notificationId) return null;
+  try {
+    return await requestWithAuth(`/notifications/${notificationId}/read`, {
+      method: 'POST',
+    });
+  } catch (error) {
+    console.error('Mark notification read error:', error);
+    throw error;
+  }
+};
+
+const markAllNotificationsRead = async () => {
+  try {
+    return await requestWithAuth('/notifications/mark-all-read', {
+      method: 'POST',
+    });
+  } catch (error) {
+    console.error('Mark all notifications read error:', error);
     throw error;
   }
 };
@@ -2219,8 +2296,16 @@ export const api = {
     updateStudentProfile,
     getForumPosts,
     createForumPost,
+    getForumComments,
+    createForumComment,
     createHelpRequest: createStudentHelpRequest,
     getLeaderboard
+  },
+
+  notifications: {
+    list: getNotifications,
+    markRead: markNotificationRead,
+    markAllRead: markAllNotificationsRead,
   },
 
   // Teacher-specific functions

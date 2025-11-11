@@ -3,11 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { api } from '../services/apiService';
 import { quickApi } from '../services/apiService';
 import Navbar from '../components/Navbar';
-import StudentLeaderboard from '../components/StudentLeaderboard';
-import StudentProgress from '../components/StudentProgress';
-import '../styles/StudentProfile.css';
+import '../styles/AdminProfile.css';
 
-const StudentProfile = () => {
+const AdminProfile = () => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [editing, setEditing] = useState(false);
@@ -19,9 +17,18 @@ const StudentProfile = () => {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [stats, setStats] = useState({
+    totalUsers: 0,
+    totalStudents: 0,
+    totalTeachers: 0,
+    totalCourses: 0,
+    pendingApprovals: 0,
+    totalAnnouncements: 0
+  });
 
   useEffect(() => {
     loadProfile();
+    loadStats();
   }, []);
 
   const loadProfile = async () => {
@@ -40,30 +47,50 @@ const StudentProfile = () => {
 
       console.log('Loading profile for userId:', userId);
       
-      // Fetch fresh profile data from backend using unified auth endpoint
+      // Fetch fresh profile data from backend
       const token = quickApi.getUserToken();
       const data = await api.auth.getProfile(token);
       
-      // Then fetch student-specific data (leaderboard, progress, etc.)
-      const studentData = await api.students.getStudentProfile(userId);
-      
-      // Merge the data
       setProfile({
-        ...data,
-        ...studentData,
-        id: data.userId
+        id: data.userId,
+        fullName: data.fullName || 'Admin',
+        email: data.email || '',
+        role: data.role || 'Admin',
+        createdAt: data.createdAt
       });
-      
+
       setFormData({
         fullName: data.fullName || '',
         email: data.email || ''
       });
+
       setError(null);
     } catch (err) {
       console.error('Failed to load profile:', err);
       setError('Failed to load profile. Please try again.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadStats = async () => {
+    try {
+      const token = quickApi.getUserToken();
+      const dashboardData = await api.admin.getDashboard(token);
+      
+      if (dashboardData.success) {
+        const data = dashboardData.data;
+        setStats({
+          totalUsers: data.statistics?.totalProfiles || 0,
+          totalStudents: data.statistics?.totalStudents || 0,
+          totalTeachers: data.statistics?.totalTeachers || 0,
+          totalCourses: data.statistics?.totalCourses || 0,
+          pendingApprovals: data.statistics?.pendingCourses || 0,
+          totalAnnouncements: data.recentAnnouncements?.length || 0
+        });
+      }
+    } catch (err) {
+      console.error('Failed to load stats:', err);
     }
   };
 
@@ -107,7 +134,7 @@ const StudentProfile = () => {
       setSaving(true);
       setError(null);
       
-      // Update profile via unified auth endpoint
+      // Update profile via backend API
       const token = quickApi.getUserToken();
       const updatedProfile = await api.auth.updateProfile(token, {
         fullName: formData.fullName,
@@ -124,9 +151,9 @@ const StudentProfile = () => {
       setSuccess('Profile updated successfully!');
       
       // Update localStorage
-      const storedProfile = quickApi.getUserProfile();
+      const userProfile = quickApi.getUserProfile();
       quickApi.storeUserData({
-        ...storedProfile,
+        ...userProfile,
         fullName: updatedProfile.fullName,
         email: updatedProfile.email
       });
@@ -144,7 +171,12 @@ const StudentProfile = () => {
     return (
       <>
         <Navbar />
-        <div className="profile-loading">Loading profile...</div>
+        <div className="admin-profile-page">
+          <div className="profile-loading">
+            <div className="loading-spinner">👨‍💼</div>
+            <p>Loading your profile...</p>
+          </div>
+        </div>
       </>
     );
   }
@@ -153,9 +185,11 @@ const StudentProfile = () => {
     return (
       <>
         <Navbar />
-        <div className="profile-error">
-          <p>Failed to load profile.</p>
-          <button onClick={() => navigate('/login')}>Go to Login</button>
+        <div className="admin-profile-page">
+          <div className="profile-error">
+            <p>Failed to load profile.</p>
+            <button onClick={loadProfile}>Try Again</button>
+          </div>
         </div>
       </>
     );
@@ -164,10 +198,10 @@ const StudentProfile = () => {
   return (
     <>
       <Navbar />
-      <div className="student-profile-page">
+      <div className="admin-profile-page">
         <div className="profile-container">
           <div className="profile-header">
-            <h1>My Profile</h1>
+            <h1>Admin Profile</h1>
             {!editing && (
               <button className="edit-profile-button" onClick={handleEdit}>
                 Edit Profile
@@ -187,6 +221,7 @@ const StudentProfile = () => {
             </div>
           )}
 
+          {/* Profile Information */}
           <div className="profile-section">
             <h2>Profile Information</h2>
             {editing ? (
@@ -244,74 +279,116 @@ const StudentProfile = () => {
                   <span className="info-label">Role:</span>
                   <span className="info-value">{profile.role}</span>
                 </div>
-                {profile.leaderboard && (
-                  <>
-                    <div className="info-item">
-                      <span className="info-label">XP Points:</span>
-                      <span className="info-value">{profile.leaderboard.xp} XP</span>
-                    </div>
-                    <div className="info-item">
-                      <span className="info-label">Rank:</span>
-                      <span className="info-value">#{profile.leaderboard.rank || 'Unranked'}</span>
-                    </div>
-                  </>
-                )}
                 <div className="info-item">
-                  <span className="info-label">Member Since:</span>
+                  <span className="info-label">Admin Since:</span>
                   <span className="info-value">
                     {profile.createdAt ? new Date(profile.createdAt).toLocaleDateString('en-US', { 
                       year: 'numeric', 
                       month: 'long', 
                       day: 'numeric' 
-                    }) : 'Recently joined'}
+                    }) : 'Unknown'}
                   </span>
                 </div>
               </div>
             )}
           </div>
 
+          {/* System Statistics */}
           <div className="profile-section">
-            <h2>Quick Stats</h2>
-            <div className="quick-stats">
-              <div className="stat-box">
+            <h2>System Overview</h2>
+            <div className="stats-grid">
+              <div className="stat-card">
+                <div className="stat-icon">👥</div>
+                <div className="stat-content">
+                  <div className="stat-value">{stats.totalUsers}</div>
+                  <div className="stat-label">Total Users</div>
+                </div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-icon">🎓</div>
+                <div className="stat-content">
+                  <div className="stat-value">{stats.totalStudents}</div>
+                  <div className="stat-label">Students</div>
+                </div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-icon">👨‍🏫</div>
+                <div className="stat-content">
+                  <div className="stat-value">{stats.totalTeachers}</div>
+                  <div className="stat-label">Teachers</div>
+                </div>
+              </div>
+              <div className="stat-card">
                 <div className="stat-icon">📚</div>
-                <div className="stat-info">
-                  <div className="stat-value">{profile.completedChapters || 0}</div>
-                  <div className="stat-label">Chapters Completed</div>
+                <div className="stat-content">
+                  <div className="stat-value">{stats.totalCourses}</div>
+                  <div className="stat-label">Courses</div>
                 </div>
               </div>
-              <div className="stat-box">
-                <div className="stat-icon">🔥</div>
-                <div className="stat-info">
-                  <div className="stat-value">{profile.currentStreak || 0}</div>
-                  <div className="stat-label">Day Streak</div>
+              <div className="stat-card">
+                <div className="stat-icon">⏳</div>
+                <div className="stat-content">
+                  <div className="stat-value">{stats.pendingApprovals}</div>
+                  <div className="stat-label">Pending Approvals</div>
                 </div>
               </div>
-              <div className="stat-box">
-                <div className="stat-icon">⏱️</div>
-                <div className="stat-info">
-                  <div className="stat-value">{profile.totalMinutes || 0}</div>
-                  <div className="stat-label">Minutes Learned</div>
-                </div>
-              </div>
-              <div className="stat-box">
-                <div className="stat-icon">🏆</div>
-                <div className="stat-info">
-                  <div className="stat-value">{profile.achievementsCount || 0}</div>
-                  <div className="stat-label">Achievements</div>
+              <div className="stat-card">
+                <div className="stat-icon">📢</div>
+                <div className="stat-content">
+                  <div className="stat-value">{stats.totalAnnouncements}</div>
+                  <div className="stat-label">Announcements</div>
                 </div>
               </div>
             </div>
           </div>
 
+          {/* Quick Actions */}
           <div className="profile-section">
-            <h2>Leaderboard</h2>
-            <StudentLeaderboard />
-          </div>
-
-          <div className="profile-section">
-            <h2>Learning Progress</h2>
-            <StudentProgress />
+            <h2>Quick Actions</h2>
+            <div className="quick-actions">
+              <button
+                className="action-button"
+                onClick={() => navigate('/admin/dashboard')}
+              >
+                <span className="action-icon">📊</span>
+                <span className="action-text">Dashboard</span>
+              </button>
+              <button
+                className="action-button"
+                onClick={() => navigate('/admin/dashboard')}
+              >
+                <span className="action-icon">👥</span>
+                <span className="action-text">Manage Users</span>
+              </button>
+              <button
+                className="action-button"
+                onClick={() => navigate('/admin/dashboard')}
+              >
+                <span className="action-icon">📚</span>
+                <span className="action-text">Manage Courses</span>
+              </button>
+              <button
+                className="action-button"
+                onClick={() => navigate('/admin/dashboard')}
+              >
+                <span className="action-icon">✅</span>
+                <span className="action-text">Pending Approvals</span>
+              </button>
+              <button
+                className="action-button"
+                onClick={() => navigate('/admin/dashboard')}
+              >
+                <span className="action-icon">📢</span>
+                <span className="action-text">Announcements</span>
+              </button>
+              <button
+                className="action-button"
+                onClick={() => navigate('/forum')}
+              >
+                <span className="action-icon">💬</span>
+                <span className="action-text">Forum</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -319,5 +396,4 @@ const StudentProfile = () => {
   );
 };
 
-export default StudentProfile;
-
+export default AdminProfile;

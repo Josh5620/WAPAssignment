@@ -35,27 +35,36 @@ const TeacherProfile = () => {
     try {
       setLoading(true);
       const userProfile = quickApi.getUserProfile();
-      if (!userProfile || !userProfile.id) {
+      
+      // Extract user ID - handle both nested (user.id/user.userId) and flat (id/userId) structures
+      const userId = userProfile?.user?.id || userProfile?.user?.userId || userProfile?.id || userProfile?.userId;
+      
+      if (!userProfile || !userId) {
+        console.log('No valid user profile found, redirecting to login');
         navigate('/login');
         return;
       }
 
-      // For now, use basic profile data
-      // TODO: Create backend endpoint for teacher profile
+      console.log('Loading profile for userId:', userId);
+      
+      // Fetch fresh profile data from backend
+      const token = quickApi.getUserToken();
+      const data = await api.auth.getProfile(token);
+      
       setProfile({
-        id: userProfile.id,
-        fullName: userProfile.full_name || 'Teacher',
-        email: userProfile.email || '',
-        role: userProfile.role || 'Teacher',
-        bio: userProfile.bio || '',
-        expertise: userProfile.expertise || 'Python Programming'
+        id: data.userId,
+        fullName: data.fullName || 'Teacher',
+        email: data.email || '',
+        role: data.role || 'Teacher',
+        bio: data.bio || '',
+        expertise: data.expertise || ''
       });
 
       setFormData({
-        fullName: userProfile.full_name || '',
-        email: userProfile.email || '',
-        bio: userProfile.bio || '',
-        expertise: userProfile.expertise || 'Python Programming'
+        fullName: data.fullName || '',
+        email: data.email || '',
+        bio: data.bio || '',
+        expertise: data.expertise || ''
       });
 
       setError(null);
@@ -124,34 +133,34 @@ const TeacherProfile = () => {
       setSaving(true);
       setError(null);
       
-      // TODO: Create backend endpoint for updating teacher profile
-      // For now, update localStorage
-      const userProfile = quickApi.getUserProfile();
-      const updatedProfile = {
-        ...profile,
+      // Update profile via backend API
+      const token = quickApi.getUserToken();
+      const updatedProfile = await api.auth.updateProfile(token, {
         fullName: formData.fullName,
-        email: formData.email,
-        bio: formData.bio,
-        expertise: formData.expertise
-      };
+        email: formData.email
+      });
       
-      setProfile(updatedProfile);
+      setProfile({
+        ...profile,
+        fullName: updatedProfile.fullName,
+        email: updatedProfile.email
+      });
+      
       setEditing(false);
       setSuccess('Profile updated successfully!');
       
       // Update localStorage
+      const userProfile = quickApi.getUserProfile();
       quickApi.storeUserData({
         ...userProfile,
-        full_name: formData.fullName,
-        email: formData.email,
-        bio: formData.bio,
-        expertise: formData.expertise
+        fullName: updatedProfile.fullName,
+        email: updatedProfile.email
       });
 
       setTimeout(() => setSuccess(null), 3000);
     } catch (err) {
       console.error('Failed to update profile:', err);
-      setError('Failed to update profile. Please try again.');
+      setError(err.message || 'Failed to update profile. Please try again.');
     } finally {
       setSaving(false);
     }

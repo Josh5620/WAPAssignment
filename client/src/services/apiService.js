@@ -121,15 +121,22 @@ export const login = async (email, password) => {
     }
 
     const data = await response.json();
-    console.log('✓ Login successful - direct to backend:', data);
+    console.log('✓ Login successful - raw backend response:', data);
     
-    // Return in format expected by AuthContext
-    // AuthController returns: { token, user: { userId, email, fullName, role } }
-    return {
-      token: data.token,
-      user: data.user,
+    // AuthController returns: { access_token, token_type, user: { userId, email, fullName, role } }
+    // Normalize the response format for AuthContext
+    const normalizedData = {
+      access_token: data.access_token,
+      token: data.access_token,
+      user: {
+        ...data.user,
+        id: data.user.userId  // Add 'id' field that maps to 'userId' for compatibility
+      },
       role: data.user.role
     };
+    
+    console.log('✓ Normalized login data being returned:', normalizedData);
+    return normalizedData;
   } catch (error) {
     console.error('Login error:', error);
     throw error;
@@ -155,6 +162,30 @@ export const getProfile = async (token) => {
     return data;
   } catch (error) {
     console.error('Get profile error:', error);
+    throw error;
+  }
+};
+
+export const updateProfile = async (token, profileData) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/auth/profile`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(profileData)
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Update profile error:', error);
     throw error;
   }
 };
@@ -1253,7 +1284,7 @@ export const adminService = {
   getAllUsers: async () => {
     try {
       // This will be a real API call once backend is implemented
-      const token = localStorage.getItem('authToken');
+      const token = getToken();
       const response = await fetch(`${API_BASE_URL}/Admin/users`, {
         method: 'GET',
         headers: {
@@ -1276,7 +1307,7 @@ export const adminService = {
   
   updateUserRole: async (userId, role) => {
     try {
-      const token = localStorage.getItem('authToken');
+      const token = getToken();
       const response = await fetch(`${API_BASE_URL}/Admin/users/${userId}/role`, {
         method: 'PUT',
         headers: {
@@ -1300,7 +1331,7 @@ export const adminService = {
   
   deleteUser: async (userId) => {
     try {
-      const token = localStorage.getItem('authToken');
+      const token = getToken();
       const response = await fetch(`${API_BASE_URL}/Admin/users/${userId}`, {
         method: 'DELETE',
         headers: {
@@ -1323,16 +1354,33 @@ export const adminService = {
   // === COURSE MANAGEMENT ===
   getAllCourses: async () => {
     try {
-      const courses = await getCourses();
-      return { success: true, data: courses };
+      const token = getToken();
+      console.log('🔑 Getting admin courses with token:', token ? 'Token present' : 'No token');
+      
+      const response = await fetch(`${API_BASE_URL}/Admin/courses`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      console.log('📚 Admin courses response:', data);
+      return data;
     } catch (error) {
+      console.error('Get admin courses error:', error);
       return { success: false, message: error.message };
     }
   },
 
   createCourse: async (courseData) => {
     try {
-      const token = localStorage.getItem('authToken');
+      const token = getToken();
       const response = await fetch(`${API_BASE_URL}/Admin/courses`, {
         method: 'POST',
         headers: {
@@ -1356,7 +1404,7 @@ export const adminService = {
 
   updateCourse: async (courseId, courseData) => {
     try {
-      const token = localStorage.getItem('authToken');
+      const token = getToken();
       const response = await fetch(`${API_BASE_URL}/Admin/courses/${courseId}`, {
         method: 'PUT',
         headers: {
@@ -1380,7 +1428,7 @@ export const adminService = {
 
   deleteCourse: async (courseId) => {
     try {
-      const token = localStorage.getItem('authToken');
+      const token = getToken();
       const response = await fetch(`${API_BASE_URL}/Admin/courses/${courseId}`, {
         method: 'DELETE',
         headers: {
@@ -1402,7 +1450,7 @@ export const adminService = {
 
   updateCourseStatus: async (courseId, published) => {
     try {
-      const token = localStorage.getItem('authToken');
+      const token = getToken();
       const response = await fetch(`${API_BASE_URL}/Admin/courses/${courseId}/status`, {
         method: 'PUT',
         headers: {
@@ -1427,7 +1475,7 @@ export const adminService = {
   // === COURSE APPROVAL SYSTEM ===
   getPendingApprovalCourses: async () => {
     try {
-      const token = localStorage.getItem('authToken');
+      const token = getToken();
       const response = await fetch(`${API_BASE_URL}/Admin/courses/pending-approval`, {
         method: 'GET',
         headers: {
@@ -1450,7 +1498,7 @@ export const adminService = {
 
   approveCourse: async (courseId, approved, rejectionReason = '') => {
     try {
-      const token = localStorage.getItem('authToken');
+      const token = getToken();
       const userProfile = JSON.parse(localStorage.getItem('user_profile') || '{}');
       
       const response = await fetch(`${API_BASE_URL}/Admin/courses/${courseId}/approve`, {
@@ -1481,7 +1529,7 @@ export const adminService = {
   // === ANNOUNCEMENT MANAGEMENT ===
   getAllAnnouncements: async () => {
     try {
-      const token = localStorage.getItem('authToken');
+      const token = getToken();
       const response = await fetch(`${API_BASE_URL}/Admin/announcements`, {
         method: 'GET',
         headers: {
@@ -1504,7 +1552,7 @@ export const adminService = {
 
   createAnnouncement: async (announcement) => {
     try {
-      const token = localStorage.getItem('authToken');
+      const token = getToken();
       const response = await fetch(`${API_BASE_URL}/Admin/announcements`, {
         method: 'POST',
         headers: {
@@ -1528,7 +1576,7 @@ export const adminService = {
 
   deleteAnnouncement: async (announcementId) => {
     try {
-      const token = localStorage.getItem('authToken');
+      const token = getToken();
       const response = await fetch(`${API_BASE_URL}/Admin/announcements/${announcementId}`, {
         method: 'DELETE',
         headers: {
@@ -1551,7 +1599,7 @@ export const adminService = {
   // === FORUM POST MANAGEMENT ===  
   getAllForumPosts: async () => {
     try {
-      const token = localStorage.getItem('authToken');
+      const token = getToken();
       const response = await fetch(`${API_BASE_URL}/Admin/forum-posts`, {
         method: 'GET',
         headers: {
@@ -1574,7 +1622,7 @@ export const adminService = {
   
   deleteForumPost: async (postId) => {
     try {
-      const token = localStorage.getItem('authToken');
+      const token = getToken();
       const response = await fetch(`${API_BASE_URL}/Admin/forum-posts/${postId}`, {
         method: 'DELETE',
         headers: {
@@ -1597,7 +1645,7 @@ export const adminService = {
   // === REPORTS ===
   getReports: async () => {
     try {
-      const token = localStorage.getItem('authToken');
+      const token = getToken();
       const response = await fetch(`${API_BASE_URL}/Admin/reports`, {
         method: 'GET',
         headers: {
@@ -1620,7 +1668,7 @@ export const adminService = {
 
   generateReport: async () => {
     try {
-      const token = localStorage.getItem('authToken');
+      const token = getToken();
       const response = await fetch(`${API_BASE_URL}/Admin/generate-report`, {
         method: 'POST',
         headers: {
@@ -2107,6 +2155,7 @@ export const api = {
   auth: {
     login,
     getProfile,
+    updateProfile,
     logout: () => {
       localStorage.removeItem('access_token');
       localStorage.removeItem('user_profile');

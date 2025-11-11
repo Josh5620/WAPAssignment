@@ -51,7 +51,7 @@ const AdminDashboard = () => {
         try {
             setLoading(true);
             
-            // Load all admin data in parallel
+            // Load all admin data in parallel using allSettled to handle failures gracefully
             const [
                 usersResult,
                 coursesResult,
@@ -60,7 +60,7 @@ const AdminDashboard = () => {
                 feedbackResult,
                 reportsResult,
                 pendingCoursesResult
-            ] = await Promise.all([
+            ] = await Promise.allSettled([
                 adminService.getAllUsers(),
                 adminService.getAllCourses(),
                 adminService.getDashboardData(),
@@ -80,6 +80,7 @@ const AdminDashboard = () => {
 
             // Handle courses
             if (coursesResult.status === 'fulfilled' && coursesResult.value.success) {
+                console.log('📚 Courses data received:', coursesResult.value.data);
                 setCourses(coursesResult.value.data || []);
             } else {
                 console.warn('Courses not available:', coursesResult.reason);
@@ -336,7 +337,7 @@ const AdminDashboard = () => {
     };
 
     const handleEditCourse = (course) => {
-        setEditingCourseId(course.id);
+        setEditingCourseId(course.courseId);
         setCourseTitle(course.title);
         setCourseDescription(course.description);
         setCoursePublished(course.published);
@@ -398,12 +399,12 @@ const AdminDashboard = () => {
     const showApprovalDialog = (course, isApproval) => {
         if (isApproval) {
             if (window.confirm(`Are you sure you want to approve the course "${course.title}"?`)) {
-                handleApproveCourse(course.id, true);
+                handleApproveCourse(course.courseId, true);
             }
         } else {
             const reason = prompt(`Please provide a reason for rejecting "${course.title}":`);
             if (reason && reason.trim()) {
-                handleApproveCourse(course.id, false, reason.trim());
+                handleApproveCourse(course.courseId, false, reason.trim());
             }
         }
     };
@@ -674,7 +675,7 @@ const AdminDashboard = () => {
                         
                         <div className="table-content">
                             {courses.map((course) => (
-                                <div key={course.id} className="table-row">
+                                <div key={course.courseId} className="table-row">
                                     <div className="table-col">
                                         <div className="course-title">{course.title}</div>
                                         <div className="course-subtitle">{course.description}</div>
@@ -682,7 +683,7 @@ const AdminDashboard = () => {
                                     <div className="table-col">
                                         <button
                                             className={`status-toggle ${course.published ? 'published' : 'draft'}`}
-                                            onClick={() => handleCourseStatusToggle(course.id, course.published)}
+                                            onClick={() => handleCourseStatusToggle(course.courseId, course.published)}
                                         >
                                             {course.published ? 'PUBLISHED' : 'DRAFT'}
                                         </button>
@@ -698,7 +699,7 @@ const AdminDashboard = () => {
                                         </button>
                                         <button 
                                             className="action-btn delete"
-                                            onClick={() => handleDeleteCourse(course.id)}
+                                            onClick={() => handleDeleteCourse(course.courseId)}
                                         >
                                             DELETE
                                         </button>
@@ -732,7 +733,7 @@ const AdminDashboard = () => {
                         ) : (
                             <div className="approval-list">
                                 {pendingCourses.map((course) => (
-                                    <div key={course.id} className="approval-card">
+                                    <div key={course.courseId} className="approval-card">
                                         <div className="course-info">
                                             <h4 className="course-title">{course.title}</h4>
                                             <p className="course-description">{course.description}</p>

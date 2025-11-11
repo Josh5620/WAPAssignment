@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import Register from './pages/Register';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminProfile from './pages/AdminProfile';
 import StudentDashboard from './pages/StudentDashboard';
 import StudentProfile from './pages/StudentProfile';
 import TeacherDashboard from './pages/TeacherDashboard';
@@ -56,6 +57,14 @@ function App() {
             element={(
               <ProtectedRoute allowedRoles={['admin']}>
                 <AdminDashboard />
+              </ProtectedRoute>
+            )}
+          />
+          <Route
+            path="/admin-profile"
+            element={(
+              <ProtectedRoute allowedRoles={['admin']}>
+                <AdminProfile />
               </ProtectedRoute>
             )}
           />

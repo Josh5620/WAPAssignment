@@ -218,6 +218,73 @@ public class AuthController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Update the authenticated user's profile
+    /// </summary>
+    /// <param name="request">Profile update request</param>
+    /// <param name="ct">Cancellation token</param>
+    /// <returns>Updated profile</returns>
+    [HttpPatch("profile")]
+    public async Task<IActionResult> UpdateProfile([FromBody] AuthUpdateProfileRequest request, CancellationToken ct = default)
+    {
+        try
+        {
+            // Get user ID from JWT token
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+            {
+                return Unauthorized(new { error = "Invalid or missing user identification" });
+            }
+
+            // Get user from database
+            var user = await _context.Profiles.FindAsync(new object[] { userId }, ct);
+
+            if (user == null)
+            {
+                return NotFound(new { error = "User not found" });
+            }
+
+            // Update profile fields if provided
+            if (!string.IsNullOrWhiteSpace(request.FullName))
+            {
+                user.FullName = request.FullName.Trim();
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.Email))
+            {
+                // Check if email is already taken by another user
+                var emailExists = await _context.Profiles.AnyAsync(
+                    p => p.Email == request.Email && p.UserId != userId, ct);
+                
+                if (emailExists)
+                {
+                    return BadRequest(new { error = "Email is already in use" });
+                }
+
+                user.Email = request.Email.Trim();
+            }
+
+            _context.Profiles.Update(user);
+            await _context.SaveChangesAsync(ct);
+
+            return Ok(new
+            {
+                userId = user.UserId,
+                email = user.Email,
+                fullName = user.FullName,
+                role = user.Role,
+                createdAt = user.CreatedAt,
+                message = "Profile updated successfully"
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating user profile");
+            return StatusCode(500, new { error = "An error occurred while updating profile" });
+        }
+    }
+
     #region Helper Methods
 
     /// <summary>
@@ -294,6 +361,17 @@ public record AuthLoginRequest
 
     [Required]
     public string Password { get; init; } = string.Empty;
+}
+
+/// <summary>
+/// Request model for updating user profile
+/// </summary>
+public record AuthUpdateProfileRequest
+{
+    public string? FullName { get; init; }
+
+    [EmailAddress]
+    public string? Email { get; init; }
 }
 
 #endregion

@@ -33,6 +33,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = useCallback(
     (authPayload) => {
+      console.log('🔐 AuthContext.login() called with:', authPayload);
+      
       if (!authPayload) {
         syncFromStorage();
         return;
@@ -46,13 +48,26 @@ export const AuthProvider = ({ children }) => {
         authPayload.jwt ||
         null;
 
+      console.log('🔑 Extracted token:', token);
+
       if (token) {
         setToken(token);
+        console.log('💾 Token saved to localStorage');
+      } else {
+        console.warn('⚠️ No token found in authPayload!');
       }
 
       persistUser(authPayload);
-      setProfile(extractProfile(authPayload));
-      setRole(deriveRole(authPayload));
+      console.log('👤 User data persisted to localStorage');
+      
+      const extractedProfile = extractProfile(authPayload);
+      const extractedRole = deriveRole(authPayload);
+      
+      console.log('📋 Extracted profile:', extractedProfile);
+      console.log('👔 Extracted role:', extractedRole);
+      
+      setProfile(extractedProfile);
+      setRole(extractedRole);
     },
     [syncFromStorage],
   );

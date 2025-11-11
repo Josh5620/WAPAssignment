@@ -282,14 +282,10 @@ namespace ProjectAPI.Controllers
                     .Include(c => c.Enrolments)
                     .Select(c => new
                     {
-                        id = c.CourseId,
-                        c.Title,
-                        c.Description,
-                        c.Published,
-                        // TODO: Add these fields to Course model when ready
-                        // c.PendingApproval,
-                        // c.CreatedBy,
-                        // c.CreatedAt
+                        courseId = c.CourseId,
+                        title = c.Title,
+                        description = c.Description,
+                        published = c.Published,
                         chapterCount = c.Chapters.Count,
                         enrollmentCount = c.Enrolments.Count
                     })

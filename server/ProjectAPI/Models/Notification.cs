@@ -3,24 +3,21 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjectAPI.Models
 {
-    public class ForumPost
+    public class Notification
     {
         [Key]
-        public Guid ForumId { get; set; }
+        public Guid NotificationId { get; set; }
         
         [ForeignKey("Profile")]
         public Guid UserId { get; set; }
         
-        [ForeignKey("Course")]
-        public Guid CourseId { get; set; }
-        
         [Required]
-        public string Content { get; set; } = string.Empty;
+        public string Message { get; set; } = string.Empty;
         
+        public bool IsRead { get; set; } = false;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         // Navigation properties
         public Profile Profile { get; set; } = null!;
-        public Course Course { get; set; } = null!;
     }
 }

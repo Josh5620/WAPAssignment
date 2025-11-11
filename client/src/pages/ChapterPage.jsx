@@ -4,6 +4,8 @@ import Navbar from '../components/Navbar';
 import StudentHelpRequest from '../components/StudentHelpRequest';
 import { gardenPathData } from '../data/curriculum.js';
 import { getChapterDetails } from '../data/chapterDetails.js';
+import { getDatabaseChapterId } from '../data/chapterIdMapping.js';
+import { api } from '../services/apiService.js';
 import '../styles/ChapterPage.css';
 import StudentFlashcardComponent from '../components/StudentFlashcardComponent.jsx';
 import StudentChallengeBoard from '../components/StudentChallengeBoard.jsx';
@@ -12,7 +14,11 @@ const ChapterPage = () => {
   const { chapterId } = useParams();
   const navigate = useNavigate();
 
+  // Convert URL numeric ID to database GUID
   const numericId = Number(chapterId);
+  const databaseChapterId = getDatabaseChapterId(numericId);
+  
+  // Fallback static data (for UI structure and navigation)
   const metadata = useMemo(
     () => gardenPathData.find((chapter) => chapter.id === numericId),
     [numericId],
@@ -28,7 +34,54 @@ const ChapterPage = () => {
     [numericId],
   );
 
+  // State for the active tab
   const [activeTab, setActiveTab] = useState('notes');
+  
+  // State for database content from "Master Key" endpoint
+  const [chapterData, setChapterData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch chapter data from backend using the master endpoint
+  useEffect(() => {
+    const fetchChapterData = async () => {
+      if (!databaseChapterId) {
+        console.warn(`No database mapping for chapter ${numericId}. Using fallback data.`);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        setError(null);
+        
+        // Call the "Master Key" endpoint: GET /api/students/chapters/{chapterId}/content
+        const data = await api.students.getChapterContent(databaseChapterId);
+        console.log('✅ Loaded chapter data from backend:', data);
+        
+        setChapterData(data);
+      } catch (err) {
+        console.error('❌ Failed to load chapter data from database:', err);
+        console.warn('⚠️ Falling back to static content');
+        setError(null); // Don't show error to user, gracefully fallback
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchChapterData();
+  }, [databaseChapterId, numericId]);
+
+  // Filter and organize resources by type using useMemo
+  const resources = useMemo(() => {
+    if (!chapterData?.content) return { lesson: null, flashcards: null, quiz: null };
+    
+    return {
+      lesson: chapterData.content.find(r => r.type === 'text' || r.type === 'lesson'),
+      flashcards: chapterData.content.find(r => r.type === 'flashcard'),
+      quiz: chapterData.content.find(r => r.type === 'mcq')
+    };
+  }, [chapterData]);
   if (!metadata || !details) {
     return (
       <>
@@ -229,43 +282,66 @@ const ChapterPage = () => {
 
               <section className="chapter-section chapter-section--lesson">
                 <h2>In This Lesson</h2>
-                <div className="lesson-timeline">
-                  {details.sections.map((section, index) => {
-                    const bloomCheck = bloomChecks[index];
-                    return (
-                      <React.Fragment key={section.heading}>
-                        <article className="chapter-article">
-                          <div className="chapter-article__badge">Step {index + 1}</div>
-                          <div className="chapter-article__content">
-                            <h3>{section.heading}</h3>
-                            {section.body.map((paragraph, paragraphIndex) => (
-                              <p key={paragraphIndex}>{paragraph}</p>
-                            ))}
-                          </div>
-                        </article>
-                        {bloomCheck && (
-                          <div
-                            className={`bloom-check ${revealedChecks[index] ? 'is-revealed' : ''}`}
-                          >
-                            <div className="bloom-check__badge">Bloom Check</div>
-                            <p className="bloom-check__prompt">{bloomCheck.prompt}</p>
-                            {revealedChecks[index] ? (
-                              <p className="bloom-check__answer">{bloomCheck.answer}</p>
-                            ) : (
-                              <button
-                                type="button"
-                                className="bloom-check__reveal"
-                                onClick={() => toggleBloomCheck(index)}
-                              >
-                                Reveal growth tip
-                              </button>
-                            )}
-                          </div>
-                        )}
-                      </React.Fragment>
-                    );
-                  })}
-                </div>
+                
+                {loading && (
+                  <div className="lesson-loading">
+                    🌱 Loading chapter content...
+                  </div>
+                )}
+                
+                {!loading && resources.lesson?.content ? (
+                  // ✅ RENDER DATABASE CONTENT (HTML from backend)
+                  <>
+                    {chapterData?.chapterSummary && (
+                      <div className="lesson-summary">
+                        <p><em>{chapterData.chapterSummary}</em></p>
+                      </div>
+                    )}
+                    <div 
+                      className="lesson-database-content"
+                      dangerouslySetInnerHTML={{ __html: resources.lesson.content }}
+                    />
+                  </>
+                ) : !loading ? (
+                  // ⚠️ FALLBACK TO STATIC CONTENT when backend unavailable
+                  <div className="lesson-timeline">
+                    {details.sections.map((section, index) => {
+                      const bloomCheck = bloomChecks[index];
+                      return (
+                        <React.Fragment key={section.heading}>
+                          <article className="chapter-article">
+                            <div className="chapter-article__badge">Step {index + 1}</div>
+                            <div className="chapter-article__content">
+                              <h3>{section.heading}</h3>
+                              {section.body.map((paragraph, paragraphIndex) => (
+                                <p key={paragraphIndex}>{paragraph}</p>
+                              ))}
+                            </div>
+                          </article>
+                          {bloomCheck && (
+                            <div
+                              className={`bloom-check ${revealedChecks[index] ? 'is-revealed' : ''}`}
+                            >
+                              <div className="bloom-check__badge">Bloom Check</div>
+                              <p className="bloom-check__prompt">{bloomCheck.prompt}</p>
+                              {revealedChecks[index] ? (
+                                <p className="bloom-check__answer">{bloomCheck.answer}</p>
+                              ) : (
+                                <button
+                                  type="button"
+                                  className="bloom-check__reveal"
+                                  onClick={() => toggleBloomCheck(index)}
+                                >
+                                  Reveal growth tip
+                                </button>
+                              )}
+                            </div>
+                          )}
+                        </React.Fragment>
+                      );
+                    })}
+                  </div>
+                ) : null}
               </section>
 
               {practiceItems.length > 0 && (
@@ -301,15 +377,18 @@ const ChapterPage = () => {
           {activeTab === 'flashcards' && (
             <section className="chapter-section flashcard-section">
               <StudentFlashcardComponent
-                chapterId={metadata.id}
-                fallbackFlashcards={details.flashcards}
+                chapterId={databaseChapterId}
+                fallbackFlashcards={resources.flashcards?.flashcards || details.flashcards}
               />
             </section>
           )}
 
           {activeTab === 'challenges' && (
             <section className="chapter-section challenges-section">
-              <StudentChallengeBoard chapterId={metadata.id} />
+              <StudentChallengeBoard 
+                chapterId={databaseChapterId}
+                fallbackQuestions={resources.quiz?.questions || details.challenges || []}
+              />
             </section>
           )}
 

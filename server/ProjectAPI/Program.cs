@@ -3,7 +3,9 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using ProjectAPI.Data;
 using ProjectAPI.Models;
 
@@ -11,6 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Read config
 var geminiKey = builder.Configuration["Gemini:ApiKey"];
+var jwtKey = builder.Configuration["Jwt:Key"] ?? "YourSuperSecretKeyThatIsAtLeast32CharactersLongForHS256Algorithm";
+var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "ProjectAPI";
+var jwtAudience = builder.Configuration["Jwt:Audience"] ?? "ProjectAPIClients";
 
 // Database
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -33,6 +38,27 @@ builder.Services.AddHttpClient("Gemini", client =>
 //  Register Services
 builder.Services.AddScoped<GeminiService>(sp =>
     new GeminiService(sp.GetRequiredService<IHttpClientFactory>().CreateClient("Gemini"), geminiKey));
+
+// JWT Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtIssuer,
+        ValidAudience = jwtAudience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
+        ClockSkew = TimeSpan.Zero // Remove default 5 minute clock skew
+    };
+});
 
 //  CORS for React - Enhanced for API compatibility
 builder.Services.AddCors(options =>
@@ -93,7 +119,8 @@ app.UseStaticFiles(); // Add static file support
 app.UseHttpsRedirection();
 app.UseCors("AllowReactApp");
 
-// NOTE: no UseAuthentication(); no custom JWTs
+// Enable authentication and authorization
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

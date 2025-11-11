@@ -101,38 +101,45 @@ const requestWithAuth = async (path, options = {}) => {
   return payload;
 };
 
-// Login function: POST to /profiles/login with correct JSON body format
-export const login = async (identifier, password) => {
+// Login function: POST to /auth/login (AuthController endpoint)
+export const login = async (email, password) => {
   try {
-    // Updated to use correct backend endpoint path: /api/login (not /api/profiles/login)
-    const response = await fetch('http://localhost:5245/api/login', {
+    const response = await fetch('http://localhost:5245/api/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        identifier,  // Backend expects 'identifier' field (can be email or username)
-        password     // Backend expects 'password' field
+        email,      // AuthController expects 'email' field
+        password    // AuthController expects 'password' field
       }),
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
     }
 
     const data = await response.json();
     console.log('✓ Login successful - direct to backend:', data);
-    return data;
+    
+    // Return in format expected by AuthContext
+    // AuthController returns: { token, user: { userId, email, fullName, role } }
+    return {
+      token: data.token,
+      user: data.user,
+      role: data.user.role
+    };
   } catch (error) {
     console.error('Login error:', error);
     throw error;
   }
 };
 
-// Get profile function: GET /profiles/me with Authorization: Bearer <token>
+// Get profile function: GET /auth/profile with Authorization: Bearer <token>
 export const getProfile = async (token) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/profiles/me`, {
+    const response = await fetch(`${API_BASE_URL}/auth/profile`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -148,6 +155,35 @@ export const getProfile = async (token) => {
     return data;
   } catch (error) {
     console.error('Get profile error:', error);
+    throw error;
+  }
+};
+
+// Register function: POST to /auth/register (AuthController endpoint)
+export const register = async (fullName, email, password) => {
+  try {
+    const response = await fetch('http://localhost:5245/api/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        fullName,   // AuthController expects 'fullName' field
+        email,      // AuthController expects 'email' field
+        password    // AuthController expects 'password' field
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    console.log('✓ Registration successful:', data);
+    return data;
+  } catch (error) {
+    console.error('Registration error:', error);
     throw error;
   }
 };
@@ -897,11 +933,23 @@ const buildQueryString = (params = {}) => {
 
 const getFeaturedGuestCourses = async (limit = 6) => {
   try {
-    const response = await requestWithAuth(`/courses/featured${buildQueryString({ limit })}`);
-    if (Array.isArray(response)) {
-      return { courses: response };
+    // Use /guests/courses endpoint without auth
+    const response = await fetch(`${API_BASE_URL}/guests/courses${buildQueryString({ limit })}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
-    return response;
+
+    const data = await response.json();
+    
+    // Backend returns { courses: [...], total: number }
+    if (Array.isArray(data)) {
+      return { courses: data };
+    }
+    return { courses: data.courses || [] };
   } catch (error) {
     console.warn('Falling back to static featured courses', error);
     const courses = fallbackGuestCourses.slice(0, limit).map(normalizeFallbackCourse);
@@ -911,17 +959,28 @@ const getFeaturedGuestCourses = async (limit = 6) => {
 
 const getGuestCourseCatalog = async (options = {}) => {
   try {
+    // Build query string from options (search, difficulty, category, sort, page, limit)
     const query = buildQueryString(options);
-    const response = await requestWithAuth(`/courses${query}`);
-    if (Array.isArray(response)) {
-      return {
-        courses: response,
-        totalCount: response.length,
-        totalPages: 1,
-        currentPage: 1,
-      };
+    
+    // Call the backend endpoint
+    const response = await fetch(`${API_BASE_URL}/guests/courses${query}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
-    return response;
+
+    const data = await response.json();
+    
+    // Transform backend response to match frontend expectations
+    return {
+      courses: data.courses || [],
+      totalCount: data.total || 0,
+      totalPages: Math.ceil((data.total || 0) / (options.limit || 12)),
+      currentPage: options.page || 1
+    };
   } catch (error) {
     console.warn('Falling back to static guest course catalog', error);
     return getFallbackCourseCatalog(options);
@@ -930,8 +989,19 @@ const getGuestCourseCatalog = async (options = {}) => {
 
 const getGuestCoursePreview = async (courseId) => {
   try {
-    const response = await requestWithAuth(`/courses/${courseId}/preview`);
-    return response;
+    const response = await fetch(`${API_BASE_URL}/guests/courses/${courseId}/preview`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    
+    // Backend returns: { course: {...}, previewChapters: [...], learningObjectives: [...] }
+    return data;
   } catch (error) {
     console.warn('Falling back to static course preview', error);
     return getFallbackCoursePreview(courseId);
@@ -951,11 +1021,23 @@ const getGuestChapterPreview = async (courseId, chapterId) => {
 const getGuestTestimonials = async ({ courseId, limit } = {}) => {
   const query = buildQueryString({ courseId, limit });
   try {
-    const response = await requestWithAuth(`/testimonials${query}`);
-    if (Array.isArray(response)) {
-      return { testimonials: response };
+    // Use /guests/testimonials endpoint without auth
+    const response = await fetch(`${API_BASE_URL}/guests/testimonials${query}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
-    return response;
+
+    const data = await response.json();
+    
+    // Return testimonials array
+    if (Array.isArray(data)) {
+      return { testimonials: data };
+    }
+    return data;
   } catch (error) {
     console.warn('Falling back to static testimonials', error);
     return getFallbackTestimonials({ courseId, limit });
@@ -1718,6 +1800,15 @@ const replyToAdminHelpRequest = (requestId, replyMessage) =>
     body: { message: replyMessage },
   });
 
+// ===== TEACHER HELP REQUEST FUNCTIONS =====
+const getTeacherHelpRequests = () => requestWithAuth('/teachers/help-requests');
+
+const respondToTeacherHelpRequest = (helpRequestId, response) =>
+  requestWithAuth(`/teachers/help-requests/${helpRequestId}/respond`, {
+    method: 'POST',
+    body: { response },
+  });
+
 export const teacherCourseService = {
   listMyCourses,
   getCourse: getManagedCourse,
@@ -1753,9 +1844,13 @@ export const forumModerationService = {
 // Student-specific API functions for learning activities
 const getChapterContent = async (chapterId) => {
   try {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/students/chapters/${chapterId}/content`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      }
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     return await response.json();
@@ -1767,9 +1862,13 @@ const getChapterContent = async (chapterId) => {
 
 const getFlashcards = async (chapterId) => {
   try {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/students/chapters/${chapterId}/flashcards`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      }
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     return await response.json();
@@ -1781,9 +1880,13 @@ const getFlashcards = async (chapterId) => {
 
 const getQuizQuestions = async (chapterId) => {
   try {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/students/chapters/${chapterId}/quizzes`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      }
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     return await response.json();
@@ -1795,9 +1898,13 @@ const getQuizQuestions = async (chapterId) => {
 
 const submitQuiz = async (userId, chapterId, answers) => {
   try {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/students/quizzes/submit`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      },
       body: JSON.stringify({
         userId,
         chapterId,
@@ -1814,9 +1921,13 @@ const submitQuiz = async (userId, chapterId, answers) => {
 
 const getQuestionHint = async (questionId) => {
   try {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/students/questions/${questionId}/hint`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      }
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     return await response.json();
@@ -1828,9 +1939,13 @@ const getQuestionHint = async (questionId) => {
 
 const getStudentProgress = async (userId) => {
   try {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/students/${userId}/progress`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      }
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     return await response.json();
@@ -1842,9 +1957,13 @@ const getStudentProgress = async (userId) => {
 
 const getChapterProgress = async (userId, chapterId) => {
   try {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/students/${userId}/chapters/${chapterId}/progress`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      }
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     return await response.json();
@@ -1856,9 +1975,13 @@ const getChapterProgress = async (userId, chapterId) => {
 
 const markChapterComplete = async (userId, chapterId) => {
   try {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/students/${userId}/chapters/${chapterId}/complete`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      }
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     return await response.json();
@@ -1870,9 +1993,13 @@ const markChapterComplete = async (userId, chapterId) => {
 
 const getStudentProfile = async (userId) => {
   try {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/students/${userId}/profile`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      }
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     return await response.json();
@@ -1884,9 +2011,13 @@ const getStudentProfile = async (userId) => {
 
 const updateStudentProfile = async (userId, profileData) => {
   try {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/students/${userId}/profile`, {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      },
       body: JSON.stringify(profileData)
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -1899,9 +2030,13 @@ const updateStudentProfile = async (userId, profileData) => {
 
 const getForumPosts = async (courseId) => {
   try {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/students/forums/courses/${courseId}/posts`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      }
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     return await response.json();
@@ -1913,9 +2048,13 @@ const getForumPosts = async (courseId) => {
 
 const createForumPost = async (userId, courseId, content) => {
   try {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/students/forums/posts`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      },
       body: JSON.stringify({
         userId,
         courseId,
@@ -1932,12 +2071,16 @@ const createForumPost = async (userId, courseId, content) => {
 
 const getLeaderboard = async (userId = null) => {
   try {
+    const token = getToken();
     const url = userId 
       ? `${API_BASE_URL}/students/leaderboard?userId=${userId}`
       : `${API_BASE_URL}/students/leaderboard`;
     const response = await fetch(url, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      }
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     return await response.json();
@@ -2029,6 +2172,16 @@ export const api = {
     createForumPost,
     createHelpRequest: createStudentHelpRequest,
     getLeaderboard
+  },
+
+  // Teacher-specific functions
+  teachers: {
+    getHelpRequests: getTeacherHelpRequests,
+    respondToHelpRequest: respondToTeacherHelpRequest,
+    getMyCourses: listMyCourses,
+    getCourse: getManagedCourse,
+    createCourse: createManagedCourse,
+    deleteCourse: deleteManagedCourse
   }
 };
 

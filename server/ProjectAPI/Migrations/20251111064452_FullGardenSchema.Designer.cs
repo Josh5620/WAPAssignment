@@ -12,8 +12,8 @@ using ProjectAPI.Data;
 namespace ProjectAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251105021630_CourseDataUploadedSuccessfully")]
-    partial class CourseDataUploadedSuccessfully
+    [Migration("20251111064452_FullGardenSchema")]
+    partial class FullGardenSchema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,33 @@ namespace ProjectAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("ProjectAPI.Models.Announcement", b =>
+                {
+                    b.Property<Guid>("AnnouncementId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AdminId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AnnouncementId");
+
+                    b.HasIndex("AdminId");
+
+                    b.ToTable("Announcements");
+                });
 
             modelBuilder.Entity("ProjectAPI.Models.Chapter", b =>
                 {
@@ -46,7 +73,7 @@ namespace ProjectAPI.Migrations
 
                     b.HasKey("ChapterId");
 
-                    b.HasIndex("CourseId");
+                    b.HasIndex("CourseId", "Number");
 
                     b.ToTable("Chapters");
                 });
@@ -61,6 +88,9 @@ namespace ProjectAPI.Migrations
 
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime?>("CompletedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("McqsAttempted")
                         .HasColumnType("int");
@@ -81,6 +111,10 @@ namespace ProjectAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("ApprovalStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -90,11 +124,21 @@ namespace ProjectAPI.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("bit");
 
+                    b.Property<string>("RejectionReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TeacherId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CourseId");
+
+                    b.HasIndex("ApprovalStatus");
+
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Courses");
                 });
@@ -106,6 +150,9 @@ namespace ProjectAPI.Migrations
 
                     b.Property<Guid>("CourseId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("EnrolledAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -166,9 +213,56 @@ namespace ProjectAPI.Migrations
 
                     b.HasIndex("CourseId");
 
+                    b.HasIndex("CreatedAt");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("ForumPosts");
+                });
+
+            modelBuilder.Entity("ProjectAPI.Models.HelpRequest", b =>
+                {
+                    b.Property<Guid>("HelpRequestId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ChapterId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Question")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ResolvedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("ResolvedByTeacherId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Response")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("HelpRequestId");
+
+                    b.HasIndex("ChapterId");
+
+                    b.HasIndex("ResolvedByTeacherId");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("HelpRequests");
                 });
 
             modelBuilder.Entity("ProjectAPI.Models.Leaderboard", b =>
@@ -190,18 +284,47 @@ namespace ProjectAPI.Migrations
                     b.ToTable("Leaderboards");
                 });
 
-            modelBuilder.Entity("ProjectAPI.Models.Profile", b =>
+            modelBuilder.Entity("ProjectAPI.Models.Notification", b =>
                 {
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("NotificationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("NotificationId");
+
+                    b.HasIndex("UserId", "IsRead");
+
+                    b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("ProjectAPI.Models.Profile", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AccessToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
@@ -211,11 +334,17 @@ namespace ProjectAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Profiles");
                 });
@@ -293,6 +422,48 @@ namespace ProjectAPI.Migrations
                     b.ToTable("Resources");
                 });
 
+            modelBuilder.Entity("ProjectAPI.Models.Testimonial", b =>
+                {
+                    b.Property<Guid>("TestimonialId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("CourseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("TestimonialId");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Testimonials");
+                });
+
+            modelBuilder.Entity("ProjectAPI.Models.Announcement", b =>
+                {
+                    b.HasOne("ProjectAPI.Models.Profile", "Admin")
+                        .WithMany("Announcements")
+                        .HasForeignKey("AdminId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Admin");
+                });
+
             modelBuilder.Entity("ProjectAPI.Models.Chapter", b =>
                 {
                     b.HasOne("ProjectAPI.Models.Course", "Course")
@@ -321,6 +492,17 @@ namespace ProjectAPI.Migrations
                     b.Navigation("Chapter");
 
                     b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("ProjectAPI.Models.Course", b =>
+                {
+                    b.HasOne("ProjectAPI.Models.Profile", "Teacher")
+                        .WithMany("CoursesCreated")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("ProjectAPI.Models.Enrolment", b =>
@@ -372,11 +554,48 @@ namespace ProjectAPI.Migrations
                     b.Navigation("Profile");
                 });
 
+            modelBuilder.Entity("ProjectAPI.Models.HelpRequest", b =>
+                {
+                    b.HasOne("ProjectAPI.Models.Chapter", "Chapter")
+                        .WithMany("HelpRequests")
+                        .HasForeignKey("ChapterId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ProjectAPI.Models.Profile", "ResolvedByTeacher")
+                        .WithMany("HelpRequestsAsTeacher")
+                        .HasForeignKey("ResolvedByTeacherId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("ProjectAPI.Models.Profile", "Student")
+                        .WithMany("HelpRequestsAsStudent")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Chapter");
+
+                    b.Navigation("ResolvedByTeacher");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("ProjectAPI.Models.Leaderboard", b =>
                 {
                     b.HasOne("ProjectAPI.Models.Profile", "Profile")
                         .WithOne("Leaderboard")
                         .HasForeignKey("ProjectAPI.Models.Leaderboard", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("ProjectAPI.Models.Notification", b =>
+                {
+                    b.HasOne("ProjectAPI.Models.Profile", "Profile")
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -416,9 +635,29 @@ namespace ProjectAPI.Migrations
                     b.Navigation("Chapter");
                 });
 
+            modelBuilder.Entity("ProjectAPI.Models.Testimonial", b =>
+                {
+                    b.HasOne("ProjectAPI.Models.Course", "Course")
+                        .WithMany("Testimonials")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ProjectAPI.Models.Profile", "Profile")
+                        .WithMany("Testimonials")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Profile");
+                });
+
             modelBuilder.Entity("ProjectAPI.Models.Chapter", b =>
                 {
                     b.Navigation("ChapterProgress");
+
+                    b.Navigation("HelpRequests");
 
                     b.Navigation("Resources");
                 });
@@ -430,17 +669,31 @@ namespace ProjectAPI.Migrations
                     b.Navigation("Enrolments");
 
                     b.Navigation("ForumPosts");
+
+                    b.Navigation("Testimonials");
                 });
 
             modelBuilder.Entity("ProjectAPI.Models.Profile", b =>
                 {
+                    b.Navigation("Announcements");
+
                     b.Navigation("ChapterProgress");
+
+                    b.Navigation("CoursesCreated");
 
                     b.Navigation("Enrolments");
 
                     b.Navigation("ForumPosts");
 
+                    b.Navigation("HelpRequestsAsStudent");
+
+                    b.Navigation("HelpRequestsAsTeacher");
+
                     b.Navigation("Leaderboard");
+
+                    b.Navigation("Notifications");
+
+                    b.Navigation("Testimonials");
                 });
 
             modelBuilder.Entity("ProjectAPI.Models.Question", b =>

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectAPI.Data;
@@ -12,6 +13,7 @@ namespace ProjectAPI.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/guests")]
+[AllowAnonymous]
 public class GuestsController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
@@ -26,7 +28,7 @@ public class GuestsController : ControllerBase
     #region Course Catalog & Previews
 
     /// <summary>
-    /// Get published courses catalog for preview (public access)
+    /// Get all approved and published courses for guest browsing
     /// </summary>
     [HttpGet("courses")]
     public async Task<IActionResult> GetCourseCatalog(CancellationToken ct = default)
@@ -34,7 +36,7 @@ public class GuestsController : ControllerBase
         try
         {
             var courses = await _context.Courses
-                .Where(c => c.Published)
+                .Where(c => c.ApprovalStatus == "Approved" && c.Published == true)
                 .Select(c => new
                 {
                     courseId = c.CourseId,
@@ -42,6 +44,7 @@ public class GuestsController : ControllerBase
                     description = c.Description,
                     previewContent = c.PreviewContent,
                     published = c.Published,
+                    approvalStatus = c.ApprovalStatus,
                     chapterCount = c.Chapters.Count
                 })
                 .OrderBy(c => c.title)
@@ -62,7 +65,7 @@ public class GuestsController : ControllerBase
     }
 
     /// <summary>
-    /// Get course preview details (limited information for guests)
+    /// Get a single approved course with its chapters for preview
     /// </summary>
     [HttpGet("courses/{courseId}/preview")]
     public async Task<IActionResult> GetCoursePreview(Guid courseId, CancellationToken ct = default)
@@ -71,29 +74,30 @@ public class GuestsController : ControllerBase
         {
             var course = await _context.Courses
                 .Include(c => c.Chapters)
-                .FirstOrDefaultAsync(c => c.CourseId == courseId && c.Published, ct);
+                .FirstOrDefaultAsync(c => c.CourseId == courseId && c.ApprovalStatus == "Approved", ct);
 
             if (course == null)
             {
-                return NotFound(new { error = "Course not found or not available for preview" });
+                return NotFound(new { error = "Course not found or not approved for preview" });
             }
 
-            // Return limited preview information
+            // Return course with chapter titles and numbers
             var preview = new
             {
                 courseId = course.CourseId,
                 title = course.Title,
                 description = course.Description,
                 previewContent = course.PreviewContent,
+                published = course.Published,
+                approvalStatus = course.ApprovalStatus,
                 totalChapters = course.Chapters.Count,
-                chapterTitles = course.Chapters
+                chapters = course.Chapters
                     .OrderBy(ch => ch.Number)
                     .Select(ch => new
                     {
                         chapterId = ch.ChapterId,
                         number = ch.Number,
-                        title = ch.Title,
-                        summary = ch.Summary
+                        title = ch.Title
                     })
                     .ToList(),
                 message = "This is a preview. Register to access full course content, quizzes, and progress tracking."
@@ -450,47 +454,41 @@ public class GuestsController : ControllerBase
     }
 
     /// <summary>
-    /// Get testimonials from users
+    /// Get all testimonials from the database
     /// </summary>
     [HttpGet("testimonials")]
-    public IActionResult GetTestimonials()
+    public async Task<IActionResult> GetTestimonials(CancellationToken ct = default)
     {
         try
         {
-            // For now, return static testimonials
-            // Can be enhanced to pull from database or user reviews later
-            var testimonials = new[]
-            {
-                new
+            var testimonials = await _context.Testimonials
+                .Include(t => t.Profile)
+                .Include(t => t.Course)
+                .Select(t => new
                 {
-                    id = 1,
-                    name = "Alex Chen",
-                    role = "Beginner Programmer",
-                    content = "CodeSage has helped me grow so much! The interactive lessons and quizzes make learning Python fun and engaging.",
-                    rating = 5
-                },
-                new
-                {
-                    id = 2,
-                    name = "Sarah Johnson",
-                    role = "Computer Science Student",
-                    content = "The progress tracking and flashcards are amazing. I can see my improvement every day!",
-                    rating = 5
-                },
-                new
-                {
-                    id = 3,
-                    name = "Michael Park",
-                    role = "Career Switcher",
-                    content = "As someone switching careers, CodeSage made learning to code accessible and enjoyable. Highly recommend!",
-                    rating = 5
-                }
-            };
+                    testimonialId = t.TestimonialId,
+                    rating = t.Rating,
+                    comment = t.Comment,
+                    createdAt = t.CreatedAt,
+                    user = new
+                    {
+                        userId = t.Profile.UserId,
+                        fullName = t.Profile.FullName,
+                        role = t.Profile.Role
+                    },
+                    course = t.Course != null ? new
+                    {
+                        courseId = t.Course.CourseId,
+                        title = t.Course.Title
+                    } : null
+                })
+                .OrderByDescending(t => t.createdAt)
+                .ToListAsync(ct);
 
             return Ok(new
             {
                 testimonials,
-                total = testimonials.Length
+                total = testimonials.Count
             });
         }
         catch (Exception ex)

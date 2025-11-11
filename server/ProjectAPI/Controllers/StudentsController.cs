@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectAPI.Data;
 using ProjectAPI.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace ProjectAPI.Controllers;
 
@@ -12,6 +14,7 @@ namespace ProjectAPI.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/students")]
+[Authorize]
 public class StudentsController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
@@ -26,7 +29,7 @@ public class StudentsController : ControllerBase
     #region Learning Content
 
     /// <summary>
-    /// Get all learning content (lessons, quizzes, flashcards) for a specific chapter
+    /// Master Key Endpoint: Get complete chapter content with all related resources, questions, and flashcards
     /// </summary>
     [HttpGet("chapters/{chapterId}/content")]
     public async Task<IActionResult> GetChapterContent(Guid chapterId, CancellationToken ct = default)
@@ -34,51 +37,76 @@ public class StudentsController : ControllerBase
         try
         {
             var chapter = await _context.Chapters
-                .Include(c => c.Resources)
+                .Include(ch => ch.Course)
+                .Include(ch => ch.Resources)
                     .ThenInclude(r => r.Questions)
                         .ThenInclude(q => q.QuestionOptions)
-                .Include(c => c.Resources)
+                .Include(ch => ch.Resources)
                     .ThenInclude(r => r.Flashcards)
-                .FirstOrDefaultAsync(c => c.ChapterId == chapterId, ct);
+                .FirstOrDefaultAsync(ch => ch.ChapterId == chapterId, ct);
 
             if (chapter == null)
             {
                 return NotFound(new { error = "Chapter not found" });
             }
 
-            var content = chapter.Resources.Select(r => new
-            {
-                resourceId = r.ResourceId,
-                type = r.Type,
-                content = r.Content,
-                flashcards = r.Type == "flashcard" ? r.Flashcards.OrderBy(f => f.OrderIndex).Select(f => new
-                {
-                    id = f.FcId,
-                    frontText = f.FrontText,
-                    backText = f.BackText,
-                    orderIndex = f.OrderIndex
-                }) : null,
-                questions = r.Type == "mcq" ? r.Questions.Select(q => new
-                {
-                    questionId = q.QuestionId,
-                    stem = q.Stem,
-                    difficulty = q.Difficulty,
-                    options = q.QuestionOptions.Select(o => new
-                    {
-                        optionId = o.OptionId,
-                        optionText = o.OptionText
-                        // Note: IsCorrect is excluded for security - students shouldn't see correct answers
-                    }).ToList()
-                }) : null
-            }).ToList();
-
-            return Ok(new
+            // Build the complete response with all nested content
+            var content = new
             {
                 chapterId = chapter.ChapterId,
                 chapterTitle = chapter.Title,
                 chapterSummary = chapter.Summary,
-                content
-            });
+                number = chapter.Number,
+                courseId = chapter.CourseId,
+                course = new
+                {
+                    courseId = chapter.Course.CourseId,
+                    title = chapter.Course.Title,
+                    description = chapter.Course.Description
+                },
+                content = chapter.Resources
+                    .OrderBy(r => r.ResourceId)
+                    .Select(r => new
+                    {
+                        resourceId = r.ResourceId,
+                        type = r.Type,
+                        content = r.Content,
+                        // Include flashcards for this resource
+                        flashcards = r.Flashcards
+                            .OrderBy(f => f.OrderIndex)
+                            .Select(f => new
+                            {
+                                fcId = f.FcId,
+                                frontText = f.FrontText,
+                                backText = f.BackText,
+                                orderIndex = f.OrderIndex
+                            })
+                            .ToList(),
+                        // Include questions with their options for this resource
+                        questions = r.Questions
+                            .OrderBy(q => q.QuestionId)
+                            .Select(q => new
+                            {
+                                questionId = q.QuestionId,
+                                stem = q.Stem,
+                                difficulty = q.Difficulty,
+                                explanation = q.Explanation,
+                                options = q.QuestionOptions
+                                    .OrderBy(qo => qo.OptionId)
+                                    .Select(qo => new
+                                    {
+                                        optionId = qo.OptionId,
+                                        optionText = qo.OptionText,
+                                        isCorrect = qo.IsCorrect
+                                    })
+                                    .ToList()
+                            })
+                            .ToList()
+                    })
+                    .ToList()
+            };
+
+            return Ok(content);
         }
         catch (Exception ex)
         {
@@ -158,87 +186,140 @@ public class StudentsController : ControllerBase
     #region Quiz Submission and Feedback
 
     /// <summary>
-    /// Submit quiz answers and receive feedback
+    /// Submit quiz answers, calculate score, and update chapter progress
     /// </summary>
     [HttpPost("quizzes/submit")]
     public async Task<IActionResult> SubmitQuiz([FromBody] QuizSubmissionRequest request, CancellationToken ct = default)
     {
         try
         {
-            if (request == null || request.Answers == null || !request.Answers.Any())
+            // Validate request
+            if (request == null || request.ChapterId == Guid.Empty || request.Answers == null || !request.Answers.Any())
             {
-                return BadRequest(new { error = "Quiz submission is required" });
+                return BadRequest(new { error = "Invalid quiz submission data. ChapterId and Answers are required." });
             }
 
-            // Verify user exists
-            var userExists = await _context.Profiles.AnyAsync(p => p.UserId == request.UserId, ct);
-            if (!userExists)
+            // Get user ID from JWT token
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
             {
-                return NotFound(new { error = "User not found" });
+                return Unauthorized(new { error = "Invalid or missing user identification" });
             }
 
-            var results = new List<QuestionResultDto>();
-            int totalCorrect = 0;
-            int totalAttempted = request.Answers.Count;
+            // Verify chapter exists
+            var chapterExists = await _context.Chapters.AnyAsync(ch => ch.ChapterId == request.ChapterId, ct);
+            if (!chapterExists)
+            {
+                return NotFound(new { error = "Chapter not found" });
+            }
+
+            // Get all questions for this chapter with their correct answers
+            var questions = await _context.Questions
+                .Include(q => q.QuestionOptions)
+                .Include(q => q.Resource)
+                .Where(q => q.Resource.ChapterId == request.ChapterId)
+                .ToListAsync(ct);
+
+            if (!questions.Any())
+            {
+                return BadRequest(new { error = "No questions found for this chapter" });
+            }
+
+            // Calculate score by checking answers against QuestionOptions table
+            int totalQuestions = request.Answers.Count;
+            int correctAnswers = 0;
+            var results = new List<object>();
 
             foreach (var answer in request.Answers)
             {
-                var question = await _context.Questions
-                    .Include(q => q.QuestionOptions)
-                    .FirstOrDefaultAsync(q => q.QuestionId == answer.QuestionId, ct);
-
+                var question = questions.FirstOrDefault(q => q.QuestionId == answer.QuestionId);
+                
                 if (question == null)
                 {
-                    results.Add(new QuestionResultDto
-                    {
-                        QuestionId = answer.QuestionId,
-                        IsCorrect = false,
-                        Feedback = "Question not found"
-                    });
-                    continue;
+                    continue; // Skip invalid question IDs
                 }
 
-                var correctOption = question.QuestionOptions.FirstOrDefault(o => o.IsCorrect);
-                var isCorrect = correctOption != null && correctOption.OptionId == answer.SelectedOptionId;
+                // Check if the selected option is correct
+                var selectedOption = question.QuestionOptions
+                    .FirstOrDefault(qo => qo.OptionId == answer.SelectedOptionId);
 
+                bool isCorrect = selectedOption != null && selectedOption.IsCorrect;
+                
                 if (isCorrect)
-                    totalCorrect++;
-
-                results.Add(new QuestionResultDto
                 {
-                    QuestionId = question.QuestionId,
-                    IsCorrect = isCorrect,
-                    Feedback = isCorrect 
-                        ? "Correct! Well done!" 
-                        : $"Incorrect. The correct answer is: {correctOption?.OptionText ?? "N/A"}",
-                    Explanation = question.Explanation,
-                    CorrectOptionId = correctOption?.OptionId
+                    correctAnswers++;
+                }
+
+                // Get the correct answer for feedback
+                var correctOption = question.QuestionOptions.FirstOrDefault(qo => qo.IsCorrect);
+
+                results.Add(new
+                {
+                    questionId = question.QuestionId,
+                    stem = question.Stem,
+                    selectedOptionId = answer.SelectedOptionId,
+                    selectedOptionText = selectedOption?.OptionText,
+                    isCorrect,
+                    correctOptionId = correctOption?.OptionId,
+                    correctOptionText = correctOption?.OptionText,
+                    explanation = question.Explanation
                 });
             }
 
-            // Update chapter progress if chapterId is provided
-            if (request.ChapterId.HasValue)
+            // Calculate percentage score
+            var scorePercentage = totalQuestions > 0 ? (int)Math.Round((double)correctAnswers / totalQuestions * 100) : 0;
+
+            // Update ChapterProgress table for this user and chapter
+            var existingProgress = await _context.ChapterProgress
+                .FirstOrDefaultAsync(cp => cp.UserId == userId && cp.ChapterId == request.ChapterId, ct);
+
+            if (existingProgress != null)
             {
-                await UpdateChapterProgressAsync(request.UserId, request.ChapterId.Value, totalAttempted, totalCorrect, ct);
+                // Update existing progress
+                existingProgress.Completed = true;
+                existingProgress.McqsAttempted = totalQuestions;
+                existingProgress.McqsCorrect = correctAnswers;
+                existingProgress.CompletedAt = DateTime.UtcNow;
+                _context.ChapterProgress.Update(existingProgress);
+            }
+            else
+            {
+                // Create new progress record
+                var newProgress = new ChapterProgress
+                {
+                    UserId = userId,
+                    ChapterId = request.ChapterId,
+                    Completed = true,
+                    McqsAttempted = totalQuestions,
+                    McqsCorrect = correctAnswers,
+                    CompletedAt = DateTime.UtcNow
+                };
+                await _context.ChapterProgress.AddAsync(newProgress, ct);
             }
 
-            // Award XP and update leaderboard
-            var xpAwarded = CalculateXPAwarded(totalCorrect, totalAttempted);
-            await AwardXPAsync(request.UserId, xpAwarded, ct);
+            await _context.SaveChangesAsync(ct);
 
-            return Ok(new QuizSubmissionResponse
+            // Return results
+            return Ok(new
             {
-                TotalQuestions = totalAttempted,
-                TotalCorrect = totalCorrect,
-                Score = totalAttempted > 0 ? (double)totalCorrect / totalAttempted * 100 : 0,
-                XPAwarded = xpAwarded,
-                Results = results
+                chapterId = request.ChapterId,
+                userId,
+                score = scorePercentage,
+                correctAnswers,
+                totalQuestions,
+                passed = scorePercentage >= 70, // 70% passing threshold
+                completedAt = DateTime.UtcNow,
+                results,
+                message = scorePercentage >= 70 
+                    ? "Congratulations! You passed this chapter!" 
+                    : "Keep practicing! You can retake the quiz to improve your score."
             });
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error submitting quiz for user {UserId}", request?.UserId);
-            return StatusCode(500, new { error = "An error occurred while submitting the quiz" });
+            _logger.LogError(ex, "Error submitting quiz for chapter {ChapterId}", request?.ChapterId);
+            return StatusCode(500, new { error = "An error occurred while submitting your quiz" });
         }
     }
 
@@ -278,6 +359,72 @@ public class StudentsController : ControllerBase
     #endregion
 
     #region Progress Tracking
+
+    /// <summary>
+    /// Get the logged-in student's progress across all chapters
+    /// </summary>
+    [HttpGet("progress")]
+    public async Task<IActionResult> GetProgress(CancellationToken ct = default)
+    {
+        try
+        {
+            // Get user ID from JWT token
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+            {
+                return Unauthorized(new { error = "Invalid or missing user identification" });
+            }
+
+            // Get all chapter progress for this user
+            var progress = await _context.ChapterProgress
+                .Include(cp => cp.Chapter)
+                    .ThenInclude(ch => ch.Course)
+                .Where(cp => cp.UserId == userId)
+                .Select(cp => new
+                {
+                    userId = cp.UserId,
+                    chapterId = cp.ChapterId,
+                    completed = cp.Completed,
+                    mcqsAttempted = cp.McqsAttempted,
+                    mcqsCorrect = cp.McqsCorrect,
+                    score = cp.McqsAttempted > 0 ? (int)Math.Round((double)cp.McqsCorrect / cp.McqsAttempted * 100) : 0,
+                    completedAt = cp.CompletedAt,
+                    chapter = new
+                    {
+                        chapterId = cp.Chapter.ChapterId,
+                        number = cp.Chapter.Number,
+                        title = cp.Chapter.Title,
+                        summary = cp.Chapter.Summary,
+                        courseId = cp.Chapter.CourseId
+                    },
+                    course = new
+                    {
+                        courseId = cp.Chapter.Course.CourseId,
+                        title = cp.Chapter.Course.Title
+                    }
+                })
+                .OrderBy(cp => cp.course.title)
+                    .ThenBy(cp => cp.chapter.number)
+                .ToListAsync(ct);
+
+            return Ok(new
+            {
+                userId,
+                totalChapters = progress.Count,
+                completedChapters = progress.Count(p => p.completed),
+                averageScore = progress.Any() 
+                    ? progress.Average(p => p.score) 
+                    : 0,
+                progress
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving student progress");
+            return StatusCode(500, new { error = "An error occurred while retrieving your progress" });
+        }
+    }
 
     /// <summary>
     /// Get student's progress for all enrolled courses
@@ -788,9 +935,7 @@ public class StudentsController : ControllerBase
 public record QuizSubmissionRequest
 {
     [Required]
-    public Guid UserId { get; init; }
-
-    public Guid? ChapterId { get; init; }
+    public Guid ChapterId { get; init; }
 
     [Required]
     public List<AnswerSubmission> Answers { get; init; } = new();

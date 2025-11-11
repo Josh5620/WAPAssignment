@@ -38,9 +38,10 @@ export const AuthProvider = ({ children }) => {
         return;
       }
 
+      // Extract token - now includes 'token' from AuthController response
       const token =
+        authPayload.token ||           // AuthController returns 'token'
         authPayload.access_token ||
-        authPayload.token ||
         authPayload.accessToken ||
         authPayload.jwt ||
         null;

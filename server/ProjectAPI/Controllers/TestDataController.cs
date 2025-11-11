@@ -24,15 +24,17 @@ public class TestDataController : ControllerBase
     {
         try
         {
-            // Clear existing profiles first to avoid duplicates
-            var existingProfiles = await _context.Profiles.ToListAsync();
-            _context.Profiles.RemoveRange(existingProfiles);
+            // Clear existing data in proper order to avoid FK constraints
+            _context.ChapterProgress.RemoveRange(_context.ChapterProgress);
+            _context.Enrolments.RemoveRange(_context.Enrolments);
+            _context.Chapters.RemoveRange(_context.Chapters);
+            _context.Courses.RemoveRange(_context.Courses);
+            _context.Profiles.RemoveRange(_context.Profiles);
             await _context.SaveChangesAsync();
 
-            // Check if courses already exist (but not profiles)
-            var coursesExist = await _context.Courses.AnyAsync();
-
-            // Create test profiles with variety of users - using List for better control
+            // ===================================
+            // STEP 1: Create and save all Profiles first
+            // ===================================
             var testProfiles = new List<Profile>();
 
             // Admin users
@@ -154,43 +156,54 @@ public class TestDataController : ControllerBase
             await _context.SaveChangesAsync();
             Console.WriteLine($"Successfully added {testProfiles.Count} profiles to database");
 
-            // Get the first student and admin for enrollment
-            var adminProfile = testProfiles.First(p => p.Role == "admin");
-            var studentProfile = testProfiles.First(p => p.Role == "student");
+            // ===================================
+            // STEP 2: Query the database to get a valid TeacherId
+            // ===================================
+            var teacherProfile = await _context.Profiles
+                .FirstOrDefaultAsync(p => p.Email == "teacher@codesage.com");
 
-            Course jsCourse, pythonCourse;
-
-            if (!coursesExist)
+            if (teacherProfile == null)
             {
-                // Create test courses
-                jsCourse = new Course {
-                    CourseId = Guid.NewGuid(),
-                    Title = "JavaScript Fundamentals",
-                    Description = "Learn the basics of JavaScript programming",
-                    PreviewContent = "Introduction to variables, functions, and control structures",
-                    Published = true
-                };
-
-                pythonCourse = new Course {
-                    CourseId = Guid.NewGuid(),
-                    Title = "Python for Beginners",
-                    Description = "Start your Python journey with this comprehensive course",
-                    PreviewContent = "Learn Python syntax, data types, and basic programming concepts",
-                    Published = true
-                };
-
-                await _context.Courses.AddRangeAsync(jsCourse, pythonCourse);
-                await _context.SaveChangesAsync();
-            }
-            else
-            {
-                // Get existing courses
-                jsCourse = await _context.Courses.FirstAsync();
-                pythonCourse = await _context.Courses.Skip(1).FirstAsync();
+                return StatusCode(500, new { error = "Failed to create teacher profile" });
             }
 
-            // Create test chapters
-            var jsChapter1 = new Chapter {
+            Console.WriteLine($"Found teacher with UserId: {teacherProfile.UserId}");
+
+            // ===================================
+            // STEP 3: Create Courses with valid TeacherId
+            // ===================================
+            var jsCourse = new Course
+            {
+                CourseId = Guid.NewGuid(),
+                Title = "JavaScript Fundamentals",
+                Description = "Learn the basics of JavaScript programming",
+                PreviewContent = "Introduction to variables, functions, and control structures",
+                Published = true,
+                TeacherId = teacherProfile.UserId, // Set valid TeacherId
+                ApprovalStatus = "Approved" // Set to approved for testing
+            };
+
+            var pythonCourse = new Course
+            {
+                CourseId = Guid.NewGuid(),
+                Title = "Python for Beginners",
+                Description = "Start your Python journey with this comprehensive course",
+                PreviewContent = "Learn Python syntax, data types, and basic programming concepts",
+                Published = true,
+                TeacherId = teacherProfile.UserId, // Set valid TeacherId
+                ApprovalStatus = "Approved" // Set to approved for testing
+            };
+
+            Console.WriteLine("About to add courses to database");
+            await _context.Courses.AddRangeAsync(jsCourse, pythonCourse);
+            await _context.SaveChangesAsync();
+            Console.WriteLine("Successfully added courses to database");
+
+            // ===================================
+            // STEP 4: Create Chapters
+            // ===================================
+            var jsChapter1 = new Chapter
+            {
                 ChapterId = Guid.NewGuid(),
                 CourseId = jsCourse.CourseId,
                 Number = 1,
@@ -198,7 +211,8 @@ public class TestDataController : ControllerBase
                 Summary = "Learn about JavaScript variables and different data types"
             };
 
-            var pythonChapter1 = new Chapter {
+            var pythonChapter1 = new Chapter
+            {
                 ChapterId = Guid.NewGuid(),
                 CourseId = pythonCourse.CourseId,
                 Number = 1,
@@ -208,39 +222,52 @@ public class TestDataController : ControllerBase
 
             await _context.Chapters.AddRangeAsync(jsChapter1, pythonChapter1);
             await _context.SaveChangesAsync();
+            Console.WriteLine("Successfully added chapters to database");
 
-            // Create test enrollment
-            var enrollment = new Enrolment
+            // ===================================
+            // STEP 5: Create test enrollment
+            // ===================================
+            var studentProfile = await _context.Profiles
+                .FirstOrDefaultAsync(p => p.Email == "student@codesage.com");
+
+            if (studentProfile != null)
             {
-                UserId = studentProfile.UserId,
-                CourseId = jsCourse.CourseId,
-                Status = "active"
-            };
+                var enrollment = new Enrolment
+                {
+                    UserId = studentProfile.UserId,
+                    CourseId = jsCourse.CourseId,
+                    Status = "active",
+                    EnrolledAt = DateTime.UtcNow
+                };
 
-            await _context.Enrolments.AddAsync(enrollment);
-            await _context.SaveChangesAsync();
+                await _context.Enrolments.AddAsync(enrollment);
+                await _context.SaveChangesAsync();
+                Console.WriteLine("Successfully added enrollment to database");
+            }
 
             return Ok(new
             {
                 message = "Test data created successfully!",
                 data = new
                 {
-                    profiles = 12,
+                    profiles = testProfiles.Count,
                     courses = 2,
                     chapters = 2,
                     enrollments = 1
                 },
                 accounts = new
                 {
-                    admins = testProfiles.Where(p => p.Role == "admin").Select(p => new { p.Email, p.FullName, Password = "Check documentation for passwords" }),
-                    teachers = testProfiles.Where(p => p.Role == "teacher").Select(p => new { p.Email, p.FullName, Password = "Check documentation for passwords" }),
-                    students = testProfiles.Where(p => p.Role == "student").Select(p => new { p.Email, p.FullName, Password = "Check documentation for passwords" })
+                    admins = testProfiles.Where(p => p.Role == "admin").Select(p => new { p.Email, p.FullName, Password = "admin123 or password123" }),
+                    teachers = testProfiles.Where(p => p.Role == "teacher").Select(p => new { p.Email, p.FullName, Password = "teacher123 or password123 or teacher456" }),
+                    students = testProfiles.Where(p => p.Role == "student").Select(p => new { p.Email, p.FullName, Password = "student123 or password123 or student456 or emma123 or carlos789 or sophia321 or james654" })
                 }
             });
         }
         catch (Exception ex)
         {
-            return StatusCode(500, new { error = ex.Message, details = ex.InnerException?.Message });
+            Console.WriteLine($"Error in SeedTestData: {ex.Message}");
+            Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
+            return StatusCode(500, new { error = ex.Message, details = ex.InnerException?.Message, stackTrace = ex.StackTrace });
         }
     }
 

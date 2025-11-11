@@ -4,27 +4,38 @@ const pdf = require('pdf-parse');
 const { v4: uuidv4 } = require('uuid');
 
 // --- CONFIGURATION ---
-const PDF_PATH = path.join(__dirname, '..', 'course_materials', 'pythonnotes.pdf'); // Corrected name
+const PDF_PATH = path.join(__dirname, '..', 'course_materials', 'pythonnotes.pdf');
 const SEED_OUTPUT_DIR = path.join(__dirname, '..', 'server', 'ProjectAPI', 'Data', 'Seeds');
-const COURSE_TITLE = 'The Garden of Python'; // Using your new theme!
+const COURSE_TITLE = 'The Garden of Python';
+const DEFAULT_TEACHER_ID = '213ac00b-c3df-4d60-a264-f5e8e5d3cb93'; 
 
-// Helper to escape single quotes for SQL
-const escapeSql = (text) => text ? text.replace(/'/g, "''") : '';
+/**
+ * Escapes single quotes in a string for safe SQL insertion.
+ * @param {string} text The text to escape.
+ * @returns {string} The escaped text.
+ */
+const escapeSql = (text) => {
+    if (typeof text !== 'string') {
+        return '';
+    }
+    return text.replace(/'/g, "''");
+};
 
+/**
+ * Main function to generate all seed files.
+ */
 async function generateSeeds() {
-    console.log('✅ PDFExtractor.js is running!');
-    console.log('Starting seed generation...');
-
+    console.log('✅ PDFExtractor.js (v7 - Final) is running!');
     await fs.mkdir(SEED_OUTPUT_DIR, { recursive: true });
-    console.log(`Output directory is: ${SEED_OUTPUT_DIR}`);
+    console.log(`Output directory set to: ${SEED_OUTPUT_DIR}`);
 
     // --- 1. Generate the Course Seed File ---
     const courseId = uuidv4();
     const courseSql = `
 -- Seed for course: ${COURSE_TITLE}
--- This file is auto-generated.
-INSERT INTO Courses (CourseId, Title, Description, Published)
-VALUES ('${courseId}', '${escapeSql(COURSE_TITLE)}', 'A course on Python fundamentals, grown from the CodeSage garden.', 1);
+-- This course is assigned to the default teacher and set to 'Approved'.
+INSERT INTO Courses (CourseId, Title, Description, Published, TeacherId, ApprovalStatus, PreviewContent)
+VALUES ('${courseId}', '${escapeSql(COURSE_TITLE)}', 'A course on Python fundamentals, grown from the CodeSage garden.', 1, '${DEFAULT_TEACHER_ID}', 'Approved', 'Learn the basics of Python, from variables to data structures and OOP.');
 GO
 `;
     await fs.writeFile(path.join(SEED_OUTPUT_DIR, '02-python-course.sql'), courseSql);
@@ -40,116 +51,162 @@ GO
         console.error('Please ensure the file exists in `course_materials`.');
         return;
     }
-
     const data = await pdf(dataBuffer);
     const allText = data.text;
 
-    // --- 3. Split by Chapter, NOT Page ---
-    // This RegEx splits the text *before* "Chapter X:", keeping it.
-    const chapterSplitPattern = /(?=^Chapter \d+: .*)/gm;
-    const chapterBlobs = allText.split(chapterSplitPattern);
+    // --- 3. Define Whitespace-Tolerant RegEx Patterns ---
+    
+    // Splits the text at the start of "Chapter X:"
+    const chapterSplitPattern = /(?=Chapter\s*\d{1,2}\s*:)/g;
+    
+    // Finds all text between "Full Notes" and the next major header
+    const notesPattern = /Full\s*Notes([\s\S]*?)(?=(?:Flashcards\s*\(\d+\)|MCQs\s*\(\d+\)|Multiple-Choice\s*Questions\s*\(\d+\)))/;
+    
+    // Finds all text between "Flashcards(X)" and the next major header
+    const flashcardsBlockPattern = /Flashcards\s*\(\d+\)([\s\S]*?)(?=(?:MCQs\s*\(\d+\)|Multiple-Choice\s*Questions\s*\(\d+\)))/;
+    
+    // Finds individual Q/A pairs, tolerating whitespace
+    const flashcardItemPattern = /\d+\.\s*Q:\s*(.*?)\n\s*A:\s*(.*?)(?=\n\d+\.\s*Q:|\n(?:MCQs\s*\(\d+\)|Multiple-Choice\s*Questions\s*\(\d+\)))/gs;
+    
+    // Finds *either* "MCQs (X) with Answers & Hints" or "Multiple-Choice Questions (X)"
+    const mcqsBlockPattern = /(?:MCQs\s*\(\d+\)\s*with\s*Answers\s*&\s*Hints|Multiple-Choice\s*Questions\s*\(\d+\))([\s\S]*?)(?=Chapter\s*\d{1,2}\s*:|$)/;
+    
+    // Finds individual MCQs, tolerating whitespace and optional "Hint:"
+    const mcqItemPattern = /\d+\.\s*([\s\S]*?)\n\s*(?:Hint:\s*(.*?)\n)?\s*A\)\s*(.*?)\n\s*B\)\s*(.*?)\n\s*C\)\s*(.*?)\n\s*D\)\s*(.*?)\n\s*Answer:\s*(A|B|C|D)/g;
 
+    // --- 4. Initialize SQL string arrays ---
     let chapterSqls = [];
+    let resourceSqls = [];
     let flashcardSqls = [];
     let questionSqls = [];
+    let optionSqls = [];
 
+    // --- 5. Main Parsing Loop ---
+    const chapterBlobs = allText.split(chapterSplitPattern);
     console.log(`Found ${chapterBlobs.length - 1} potential chapters...`);
 
-    // We skip blob[0] as it's everything *before* Chapter 1
+    // We skip blob[0] (text before Chapter 1)
     for (let i = 1; i < chapterBlobs.length; i++) {
         const blob = chapterBlobs[i];
         const chapterId = uuidv4();
 
-        // --- A. Parse Chapter Title and Content ---
-        const titleMatch = blob.match(/^Chapter \d+: (.*)/);
+        // --- A. Parse Chapter & Create its Resources ---
+        const titleMatch = blob.match(/^Chapter\s*\d{1,2}\s*:\s*(.*)/);
         const chapterTitle = titleMatch ? titleMatch[1].trim() : `Chapter ${i}`;
 
-        // RegEx to find text between "Full Notes" and the *next* "Flashcards" header
-        const notesMatch = blob.match(/Full Notes([\s\S]*?)(?=Flashcards \(\d+\))/);
-        const chapterContent = notesMatch ? notesMatch[1].trim() : 'Content not found.';
+        // Find the "Full Notes" section
+        let chapterContent = 'Content not found.';
+        const notesMatch = blob.match(notesPattern);
+        
+        if (notesMatch) {
+            chapterContent = notesMatch[1].trim();
+        } else {
+            // Fallback for chapters that *only* have notes (like Ch. 10)
+            const simpleContentMatch = blob.match(/^Chapter\s*\d{1,2}\s*:[\s\S]*?Full\s*Notes([\s\S]*?)(?=Flashcards\s*\(\d+\)|Multiple-Choice\s*Questions\s*\(\d+\)|$)/);
+            if (simpleContentMatch) {
+                chapterContent = simpleContentMatch[1].trim();
+            } else {
+                 // Final fallback: just grab everything after the title line
+                const fallbackMatch = blob.match(/^Chapter\s*\d{1,2}\s*:[\r\n]+([\s\S]*)/);
+                if(fallbackMatch) {
+                    chapterContent = fallbackMatch[1].trim();
+                }
+            }
+        }
         
         const chapterSql = `
 -- Seed for Chapter ${i}: ${chapterTitle}
 INSERT INTO Chapters (ChapterId, Title, Summary, Number, CourseId)
-VALUES ('${chapterId}', '${escapeSql(chapterTitle)}', N'${escapeSql(chapterContent)}', ${i}, '${courseId}');
+VALUES ('${chapterId}', '${escapeSql(chapterTitle)}', N'${escapeSql(chapterContent.substring(0, 200))}...', ${i}, '${courseId}');
 GO`;
         chapterSqls.push(chapterSql);
 
+        // --- Create ONE set of resources for this whole chapter ---
+        const lessonResourceId = uuidv4();
+        const flashcardResourceId = uuidv4();
+        const quizResourceId = uuidv4();
+
+        // 1. Lesson Resource
+        resourceSqls.push(`
+INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
+VALUES ('${lessonResourceId}', '${chapterId}', 'lesson', N'${escapeSql(chapterContent)}');
+GO`);
+
+        // 2. Flashcard Resource (wrapper)
+        resourceSqls.push(`
+INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
+VALUES ('${flashcardResourceId}', '${chapterId}', 'flashcard', '${escapeSql(chapterTitle)} Flashcards');
+GO`);
+
+        // 3. Quiz Resource (wrapper)
+        resourceSqls.push(`
+INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
+VALUES ('${quizResourceId}', '${chapterId}', 'mcq', '${escapeSql(chapterTitle)} Quiz');
+GO`);
+
+
         // --- B. Parse Flashcards ---
-        const flashcardsMatch = blob.match(/Flashcards \(\d+\)([\s\S]*?)(?=MCQs \(\d+\))/);
+        const flashcardsMatch = blob.match(flashcardsBlockPattern);
         if (flashcardsMatch) {
             const flashcardText = flashcardsMatch[1];
-            // RegEx to find all "Q: ... A: ..." pairs
-            const fcPattern = /\d+\. Q: (.*?)\n\s*A: (.*?)(?=\n\d+\. Q:|\nMCQs)/gs;
             let fcMatch;
-            let orderIndex = 1;
-            while ((fcMatch = fcPattern.exec(flashcardText)) !== null) {
+            let orderIndex = 0;
+            while ((fcMatch = flashcardItemPattern.exec(flashcardText)) !== null) {
                 const question = fcMatch[1].trim();
                 const answer = fcMatch[2].trim();
                 
-                // Generate Resource and Flashcard following proper schema
-                const resourceId = uuidv4();
-                const flashcardId = uuidv4();
-                const resourceSql = `INSERT INTO Resources (ResourceId, ChapterId, Type, Content) VALUES ('${resourceId}', '${chapterId}', 'flashcard', NULL);\nGO`;
-                const fcSql = `INSERT INTO Flashcards (FcId, ResourceId, FrontText, BackText, OrderIndex) VALUES ('${flashcardId}', '${resourceId}', N'${escapeSql(question)}', N'${escapeSql(answer)}', ${orderIndex});\nGO`;
-                flashcardSqls.push(resourceSql + '\n' + fcSql);
+                // Link ALL flashcards to the ONE flashcardResourceId
+                const fcSql = `INSERT INTO Flashcards (FcId, ResourceId, FrontText, BackText, OrderIndex) VALUES ('${uuidv4()}', '${flashcardResourceId}', N'${escapeSql(question)}', N'${escapeSql(answer)}', ${orderIndex});\nGO`;
+                flashcardSqls.push(fcSql);
                 orderIndex++;
             }
         }
 
         // --- C. Parse MCQs (Questions) ---
-        const mcqsMatch = blob.match(/MCQs \(\d+\) with Answers & Hints([\s\S]*)/);
+        const mcqsMatch = blob.match(mcqsBlockPattern);
         if (mcqsMatch) {
             const mcqText = mcqsMatch[1];
-            // This RegEx is more complex. It finds a question, all 4 options, and the answer.
-            const mcqPattern = /\d+\. ([\s\S]*?)\n\s*Hint: .*?\n\s*A\) (.*?)\n\s*B\) (.*?)\n\s*C\) (.*?)\n\s*D\) (.*?)\n\s*Answer: (A|B|C|D)/g;
             let mcqMatch;
-            while ((mcqMatch = mcqPattern.exec(mcqText)) !== null) {
-                const questionText = mcqMatch[1].trim().replace(/\n/g, ' '); // Clean up question text
-                const options = {
-                    A: mcqMatch[2].trim(),
-                    B: mcqMatch[3].trim(),
-                    C: mcqMatch[4].trim(),
-                    D: mcqMatch[5].trim()
-                };
-                const answer = mcqMatch[6].trim();
-                
-                // Generate Resource, Question, and QuestionOptions following proper schema
-                const resourceId = uuidv4();
+            while ((mcqMatch = mcqItemPattern.exec(mcqText)) !== null) {
                 const questionId = uuidv4();
+                const questionText = mcqMatch[1].trim().replace(/\n/g, ' ');
+                const explanation = mcqMatch[2] ? mcqMatch[2].trim() : 'No hint provided.';
+                const options = { A: mcqMatch[3].trim(), B: mcqMatch[4].trim(), C: mcqMatch[5].trim(), D: mcqMatch[6].trim() };
+                const answerKey = mcqMatch[7].trim(); 
                 
-                const resourceSql = `INSERT INTO Resources (ResourceId, ChapterId, Type, Content) VALUES ('${resourceId}', '${chapterId}', 'mcq', NULL);\nGO`;
-                const questionSql = `INSERT INTO Questions (QuestionId, ResourceId, Stem, Difficulty, Explanation) VALUES ('${questionId}', '${resourceId}', N'${escapeSql(questionText)}', 'medium', NULL);\nGO`;
+                // Link ALL questions to the ONE quizResourceId
+                const qSql = `INSERT INTO Questions (QuestionId, ResourceId, Stem, Difficulty, Explanation) VALUES ('${questionId}', '${quizResourceId}', N'${escapeSql(questionText)}', 'medium', N'${escapeSql(explanation)}');\nGO`;
+                questionSqls.push(qSql);
                 
-                // Generate options
-                let optionSqls = [];
+                // Generate options for this question
                 Object.keys(options).forEach(key => {
-                    const optionId = uuidv4();
-                    const isCorrect = (key === answer) ? 1 : 0;
-                    const optionSql = `INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('${optionId}', '${questionId}', N'${escapeSql(options[key])}', ${isCorrect});\nGO`;
+                    const isCorrect = (key === answerKey) ? 1 : 0;
+                    const optionSql = `INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('${uuidv4()}', '${questionId}', N'${escapeSql(options[key])}', ${isCorrect});\nGO`;
                     optionSqls.push(optionSql);
                 });
-                
-                questionSqls.push(resourceSql + '\n' + questionSql + '\n' + optionSqls.join('\n'));
             }
         }
+        console.log(`  ...Processed Chapter ${i}: ${chapterTitle}`);
     }
 
     // --- 4. Write All Seed Files ---
-    if (chapterSqls.length > 0) {
-        await fs.writeFile(path.join(SEED_OUTPUT_DIR, '03-python-chapters.sql'), chapterSqls.join('\n'));
-        console.log(`✅ Generated 03-python-chapters.sql with ${chapterSqls.length} chapters.`);
-    }
-    if (flashcardSqls.length > 0) {
-        await fs.writeFile(path.join(SEED_OUTPUT_DIR, '04-python-flashcards.sql'), flashcardSqls.join('\n'));
-        console.log(`✅ Generated 04-python-flashcards.sql with ${flashcardSqls.length} flashcards.`);
-    }
-    if (questionSqls.length > 0) {
-        await fs.writeFile(path.join(SEED_OUTPUT_DIR, '05-python-questions.sql'), questionSqls.join('\n'));
-        console.log(`✅ Generated 05-python-questions.sql with ${questionSqls.length} MCQs.`);
-    }
+    await fs.writeFile(path.join(SEED_OUTPUT_DIR, '03-python-chapters.sql'), chapterSqls.join('\n'));
+    console.log(`✅ Generated 03-python-chapters.sql with ${chapterSqls.length} chapters.`);
+    
+    await fs.writeFile(path.join(SEED_OUTPUT_DIR, '04-python-resources.sql'), resourceSqls.join('\n'));
+    console.log(`✅ Generated 04-python-resources.sql with ${resourceSqls.length} resources.`);
+    
+    await fs.writeFile(path.join(SEED_OUTPUT_DIR, '05-python-flashcards.sql'), flashcardSqls.join('\n'));
+    console.log(`✅ Generated 05-python-flashcards.sql with ${flashcardSqls.length} flashcards.`);
+
+    await fs.writeFile(path.join(SEED_OUTPUT_DIR, '06-python-questions.sql'), questionSqls.join('\n'));
+    console.log(`✅ Generated 06-python-questions.sql with ${questionSqls.length} questions.`);
+
+    await fs.writeFile(path.join(SEED_OUTPUT_DIR, '07-python-question-options.sql'), optionSqls.join('\n'));
+    console.log(`✅ Generated 07-python-question-options.sql with ${optionSqls.length} options.`);
 
     console.log('\nSeed generation complete!');
 }
 
+// --- Run the script ---
 generateSeeds().catch(console.error);

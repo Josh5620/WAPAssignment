@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PrimaryButton from './PrimaryButton';
-import { adminService } from '../services/apiService';
+import { api } from '../services/apiService';
 import '../styles/TeacherFeedbackQueue.css';
 
 const TeacherFeedbackQueue = ({ onReplyClick, refreshToken = 0 }) => {
@@ -11,12 +11,14 @@ const TeacherFeedbackQueue = ({ onReplyClick, refreshToken = 0 }) => {
   const loadRequests = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await adminService.getHelpRequests();
+      const data = await api.teachers.getHelpRequests();
       let items = [];
       if (Array.isArray(data)) {
         items = data;
       } else if (Array.isArray(data?.data)) {
         items = data.data;
+      } else if (Array.isArray(data?.helpRequests)) {
+        items = data.helpRequests;
       } else if (Array.isArray(data?.items)) {
         items = data.items;
       } else if (Array.isArray(data?.results)) {

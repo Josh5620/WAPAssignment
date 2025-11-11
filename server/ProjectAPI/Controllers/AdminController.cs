@@ -8,14 +8,166 @@ namespace ProjectAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    // [Authorize] // TODO: Re-enable when authentication is properly configured
+    [Authorize(Roles = "admin")]
     public class AdminController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<AdminController> _logger;
 
-        public AdminController(ApplicationDbContext context)
+        public AdminController(ApplicationDbContext context, ILogger<AdminController> logger)
         {
             _context = context;
+            _logger = logger;
+        }
+
+        // === COURSE APPROVAL MANAGEMENT ===
+        
+        /// <summary>
+        /// Get all courses pending admin approval (alias endpoint)
+        /// </summary>
+        [HttpGet("pending-approval")]
+        public async Task<IActionResult> GetPendingApproval()
+        {
+            // This is an alias for pending-courses to match frontend expectations
+            return await GetPendingCourses();
+        }
+        
+        /// <summary>
+        /// Get all courses pending admin approval
+        /// </summary>
+        [HttpGet("pending-courses")]
+        public async Task<IActionResult> GetPendingCourses()
+        {
+            try
+            {
+                var pendingCourses = await _context.Courses
+                    .Include(c => c.Teacher)
+                    .Include(c => c.Chapters)
+                    .Where(c => c.ApprovalStatus == "Pending")
+                    .Select(c => new
+                    {
+                        courseId = c.CourseId,
+                        title = c.Title,
+                        description = c.Description,
+                        previewContent = c.PreviewContent,
+                        approvalStatus = c.ApprovalStatus,
+                        teacherId = c.TeacherId,
+                        teacher = new
+                        {
+                            userId = c.Teacher.UserId,
+                            fullName = c.Teacher.FullName,
+                            email = c.Teacher.Email
+                        },
+                        totalChapters = c.Chapters.Count
+                    })
+                    .OrderBy(c => c.title)
+                    .ToListAsync();
+
+                return Ok(new
+                {
+                    totalPending = pendingCourses.Count,
+                    courses = pendingCourses
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving pending courses");
+                return StatusCode(500, new { error = "An error occurred while retrieving pending courses" });
+            }
+        }
+
+        /// <summary>
+        /// Approve a course - sets ApprovalStatus to "Approved" and Published to true
+        /// </summary>
+        [HttpPost("courses/{id}/approve")]
+        public async Task<IActionResult> ApproveCourse(Guid id)
+        {
+            try
+            {
+                var course = await _context.Courses
+                    .Include(c => c.Teacher)
+                    .FirstOrDefaultAsync(c => c.CourseId == id);
+
+                if (course == null)
+                {
+                    return NotFound(new { error = "Course not found" });
+                }
+
+                if (course.ApprovalStatus == "Approved")
+                {
+                    return BadRequest(new { error = "Course is already approved" });
+                }
+
+                // Approve the course
+                course.ApprovalStatus = "Approved";
+                course.Published = true;
+                course.RejectionReason = null;
+
+                _context.Courses.Update(course);
+                await _context.SaveChangesAsync();
+
+                return Ok(new
+                {
+                    courseId = course.CourseId,
+                    title = course.Title,
+                    approvalStatus = course.ApprovalStatus,
+                    published = course.Published,
+                    teacherName = course.Teacher.FullName,
+                    message = "Course approved successfully and is now published!"
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error approving course {CourseId}", id);
+                return StatusCode(500, new { error = "An error occurred while approving the course" });
+            }
+        }
+
+        /// <summary>
+        /// Reject a course - sets ApprovalStatus to "Rejected" with a reason
+        /// </summary>
+        [HttpPost("courses/{id}/reject")]
+        public async Task<IActionResult> RejectCourse(Guid id, [FromBody] RejectCourseRequest request)
+        {
+            try
+            {
+                if (request == null || string.IsNullOrWhiteSpace(request.RejectionReason))
+                {
+                    return BadRequest(new { error = "Rejection reason is required" });
+                }
+
+                var course = await _context.Courses
+                    .Include(c => c.Teacher)
+                    .FirstOrDefaultAsync(c => c.CourseId == id);
+
+                if (course == null)
+                {
+                    return NotFound(new { error = "Course not found" });
+                }
+
+                // Reject the course
+                course.ApprovalStatus = "Rejected";
+                course.RejectionReason = request.RejectionReason.Trim();
+                course.Published = false;
+
+                _context.Courses.Update(course);
+                await _context.SaveChangesAsync();
+
+                return Ok(new
+                {
+                    courseId = course.CourseId,
+                    title = course.Title,
+                    approvalStatus = course.ApprovalStatus,
+                    rejectionReason = course.RejectionReason,
+                    teacherName = course.Teacher.FullName,
+                    message = "Course rejected. Teacher has been notified."
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error rejecting course {CourseId}", id);
+                return StatusCode(500, new { error = "An error occurred while rejecting the course" });
+            }
         }
 
         // === DASHBOARD DATA ===
@@ -289,24 +441,36 @@ namespace ProjectAPI.Controllers
             }
         }
 
-        // === ANNOUNCEMENTS (Placeholder - you'll need to create Announcement model) ===
+        // === ANNOUNCEMENTS ===
+        /// <summary>
+        /// Get all announcements from the database
+        /// </summary>
         [HttpGet("announcements")]
-        public IActionResult GetAllAnnouncements()
+        public async Task<IActionResult> GetAllAnnouncements()
         {
-            // TODO: Implement when Announcement model is created
-            var sampleAnnouncements = new[]
+            try
             {
-                new
-                {
-                    id = Guid.NewGuid(),
-                    title = "Welcome to CodeSage",
-                    content = "Welcome to our learning platform!",
-                    priority = "medium",
-                    createdAt = DateTime.UtcNow.AddDays(-2)
-                }
-            };
+                var announcements = await _context.Announcements
+                    .Include(a => a.Admin)
+                    .OrderByDescending(a => a.CreatedAt)
+                    .Select(a => new
+                    {
+                        id = a.AnnouncementId,
+                        title = a.Title,
+                        content = a.Message,
+                        adminId = a.AdminId,
+                        adminName = a.Admin.FullName,
+                        createdAt = a.CreatedAt
+                    })
+                    .ToListAsync();
 
-            return Ok(new { success = true, data = sampleAnnouncements });
+                return Ok(new { success = true, data = announcements, count = announcements.Count });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving announcements");
+                return StatusCode(500, new { success = false, message = "Failed to load announcements", error = ex.Message });
+            }
         }
 
         [HttpPost("announcements")]
@@ -417,29 +581,51 @@ namespace ProjectAPI.Controllers
             return await GetReports();
         }
 
-        // === HELP REQUESTS (Placeholder) ===
+        // === HELP REQUESTS ===
+        /// <summary>
+        /// Get all pending help requests from students
+        /// </summary>
         [HttpGet("help-requests")]
-        public IActionResult GetHelpRequests()
+        public async Task<IActionResult> GetHelpRequests()
         {
             try
             {
-                // TODO: Implement when HelpRequest model is created
-                var sampleRequests = new[]
-                {
-                    new
+                var helpRequests = await _context.HelpRequests
+                    .Include(hr => hr.Student)
+                    .Include(hr => hr.ResolvedByTeacher)
+                    .Include(hr => hr.Chapter)
+                        .ThenInclude(ch => ch.Course)
+                    .Where(hr => hr.Status == "Pending")
+                    .OrderByDescending(hr => hr.CreatedAt)
+                    .Select(hr => new
                     {
-                        id = Guid.NewGuid(),
-                        userName = "Sample User",
-                        content = "Sample help request content",
-                        submittedDate = DateTime.UtcNow.AddDays(-1),
-                        status = "pending"
-                    }
-                };
+                        id = hr.HelpRequestId,
+                        studentId = hr.StudentId,
+                        studentName = hr.Student.FullName,
+                        studentEmail = hr.Student.Email,
+                        chapterId = hr.ChapterId,
+                        chapterTitle = hr.Chapter.Title,
+                        courseTitle = hr.Chapter.Course.Title,
+                        question = hr.Question,
+                        response = hr.Response,
+                        status = hr.Status,
+                        resolvedByTeacherId = hr.ResolvedByTeacherId,
+                        resolvedByTeacherName = hr.ResolvedByTeacher != null ? hr.ResolvedByTeacher.FullName : null,
+                        submittedDate = hr.CreatedAt,
+                        resolvedDate = hr.ResolvedAt
+                    })
+                    .ToListAsync();
 
-                return Ok(new { success = true, data = sampleRequests });
+                return Ok(new 
+                { 
+                    success = true, 
+                    data = helpRequests,
+                    totalPending = helpRequests.Count
+                });
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error retrieving help requests");
                 return StatusCode(500, new { success = false, message = "Failed to load help requests", error = ex.Message });
             }
         }
@@ -569,5 +755,10 @@ namespace ProjectAPI.Controllers
     public class HelpRequestReplyDto
     {
         public string Message { get; set; } = string.Empty;
+    }
+
+    public class RejectCourseRequest
+    {
+        public string RejectionReason { get; set; } = string.Empty;
     }
 }

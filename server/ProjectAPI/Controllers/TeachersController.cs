@@ -1,0 +1,573 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ProjectAPI.Data;
+using ProjectAPI.Models;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+
+namespace ProjectAPI.Controllers;
+
+/// <summary>
+/// Controller for teacher-specific operations including course creation and management
+/// </summary>
+[ApiController]
+[Route("api/[controller]")]
+[Authorize(Roles = "teacher")]
+public class TeachersController : ControllerBase
+{
+    private readonly ApplicationDbContext _context;
+    private readonly ILogger<TeachersController> _logger;
+
+    public TeachersController(ApplicationDbContext context, ILogger<TeachersController> logger)
+    {
+        _context = context;
+        _logger = logger;
+    }
+
+    #region Course Management
+
+    /// <summary>
+    /// Get all courses created by the logged-in teacher
+    /// </summary>
+    /// <param name="ct">Cancellation token</param>
+    /// <returns>List of courses where TeacherId matches the authenticated teacher</returns>
+    [HttpGet("my-courses")]
+    public async Task<IActionResult> GetMyCourses(CancellationToken ct = default)
+    {
+        try
+        {
+            // Get teacher ID from JWT token
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var teacherId))
+            {
+                return Unauthorized(new { error = "Invalid or missing teacher identification" });
+            }
+
+            // Get all courses created by this teacher
+            var courses = await _context.Courses
+                .Include(c => c.Chapters)
+                .Where(c => c.TeacherId == teacherId)
+                .Select(c => new
+                {
+                    courseId = c.CourseId,
+                    title = c.Title,
+                    description = c.Description,
+                    previewContent = c.PreviewContent,
+                    published = c.Published,
+                    approvalStatus = c.ApprovalStatus,
+                    rejectionReason = c.RejectionReason,
+                    teacherId = c.TeacherId,
+                    totalChapters = c.Chapters.Count
+                })
+                .OrderByDescending(c => c.approvalStatus == "Pending")
+                    .ThenBy(c => c.title)
+                .ToListAsync(ct);
+
+            return Ok(new
+            {
+                teacherId,
+                totalCourses = courses.Count,
+                pendingApproval = courses.Count(c => c.approvalStatus == "Pending"),
+                approved = courses.Count(c => c.approvalStatus == "Approved"),
+                rejected = courses.Count(c => c.approvalStatus == "Rejected"),
+                courses
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving teacher's courses");
+            return StatusCode(500, new { error = "An error occurred while retrieving your courses" });
+        }
+    }
+
+    /// <summary>
+    /// Create a new course (pending admin approval)
+    /// </summary>
+    /// <param name="request">Course creation request</param>
+    /// <param name="ct">Cancellation token</param>
+    /// <returns>Created course details</returns>
+    [HttpPost("courses")]
+    public async Task<IActionResult> CreateCourse([FromBody] CreateCourseRequest request, CancellationToken ct = default)
+    {
+        try
+        {
+            // Validate request
+            if (request == null || string.IsNullOrWhiteSpace(request.Title))
+            {
+                return BadRequest(new { error = "Course title is required" });
+            }
+
+            // Get teacher ID from JWT token
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var teacherId))
+            {
+                return Unauthorized(new { error = "Invalid or missing teacher identification" });
+            }
+
+            // Verify teacher exists
+            var teacher = await _context.Profiles.FindAsync(new object[] { teacherId }, ct);
+            if (teacher == null || teacher.Role != "teacher")
+            {
+                return Forbid("Only teachers can create courses");
+            }
+
+            // Create new course with Pending status
+            var course = new Course
+            {
+                CourseId = Guid.NewGuid(),
+                Title = request.Title.Trim(),
+                Description = request.Description?.Trim() ?? string.Empty,
+                PreviewContent = request.PreviewContent?.Trim(),
+                Published = false,
+                TeacherId = teacherId,
+                ApprovalStatus = "Pending" // Always set to Pending for new courses
+            };
+
+            await _context.Courses.AddAsync(course, ct);
+            await _context.SaveChangesAsync(ct);
+
+            return CreatedAtAction(
+                nameof(GetMyCourses),
+                new
+                {
+                    courseId = course.CourseId,
+                    title = course.Title,
+                    description = course.Description,
+                    previewContent = course.PreviewContent,
+                    published = course.Published,
+                    approvalStatus = course.ApprovalStatus,
+                    teacherId = course.TeacherId,
+                    message = "Course created successfully! Waiting for admin approval."
+                });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating course");
+            return StatusCode(500, new { error = "An error occurred while creating the course" });
+        }
+    }
+
+    /// <summary>
+    /// Update an existing course (only if it's pending or rejected)
+    /// </summary>
+    /// <param name="courseId">Course ID</param>
+    /// <param name="request">Update course request</param>
+    /// <param name="ct">Cancellation token</param>
+    /// <returns>Updated course details</returns>
+    [HttpPut("courses/{courseId}")]
+    public async Task<IActionResult> UpdateCourse(Guid courseId, [FromBody] UpdateCourseRequest request, CancellationToken ct = default)
+    {
+        try
+        {
+            // Get teacher ID from JWT token
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var teacherId))
+            {
+                return Unauthorized(new { error = "Invalid or missing teacher identification" });
+            }
+
+            // Get the course
+            var course = await _context.Courses.FindAsync(new object[] { courseId }, ct);
+            
+            if (course == null)
+            {
+                return NotFound(new { error = "Course not found" });
+            }
+
+            // Verify the teacher owns this course
+            if (course.TeacherId != teacherId)
+            {
+                return Forbid("You can only update your own courses");
+            }
+
+            // Update course details
+            if (!string.IsNullOrWhiteSpace(request.Title))
+            {
+                course.Title = request.Title.Trim();
+            }
+
+            if (request.Description != null)
+            {
+                course.Description = request.Description.Trim();
+            }
+
+            if (request.PreviewContent != null)
+            {
+                course.PreviewContent = request.PreviewContent.Trim();
+            }
+
+            // If course was rejected, reset to Pending when updated
+            if (course.ApprovalStatus == "Rejected")
+            {
+                course.ApprovalStatus = "Pending";
+                course.RejectionReason = null;
+            }
+
+            _context.Courses.Update(course);
+            await _context.SaveChangesAsync(ct);
+
+            return Ok(new
+            {
+                courseId = course.CourseId,
+                title = course.Title,
+                description = course.Description,
+                previewContent = course.PreviewContent,
+                published = course.Published,
+                approvalStatus = course.ApprovalStatus,
+                message = "Course updated successfully!"
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating course {CourseId}", courseId);
+            return StatusCode(500, new { error = "An error occurred while updating the course" });
+        }
+    }
+
+    /// <summary>
+    /// Delete a course (only if it's pending or rejected)
+    /// </summary>
+    /// <param name="courseId">Course ID</param>
+    /// <param name="ct">Cancellation token</param>
+    /// <returns>Confirmation message</returns>
+    [HttpDelete("courses/{courseId}")]
+    public async Task<IActionResult> DeleteCourse(Guid courseId, CancellationToken ct = default)
+    {
+        try
+        {
+            // Get teacher ID from JWT token
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var teacherId))
+            {
+                return Unauthorized(new { error = "Invalid or missing teacher identification" });
+            }
+
+            // Get the course
+            var course = await _context.Courses
+                .Include(c => c.Chapters)
+                .FirstOrDefaultAsync(c => c.CourseId == courseId, ct);
+            
+            if (course == null)
+            {
+                return NotFound(new { error = "Course not found" });
+            }
+
+            // Verify the teacher owns this course
+            if (course.TeacherId != teacherId)
+            {
+                return Forbid("You can only delete your own courses");
+            }
+
+            // Don't allow deletion of approved courses with students enrolled
+            if (course.ApprovalStatus == "Approved")
+            {
+                var hasEnrollments = await _context.Enrolments.AnyAsync(e => e.CourseId == courseId, ct);
+                if (hasEnrollments)
+                {
+                    return BadRequest(new { error = "Cannot delete approved courses with enrolled students" });
+                }
+            }
+
+            _context.Courses.Remove(course);
+            await _context.SaveChangesAsync(ct);
+
+            return Ok(new { message = "Course deleted successfully" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting course {CourseId}", courseId);
+            return StatusCode(500, new { error = "An error occurred while deleting the course" });
+        }
+    }
+
+    /// <summary>
+    /// Get detailed information about a specific course (teacher's own)
+    /// </summary>
+    /// <param name="courseId">Course ID</param>
+    /// <param name="ct">Cancellation token</param>
+    /// <returns>Detailed course information</returns>
+    [HttpGet("courses/{courseId}")]
+    public async Task<IActionResult> GetCourse(Guid courseId, CancellationToken ct = default)
+    {
+        try
+        {
+            // Get teacher ID from JWT token
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var teacherId))
+            {
+                return Unauthorized(new { error = "Invalid or missing teacher identification" });
+            }
+
+            var course = await _context.Courses
+                .Include(c => c.Chapters)
+                    .ThenInclude(ch => ch.Resources)
+                .Include(c => c.Enrolments)
+                .FirstOrDefaultAsync(c => c.CourseId == courseId && c.TeacherId == teacherId, ct);
+
+            if (course == null)
+            {
+                return NotFound(new { error = "Course not found or you don't have access" });
+            }
+
+            return Ok(new
+            {
+                courseId = course.CourseId,
+                title = course.Title,
+                description = course.Description,
+                previewContent = course.PreviewContent,
+                published = course.Published,
+                approvalStatus = course.ApprovalStatus,
+                rejectionReason = course.RejectionReason,
+                teacherId = course.TeacherId,
+                totalChapters = course.Chapters.Count,
+                totalEnrollments = course.Enrolments.Count,
+                chapters = course.Chapters
+                    .OrderBy(ch => ch.Number)
+                    .Select(ch => new
+                    {
+                        chapterId = ch.ChapterId,
+                        number = ch.Number,
+                        title = ch.Title,
+                        summary = ch.Summary,
+                        resourceCount = ch.Resources.Count
+                    })
+                    .ToList()
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving course {CourseId}", courseId);
+            return StatusCode(500, new { error = "An error occurred while retrieving the course" });
+        }
+    }
+
+    #endregion
+
+    #region Teacher Statistics
+
+    /// <summary>
+    /// Get statistics for the logged-in teacher
+    /// </summary>
+    /// <param name="ct">Cancellation token</param>
+    /// <returns>Teacher statistics</returns>
+    [HttpGet("statistics")]
+    public async Task<IActionResult> GetStatistics(CancellationToken ct = default)
+    {
+        try
+        {
+            // Get teacher ID from JWT token
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var teacherId))
+            {
+                return Unauthorized(new { error = "Invalid or missing teacher identification" });
+            }
+
+            var courses = await _context.Courses
+                .Include(c => c.Chapters)
+                .Include(c => c.Enrolments)
+                .Where(c => c.TeacherId == teacherId)
+                .ToListAsync(ct);
+
+            var totalEnrollments = courses.Sum(c => c.Enrolments.Count);
+            var totalChapters = courses.Sum(c => c.Chapters.Count);
+
+            return Ok(new
+            {
+                teacherId,
+                totalCourses = courses.Count,
+                approvedCourses = courses.Count(c => c.ApprovalStatus == "Approved"),
+                pendingCourses = courses.Count(c => c.ApprovalStatus == "Pending"),
+                rejectedCourses = courses.Count(c => c.ApprovalStatus == "Rejected"),
+                totalChapters,
+                totalEnrollments
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving teacher statistics");
+            return StatusCode(500, new { error = "An error occurred while retrieving statistics" });
+        }
+    }
+
+    #endregion
+
+    #region Help Requests Management
+
+    /// <summary>
+    /// Get all pending help requests for teachers to answer
+    /// </summary>
+    /// <param name="ct">Cancellation token</param>
+    /// <returns>List of pending help requests from students</returns>
+    [HttpGet("help-requests")]
+    public async Task<IActionResult> GetHelpRequests(CancellationToken ct = default)
+    {
+        try
+        {
+            // Get teacher ID from JWT token
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var teacherId))
+            {
+                return Unauthorized(new { error = "Invalid or missing teacher identification" });
+            }
+
+            // Get all pending help requests
+            var helpRequests = await _context.HelpRequests
+                .Include(hr => hr.Student)
+                .Include(hr => hr.Chapter)
+                    .ThenInclude(ch => ch.Course)
+                .Where(hr => hr.Status == "Pending")
+                .OrderByDescending(hr => hr.CreatedAt)
+                .Select(hr => new
+                {
+                    helpRequestId = hr.HelpRequestId,
+                    studentId = hr.StudentId,
+                    studentName = hr.Student.FullName,
+                    studentEmail = hr.Student.Email,
+                    chapterId = hr.ChapterId,
+                    chapterTitle = hr.Chapter.Title,
+                    chapterNumber = hr.Chapter.Number,
+                    courseId = hr.Chapter.CourseId,
+                    courseTitle = hr.Chapter.Course.Title,
+                    question = hr.Question,
+                    status = hr.Status,
+                    createdAt = hr.CreatedAt
+                })
+                .ToListAsync(ct);
+
+            return Ok(new
+            {
+                teacherId,
+                totalPending = helpRequests.Count,
+                helpRequests
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving help requests");
+            return StatusCode(500, new { error = "An error occurred while retrieving help requests" });
+        }
+    }
+
+    /// <summary>
+    /// Respond to a help request and mark it as resolved
+    /// </summary>
+    /// <param name="helpRequestId">Help request ID</param>
+    /// <param name="request">Response request</param>
+    /// <param name="ct">Cancellation token</param>
+    /// <returns>Updated help request</returns>
+    [HttpPost("help-requests/{helpRequestId}/respond")]
+    public async Task<IActionResult> RespondToHelpRequest(
+        Guid helpRequestId, 
+        [FromBody] HelpRequestResponseRequest request, 
+        CancellationToken ct = default)
+    {
+        try
+        {
+            // Validate request
+            if (request == null || string.IsNullOrWhiteSpace(request.Response))
+            {
+                return BadRequest(new { error = "Response text is required" });
+            }
+
+            // Get teacher ID from JWT token
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var teacherId))
+            {
+                return Unauthorized(new { error = "Invalid or missing teacher identification" });
+            }
+
+            // Get the help request
+            var helpRequest = await _context.HelpRequests
+                .Include(hr => hr.Student)
+                .FirstOrDefaultAsync(hr => hr.HelpRequestId == helpRequestId, ct);
+
+            if (helpRequest == null)
+            {
+                return NotFound(new { error = "Help request not found" });
+            }
+
+            if (helpRequest.Status != "Pending")
+            {
+                return BadRequest(new { error = "This help request has already been resolved" });
+            }
+
+            // Update the help request
+            helpRequest.Response = request.Response.Trim();
+            helpRequest.Status = "Resolved";
+            helpRequest.ResolvedByTeacherId = teacherId;
+            helpRequest.ResolvedAt = DateTime.UtcNow;
+
+            _context.HelpRequests.Update(helpRequest);
+            await _context.SaveChangesAsync(ct);
+
+            return Ok(new
+            {
+                helpRequestId = helpRequest.HelpRequestId,
+                studentName = helpRequest.Student.FullName,
+                question = helpRequest.Question,
+                response = helpRequest.Response,
+                status = helpRequest.Status,
+                resolvedByTeacherId = helpRequest.ResolvedByTeacherId,
+                resolvedAt = helpRequest.ResolvedAt,
+                message = "Help request resolved successfully!"
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error responding to help request {HelpRequestId}", helpRequestId);
+            return StatusCode(500, new { error = "An error occurred while responding to the help request" });
+        }
+    }
+
+    #endregion
+}
+
+#region DTOs
+
+/// <summary>
+/// Request model for creating a new course
+/// </summary>
+public record CreateCourseRequest
+{
+    [Required]
+    [MinLength(3)]
+    public string Title { get; init; } = string.Empty;
+
+    public string? Description { get; init; }
+
+    public string? PreviewContent { get; init; }
+}
+
+/// <summary>
+/// Request model for updating a course
+/// </summary>
+public record UpdateCourseRequest
+{
+    [MinLength(3)]
+    public string? Title { get; init; }
+
+    public string? Description { get; init; }
+
+    public string? PreviewContent { get; init; }
+}
+
+/// <summary>
+/// Request model for responding to a help request
+/// </summary>
+public record HelpRequestResponseRequest
+{
+    [Required]
+    [MinLength(10)]
+    public string Response { get; init; } = string.Empty;
+}
+
+#endregion

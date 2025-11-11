@@ -144,9 +144,11 @@ static async Task SeedDatabaseIfEmpty(ApplicationDbContext context, ILogger logg
 
         logger.LogInformation("Database is empty. Starting automatic seeding...");
         
-        // Use the same logic as TestDataController
+        // Seed test user profiles first
         await SeedTestProfiles(context, logger);
-        await SeedTestCourses(context, logger);
+        
+        // Run all SQL seed files in order
+        await ExecuteSqlSeedFiles(context, logger);
         
         logger.LogInformation("Automatic database seeding completed successfully!");
     }
@@ -154,6 +156,48 @@ static async Task SeedDatabaseIfEmpty(ApplicationDbContext context, ILogger logg
     {
         logger.LogError(ex, "Error occurred during automatic database seeding.");
         throw;
+    }
+}
+
+static async Task ExecuteSqlSeedFiles(ApplicationDbContext context, ILogger logger)
+{
+    var seedFiles = new[]
+    {
+        "Data/Seeds/02-python-course.sql",
+        "Data/Seeds/03-python-chapters.sql",
+        "Data/Seeds/04-python-resources.sql",
+        "Data/Seeds/05-python-flashcards.sql",
+        "Data/Seeds/06-python-questions.sql",
+        "Data/Seeds/07-python-question-options.sql"
+    };
+
+    foreach (var seedFile in seedFiles)
+    {
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), seedFile);
+        if (File.Exists(filePath))
+        {
+            logger.LogInformation($"Executing seed file: {seedFile}");
+            var sql = await File.ReadAllTextAsync(filePath);
+            
+            // Split by GO statements and execute each batch
+            var batches = sql.Split(new[] { "\nGO\n", "\ngo\n", "\nGo\n", "\ngO\n", "\r\nGO\r\n" }, 
+                StringSplitOptions.RemoveEmptyEntries);
+            
+            foreach (var batch in batches)
+            {
+                var trimmedBatch = batch.Trim();
+                if (!string.IsNullOrWhiteSpace(trimmedBatch))
+                {
+                    await context.Database.ExecuteSqlRawAsync(trimmedBatch);
+                }
+            }
+            
+            logger.LogInformation($"Successfully executed: {seedFile}");
+        }
+        else
+        {
+            logger.LogWarning($"Seed file not found: {filePath}");
+        }
     }
 }
 
@@ -167,8 +211,8 @@ static async Task SeedTestProfiles(ApplicationDbContext context, ILogger logger)
         new() { UserId = Guid.NewGuid(), FullName = "Sarah Administrator", Email = "sarah.admin@codesage.com", 
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("password123"), Role = "admin", CreatedAt = DateTime.UtcNow.AddDays(-28) },
         
-        // Teachers  
-        new() { UserId = Guid.NewGuid(), FullName = "Dr. Michael Johnson", Email = "teacher@codesage.com", 
+        // Teachers - MUST use specific GUID that matches SQL seed files
+        new() { UserId = Guid.Parse("213ac00b-c3df-4d60-a264-f5e8e5d3cb93"), FullName = "Dr. Michael Johnson", Email = "teacher@codesage.com", 
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("teacher123"), Role = "teacher", CreatedAt = DateTime.UtcNow.AddDays(-25) },
         new() { UserId = Guid.NewGuid(), FullName = "Prof. Emily Chen", Email = "emily.chen@codesage.com", 
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("password123"), Role = "teacher", CreatedAt = DateTime.UtcNow.AddDays(-22) },
@@ -195,22 +239,6 @@ static async Task SeedTestProfiles(ApplicationDbContext context, ILogger logger)
     context.Profiles.AddRange(profiles);
     await context.SaveChangesAsync();
     logger.LogInformation($"Added {profiles.Count} profiles to database");
-}
-
-static async Task SeedTestCourses(ApplicationDbContext context, ILogger logger)
-{
-    // Only add basic courses to prevent complexity
-    if (!await context.Courses.AnyAsync())
-    {
-        var courses = new List<Course>
-        {
-            new() { CourseId = Guid.NewGuid(), Title = "Introduction to Python", Description = "Learn Python basics", Published = true }
-        };
-        
-        context.Courses.AddRange(courses);
-        await context.SaveChangesAsync();
-        logger.LogInformation($"Added {courses.Count} courses to database");
-    }
 }
 
 // Original database seeding method (kept for reference)

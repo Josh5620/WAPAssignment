@@ -2,28 +2,37 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../services/apiService';
 import { quickApi } from '../services/apiService';
+import { useProfileForm } from '../hooks/useProfileForm';
 import Navbar from '../components/Navbar';
 import '../styles/TeacherProfile.css';
 
 const TeacherProfile = () => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
-  const [editing, setEditing] = useState(false);
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    bio: '',
-    expertise: ''
-  });
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
   const [stats, setStats] = useState({
     totalStudents: 0,
     totalCourses: 0,
     pendingFeedback: 0,
     forumPosts: 0
+  });
+  const {
+    editing,
+    formData,
+    saving,
+    error,
+    success,
+    beginEdit,
+    cancelEdit,
+    handleChange,
+    setFormValues,
+    saveProfile,
+    setErrorMessage,
+  } = useProfileForm({
+    fullName: '',
+    email: '',
+    bio: '',
+    expertise: '',
   });
 
   useEffect(() => {
@@ -51,26 +60,27 @@ const TeacherProfile = () => {
       const token = quickApi.getUserToken();
       const data = await api.auth.getProfile(token);
       
-      setProfile({
+      const normalizedProfile = {
         id: data.userId,
         fullName: data.fullName || 'Teacher',
         email: data.email || '',
         role: data.role || 'Teacher',
         bio: data.bio || '',
-        expertise: data.expertise || ''
-      });
+        expertise: data.expertise || '',
+      };
 
-      setFormData({
-        fullName: data.fullName || '',
-        email: data.email || '',
-        bio: data.bio || '',
-        expertise: data.expertise || ''
-      });
+      setProfile(normalizedProfile);
 
-      setError(null);
+      setFormValues({
+        fullName: normalizedProfile.fullName,
+        email: normalizedProfile.email,
+        bio: normalizedProfile.bio,
+        expertise: normalizedProfile.expertise,
+      });
     } catch (err) {
       console.error('Failed to load profile:', err);
-      setError('Failed to load profile. Please try again.');
+      cancelEdit();
+      setErrorMessage('Failed to load profile. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -91,79 +101,49 @@ const TeacherProfile = () => {
     }
   };
 
-  const handleEdit = () => {
-    setEditing(true);
-    setSuccess(null);
-  };
-
   const handleCancel = () => {
-    setEditing(false);
     if (profile) {
-      setFormData({
+      cancelEdit({
         fullName: profile.fullName || '',
         email: profile.email || '',
         bio: profile.bio || '',
-        expertise: profile.expertise || ''
+        expertise: profile.expertise || '',
       });
+    } else {
+      cancelEdit();
     }
-    setSuccess(null);
-    setError(null);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
   };
 
   const handleSave = async () => {
-    if (!formData.fullName.trim()) {
-      setError('Full name is required.');
-      return;
-    }
-
-    if (!formData.email.trim()) {
-      setError('Email is required.');
-      return;
-    }
-
-    try {
-      setSaving(true);
-      setError(null);
-      
-      // Update profile via backend API
+    const updatedProfile = await saveProfile(async (values) => {
       const token = quickApi.getUserToken();
-      const updatedProfile = await api.auth.updateProfile(token, {
-        fullName: formData.fullName,
-        email: formData.email
+      return api.auth.updateProfile(token, {
+        fullName: values.fullName,
+        email: values.email,
       });
-      
-      setProfile({
-        ...profile,
-        fullName: updatedProfile.fullName,
-        email: updatedProfile.email
-      });
-      
-      setEditing(false);
-      setSuccess('Profile updated successfully!');
-      
-      // Update localStorage
-      const userProfile = quickApi.getUserProfile();
-      quickApi.storeUserData({
-        ...userProfile,
-        fullName: updatedProfile.fullName,
-        email: updatedProfile.email
-      });
+    });
 
-      setTimeout(() => setSuccess(null), 3000);
-    } catch (err) {
-      console.error('Failed to update profile:', err);
-      setError(err.message || 'Failed to update profile. Please try again.');
-    } finally {
-      setSaving(false);
+    if (!updatedProfile) {
+      return;
     }
+
+    setProfile((prev) => (
+      prev
+        ? {
+            ...prev,
+            fullName: updatedProfile.fullName,
+            email: updatedProfile.email,
+          }
+        : prev
+    ));
+
+    // Update localStorage
+    const userProfile = quickApi.getUserProfile();
+    quickApi.storeUserData({
+      ...(userProfile || {}),
+      fullName: updatedProfile.fullName,
+      email: updatedProfile.email,
+    });
   };
 
   if (loading) {
@@ -202,7 +182,7 @@ const TeacherProfile = () => {
           <div className="profile-header">
             <h1>My Profile</h1>
             {!editing && (
-              <button className="edit-profile-button" onClick={handleEdit}>
+              <button className="edit-profile-button" onClick={beginEdit}>
                 Edit Profile
               </button>
             )}

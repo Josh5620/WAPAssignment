@@ -341,6 +341,76 @@
   gap: 1.2rem;
 }
 
+.certificate-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.certificate-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.4rem 1.6rem;
+  border-radius: 18px;
+  border: 2px solid rgba(113, 119, 68, 0.35);
+  background: rgba(243, 245, 235, 0.8);
+}
+
+.certificate-info h3 {
+  margin: 0 0 0.45rem;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1.05rem;
+  color: var(--cs-olive9);
+}
+
+.certificate-info p {
+  margin: 0;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.9rem;
+  color: rgba(55, 61, 32, 0.7);
+}
+
+.certificate-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.certificate-link {
+  text-decoration: none;
+  font-family: 'Pixelify Sans', cursive;
+  background: rgba(74, 124, 89, 0.2);
+  color: var(--cs-olive9);
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+}
+
+.certificate-link:hover {
+  background: rgba(74, 124, 89, 0.35);
+  box-shadow: 0 4px 12px rgba(74, 124, 89, 0.2);
+}
+
+.certificates-status {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.95rem;
+  color: rgba(55, 61, 32, 0.75);
+  background: rgba(243, 245, 235, 0.8);
+  border: 1px dashed rgba(113, 119, 68, 0.4);
+  padding: 1.2rem 1.4rem;
+  border-radius: 16px;
+}
+
+.certificates-status.is-error {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #7f1d1d;
+}
+
 .stat-box {
   background: var(--cs-sage3);
   border-radius: 16px;
@@ -394,5 +464,21 @@
 
   .stat-value {
     font-size: 1.3rem;
+  }
+
+  .certificate-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .certificate-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .certificate-link {
+    width: 100%;
+    text-align: center;
   }
 }

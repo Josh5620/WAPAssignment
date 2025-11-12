@@ -19,6 +19,9 @@ const StudentProfile = () => {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [certificates, setCertificates] = useState([]);
+  const [certificatesLoading, setCertificatesLoading] = useState(true);
+  const [certificatesError, setCertificatesError] = useState(null);
 
   useEffect(() => {
     loadProfile();
@@ -43,17 +46,30 @@ const StudentProfile = () => {
       // Fetch fresh profile data from backend using unified auth endpoint
       const token = quickApi.getUserToken();
       const data = await api.auth.getProfile(token);
-      
+
       // Then fetch student-specific data (leaderboard, progress, etc.)
       const studentData = await api.students.getStudentProfile(userId);
-      
+      let certificateData = [];
+      try {
+        setCertificatesLoading(true);
+        const response = await api.students.getCertificates();
+        certificateData = Array.isArray(response) ? response : [];
+        setCertificatesError(null);
+      } catch (certError) {
+        console.error('Failed to load certificates:', certError);
+        setCertificatesError('Unable to load certificates at this time.');
+      } finally {
+        setCertificatesLoading(false);
+      }
+
       // Merge the data
       setProfile({
         ...data,
         ...studentData,
         id: data.userId
       });
-      
+      setCertificates(certificateData);
+
       setFormData({
         fullName: data.fullName || '',
         email: data.email || ''
@@ -138,6 +154,43 @@ const StudentProfile = () => {
     } finally {
       setSaving(false);
     }
+  };
+
+  const renderCertificates = () => {
+    if (certificatesLoading) {
+      return <div className="certificates-status">Loading certificates...</div>;
+    }
+
+    if (certificatesError) {
+      return <div className="certificates-status is-error">{certificatesError}</div>;
+    }
+
+    if (!certificates.length) {
+      return <div className="certificates-status is-empty">Complete a course to earn your first certificate!</div>;
+    }
+
+    return (
+      <ul className="certificate-list">
+        {certificates.map((certificate) => (
+          <li key={certificate.certificateId} className="certificate-item">
+            <div className="certificate-info">
+              <h3>{certificate.courseTitle || 'Course Certificate'}</h3>
+              <p>Issued on {new Date(certificate.issueDate).toLocaleDateString()}</p>
+            </div>
+            <div className="certificate-actions">
+              <a
+                href={certificate.certificateUrl || '#'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="certificate-link"
+              >
+                View Certificate
+              </a>
+            </div>
+          </li>
+        ))}
+      </ul>
+    );
   };
 
   if (loading) {
@@ -302,6 +355,11 @@ const StudentProfile = () => {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="profile-section">
+            <h2>My Certificates</h2>
+            {renderCertificates()}
           </div>
 
           <div className="profile-section">

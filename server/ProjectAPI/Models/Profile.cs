@@ -41,6 +41,7 @@ namespace ProjectAPI.Models
         public ICollection<AnnouncementRead> AnnouncementReads { get; set; } = new List<AnnouncementRead>();
         public ICollection<Testimonial> Testimonials { get; set; } = new List<Testimonial>();
         public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+        public ICollection<Certificate> Certificates { get; set; } = new List<Certificate>();
         public Leaderboard? Leaderboard { get; set; }
     }
 }

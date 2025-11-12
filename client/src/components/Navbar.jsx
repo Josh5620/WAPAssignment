@@ -22,6 +22,7 @@ const Navbar = () => {
   const [notifications, setNotifications] = useState([]);
   const [notificationsLoading, setNotificationsLoading] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const notificationsRef = useRef(null);
 
   useEffect(() => {
@@ -42,6 +43,7 @@ const Navbar = () => {
   useEffect(() => {
     if (!isLoggedIn) {
       setNotifications([]);
+      setUnreadCount(0);
       return;
     }
 
@@ -51,6 +53,7 @@ const Navbar = () => {
         const response = await api.notifications.list(true);
         const items = Array.isArray(response?.notifications) ? response.notifications : [];
         setNotifications(items);
+        setUnreadCount(response?.unread ?? items.length);
       } catch (error) {
         console.error('Failed to load notifications in navbar:', error);
       } finally {
@@ -75,11 +78,15 @@ const Navbar = () => {
 
   const refreshNotifications = async () => {
     try {
-      const response = await api.notifications.list(true);
+      setNotificationsLoading(true);
+      const response = await api.notifications.list();
       const items = Array.isArray(response?.notifications) ? response.notifications : [];
       setNotifications(items);
+      setUnreadCount(response?.unread ?? items.filter((item) => !item.isRead).length);
     } catch (error) {
       console.error('Failed to refresh notifications:', error);
+    } finally {
+      setNotificationsLoading(false);
     }
   };
 
@@ -91,6 +98,7 @@ const Navbar = () => {
           item.notificationId === notificationId ? { ...item, isRead: true } : item,
         ),
       );
+      setUnreadCount((prev) => Math.max(0, prev - 1));
     } catch (error) {
       console.error('Failed to mark navbar notification as read:', error);
     }
@@ -99,13 +107,12 @@ const Navbar = () => {
   const handleMarkAllNotificationsRead = async () => {
     try {
       await api.notifications.markAllRead();
-      refreshNotifications();
+      setNotifications((prev) => prev.map((item) => ({ ...item, isRead: true })));
+      setUnreadCount(0);
     } catch (error) {
       console.error('Failed to mark all navbar notifications as read:', error);
     }
   };
-
-  const unreadCount = notifications.filter((item) => !item.isRead).length;
 
   const dashboardPath = getDashboardPath(role);
 

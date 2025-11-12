@@ -40,7 +40,7 @@ public class AuthController : ControllerBase
     /// <param name="ct">Cancellation token</param>
     /// <returns>Success message with user details</returns>
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegisterRequest request, CancellationToken ct = default)
+    public async Task<IActionResult> Register([FromBody] AuthRegisterRequest request, CancellationToken ct = default)
     {
         try
         {
@@ -384,7 +384,7 @@ public record AuthUpdateProfileRequest
 /// <summary>
 /// Request model for user registration via AuthController
 /// </summary>
-public record RegisterRequest
+public record AuthRegisterRequest
 {
     [Required]
     public string FullName { get; init; } = string.Empty;

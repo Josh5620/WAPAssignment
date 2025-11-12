@@ -11,7 +11,7 @@ public class GeminiService(HttpClient httpClient, string apiKey)
     public async Task<string> GetResponse(object payload)
     {
         var response = await _httpClient.PostAsJsonAsync(
-            $"models/gemini-1.5-flash:generateContent?key={_apiKey}", payload);
+            $"models/gemini-2.5-flash:generateContent?key={_apiKey}", payload);
 
         if (!response.IsSuccessStatusCode)
         {

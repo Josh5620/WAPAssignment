@@ -138,14 +138,15 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
   flex-shrink: 0;
   gap: 0.4rem;
   min-height: 1.5rem;
 }
 
 .path-card-icon {
-  font-size: 1.2rem;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
   line-height: 1;
 }
@@ -163,9 +164,9 @@
 
 .path-card-title {
   font-family: 'Press Start 2P', cursive;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   color: var(--primary);
-  margin-bottom: 0.6rem;
+  margin: 0.2rem;
   flex-shrink: 0;
   line-height: 1.4;
   height: 3.4rem;

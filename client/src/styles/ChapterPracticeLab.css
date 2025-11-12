@@ -1,19 +1,18 @@
 .practice-lab {
   border: 2px solid rgba(113, 119, 68, 0.25);
-  border-radius: 18px;
-  background: linear-gradient(180deg, rgba(250, 251, 246, 0.92), rgba(247, 248, 240, 0.85));
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.5);
   padding: 1.75rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  box-shadow: 0 16px 40px rgba(55, 61, 32, 0.12);
+  box-shadow: 0 8px 20px rgba(55, 61, 32, 0.08);
 }
 
 .practice-lab.is-collapsed {
   align-items: stretch;
   justify-content: center;
   min-height: 280px;
-  background: linear-gradient(135deg, rgba(249, 246, 239, 0.95), rgba(244, 247, 233, 0.85));
 }
 
 .practice-lab__preview {

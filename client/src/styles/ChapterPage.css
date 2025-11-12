@@ -1,86 +1,111 @@
+/* ==================== */
+/* BASE LAYOUT          */
+/* ==================== */
+
 .chapter-page {
-max-width: 960px;
-margin: 0 auto;
-padding: 2rem 1.5rem 4rem;
-color: var(--text);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  color: var(--text);
 }
 
+/* ==================== */
+/* HERO SECTION         */
+/* ==================== */
+
 .chapter-hero {
-text-align: center;
-margin-bottom: 2.5rem;
-padding: 2rem 1.5rem;
-background: var(--card-bg, rgba(255, 255, 255, 0.75));
-border: 3px solid var(--border);
-border-radius: 24px;
-box-shadow: var(--shadow-2);
-position: relative;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  padding: 2rem 1.5rem;
+  background: var(--card-bg, rgba(255, 255, 255, 0.75));
+  border: 3px solid var(--border);
+  border-radius: 24px;
+  box-shadow: var(--shadow-2);
+  position: relative;
 }
 
 .chapter-breadcrumb {
-display: flex;
-justify-content: center;
-align-items: center;
-gap: 0.5rem;
-font-family: 'Pixelify Sans', cursive;
-margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Pixelify Sans', cursive;
+  margin-bottom: 1rem;
 }
 
 .breadcrumb-link {
-background: none;
-border: none;
-color: var(--primary);
-font-size: 0.9rem;
-cursor: pointer;
-text-decoration: underline;
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .breadcrumb-link:hover {
-color: var(--primary-hover);
+  color: var(--primary-hover);
 }
 
 .chapter-icon {
-font-size: 2.5rem;
-display: inline-block;
-margin-bottom: 1rem;
+  font-size: 2.5rem;
+  display: inline-block;
+  margin-bottom: 1rem;
 }
 
 .chapter-hero h1 {
-margin: 0;
-font-family: 'Press Start 2P', cursive;
-font-size: 1.25rem;
+  margin: 0;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.25rem;
 }
 
 .chapter-overview {
-margin: 1rem auto 1.5rem;
-max-width: 640px;
-font-size: 1rem;
-line-height: 1.6;
-color: var(--text-muted, var(--text));
+  margin: 1rem auto 1.5rem;
+  max-width: 640px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-muted, var(--text));
 }
 
 .chapter-meta {
-display: flex;
-justify-content: center;
-gap: 1rem;
-font-size: 0.9rem;
-letter-spacing: 0.05em;
-text-transform: uppercase;
-color: var(--muted);
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
+
+/* ==================== */
+/* SECTION CONTAINERS   */
+/* ==================== */
 
 .chapter-section {
   margin-bottom: 2rem;
   padding: 1.75rem;
-  border: 2px dashed var(--border);
+  border: 2px solid rgba(113, 119, 68, 0.25);
   border-radius: 20px;
-  background: var(--bg);
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 20px rgba(55, 61, 32, 0.08);
 }
 
-.chapter-section--objectives {
-  background: linear-gradient(180deg, rgba(239, 241, 237, 0.9), rgba(239, 241, 237, 0.65));
-  border: 2px solid rgba(113, 119, 68, 0.35);
-  box-shadow: 0 12px 26px rgba(55, 61, 32, 0.12);
+.chapter-section h2 {
+  margin-top: 0;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1rem;
+  margin-bottom: 1rem;
 }
+
+.chapter-section ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  list-style: square;
+  line-height: 1.7;
+}
+
+/* ==================== */
+/* OBJECTIVES SECTION   */
+/* ==================== */
 
 .objectives-list {
   list-style: none;
@@ -109,13 +134,17 @@ color: var(--muted);
   margin-top: 0.15rem;
 }
 
+/* ==================== */
+/* STORY SECTION        */
+/* ==================== */
+
 .chapter-story-card {
   margin-bottom: 2rem;
-  padding: 1.6rem 1.8rem;
-  border-radius: 26px;
-  border: 2px solid rgba(151, 186, 120, 0.35);
-  background: linear-gradient(135deg, rgba(239, 241, 237, 0.92), rgba(225, 232, 208, 0.7));
-  box-shadow: 0 14px 28px rgba(55, 61, 32, 0.12);
+  padding: 1.75rem;
+  border-radius: 20px;
+  border: 2px solid rgba(113, 119, 68, 0.25);
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 20px rgba(55, 61, 32, 0.08);
 }
 
 .chapter-story-card__badge {
@@ -143,6 +172,10 @@ color: var(--muted);
   margin: 0 0 0.6rem 0;
   line-height: 1.6;
 }
+
+/* ==================== */
+/* BLOOM CHECK          */
+/* ==================== */
 
 .bloom-check {
   margin: 1.2rem 0 1.8rem 1.4rem;
@@ -199,11 +232,9 @@ color: var(--muted);
   border-left-color: var(--primary);
 }
 
-.chapter-section--lesson {
-  background: rgba(255, 255, 255, 0.92);
-  border: 2px solid rgba(151, 186, 120, 0.35);
-  box-shadow: 0 10px 20px rgba(55, 61, 32, 0.1);
-}
+/* ==================== */
+/* LESSON SECTION       */
+/* ==================== */
 
 .lesson-timeline {
   position: relative;
@@ -215,7 +246,7 @@ color: var(--muted);
   position: absolute;
   top: 0.5rem;
   bottom: 0.5rem;
-  left: 0.55rem;
+  left: 0.6rem;
   width: 2px;
   background: repeating-linear-gradient(
     to bottom,
@@ -225,6 +256,60 @@ color: var(--muted);
     transparent 16px
   );
 }
+
+.chapter-article + .chapter-article {
+  margin-top: 1.75rem;
+}
+
+.chapter-article {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.chapter-article::before {
+  content: '';
+  position: absolute;
+  top: 0.4rem;
+  left: -0.75rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 0 4px rgba(113, 119, 68, 0.2);
+  transform: translateX(-8px);
+}
+
+.chapter-article__badge {
+  display: inline-block;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid rgba(113, 119, 68, 0.3);
+  border-radius: 999px;
+  background: rgba(151, 186, 120, 0.2);
+  color: var(--primary);
+  margin-bottom: 0.7rem;
+}
+
+.chapter-article__content h3 {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1.1rem;
+  margin-bottom: 0.6rem;
+}
+
+.chapter-article__content p {
+  margin: 0 0 0.65rem 0;
+  line-height: 1.7;
+}
+
+.chapter-article__content p:last-child {
+  margin-bottom: 0;
+}
+
+/* ==================== */
+/* TABS                 */
+/* ==================== */
 
 .chapter-tabs {
   display: flex;
@@ -262,27 +347,12 @@ color: var(--muted);
   gap: 1.5rem;
 }
 
-.chapter-section h2 {
-margin-top: 0;
-font-family: 'Press Start 2P', cursive;
-font-size: 1rem;
-margin-bottom: 1rem;
-}
-
-.chapter-section ul {
-margin: 0;
-padding-left: 1.2rem;
-list-style: square;
-line-height: 1.7;
-}
-
-.chapter-section--practice {
-  background: linear-gradient(180deg, rgba(245, 247, 240, 0.9), rgba(245, 247, 240, 0.7));
-  border: 2px solid rgba(113, 119, 68, 0.25);
-}
+/* ==================== */
+/* PRACTICE SECTION     */
+/* ==================== */
 
 .practice-lab-section {
-  padding: 0;
+  padding: 2rem;
 }
 
 .practice-list {
@@ -356,6 +426,10 @@ line-height: 1.7;
   box-shadow: 0 14px 26px rgba(195, 135, 110, 0.2);
 }
 
+/* ==================== */
+/* SYSTEM SECTION       */
+/* ==================== */
+
 .system-section {
   padding: 0;
   margin-top: 2.5rem;
@@ -422,64 +496,10 @@ line-height: 1.7;
   color: rgba(55, 61, 32, 0.75);
 }
 
-@media (max-width: 768px) {
-  .system-header {
-    padding: 0;
-  }
 
-  .system-wrapper {
-    padding: 1.25rem;
-  }
-}
-
-.chapter-article + .chapter-article {
-  margin-top: 1.75rem;
-}
-
-.chapter-article {
-  position: relative;
-  padding-left: 1.5rem;
-}
-
-.chapter-article::before {
-  content: '';
-  position: absolute;
-  top: 0.4rem;
-  left: -0.75rem;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--primary);
-  box-shadow: 0 0 0 4px rgba(113, 119, 68, 0.2);
-}
-
-.chapter-article__badge {
-  display: inline-block;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.65rem;
-  letter-spacing: 0.08em;
-  padding: 0.35rem 0.6rem;
-  border: 1px solid rgba(113, 119, 68, 0.3);
-  border-radius: 999px;
-  background: rgba(151, 186, 120, 0.2);
-  color: var(--primary);
-  margin-bottom: 0.7rem;
-}
-
-.chapter-article__content h3 {
-  font-family: 'Pixelify Sans', cursive;
-  font-size: 1.1rem;
-  margin-bottom: 0.6rem;
-}
-
-.chapter-article__content p {
-  margin: 0 0 0.65rem 0;
-  line-height: 1.7;
-}
-
-.chapter-article__content p:last-child {
-  margin-bottom: 0;
-}
+/* ==================== */
+/* FLASHCARD SECTION    */
+/* ==================== */
 
 .flashcard-section {
   display: flex;
@@ -554,6 +574,10 @@ line-height: 1.7;
   box-shadow: var(--shadow-1);
 }
 
+/* ==================== */
+/* CHALLENGES SECTION   */
+/* ==================== */
+
 .challenges-section {
   display: flex;
   flex-direction: column;
@@ -621,57 +645,73 @@ line-height: 1.7;
   font-family: 'Pixelify Sans', cursive;
 }
 
+/* ==================== */
+/* NAVIGATION           */
+/* ==================== */
+
 .chapter-navigation {
-display: flex;
-justify-content: space-between;
-gap: 1rem;
-margin-top: 3rem;
-flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+  flex-wrap: wrap;
 }
 
 .chapter-nav-button {
-flex: 1;
-min-width: 220px;
-padding: 0.85rem 1.5rem;
-border: 2px solid var(--border);
-border-radius: 16px;
-background: var(--primary);
-color: var(--bg);
-font-family: 'Pixelify Sans', cursive;
-cursor: pointer;
-transition: transform 0.2s ease, box-shadow 0.2s ease;
+  flex: 1;
+  min-width: 220px;
+  padding: 0.85rem 1.5rem;
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  background: var(--primary);
+  color: var(--bg);
+  font-family: 'Pixelify Sans', cursive;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .chapter-nav-button:hover:not(:disabled) {
-transform: translateY(-2px);
-box-shadow: var(--shadow-2);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
 }
 
 .chapter-nav-button:disabled {
-background: var(--muted);
-color: var(--text-muted);
-cursor: not-allowed;
+  background: var(--muted);
+  color: var(--text-muted);
+  cursor: not-allowed;
 }
+
+/* ==================== */
+/* RESPONSIVE           */
+/* ==================== */
 
 @media (max-width: 768px) {
-.chapter-page {
+  .chapter-page {
     padding: 1.5rem 1rem 3rem;
-}
+  }
 
-.chapter-hero {
+  .chapter-hero {
     padding: 1.5rem 1rem;
-}
+  }
 
-.chapter-navigation {
+  .chapter-navigation {
     flex-direction: column;
-}
+  }
 
-.chapter-nav-button {
+  .chapter-nav-button {
     width: 100%;
-}
+  }
 
   .flashcard {
     padding: 1.5rem;
+  }
+
+  .system-header {
+    padding: 0;
+  }
+
+  .system-wrapper {
+    padding: 1.25rem;
   }
 }
 

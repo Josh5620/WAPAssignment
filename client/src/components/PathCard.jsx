@@ -25,7 +25,7 @@ const PathCard = ({ icon, title, level, topics = [], status = '' }) => {
         {/* Back side - Chapter details */}
         <div className="path-card-back">
           <div className="path-card-header">
-            <span className="path-card-icon">{icon}</span>
+            <img src="/pot.svg" alt="" className="path-card-icon" aria-hidden="true" />
             <span className="path-card-level">{level}</span>
           </div>
           <h3 className="path-card-title">{title}</h3>

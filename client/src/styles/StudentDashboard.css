@@ -218,18 +218,19 @@
 
 .garden-path-grid {
   display: grid;
-  grid-template-columns: repeat(7, minmax(180px, 180px));
-  grid-template-rows: repeat(2, minmax(180px, 180px));
-  gap: 0;
-  max-width: 1500px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  grid-template-columns: repeat(7, 160px);
+  grid-template-rows: repeat(2, 160px);
+  gap: 1rem;
+  max-width: 1400px;
+  margin: 0;
+  padding: 2rem 1rem;
   justify-content: center;
+  overflow-x: auto;
 }
 
 .path-card-wrapper {
-  width: 180px;
-  height: 180px;
+  width: 160px;
+  height: 160px;
   margin: 0;
 }
 
@@ -314,10 +315,12 @@
 
 @media (max-width: 1400px) {
   .garden-path-grid {
-    grid-template-columns: repeat(7, minmax(160px, 160px));
-    grid-template-rows: repeat(2, minmax(160px, 160px));
-    overflow-x: auto;
+    grid-template-columns: repeat(7, 160px);
+    grid-template-rows: repeat(2, 160px);
+    gap: 1rem;
     justify-content: flex-start;
+    max-width: 100%;
+    overflow-x: auto;
   }
 
   .path-card-wrapper {
@@ -326,8 +329,8 @@
   }
 
   .path-card {
-    width: 160px;
-    height: 160px;
+    width: 100%;
+    height: 100%;
   }
 }
 

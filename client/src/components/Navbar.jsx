@@ -224,9 +224,7 @@ const Navbar = () => {
                   }}
                   aria-label="Notifications"
                 >
-                  <span role="img" aria-hidden="true">
-                    🔔
-                  </span>
+                  <img src="/bell.svg" alt="" aria-hidden="true" style={{ width: '20px', height: '20px' }} />
                   {unreadCount > 0 && <span className="notification-count">{unreadCount}</span>}
                 </button>
                 {notificationsOpen && (

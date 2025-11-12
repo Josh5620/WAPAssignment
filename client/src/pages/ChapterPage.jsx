@@ -9,6 +9,7 @@ import { api } from '../services/apiService.js';
 import '../styles/ChapterPage.css';
 import StudentFlashcardComponent from '../components/StudentFlashcardComponent.jsx';
 import StudentChallengeBoard from '../components/StudentChallengeBoard.jsx';
+import StudentQuizComponent from '../components/StudentQuizComponent.jsx';
 import ChapterPracticeLab from '../components/ChapterPracticeLab.jsx';
 
 const ChapterPage = () => {
@@ -37,6 +38,9 @@ const ChapterPage = () => {
 
   // State for the active tab
   const [activeTab, setActiveTab] = useState('notes');
+  
+  // State for challenges mode (practice vs quiz)
+  const [challengeMode, setChallengeMode] = useState('practice'); // 'practice' or 'quiz'
   
   // State for database content from "Master Key" endpoint
   const [chapterData, setChapterData] = useState(null);
@@ -399,10 +403,37 @@ const ChapterPage = () => {
 
           {activeTab === 'challenges' && (
             <section className="chapter-section challenges-section">
-              <StudentChallengeBoard 
-                chapterId={databaseChapterId}
-                fallbackQuestions={resources.quiz?.questions || details.challenges || []}
-              />
+              <div className="challenges-mode-selector">
+                <button
+                  type="button"
+                  className={`mode-button ${challengeMode === 'practice' ? 'active' : ''}`}
+                  onClick={() => setChallengeMode('practice')}
+                >
+                  🌱 Practice Challenges
+                </button>
+                <button
+                  type="button"
+                  className={`mode-button ${challengeMode === 'quiz' ? 'active' : ''}`}
+                  onClick={() => setChallengeMode('quiz')}
+                >
+                  📝 Chapter Quiz
+                </button>
+              </div>
+              
+              {challengeMode === 'practice' ? (
+                <StudentChallengeBoard 
+                  chapterId={databaseChapterId}
+                  fallbackQuestions={resources.quiz?.questions || details.challenges || []}
+                />
+              ) : (
+                <StudentQuizComponent 
+                  chapterId={databaseChapterId}
+                  onQuizComplete={(result) => {
+                    console.log('Quiz completed:', result);
+                    // Optionally refresh progress or show success message
+                  }}
+                />
+              )}
             </section>
           )}
 

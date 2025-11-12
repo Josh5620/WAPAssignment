@@ -78,6 +78,13 @@ public class AuthController : ControllerBase
             // Hash the password using BCrypt
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
+            // Validate and set role (default to "student" if not provided or invalid)
+            var role = request.Role?.ToLower()?.Trim();
+            if (string.IsNullOrEmpty(role) || (role != "student" && role != "teacher" && role != "admin"))
+            {
+                role = "student"; // Default to student if invalid role provided
+            }
+
             // Create new Profile
             var newProfile = new Profile
             {
@@ -85,7 +92,7 @@ public class AuthController : ControllerBase
                 Email = email,
                 FullName = request.FullName.Trim(),
                 PasswordHash = passwordHash,
-                Role = "student", // Default role
+                Role = role,
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -372,6 +379,25 @@ public record AuthUpdateProfileRequest
 
     [EmailAddress]
     public string? Email { get; init; }
+}
+
+/// <summary>
+/// Request model for user registration via AuthController
+/// </summary>
+public record RegisterRequest
+{
+    [Required]
+    public string FullName { get; init; } = string.Empty;
+
+    [Required]
+    [EmailAddress]
+    public string Email { get; init; } = string.Empty;
+
+    [Required]
+    [MinLength(6)]
+    public string Password { get; init; } = string.Empty;
+
+    public string? Role { get; init; }
 }
 
 #endregion

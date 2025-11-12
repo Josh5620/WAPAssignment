@@ -398,6 +398,357 @@ public class TeachersController : ControllerBase
 
     #endregion
 
+    #region Question Management
+
+    /// <summary>
+    /// Create a question for a chapter's quiz resource
+    /// </summary>
+    [HttpPost("chapters/{chapterId}/questions")]
+    public async Task<IActionResult> CreateQuestion(
+        Guid chapterId,
+        [FromBody] CreateQuestionRequest request,
+        CancellationToken ct = default)
+    {
+        try
+        {
+            if (request == null || string.IsNullOrWhiteSpace(request.Stem))
+            {
+                return BadRequest(new { error = "Question stem is required" });
+            }
+
+            // Verify chapter exists and belongs to teacher's course
+            var chapter = await _context.Chapters
+                .Include(ch => ch.Course)
+                .FirstOrDefaultAsync(ch => ch.ChapterId == chapterId, ct);
+
+            if (chapter == null)
+            {
+                return NotFound(new { error = "Chapter not found" });
+            }
+
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var teacherId))
+            {
+                return Unauthorized(new { error = "Invalid teacher identification" });
+            }
+
+            if (chapter.Course.TeacherId != teacherId)
+            {
+                return Forbid("You can only add questions to chapters in your own courses");
+            }
+
+            // Find or create MCQ resource for this chapter
+            var resource = await _context.Resources
+                .FirstOrDefaultAsync(r => r.ChapterId == chapterId && r.Type == "mcq", ct);
+
+            if (resource == null)
+            {
+                resource = new Resource
+                {
+                    ResourceId = Guid.NewGuid(),
+                    ChapterId = chapterId,
+                    Type = "mcq",
+                    Content = "Quiz Questions"
+                };
+                _context.Resources.Add(resource);
+                await _context.SaveChangesAsync(ct);
+            }
+
+            // Create the question
+            var question = new Question
+            {
+                QuestionId = Guid.NewGuid(),
+                ResourceId = resource.ResourceId,
+                Stem = request.Stem.Trim(),
+                Difficulty = request.Difficulty ?? "medium",
+                QuestionType = request.QuestionType ?? "multiple_choice",
+                ExpectedAnswer = request.ExpectedAnswer,
+                Explanation = request.Explanation
+            };
+
+            _context.Questions.Add(question);
+
+            // Add options for multiple choice and true/false questions
+            if (question.QuestionType == "multiple_choice" || question.QuestionType == "true_false")
+            {
+                if (request.Options == null || !request.Options.Any())
+                {
+                    return BadRequest(new { error = "Options are required for multiple choice and true/false questions" });
+                }
+
+                var options = request.Options.Select((opt, index) => new QuestionOption
+                {
+                    OptionId = Guid.NewGuid(),
+                    QuestionId = question.QuestionId,
+                    OptionText = opt.Text.Trim(),
+                    IsCorrect = opt.IsCorrect
+                }).ToList();
+
+                // Validate that at least one option is correct
+                if (!options.Any(o => o.IsCorrect))
+                {
+                    return BadRequest(new { error = "At least one option must be marked as correct" });
+                }
+
+                _context.QuestionOptions.AddRange(options);
+            }
+            else if (question.QuestionType == "short_answer" || question.QuestionType == "essay")
+            {
+                if (string.IsNullOrWhiteSpace(request.ExpectedAnswer))
+                {
+                    return BadRequest(new { error = "Expected answer is required for short answer and essay questions" });
+                }
+            }
+
+            await _context.SaveChangesAsync(ct);
+
+            return CreatedAtAction(
+                nameof(GetQuestion),
+                new { questionId = question.QuestionId },
+                new
+                {
+                    questionId = question.QuestionId,
+                    stem = question.Stem,
+                    difficulty = question.Difficulty,
+                    questionType = question.QuestionType,
+                    explanation = question.Explanation,
+                    options = question.QuestionType == "multiple_choice" || question.QuestionType == "true_false"
+                        ? await _context.QuestionOptions
+                            .Where(o => o.QuestionId == question.QuestionId)
+                            .Select(o => new
+                            {
+                                optionId = o.OptionId,
+                                text = o.OptionText,
+                                isCorrect = o.IsCorrect
+                            })
+                            .ToListAsync(ct)
+                        : null
+                });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating question for chapter {ChapterId}", chapterId);
+            return StatusCode(500, new { error = "An error occurred while creating the question" });
+        }
+    }
+
+    /// <summary>
+    /// Get a question by ID
+    /// </summary>
+    [HttpGet("questions/{questionId}")]
+    public async Task<IActionResult> GetQuestion(Guid questionId, CancellationToken ct = default)
+    {
+        try
+        {
+            var question = await _context.Questions
+                .Include(q => q.QuestionOptions)
+                .Include(q => q.Resource)
+                    .ThenInclude(r => r.Chapter)
+                        .ThenInclude(ch => ch.Course)
+                .FirstOrDefaultAsync(q => q.QuestionId == questionId, ct);
+
+            if (question == null)
+            {
+                return NotFound(new { error = "Question not found" });
+            }
+
+            return Ok(new
+            {
+                questionId = question.QuestionId,
+                chapterId = question.Resource.ChapterId,
+                stem = question.Stem,
+                difficulty = question.Difficulty,
+                questionType = question.QuestionType,
+                expectedAnswer = question.ExpectedAnswer,
+                explanation = question.Explanation,
+                options = question.QuestionOptions.Select(o => new
+                {
+                    optionId = o.OptionId,
+                    text = o.OptionText,
+                    isCorrect = o.IsCorrect
+                }).ToList()
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving question {QuestionId}", questionId);
+            return StatusCode(500, new { error = "An error occurred while retrieving the question" });
+        }
+    }
+
+    /// <summary>
+    /// Get all questions for a chapter
+    /// </summary>
+    [HttpGet("chapters/{chapterId}/questions")]
+    public async Task<IActionResult> GetChapterQuestions(Guid chapterId, CancellationToken ct = default)
+    {
+        try
+        {
+            var questions = await _context.Questions
+                .Include(q => q.QuestionOptions)
+                .Include(q => q.Resource)
+                .Where(q => q.Resource.ChapterId == chapterId)
+                .Select(q => new
+                {
+                    questionId = q.QuestionId,
+                    stem = q.Stem,
+                    difficulty = q.Difficulty,
+                    questionType = q.QuestionType,
+                    expectedAnswer = q.ExpectedAnswer,
+                    explanation = q.Explanation,
+                    options = q.QuestionOptions.Select(o => new
+                    {
+                        optionId = o.OptionId,
+                        text = o.OptionText,
+                        isCorrect = o.IsCorrect
+                    }).ToList()
+                })
+                .ToListAsync(ct);
+
+            return Ok(new
+            {
+                chapterId,
+                totalQuestions = questions.Count,
+                questions
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving questions for chapter {ChapterId}", chapterId);
+            return StatusCode(500, new { error = "An error occurred while retrieving questions" });
+        }
+    }
+
+    /// <summary>
+    /// Update a question
+    /// </summary>
+    [HttpPut("questions/{questionId}")]
+    public async Task<IActionResult> UpdateQuestion(
+        Guid questionId,
+        [FromBody] UpdateQuestionRequest request,
+        CancellationToken ct = default)
+    {
+        try
+        {
+            var question = await _context.Questions
+                .Include(q => q.QuestionOptions)
+                .Include(q => q.Resource)
+                    .ThenInclude(r => r.Chapter)
+                        .ThenInclude(ch => ch.Course)
+                .FirstOrDefaultAsync(q => q.QuestionId == questionId, ct);
+
+            if (question == null)
+            {
+                return NotFound(new { error = "Question not found" });
+            }
+
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var teacherId))
+            {
+                return Unauthorized(new { error = "Invalid teacher identification" });
+            }
+
+            if (question.Resource.Chapter.Course.TeacherId != teacherId)
+            {
+                return Forbid("You can only update questions in your own courses");
+            }
+
+            // Update question fields
+            if (!string.IsNullOrWhiteSpace(request.Stem))
+                question.Stem = request.Stem.Trim();
+
+            if (!string.IsNullOrWhiteSpace(request.Difficulty))
+                question.Difficulty = request.Difficulty;
+
+            if (!string.IsNullOrWhiteSpace(request.QuestionType))
+                question.QuestionType = request.QuestionType;
+
+            if (request.ExpectedAnswer != null)
+                question.ExpectedAnswer = request.ExpectedAnswer;
+
+            if (request.Explanation != null)
+                question.Explanation = request.Explanation;
+
+            // Update options if provided
+            if (request.Options != null && request.Options.Any())
+            {
+                // Remove existing options
+                _context.QuestionOptions.RemoveRange(question.QuestionOptions);
+
+                // Add new options
+                var newOptions = request.Options.Select(opt => new QuestionOption
+                {
+                    OptionId = Guid.NewGuid(),
+                    QuestionId = question.QuestionId,
+                    OptionText = opt.Text.Trim(),
+                    IsCorrect = opt.IsCorrect
+                }).ToList();
+
+                _context.QuestionOptions.AddRange(newOptions);
+            }
+
+            await _context.SaveChangesAsync(ct);
+
+            return Ok(new
+            {
+                questionId = question.QuestionId,
+                stem = question.Stem,
+                difficulty = question.Difficulty,
+                questionType = question.QuestionType,
+                message = "Question updated successfully"
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating question {QuestionId}", questionId);
+            return StatusCode(500, new { error = "An error occurred while updating the question" });
+        }
+    }
+
+    /// <summary>
+    /// Delete a question
+    /// </summary>
+    [HttpDelete("questions/{questionId}")]
+    public async Task<IActionResult> DeleteQuestion(Guid questionId, CancellationToken ct = default)
+    {
+        try
+        {
+            var question = await _context.Questions
+                .Include(q => q.Resource)
+                    .ThenInclude(r => r.Chapter)
+                        .ThenInclude(ch => ch.Course)
+                .FirstOrDefaultAsync(q => q.QuestionId == questionId, ct);
+
+            if (question == null)
+            {
+                return NotFound(new { error = "Question not found" });
+            }
+
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var teacherId))
+            {
+                return Unauthorized(new { error = "Invalid teacher identification" });
+            }
+
+            if (question.Resource.Chapter.Course.TeacherId != teacherId)
+            {
+                return Forbid("You can only delete questions in your own courses");
+            }
+
+            _context.Questions.Remove(question);
+            await _context.SaveChangesAsync(ct);
+
+            return Ok(new { message = "Question deleted successfully" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting question {QuestionId}", questionId);
+            return StatusCode(500, new { error = "An error occurred while deleting the question" });
+        }
+    }
+
+    #endregion
+
     #region Help Requests Management
 
     /// <summary>
@@ -583,6 +934,54 @@ public record HelpRequestResponseRequest
     [Required]
     [MinLength(10)]
     public string Response { get; init; } = string.Empty;
+}
+
+/// <summary>
+/// Request model for creating a question
+/// </summary>
+public record CreateQuestionRequest
+{
+    [Required]
+    public string Stem { get; init; } = string.Empty;
+    
+    public string? Difficulty { get; init; } // "easy", "medium", "hard"
+    
+    public string? QuestionType { get; init; } // "multiple_choice", "true_false", "short_answer", "essay"
+    
+    public string? ExpectedAnswer { get; init; } // For short_answer and essay
+    
+    public string? Explanation { get; init; }
+    
+    public List<QuestionOptionDto>? Options { get; init; } // For multiple_choice and true_false
+}
+
+/// <summary>
+/// Request model for updating a question
+/// </summary>
+public record UpdateQuestionRequest
+{
+    public string? Stem { get; init; }
+    
+    public string? Difficulty { get; init; }
+    
+    public string? QuestionType { get; init; }
+    
+    public string? ExpectedAnswer { get; init; }
+    
+    public string? Explanation { get; init; }
+    
+    public List<QuestionOptionDto>? Options { get; init; }
+}
+
+/// <summary>
+/// DTO for question options
+/// </summary>
+public record QuestionOptionDto
+{
+    [Required]
+    public string Text { get; init; } = string.Empty;
+    
+    public bool IsCorrect { get; init; }
 }
 
 #endregion

@@ -17,6 +17,17 @@ namespace ProjectAPI.Models
         [Required]
         public string Difficulty { get; set; } = string.Empty; // "easy", "medium", "hard"
         
+        /// <summary>
+        /// Question type: "multiple_choice", "true_false", "short_answer", "essay"
+        /// </summary>
+        [Required]
+        public string QuestionType { get; set; } = "multiple_choice";
+        
+        /// <summary>
+        /// For short_answer and essay questions, the expected answer or answer key
+        /// </summary>
+        public string? ExpectedAnswer { get; set; }
+        
         public string? Explanation { get; set; }
 
         // Navigation properties

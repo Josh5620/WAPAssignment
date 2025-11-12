@@ -410,6 +410,7 @@ public class StudentsController : ControllerBase
                     questionId = q.QuestionId,
                     stem = q.Stem,
                     difficulty = q.Difficulty,
+                    questionType = q.QuestionType ?? "multiple_choice",
                     options = q.QuestionOptions.Select(o => new
                     {
                         optionId = o.OptionId,
@@ -417,6 +418,11 @@ public class StudentsController : ControllerBase
                     }).ToList()
                 })
                 .ToListAsync(ct);
+
+            if (questions.Count == 0)
+            {
+                return Ok(new List<object>());
+            }
 
             return Ok(questions);
         }
@@ -430,6 +436,165 @@ public class StudentsController : ControllerBase
     #endregion
 
     #region Quiz Submission and Feedback
+
+    /// <summary>
+    /// Get quiz information including time limit and attempt limits
+    /// </summary>
+    [HttpGet("quizzes/chapters/{chapterId}/info")]
+    public async Task<IActionResult> GetQuizInfo(Guid chapterId, CancellationToken ct = default)
+    {
+        try
+        {
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+            {
+                return Unauthorized(new { error = "Invalid or missing user identification" });
+            }
+
+            var chapter = await _context.Chapters
+                .FirstOrDefaultAsync(ch => ch.ChapterId == chapterId, ct);
+
+            if (chapter == null)
+            {
+                return NotFound(new { error = "Chapter not found" });
+            }
+
+            // Get attempt count for this user and chapter
+            var attemptCount = await _context.QuizAttempts
+                .CountAsync(qa => qa.UserId == userId && qa.ChapterId == chapterId, ct);
+
+            // Get questions count
+            var questionCount = await _context.Questions
+                .Include(q => q.Resource)
+                .CountAsync(q => q.Resource.ChapterId == chapterId, ct);
+
+            return Ok(new
+            {
+                chapterId,
+                timeLimitSeconds = chapter.QuizTimeLimitSeconds,
+                maxAttempts = chapter.MaxQuizAttempts,
+                currentAttemptCount = attemptCount,
+                remainingAttempts = chapter.MaxQuizAttempts.HasValue 
+                    ? Math.Max(0, chapter.MaxQuizAttempts.Value - attemptCount)
+                    : (int?)null,
+                totalQuestions = questionCount,
+                canAttempt = !chapter.MaxQuizAttempts.HasValue || attemptCount < chapter.MaxQuizAttempts.Value
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting quiz info for chapter {ChapterId}", chapterId);
+            return StatusCode(500, new { error = "An error occurred while getting quiz information" });
+        }
+    }
+
+    /// <summary>
+    /// Start a new quiz attempt (tracks timer start)
+    /// </summary>
+    [HttpPost("quizzes/start")]
+    public async Task<IActionResult> StartQuiz([FromBody] StartQuizRequest request, CancellationToken ct = default)
+    {
+        try
+        {
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+            {
+                return Unauthorized(new { error = "Invalid or missing user identification" });
+            }
+
+            var chapter = await _context.Chapters
+                .FirstOrDefaultAsync(ch => ch.ChapterId == request.ChapterId, ct);
+
+            if (chapter == null)
+            {
+                return NotFound(new { error = "Chapter not found" });
+            }
+
+            // Check attempt limit
+            if (chapter.MaxQuizAttempts.HasValue)
+            {
+                var attemptCount = await _context.QuizAttempts
+                    .CountAsync(qa => qa.UserId == userId && qa.ChapterId == request.ChapterId, ct);
+
+                if (attemptCount >= chapter.MaxQuizAttempts.Value)
+                {
+                    return BadRequest(new { error = $"Maximum attempts ({chapter.MaxQuizAttempts.Value}) reached for this quiz." });
+                }
+            }
+
+            var attempt = new QuizAttempt
+            {
+                AttemptId = Guid.NewGuid(),
+                UserId = userId,
+                ChapterId = request.ChapterId,
+                TimeLimitSeconds = chapter.QuizTimeLimitSeconds,
+                StartedAt = DateTime.UtcNow,
+                CompletedInTime = true
+            };
+
+            _context.QuizAttempts.Add(attempt);
+            await _context.SaveChangesAsync(ct);
+
+            return Ok(new
+            {
+                attemptId = attempt.AttemptId,
+                chapterId = request.ChapterId,
+                timeLimitSeconds = attempt.TimeLimitSeconds,
+                startedAt = attempt.StartedAt
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error starting quiz for chapter {ChapterId}", request?.ChapterId);
+            return StatusCode(500, new { error = "An error occurred while starting the quiz" });
+        }
+    }
+
+    /// <summary>
+    /// Get quiz attempt history for a chapter
+    /// </summary>
+    [HttpGet("quizzes/chapters/{chapterId}/history")]
+    public async Task<IActionResult> GetQuizHistory(Guid chapterId, CancellationToken ct = default)
+    {
+        try
+        {
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+            {
+                return Unauthorized(new { error = "Invalid or missing user identification" });
+            }
+
+            var attempts = await _context.QuizAttempts
+                .Where(qa => qa.UserId == userId && qa.ChapterId == chapterId)
+                .OrderByDescending(qa => qa.StartedAt)
+                .Select(qa => new
+                {
+                    attemptId = qa.AttemptId,
+                    scorePercentage = qa.ScorePercentage,
+                    correctAnswers = qa.CorrectAnswers,
+                    totalQuestions = qa.TotalQuestions,
+                    passed = qa.Passed,
+                    timeSpentSeconds = qa.TimeSpentSeconds,
+                    timeLimitSeconds = qa.TimeLimitSeconds,
+                    completedInTime = qa.CompletedInTime,
+                    startedAt = qa.StartedAt,
+                    submittedAt = qa.SubmittedAt
+                })
+                .ToListAsync(ct);
+
+            return Ok(new
+            {
+                chapterId,
+                totalAttempts = attempts.Count,
+                attempts
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting quiz history for chapter {ChapterId}", chapterId);
+            return StatusCode(500, new { error = "An error occurred while retrieving quiz history" });
+        }
+    }
 
     /// <summary>
     /// Submit quiz answers, calculate score, and update chapter progress
@@ -453,11 +618,38 @@ public class StudentsController : ControllerBase
                 return Unauthorized(new { error = "Invalid or missing user identification" });
             }
 
-            // Verify chapter exists
-            var chapterExists = await _context.Chapters.AnyAsync(ch => ch.ChapterId == request.ChapterId, ct);
-            if (!chapterExists)
+            // Verify chapter exists and get it
+            var chapter = await _context.Chapters
+                .FirstOrDefaultAsync(ch => ch.ChapterId == request.ChapterId, ct);
+            if (chapter == null)
             {
                 return NotFound(new { error = "Chapter not found" });
+            }
+
+            // Check attempt limit if this is a new attempt
+            QuizAttempt? attempt = null;
+            if (request.AttemptId.HasValue)
+            {
+                attempt = await _context.QuizAttempts
+                    .FirstOrDefaultAsync(qa => qa.AttemptId == request.AttemptId.Value && qa.UserId == userId, ct);
+                if (attempt == null)
+                {
+                    return NotFound(new { error = "Quiz attempt not found" });
+                }
+            }
+            else
+            {
+                // Check attempt limit for new attempts
+                if (chapter.MaxQuizAttempts.HasValue)
+                {
+                    var attemptCount = await _context.QuizAttempts
+                        .CountAsync(qa => qa.UserId == userId && qa.ChapterId == request.ChapterId, ct);
+
+                    if (attemptCount >= chapter.MaxQuizAttempts.Value)
+                    {
+                        return BadRequest(new { error = $"Maximum attempts ({chapter.MaxQuizAttempts.Value}) reached for this quiz." });
+                    }
+                }
             }
 
             // Get all questions for this chapter with their correct answers
@@ -472,7 +664,7 @@ public class StudentsController : ControllerBase
                 return BadRequest(new { error = "No questions found for this chapter" });
             }
 
-            // Calculate score by checking answers against QuestionOptions table
+            // Calculate score by checking answers - supports different question types
             int totalQuestions = request.Answers.Count;
             int correctAnswers = 0;
             var results = new List<object>();
@@ -486,35 +678,135 @@ public class StudentsController : ControllerBase
                     continue; // Skip invalid question IDs
                 }
 
-                // Check if the selected option is correct
-                var selectedOption = question.QuestionOptions
-                    .FirstOrDefault(qo => qo.OptionId == answer.SelectedOptionId);
+                bool isCorrect = false;
+                string? selectedAnswerText = null;
+                string? correctAnswerText = null;
 
-                bool isCorrect = selectedOption != null && selectedOption.IsCorrect;
+                // Handle different question types
+                switch (question.QuestionType.ToLower())
+                {
+                    case "multiple_choice":
+                        // Multiple choice: check SelectedOptionId
+                        if (Guid.TryParse(answer.SelectedOptionId, out var optionId))
+                        {
+                            var selectedOption = question.QuestionOptions
+                                .FirstOrDefault(qo => qo.OptionId == optionId);
+                            isCorrect = selectedOption != null && selectedOption.IsCorrect;
+                            selectedAnswerText = selectedOption?.OptionText;
+                            var correctOption = question.QuestionOptions.FirstOrDefault(qo => qo.IsCorrect);
+                            correctAnswerText = correctOption?.OptionText;
+                        }
+                        break;
+
+                    case "true_false":
+                        // True/False: check if SelectedOptionId matches "true" or "false"
+                        var correctTFOption = question.QuestionOptions.FirstOrDefault(qo => qo.IsCorrect);
+                        if (correctTFOption != null && answer.SelectedOptionId != null)
+                        {
+                            // Compare the option text or check if it's the correct option
+                            var selectedTFOption = question.QuestionOptions
+                                .FirstOrDefault(qo => qo.OptionText.ToLower() == answer.SelectedOptionId.ToLower());
+                            isCorrect = selectedTFOption != null && selectedTFOption.IsCorrect;
+                            selectedAnswerText = answer.SelectedOptionId;
+                            correctAnswerText = correctTFOption.OptionText;
+                        }
+                        break;
+
+                    case "short_answer":
+                    case "essay":
+                        // Text-based questions: compare with ExpectedAnswer (case-insensitive for short_answer)
+                        if (!string.IsNullOrWhiteSpace(answer.TextAnswer) && !string.IsNullOrWhiteSpace(question.ExpectedAnswer))
+                        {
+                            if (question.QuestionType.ToLower() == "short_answer")
+                            {
+                                // Case-insensitive comparison for short answer
+                                isCorrect = answer.TextAnswer.Trim().Equals(question.ExpectedAnswer.Trim(), StringComparison.OrdinalIgnoreCase);
+                            }
+                            else
+                            {
+                                // Essay questions might need manual grading, but for now we'll do exact match
+                                isCorrect = answer.TextAnswer.Trim().Equals(question.ExpectedAnswer.Trim(), StringComparison.OrdinalIgnoreCase);
+                            }
+                            selectedAnswerText = answer.TextAnswer;
+                            correctAnswerText = question.ExpectedAnswer;
+                        }
+                        break;
+
+                    default:
+                        // Default to multiple choice behavior
+                        if (Guid.TryParse(answer.SelectedOptionId, out var defaultOptionId))
+                        {
+                            var defaultOption = question.QuestionOptions
+                                .FirstOrDefault(qo => qo.OptionId == defaultOptionId);
+                            isCorrect = defaultOption != null && defaultOption.IsCorrect;
+                            selectedAnswerText = defaultOption?.OptionText;
+                            var defaultCorrectOption = question.QuestionOptions.FirstOrDefault(qo => qo.IsCorrect);
+                            correctAnswerText = defaultCorrectOption?.OptionText;
+                        }
+                        break;
+                }
                 
                 if (isCorrect)
                 {
                     correctAnswers++;
                 }
 
-                // Get the correct answer for feedback
-                var correctOption = question.QuestionOptions.FirstOrDefault(qo => qo.IsCorrect);
-
                 results.Add(new
                 {
                     questionId = question.QuestionId,
+                    questionType = question.QuestionType,
                     stem = question.Stem,
-                    selectedOptionId = answer.SelectedOptionId,
-                    selectedOptionText = selectedOption?.OptionText,
+                    selectedAnswer = selectedAnswerText,
                     isCorrect,
-                    correctOptionId = correctOption?.OptionId,
-                    correctOptionText = correctOption?.OptionText,
+                    correctAnswer = correctAnswerText,
                     explanation = question.Explanation
                 });
             }
 
             // Calculate percentage score
             var scorePercentage = totalQuestions > 0 ? (int)Math.Round((double)correctAnswers / totalQuestions * 100) : 0;
+            var passed = scorePercentage >= 70; // 70% passing threshold
+
+            // Check if completed within time limit
+            bool completedInTime = true;
+            if (attempt != null && attempt.TimeLimitSeconds.HasValue && request.TimeSpentSeconds.HasValue)
+            {
+                completedInTime = request.TimeSpentSeconds.Value <= attempt.TimeLimitSeconds.Value;
+            }
+
+            // Save or update quiz attempt
+            if (attempt == null)
+            {
+                attempt = new QuizAttempt
+                {
+                    AttemptId = Guid.NewGuid(),
+                    UserId = userId,
+                    ChapterId = request.ChapterId,
+                    TimeLimitSeconds = chapter.QuizTimeLimitSeconds,
+                    TimeSpentSeconds = request.TimeSpentSeconds,
+                    ScorePercentage = scorePercentage,
+                    CorrectAnswers = correctAnswers,
+                    TotalQuestions = totalQuestions,
+                    Passed = passed,
+                    CompletedInTime = completedInTime,
+                    StartedAt = DateTime.UtcNow,
+                    SubmittedAt = DateTime.UtcNow,
+                    ResultsJson = System.Text.Json.JsonSerializer.Serialize(results)
+                };
+                _context.QuizAttempts.Add(attempt);
+            }
+            else
+            {
+                attempt.TimeSpentSeconds = request.TimeSpentSeconds;
+                attempt.ScorePercentage = scorePercentage;
+                attempt.CorrectAnswers = correctAnswers;
+                attempt.TotalQuestions = totalQuestions;
+                attempt.Passed = passed;
+                attempt.CompletedInTime = completedInTime;
+                attempt.SubmittedAt = DateTime.UtcNow;
+                attempt.ResultsJson = System.Text.Json.JsonSerializer.Serialize(results);
+                _context.QuizAttempts.Update(attempt);
+            }
 
             // Update ChapterProgress table for this user and chapter
             var existingProgress = await _context.ChapterProgress
@@ -549,15 +841,18 @@ public class StudentsController : ControllerBase
             // Return results
             return Ok(new
             {
+                attemptId = attempt.AttemptId,
                 chapterId = request.ChapterId,
                 userId,
                 score = scorePercentage,
                 correctAnswers,
                 totalQuestions,
-                passed = scorePercentage >= 70, // 70% passing threshold
+                passed,
+                timeSpentSeconds = request.TimeSpentSeconds,
+                completedInTime,
                 completedAt = DateTime.UtcNow,
                 results,
-                message = scorePercentage >= 70 
+                message = passed 
                     ? "Congratulations! You passed this chapter!" 
                     : "Keep practicing! You can retake the quiz to improve your score."
             });
@@ -920,17 +1215,17 @@ public class StudentsController : ControllerBase
     #region Forum Participation
 
     /// <summary>
-    /// Get forum posts for a course (students can view all posts)
+    /// Get all forum posts (including general discussions)
     /// </summary>
-    [HttpGet("forums/courses/{courseId}/posts")]
-    public async Task<IActionResult> GetForumPosts(Guid courseId, CancellationToken ct = default)
+    [HttpGet("forums/posts")]
+    public async Task<IActionResult> GetAllForumPosts(CancellationToken ct = default)
     {
         try
         {
             var posts = await _context.ForumPosts
                 .Include(fp => fp.Profile)
                 .Include(fp => fp.Course)
-                .Where(fp => fp.CourseId == courseId)
+                .Include(fp => fp.Comments)
                 .OrderByDescending(fp => fp.CreatedAt)
                 .Select(fp => new
                 {
@@ -941,7 +1236,44 @@ public class StudentsController : ControllerBase
                     content = fp.Content,
                     createdAt = fp.CreatedAt,
                     courseId = fp.CourseId,
-                    courseTitle = fp.Course.Title,
+                    courseTitle = fp.Course != null ? fp.Course.Title : "General Discussion",
+                    commentCount = fp.Comments.Count
+                })
+                .ToListAsync(ct);
+
+            return Ok(posts);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving all forum posts");
+            return StatusCode(500, new { error = "An error occurred while retrieving forum posts" });
+        }
+    }
+
+    /// <summary>
+    /// Get forum posts for a course (students can view all posts)
+    /// </summary>
+    [HttpGet("forums/courses/{courseId}/posts")]
+    public async Task<IActionResult> GetForumPosts(Guid courseId, CancellationToken ct = default)
+    {
+        try
+        {
+            var posts = await _context.ForumPosts
+                .Include(fp => fp.Profile)
+                .Include(fp => fp.Course)
+                .Include(fp => fp.Comments) // Include Comments to get accurate count
+                .Where(fp => fp.CourseId == courseId || (courseId == Guid.Empty && fp.CourseId == null))
+                .OrderByDescending(fp => fp.CreatedAt)
+                .Select(fp => new
+                {
+                    forumId = fp.ForumId,
+                    userId = fp.UserId,
+                    userName = fp.Profile.FullName,
+                    userEmail = fp.Profile.Email,
+                    content = fp.Content,
+                    createdAt = fp.CreatedAt,
+                    courseId = fp.CourseId,
+                    courseTitle = fp.Course != null ? fp.Course.Title : "General Discussion",
                     commentCount = fp.Comments.Count
                 })
                 .ToListAsync(ct);
@@ -968,34 +1300,38 @@ public class StudentsController : ControllerBase
                 return BadRequest(new { error = "Post content is required" });
             }
 
-            // Verify user exists and is a student
+            // Verify user exists
             var profile = await _context.Profiles.FindAsync(new object[] { request.UserId }, ct);
             if (profile == null)
             {
                 return NotFound(new { error = "User not found" });
             }
 
-            // Verify course exists
-            var courseExists = await _context.Courses.AnyAsync(c => c.CourseId == request.CourseId, ct);
-            if (!courseExists)
+            // Allow posting without course validation - users can ask general questions
+            // CourseId is optional - can be null for general forum discussions
+            Guid? courseIdToUse = null;
+            
+            // If a courseId is provided, verify it exists (optional check)
+            if (request.CourseId != Guid.Empty)
             {
-                return NotFound(new { error = "Course not found" });
-            }
-
-            // Verify user is enrolled in the course
-            var isEnrolled = await _context.Enrolments
-                .AnyAsync(e => e.UserId == request.UserId && e.CourseId == request.CourseId, ct);
-
-            if (!isEnrolled && profile.Role != "admin" && profile.Role != "teacher")
-            {
-                return Forbid("You must be enrolled in the course to post in its forum");
+                var courseExists = await _context.Courses.AnyAsync(c => c.CourseId == request.CourseId, ct);
+                if (courseExists)
+                {
+                    courseIdToUse = request.CourseId;
+                }
+                else
+                {
+                    // Course doesn't exist, but allow posting anyway as general forum post
+                    _logger.LogWarning("Post created with non-existent courseId {CourseId}, posting as general forum discussion", request.CourseId);
+                    courseIdToUse = null; // Set to null for general forum post
+                }
             }
 
             var forumPost = new ForumPost
             {
                 ForumId = Guid.NewGuid(),
                 UserId = request.UserId,
-                CourseId = request.CourseId,
+                CourseId = courseIdToUse, // Can be null for general forum posts
                 Content = request.Content,
                 CreatedAt = DateTime.UtcNow
             };
@@ -1003,8 +1339,15 @@ public class StudentsController : ControllerBase
             _context.ForumPosts.Add(forumPost);
             await _context.SaveChangesAsync(ct);
 
-            // Award XP for forum participation
-            await AwardXPAsync(request.UserId, 10, ct);
+            // Award XP for forum participation (don't fail if this errors)
+            try
+            {
+                await AwardXPAsync(request.UserId, 10, ct);
+            }
+            catch (Exception xpEx)
+            {
+                _logger.LogWarning(xpEx, "Failed to award XP for forum post, but post was created successfully");
+            }
 
             return CreatedAtAction(
                 nameof(GetForumPosts),
@@ -1019,10 +1362,15 @@ public class StudentsController : ControllerBase
                     xpAwarded = 10
                 });
         }
+        catch (DbUpdateException dbEx)
+        {
+            _logger.LogError(dbEx, "Database error creating forum post for user {UserId}", request?.UserId);
+            return StatusCode(500, new { error = "Database error occurred while creating the forum post. Please try again." });
+        }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error creating forum post for user {UserId}", request?.UserId);
-            return StatusCode(500, new { error = "An error occurred while creating the forum post" });
+            _logger.LogError(ex, "Error creating forum post for user {UserId}. Error: {ErrorMessage}", request?.UserId, ex.Message);
+            return StatusCode(500, new { error = $"An error occurred while creating the forum post: {ex.Message}" });
         }
     }
 
@@ -1042,6 +1390,7 @@ public class StudentsController : ControllerBase
                 return NotFound(new { error = "Forum post not found" });
             }
 
+            // Load all comments with their profile information
             var comments = await _context.ForumComments
                 .Include(fc => fc.Profile)
                 .Where(fc => fc.ForumId == forumId)
@@ -1095,6 +1444,7 @@ public class StudentsController : ControllerBase
 
             var forumPost = await _context.ForumPosts
                 .Include(fp => fp.Course)
+                .Include(fp => fp.Profile)
                 .FirstOrDefaultAsync(fp => fp.ForumId == forumId, ct);
 
             if (forumPost == null)
@@ -1102,6 +1452,10 @@ public class StudentsController : ControllerBase
                 return NotFound(new { error = "Forum post not found" });
             }
 
+            // Allow all authenticated users to comment (students, teachers, admins)
+            // Enrollment check is optional - we'll allow commenting for better engagement
+            // If you want to enforce enrollment, uncomment the check below
+            /*
             var isEnrolled = await _context.Enrolments
                 .AnyAsync(e => e.UserId == userId && e.CourseId == forumPost.CourseId, ct);
 
@@ -1109,15 +1463,44 @@ public class StudentsController : ControllerBase
             {
                 return Forbid("You must be enrolled in the course to comment on this forum.");
             }
+            */
+
+            Guid? notificationRecipientId = null;
+            string notificationMessage = string.Empty;
 
             if (request.ParentCommentId.HasValue)
             {
+                // This is a reply to a comment - notify the comment author
                 var parentComment = await _context.ForumComments
-                    .AnyAsync(fc => fc.CommentId == request.ParentCommentId.Value && fc.ForumId == forumId, ct);
+                    .Include(fc => fc.Profile)
+                    .FirstOrDefaultAsync(fc => fc.CommentId == request.ParentCommentId.Value && fc.ForumId == forumId, ct);
 
-                if (!parentComment)
+                if (parentComment == null)
                 {
                     return BadRequest(new { error = "Parent comment not found in this thread." });
+                }
+
+                // Only notify if the comment author is different from the person replying
+                if (parentComment.UserId != userId)
+                {
+                    notificationRecipientId = parentComment.UserId;
+                    var commentPreview = parentComment.Content.Length > 50 
+                        ? parentComment.Content.Substring(0, 47) + "..." 
+                        : parentComment.Content;
+                    notificationMessage = $"💬 {profile.FullName} replied to your comment: \"{commentPreview}\"";
+                }
+            }
+            else
+            {
+                // This is a direct reply to the post - notify the post author
+                // Only notify if the post author is different from the person commenting
+                if (forumPost.UserId != userId)
+                {
+                    notificationRecipientId = forumPost.UserId;
+                    var postPreview = forumPost.Content.Length > 50 
+                        ? forumPost.Content.Substring(0, 47) + "..." 
+                        : forumPost.Content;
+                    notificationMessage = $"💬 {profile.FullName} replied to your post: \"{postPreview}\"";
                 }
             }
 
@@ -1132,6 +1515,19 @@ public class StudentsController : ControllerBase
             };
 
             _context.ForumComments.Add(comment);
+
+            // Create notification if there's a recipient
+            if (notificationRecipientId.HasValue && !string.IsNullOrEmpty(notificationMessage))
+            {
+                _context.Notifications.Add(new Notification
+                {
+                    NotificationId = Guid.NewGuid(),
+                    UserId = notificationRecipientId.Value,
+                    Message = notificationMessage,
+                    CreatedAt = DateTime.UtcNow
+                });
+            }
+
             await _context.SaveChangesAsync(ct);
 
             await AwardXPAsync(userId, 5, ct);
@@ -1361,6 +1757,16 @@ public record QuizSubmissionRequest
 
     [Required]
     public List<AnswerSubmission> Answers { get; init; } = new();
+    
+    /// <summary>
+    /// Time spent on quiz in seconds
+    /// </summary>
+    public int? TimeSpentSeconds { get; init; }
+    
+    /// <summary>
+    /// Attempt ID if this is continuing a previous attempt
+    /// </summary>
+    public Guid? AttemptId { get; init; }
 }
 
 public record AnswerSubmission
@@ -1368,8 +1774,24 @@ public record AnswerSubmission
     [Required]
     public Guid QuestionId { get; init; }
 
+    /// <summary>
+    /// For multiple choice: SelectedOptionId
+    /// For true/false: "true" or "false"
+    /// For short answer: the text answer
+    /// For essay: the essay text
+    /// </summary>
+    public string? SelectedOptionId { get; init; }
+    
+    /// <summary>
+    /// For text-based questions (short_answer, essay)
+    /// </summary>
+    public string? TextAnswer { get; init; }
+}
+
+public record StartQuizRequest
+{
     [Required]
-    public Guid SelectedOptionId { get; init; }
+    public Guid ChapterId { get; init; }
 }
 
 public record QuizSubmissionResponse

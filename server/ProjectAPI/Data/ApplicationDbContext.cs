@@ -28,6 +28,7 @@ namespace ProjectAPI.Data
         public DbSet<AnnouncementRead> AnnouncementReads { get; set; }
         public DbSet<ForumComment> ForumComments { get; set; }
         public DbSet<Certificate> Certificates { get; set; }
+        public DbSet<QuizAttempt> QuizAttempts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -150,12 +151,12 @@ namespace ProjectAPI.Data
                 .HasForeignKey(fp => fp.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Course -> ForumPosts
+            // Course -> ForumPosts (optional - allows general forum posts)
             modelBuilder.Entity<ForumPost>()
                 .HasOne(fp => fp.Course)
                 .WithMany(c => c.ForumPosts)
                 .HasForeignKey(fp => fp.CourseId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull); // Set null instead of cascade to preserve general posts
 
             // Profile -> Testimonials
             modelBuilder.Entity<Testimonial>()
@@ -206,6 +207,19 @@ namespace ProjectAPI.Data
                 .WithMany(p => p.Notifications)
                 .HasForeignKey(n => n.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // QuizAttempt relationships
+            modelBuilder.Entity<QuizAttempt>()
+                .HasOne(qa => qa.Profile)
+                .WithMany()
+                .HasForeignKey(qa => qa.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<QuizAttempt>()
+                .HasOne(qa => qa.Chapter)
+                .WithMany(ch => ch.QuizAttempts)
+                .HasForeignKey(qa => qa.ChapterId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // AnnouncementRead composite key and relationships
             modelBuilder.Entity<AnnouncementRead>()

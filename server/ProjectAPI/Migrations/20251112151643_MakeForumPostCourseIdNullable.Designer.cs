@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectAPI.Data;
 
@@ -11,9 +12,11 @@ using ProjectAPI.Data;
 namespace ProjectAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251112151643_MakeForumPostCourseIdNullable")]
+    partial class MakeForumPostCourseIdNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,13 +107,7 @@ namespace ProjectAPI.Migrations
                     b.Property<Guid>("CourseId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("MaxQuizAttempts")
-                        .HasColumnType("int");
-
                     b.Property<int>("Number")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("QuizTimeLimitSeconds")
                         .HasColumnType("int");
 
                     b.Property<string>("Summary")
@@ -450,14 +447,7 @@ namespace ProjectAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ExpectedAnswer")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Explanation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("QuestionType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ResourceId")
@@ -495,57 +485,6 @@ namespace ProjectAPI.Migrations
                     b.HasIndex("QuestionId");
 
                     b.ToTable("QuestionOptions");
-                });
-
-            modelBuilder.Entity("ProjectAPI.Models.QuizAttempt", b =>
-                {
-                    b.Property<Guid>("AttemptId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ChapterId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("CompletedInTime")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("CorrectAnswers")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Passed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ResultsJson")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ScorePercentage")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("SubmittedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("TimeLimitSeconds")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TimeSpentSeconds")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalQuestions")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("AttemptId");
-
-                    b.HasIndex("ChapterId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("QuizAttempts");
                 });
 
             modelBuilder.Entity("ProjectAPI.Models.Resource", b =>
@@ -836,25 +775,6 @@ namespace ProjectAPI.Migrations
                     b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("ProjectAPI.Models.QuizAttempt", b =>
-                {
-                    b.HasOne("ProjectAPI.Models.Chapter", "Chapter")
-                        .WithMany("QuizAttempts")
-                        .HasForeignKey("ChapterId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ProjectAPI.Models.Profile", "Profile")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Chapter");
-
-                    b.Navigation("Profile");
-                });
-
             modelBuilder.Entity("ProjectAPI.Models.Resource", b =>
                 {
                     b.HasOne("ProjectAPI.Models.Chapter", "Chapter")
@@ -894,8 +814,6 @@ namespace ProjectAPI.Migrations
                     b.Navigation("ChapterProgress");
 
                     b.Navigation("HelpRequests");
-
-                    b.Navigation("QuizAttempts");
 
                     b.Navigation("Resources");
                 });

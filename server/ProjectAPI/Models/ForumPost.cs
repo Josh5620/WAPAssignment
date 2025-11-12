@@ -12,7 +12,7 @@ namespace ProjectAPI.Models
         public Guid UserId { get; set; }
         
         [ForeignKey("Course")]
-        public Guid CourseId { get; set; }
+        public Guid? CourseId { get; set; } // Nullable to allow general forum posts
         
         [Required]
         public string Content { get; set; } = string.Empty;
@@ -21,7 +21,7 @@ namespace ProjectAPI.Models
 
         // Navigation properties
         public Profile Profile { get; set; } = null!;
-        public Course Course { get; set; } = null!;
+        public Course? Course { get; set; } // Nullable to allow general forum posts
         public ICollection<ForumComment> Comments { get; set; } = new List<ForumComment>();
     }
 }

@@ -32,27 +32,6 @@ const ForumPage = () => {
     [resolvedCourseId],
   );
 
-  const samplePosts = useMemo(
-    () => [
-      {
-        id: 'sample-1',
-        userName: 'Luna',
-        userRole: 'student',
-        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 8).toISOString(),
-        content: 'What’s your favorite way to remember the difference between lists and tuples?',
-      },
-      {
-        id: 'sample-2',
-        userName: 'Theo',
-        userRole: 'teacher',
-        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
-        content:
-          'Try grouping related flashcards into themes. Plant metaphors work great for remembering data structures!',
-      },
-    ],
-    [],
-  );
-
   const getLocalPosts = () => {
     try {
       const stored = localStorage.getItem(storageKey);
@@ -152,10 +131,10 @@ const ForumPage = () => {
       try {
         const courses = await api.courses.getAll();
 
-        if (Array.isArray(courses)) {
+        if (Array.isArray(courses) && courses.length > 0) {
           const firstGuid = courses
             .map((course) => {
-              const ids = [course.courseId, course.courseID, course.id, course.Id].filter(Boolean);
+              const ids = [course.courseId, course.courseID, course.id, course.Id, course.CourseId].filter(Boolean);
               return ids.find((candidate) => typeof candidate === 'string' && isGuid(candidate));
             })
             .find(Boolean);
@@ -165,11 +144,11 @@ const ForumPage = () => {
             return;
           }
         }
+        // If no valid course found, don't set fallback - let loadForumPosts handle it
+        console.warn('No valid course ID found in courses list');
       } catch (err) {
-        console.warn('Unable to resolve course id from API, falling back to offline mode.', err);
-      }
-      if (!resolvedCourseId) {
-        rememberCourseId(FALLBACK_COURSE_ID);
+        console.warn('Unable to resolve course id from API:', err);
+        // Don't set fallback on error - let the error be handled in loadForumPosts
       }
     };
 
@@ -177,48 +156,89 @@ const ForumPage = () => {
   }, [user, navigate]);
 
   useEffect(() => {
-    if (!user || !resolvedCourseId) {
+    if (!user) {
       return;
     }
-    loadForumPosts(resolvedCourseId);
+    // Load posts if we have a valid courseId, otherwise loadForumPosts will try to resolve it
+    if (resolvedCourseId && isGuid(resolvedCourseId)) {
+      loadForumPosts(resolvedCourseId);
+    } else if (resolvedCourseId === null) {
+      // Only try to load if courseId is explicitly null (not the fallback string)
+      // This will trigger the courseId resolution in loadForumPosts
+      loadForumPosts(null);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, resolvedCourseId]);
 
   const loadForumPosts = async (courseId) => {
     try {
       setLoading(true);
-      setInfo(null);
+      setInfo(null); // Clear any info messages
+      setError(null); // Clear any errors
+      
+      // Validate courseId before making the request
+      if (!courseId || !isGuid(courseId)) {
+        console.warn('Invalid courseId, attempting to resolve...', courseId);
+        // Try to resolve courseId again
+        const courses = await api.courses.getAll();
+        if (Array.isArray(courses) && courses.length > 0) {
+          const firstGuid = courses
+            .map((course) => {
+              const ids = [course.courseId, course.courseID, course.id, course.Id, course.CourseId].filter(Boolean);
+              return ids.find((candidate) => typeof candidate === 'string' && isGuid(candidate));
+            })
+            .find(Boolean);
+          
+          if (firstGuid) {
+            rememberCourseId(firstGuid);
+            courseId = firstGuid;
+          } else {
+            throw new Error('No valid course ID found. Please ensure you have at least one course.');
+          }
+        } else {
+          throw new Error('No courses available. Please create a course first.');
+        }
+      }
+      
+      console.log('Loading forum posts for courseId:', courseId);
       const data = await api.students.getForumPosts(courseId);
+      console.log('Received forum posts data:', data);
+      
       const normalized = Array.isArray(data) ? data.map((item) => normalizeForumPost(item)).filter(Boolean) : [];
+      
+      // Update courseId if we found a valid one from server posts
       if (!resolvedCourseId || resolvedCourseId === FALLBACK_COURSE_ID) {
         const firstServerBackedPost = normalized.find((post) => post.hasServerId);
-        if (firstServerBackedPost && firstServerBackedPost.courseId && firstServerBackedPost.courseId !== resolvedCourseId) {
+        if (firstServerBackedPost && firstServerBackedPost.courseId && isGuid(firstServerBackedPost.courseId)) {
           rememberCourseId(firstServerBackedPost.courseId);
         }
       }
+      
       setPosts(normalized);
       saveLocalPosts(normalized);
       setError(null);
-      setThreadState({});
-      setActivePostId(null);
+      setInfo(null); // Clear info on successful load
+      // Don't clear threadState here - preserve open threads and their comments
     } catch (err) {
       console.error('Failed to load forum posts:', err);
-      const local = getLocalPosts();
-      if (local.length) {
-        setPosts(local.map((item) => normalizeForumPost(item)).filter(Boolean));
-        setInfo(
-          isOnline
-            ? 'The forum service is still growing. Showing saved discussions for now.'
-            : 'You are offline. Showing saved discussions until you reconnect.',
-        );
-        setError(null);
-      } else if (samplePosts.length) {
-        setPosts(samplePosts.map((item) => normalizeForumPost(item)).filter(Boolean));
-        setInfo('Showing sample discussions until the community begins chatting.');
-        setError(null);
+      
+      // Only show offline message if we're actually offline
+      if (!isOnline) {
+        const local = getLocalPosts();
+        if (local.length) {
+          setPosts(local.map((item) => normalizeForumPost(item)).filter(Boolean));
+          setInfo('You are offline. Showing saved discussions until you reconnect.');
+          setError(null);
+        } else {
+          setError('You are offline and no saved discussions found.');
+          setPosts([]);
+        }
       } else {
-        setError('Failed to load forum posts. Please try again.');
+        // Online but API failed - show detailed error
+        const errorMessage = err.message || err.data?.error || 'Failed to load forum posts';
+        setError(`${errorMessage}. Please try again.`);
         setPosts([]);
+        setInfo(null);
       }
     } finally {
       setLoading(false);
@@ -238,50 +258,54 @@ const ForumPage = () => {
       return;
     }
 
+    // Check if we have a valid course ID
     if (!resolvedCourseId || !isGuid(resolvedCourseId)) {
-      setInfo(
-        'We saved your discussion locally and will post it to the community garden once the course syncs.',
-      );
+      alert('Unable to determine course. Please refresh the page and try again.');
+      return;
     }
 
     try {
       setPosting(true);
-      if (resolvedCourseId && isGuid(resolvedCourseId)) {
-        await api.students.createForumPost(
-          user.id,
-          resolvedCourseId,
-          `**${newPostTitle}**\n\n${newPostContent}`,
-        );
-        setNewPostTitle('');
-        setNewPostContent('');
-        setShowPostForm(false);
-        await loadForumPosts(resolvedCourseId);
-        return;
-      }
-      throw new Error('OfflineMode');
-    } catch (err) {
-      console.error('Failed to create post:', err);
-      const local = getLocalPosts();
-      const localPost = {
-        id: `local-${Date.now()}`,
-        userName: user?.full_name || user?.email || 'You',
-        userRole: role || 'student',
-        createdAt: new Date().toISOString(),
-        content: `**${newPostTitle}**\n\n${newPostContent}`,
-        userEmail: user?.email || null,
-        courseId: resolvedCourseId || FALLBACK_COURSE_ID,
-      };
-      const updated = [localPost, ...local];
-      saveLocalPosts(updated);
-      setPosts(updated.map((item) => normalizeForumPost(item)).filter(Boolean));
-      setInfo(
-        isOnline
-          ? 'The forum service is still growing. We saved your discussion locally and will publish it once it is ready.'
-          : 'You appear to be offline. We saved your discussion locally and will send it once you reconnect.',
+      setInfo(null); // Clear any previous messages
+      
+      // Create the post on the server
+      const result = await api.students.createForumPost(
+        user.id,
+        resolvedCourseId,
+        `**${newPostTitle}**\n\n${newPostContent}`,
       );
-      setShowPostForm(false);
+      
+      console.log('Post created successfully:', result);
+      
+      // Clear form
       setNewPostTitle('');
       setNewPostContent('');
+      setShowPostForm(false);
+      setInfo(null); // Clear info message on success
+      
+      // Reload posts to show the new one
+      await loadForumPosts(resolvedCourseId);
+    } catch (err) {
+      console.error('Failed to create post:', err);
+      
+      // Extract error message from response
+      let errorMessage = 'Failed to create post';
+      
+      if (err.data?.error) {
+        errorMessage = err.data.error;
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
+      
+      // Check if it's a network error
+      if (errorMessage.includes('Failed to fetch') || errorMessage.includes('Network')) {
+        setInfo('Network error. Please check your connection and try again.');
+      } else if (errorMessage.includes('500') || errorMessage.includes('Internal Server Error')) {
+        // Server error - show more helpful message
+        alert(`Server error: ${errorMessage}\n\nPlease check:\n1. You are logged in\n2. The course exists\n3. Try refreshing the page`);
+      } else {
+        alert(`Failed to create post: ${errorMessage}`);
+      }
     } finally {
       setPosting(false);
     }
@@ -303,10 +327,19 @@ const ForumPage = () => {
 
   const handleSubmitComment = async (event, forumId, threadKey) => {
     event.preventDefault();
+    event.stopPropagation(); // Prevent any event bubbling that might cause reload
+    
     const key = threadKey || forumId;
-    if (!key || !forumId) return;
+    if (!key || !forumId) {
+      console.warn('Missing key or forumId:', { key, forumId });
+      return;
+    }
+    
     const draft = (replyDrafts[key] || '').trim();
-    if (!draft) return;
+    if (!draft) {
+      console.warn('Empty draft, not submitting');
+      return;
+    }
 
     const parentCommentId = replyTargets[key]?.commentId ?? null;
 
@@ -320,10 +353,42 @@ const ForumPage = () => {
         },
       }));
 
-      await api.students.createForumComment(forumId, draft, parentCommentId);
+      console.log('Submitting comment:', { forumId, key, draft, parentCommentId });
+      
+      // Create the comment
+      const result = await api.students.createForumComment(forumId, draft, parentCommentId);
+      console.log('Comment created successfully:', result);
+      
+      // Clear the draft and reply target
       handleReplyDraftChange(key, '');
       handleSetReplyTarget(key, null, '');
+      
+      // Ensure thread stays open
+      if (activeThreadKey !== key) {
+        setActiveThreadKey(key);
+      }
+      
+      // Small delay to ensure backend has saved the comment
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
+      // Refresh comments immediately to show the new comment
       await fetchComments(forumId, key);
+      
+      // Update the post's comment count without reloading all posts (which would clear thread state)
+      // Just update the specific post in the posts array
+      setPosts((prevPosts) => 
+        prevPosts.map((post) => {
+          if (post.forumId === forumId || post.threadKey === threadKey) {
+            return {
+              ...post,
+              commentCount: (post.commentCount || 0) + 1
+            };
+          }
+          return post;
+        })
+      );
+      
+      console.log('Comment submitted and refreshed successfully');
     } catch (err) {
       console.error('Failed to submit comment:', err);
       setThreadState((prev) => ({
@@ -331,10 +396,11 @@ const ForumPage = () => {
         [key]: {
           ...(prev[key] || {}),
           submitting: false,
-          error: err.message || 'Failed to post your reply. Please try again.',
+          error: err.message || err.data?.error || 'Failed to post your reply. Please try again.',
         },
       }));
     } finally {
+      // Ensure submitting state is cleared
       setThreadState((prev) => ({
         ...prev,
         [key]: {
@@ -347,16 +413,28 @@ const ForumPage = () => {
 
   const renderCommentTree = (items, threadKey, depth = 0) => {
     if (!items || !items.length) {
-      return null;
+      return (
+        <div className="comment-thread-empty">
+          <p>No replies yet. Be the first to respond!</p>
+        </div>
+      );
     }
 
     return (
       <div className="comment-thread">
         {items.map((comment) => {
-          const authorName = comment.user?.fullName || comment.user?.email || 'Community Member';
+          // Handle different response formats from backend
+          const authorName = comment.user?.fullName || 
+                           comment.user?.name || 
+                           comment.userName || 
+                           'Community Member';
+          const commentId = comment.commentId || comment.id;
+          const commentContent = comment.content || comment.text || '';
+          const createdAt = comment.createdAt || comment.date;
+          
           return (
             <div
-              key={comment.commentId || comment.id}
+              key={commentId}
               className="comment-node"
               style={{ marginLeft: depth * 20 }}
             >
@@ -366,17 +444,17 @@ const ForumPage = () => {
                 </div>
                 <div className="comment-meta">
                   <span className="comment-author">{authorName}</span>
-                  <span className="comment-date">{formatDate(comment.createdAt)}</span>
+                  <span className="comment-date">{formatDate(createdAt)}</span>
                 </div>
               </div>
               <div className="comment-body">
-                {comment.content}
+                {commentContent}
               </div>
               <div className="comment-actions">
                 <button
                   type="button"
                   className="btn-reply"
-                  onClick={() => handleSetReplyTarget(threadKey, comment.commentId, authorName)}
+                  onClick={() => handleSetReplyTarget(threadKey, commentId, authorName)}
                 >
                   Reply
                 </button>
@@ -402,7 +480,9 @@ const ForumPage = () => {
     }));
     try {
       const response = await api.students.getForumComments(forumId);
+      console.log('Fetched comments response:', response);
       const comments = Array.isArray(response?.comments) ? response.comments : [];
+      console.log('Parsed comments:', comments);
       setThreadState((prev) => ({
         ...prev,
         [key]: {
@@ -418,7 +498,7 @@ const ForumPage = () => {
         [key]: {
           comments: prev[key]?.comments || [],
           loading: false,
-          error: err.message || 'Failed to load replies.',
+          error: err.message || err.data?.error || 'Failed to load replies.',
         },
       }));
     }
@@ -646,7 +726,7 @@ const ForumPage = () => {
                         {threadState[threadKey]?.loading && (
                           <div className="thread-loading">Sprouting replies…</div>
                         )}
-                        {threadState[threadKey]?.error && (
+                        {threadState[threadKey]?.error && !threadState[threadKey]?.loading && (
                           <div className="thread-error">
                             {threadState[threadKey]?.error}
                             <button
@@ -658,9 +738,10 @@ const ForumPage = () => {
                             </button>
                           </div>
                         )}
-                        {post.hasServerId ? (
+                        {!threadState[threadKey]?.loading && !threadState[threadKey]?.error && post.hasServerId && (
                           renderCommentTree(threadState[threadKey]?.comments, threadKey)
-                        ) : (
+                        )}
+                        {!post.hasServerId && (
                           <div className="thread-placeholder">
                             Replies are available once this discussion sprouts in the live forum.
                           </div>

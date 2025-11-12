@@ -1135,7 +1135,8 @@ const guestRegister = async ({ fullName, email, password, role }) => {
       body: JSON.stringify({
         email,        // Backend expects 'email' field
         password,     // Backend expects 'password' field
-        fullName      // Backend expects 'fullName' field (optional)
+        fullName,     // Backend expects 'fullName' field
+        role          // Backend expects 'role' field (student or teacher)
       }),
     });
 
@@ -1877,11 +1878,102 @@ const respondToTeacherHelpRequest = (helpRequestId, response) =>
     body: { response },
   });
 
+// Teacher Question Management
+const createQuestion = async (chapterId, questionData) => {
+  try {
+    const token = getToken();
+    const response = await fetch(`${API_BASE_URL}/teachers/chapters/${chapterId}/questions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      },
+      body: JSON.stringify(questionData)
+    });
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Create question error:', error);
+    throw error;
+  }
+};
+
+const getChapterQuestions = async (chapterId) => {
+  try {
+    const token = getToken();
+    const response = await fetch(`${API_BASE_URL}/teachers/chapters/${chapterId}/questions`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Get chapter questions error:', error);
+    throw error;
+  }
+};
+
+const updateQuestion = async (questionId, questionData) => {
+  try {
+    const token = getToken();
+    const response = await fetch(`${API_BASE_URL}/teachers/questions/${questionId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      },
+      body: JSON.stringify(questionData)
+    });
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Update question error:', error);
+    throw error;
+  }
+};
+
+const deleteQuestion = async (questionId) => {
+  try {
+    const token = getToken();
+    const response = await fetch(`${API_BASE_URL}/teachers/questions/${questionId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      }
+    });
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Delete question error:', error);
+    throw error;
+  }
+};
+
 export const teacherCourseService = {
   listMyCourses,
   getCourse: getManagedCourse,
   createCourse: createManagedCourse,
   deleteCourse: deleteManagedCourse,
+};
+
+export const teacherQuestionService = {
+  createQuestion,
+  getChapterQuestions,
+  updateQuestion,
+  deleteQuestion,
 };
 
 export const chapterManagementService = {
@@ -1964,7 +2056,65 @@ const getQuizQuestions = async (chapterId) => {
   }
 };
 
-const submitQuiz = async (userId, chapterId, answers) => {
+// Get quiz information (time limit, attempt limits, etc.)
+const getQuizInfo = async (chapterId) => {
+  try {
+    const token = getToken();
+    const response = await fetch(`${API_BASE_URL}/students/quizzes/chapters/${chapterId}/info`, {
+      method: 'GET',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Get quiz info error:', error);
+    throw error;
+  }
+};
+
+// Start a new quiz attempt (tracks timer)
+const startQuiz = async (chapterId) => {
+  try {
+    const token = getToken();
+    const response = await fetch(`${API_BASE_URL}/students/quizzes/start`, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      },
+      body: JSON.stringify({ chapterId })
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Start quiz error:', error);
+    throw error;
+  }
+};
+
+// Get quiz attempt history
+const getQuizHistory = async (chapterId) => {
+  try {
+    const token = getToken();
+    const response = await fetch(`${API_BASE_URL}/students/quizzes/chapters/${chapterId}/history`, {
+      method: 'GET',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Get quiz history error:', error);
+    throw error;
+  }
+};
+
+const submitQuiz = async (chapterId, answers, timeSpentSeconds = null, attemptId = null) => {
   try {
     const token = getToken();
     const response = await fetch(`${API_BASE_URL}/students/quizzes/submit`, {
@@ -1974,12 +2124,16 @@ const submitQuiz = async (userId, chapterId, answers) => {
         'Authorization': token ? `Bearer ${token}` : ''
       },
       body: JSON.stringify({
-        userId,
         chapterId,
-        answers
+        answers,
+        timeSpentSeconds,
+        attemptId
       })
     });
-    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+    }
     return await response.json();
   } catch (error) {
     console.error('Submit quiz error:', error);
@@ -2307,6 +2461,9 @@ export const api = {
     getChapterContent,
     getFlashcards,
     getQuizQuestions,
+    getQuizInfo,
+    startQuiz,
+    getQuizHistory,
     submitQuiz,
     getQuestionHint,
     getStudentProgress,
@@ -2339,7 +2496,11 @@ export const api = {
     getMyCourses: listMyCourses,
     getCourse: getManagedCourse,
     createCourse: createManagedCourse,
-    deleteCourse: deleteManagedCourse
+    deleteCourse: deleteManagedCourse,
+    createQuestion,
+    getChapterQuestions,
+    updateQuestion,
+    deleteQuestion
   }
 };
 

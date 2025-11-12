@@ -138,15 +138,91 @@
   transition: all 0.3s;
 }
 
-.try-it-btn:hover {
+.try-it-btn:hover:not(:disabled) {
   background: #218838;
   transform: translateY(-1px);
+}
+
+.try-it-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .code-info {
   color: #6c757d;
   font-size: 0.8rem;
   font-weight: 500;
+}
+
+/* Code Output Panel */
+.code-output {
+  background: #f8f9fa;
+  border-top: 2px solid #dee2e6;
+  margin-top: 0;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
+.code-output.running {
+  border-top-color: #ffc107;
+}
+
+.code-output-header {
+  background: #e9ecef;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #dee2e6;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.code-output-close {
+  background: transparent;
+  border: none;
+  color: #6c757d;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.code-output-close:hover {
+  background: #dee2e6;
+  color: #495057;
+}
+
+.code-output-content {
+  margin: 0;
+  padding: 20px;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: #2c3e50;
+  background: white;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 /* Responsive design */

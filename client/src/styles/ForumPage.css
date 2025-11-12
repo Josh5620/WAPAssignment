@@ -461,12 +461,18 @@
   resize: vertical;
   min-height: 110px;
   background: rgba(255, 255, 255, 0.85);
+  color: var(--cs-brown, #5a4a3a); /* Ensure text is visible */
 }
 
 .comment-input:focus {
   outline: none;
   border-color: var(--cs-brown);
   background: rgba(255, 255, 255, 1);
+  color: var(--cs-brown, #5a4a3a); /* Ensure text is visible when focused */
+}
+
+.comment-input::placeholder {
+  color: rgba(90, 74, 58, 0.5); /* Make placeholder visible but lighter */
 }
 
 .btn-submit-comment {

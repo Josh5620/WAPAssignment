@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../services/apiService';
 import { quickApi } from '../services/apiService';
+import { useProfileForm } from '../hooks/useProfileForm';
 import Navbar from '../components/Navbar';
 import StudentLeaderboard from '../components/StudentLeaderboard';
 import StudentProgress from '../components/StudentProgress';
@@ -10,18 +11,26 @@ import '../styles/StudentProfile.css';
 const StudentProfile = () => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
-  const [editing, setEditing] = useState(false);
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: ''
-  });
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
   const [certificates, setCertificates] = useState([]);
   const [certificatesLoading, setCertificatesLoading] = useState(true);
   const [certificatesError, setCertificatesError] = useState(null);
+  const {
+    editing,
+    formData,
+    saving,
+    error,
+    success,
+    beginEdit,
+    cancelEdit,
+    handleChange,
+    setFormValues,
+    saveProfile,
+    setErrorMessage,
+  } = useProfileForm({
+    fullName: '',
+    email: '',
+  });
 
   useEffect(() => {
     loadProfile();
@@ -70,90 +79,60 @@ const StudentProfile = () => {
       });
       setCertificates(certificateData);
 
-      setFormData({
+      setFormValues({
         fullName: data.fullName || '',
-        email: data.email || ''
+        email: data.email || '',
       });
-      setError(null);
     } catch (err) {
       console.error('Failed to load profile:', err);
-      setError('Failed to load profile. Please try again.');
+      cancelEdit();
+      setErrorMessage('Failed to load profile. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleEdit = () => {
-    setEditing(true);
-    setSuccess(null);
-  };
-
   const handleCancel = () => {
-    setEditing(false);
     if (profile) {
-      setFormData({
+      cancelEdit({
         fullName: profile.fullName || '',
-        email: profile.email || ''
+        email: profile.email || '',
       });
+    } else {
+      cancelEdit();
     }
-    setSuccess(null);
-    setError(null);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
   };
 
   const handleSave = async () => {
-    if (!formData.fullName.trim()) {
-      setError('Full name is required.');
-      return;
-    }
-
-    if (!formData.email.trim()) {
-      setError('Email is required.');
-      return;
-    }
-
-    try {
-      setSaving(true);
-      setError(null);
-      
-      // Update profile via unified auth endpoint
+    const updatedProfile = await saveProfile(async (values) => {
       const token = quickApi.getUserToken();
-      const updatedProfile = await api.auth.updateProfile(token, {
-        fullName: formData.fullName,
-        email: formData.email
+      return api.auth.updateProfile(token, {
+        fullName: values.fullName,
+        email: values.email,
       });
-      
-      setProfile({
-        ...profile,
-        fullName: updatedProfile.fullName,
-        email: updatedProfile.email
-      });
-      
-      setEditing(false);
-      setSuccess('Profile updated successfully!');
-      
-      // Update localStorage
-      const storedProfile = quickApi.getUserProfile();
-      quickApi.storeUserData({
-        ...storedProfile,
-        fullName: updatedProfile.fullName,
-        email: updatedProfile.email
-      });
+    });
 
-      setTimeout(() => setSuccess(null), 3000);
-    } catch (err) {
-      console.error('Failed to update profile:', err);
-      setError(err.message || 'Failed to update profile. Please try again.');
-    } finally {
-      setSaving(false);
+    if (!updatedProfile) {
+      return;
     }
+
+    setProfile((prev) => (
+      prev
+        ? {
+            ...prev,
+            fullName: updatedProfile.fullName,
+            email: updatedProfile.email,
+          }
+        : prev
+    ));
+
+    // Update localStorage
+    const storedProfile = quickApi.getUserProfile();
+    quickApi.storeUserData({
+      ...(storedProfile || {}),
+      fullName: updatedProfile.fullName,
+      email: updatedProfile.email,
+    });
   };
 
   const renderCertificates = () => {
@@ -222,7 +201,7 @@ const StudentProfile = () => {
           <div className="profile-header">
             <h1>My Profile</h1>
             {!editing && (
-              <button className="edit-profile-button" onClick={handleEdit}>
+              <button className="edit-profile-button" onClick={beginEdit}>
                 Edit Profile
               </button>
             )}

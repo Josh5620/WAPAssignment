@@ -420,7 +420,6 @@ const ChapterPage = () => {
                 ? navigate(`/chapters/${previousChapter.id}`)
                 : navigate('/student-dashboard')
             }
-            disabled={!previousChapter}
           >
             {previousChapter ? `← ${previousChapter.title}` : 'Back to Dashboard'}
           </button>

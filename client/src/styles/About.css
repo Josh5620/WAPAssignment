@@ -1,6 +1,6 @@
 .about-page {
   min-height: 100vh;
-  background: linear-gradient(180deg, rgba(239, 241, 237, 1) 0%, rgba(239, 241, 237, 0.7) 60%, rgba(239, 241, 237, 1) 100%);
+  background: var(--bg);
   display: flex;
   flex-direction: column;
 }
@@ -27,11 +27,12 @@
   font-size: clamp(1.8rem, 3vw, 2.6rem);
   line-height: 1.3;
   margin: 0.75rem 0 1.25rem;
+  color: var(--text);
 }
 
 .about-hero__copy p {
   font-family: 'Pixelify Sans', cursive;
-  color: rgba(55, 61, 32, 0.75);
+  color: var(--text-muted);
   line-height: 1.65;
   font-size: 1.05rem;
 }
@@ -41,14 +42,14 @@
   font-size: 0.9rem;
   letter-spacing: 0.6px;
   text-transform: uppercase;
-  color: rgba(55, 61, 32, 0.6);
+  color: var(--muted);
 }
 
 .about-hero__card {
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--card-bg);
   border-radius: 28px;
-  border: 1px solid rgba(103, 117, 74, 0.22);
-  box-shadow: 0 28px 48px rgba(55, 61, 32, 0.12);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-2);
   padding: clamp(2rem, 4vw, 2.8rem);
   display: flex;
   flex-direction: column;
@@ -58,11 +59,12 @@
 .about-hero__card h2 {
   font-family: 'Press Start 2P', cursive;
   font-size: 1.4rem;
+  color: var(--text);
 }
 
 .about-hero__card p {
   font-family: 'Pixelify Sans', cursive;
-  color: rgba(55, 61, 32, 0.7);
+  color: var(--text-muted);
   line-height: 1.6;
 }
 
@@ -73,11 +75,11 @@
 }
 
 .about-benefit-card {
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--card-bg);
   border-radius: 24px;
-  border: 1px solid rgba(103, 117, 74, 0.18);
+  border: 1px solid var(--border);
   padding: 1.75rem;
-  box-shadow: 0 20px 40px rgba(55, 61, 32, 0.08);
+  box-shadow: var(--shadow-1);
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
@@ -90,11 +92,12 @@
 .about-benefit-card h3 {
   font-family: 'Press Start 2P', cursive;
   font-size: 1.1rem;
+  color: var(--text);
 }
 
 .about-benefit-card p {
   font-family: 'Pixelify Sans', cursive;
-  color: rgba(55, 61, 32, 0.7);
+  color: var(--text-muted);
   line-height: 1.55;
 }
 
@@ -108,11 +111,12 @@
   font-family: 'Press Start 2P', cursive;
   font-size: clamp(1.6rem, 3vw, 2.2rem);
   margin-bottom: 0.75rem;
+  color: var(--text);
 }
 
 .section-heading p {
   font-family: 'Pixelify Sans', cursive;
-  color: rgba(55, 61, 32, 0.7);
+  color: var(--text-muted);
   line-height: 1.6;
 }
 
@@ -123,14 +127,14 @@
 }
 
 .about-step {
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(103, 117, 74, 0.18);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
   border-radius: 24px;
   padding: 1.75rem;
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
-  box-shadow: 0 20px 40px rgba(55, 61, 32, 0.08);
+  box-shadow: var(--shadow-1);
 }
 
 .about-step__number {
@@ -142,23 +146,24 @@
 .about-step h3 {
   font-family: 'Press Start 2P', cursive;
   font-size: 1.05rem;
+  color: var(--text);
 }
 
 .about-step p {
   font-family: 'Pixelify Sans', cursive;
-  color: rgba(55, 61, 32, 0.7);
+  color: var(--text-muted);
   line-height: 1.55;
 }
 
 .about-story__content {
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--card-bg);
   border-radius: 24px;
-  border: 1px solid rgba(103, 117, 74, 0.2);
+  border: 1px solid var(--border);
   padding: 2rem;
   font-family: 'Pixelify Sans', cursive;
-  color: rgba(55, 61, 32, 0.75);
+  color: var(--text-muted);
   line-height: 1.65;
-  box-shadow: 0 24px 48px rgba(55, 61, 32, 0.1);
+  box-shadow: var(--shadow-2);
 }
 
 .about-stats {
@@ -168,15 +173,15 @@
 }
 
 .about-stat {
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--card-bg);
   border-radius: 24px;
-  border: 1px solid rgba(103, 117, 74, 0.2);
+  border: 1px solid var(--border);
   padding: 1.75rem;
   text-align: center;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  box-shadow: 0 24px 48px rgba(55, 61, 32, 0.1);
+  box-shadow: var(--shadow-2);
 }
 
 .about-stat__value {
@@ -188,18 +193,37 @@
 .about-stat__label {
   font-family: 'Pixelify Sans', cursive;
   font-weight: 600;
+  color: var(--text);
 }
 
 .about-cta__card {
-  background: linear-gradient(135deg, rgba(103, 117, 74, 0.95), rgba(64, 82, 47, 0.95));
+  background: var(--card-bg);
+  border: 2px solid var(--border);
   border-radius: 28px;
-  padding: clamp(2rem, 4vw, 3rem);
+  padding: clamp(2.5rem, 5vw, 3.5rem);
   text-align: center;
-  color: var(--cs-beige);
-  box-shadow: 0 30px 50px rgba(49, 64, 40, 0.3);
+  box-shadow: var(--shadow-2);
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1.5rem;
+}
+
+.about-cta__card h2 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  line-height: 1.4;
+  color: var(--text);
+  margin: 0;
+}
+
+.about-cta__card p {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 700px;
+  margin: 0;
 }
 
 .about-cta__actions {
@@ -207,33 +231,44 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
+  margin-top: 0.5rem;
 }
 
 /* Responsive styles */
 @media (max-width: 768px) {
+  .about-hero {
+    grid-template-columns: 1fr;
+  }
+
   h1 {
     font-size: 1.2rem;
     margin-top: 2rem;
   }
+
   .about-tagline {
     font-size: 1rem;
     margin-bottom: 1.5rem;
   }
+
   .about-section h3 {
     font-size: 1rem;
     margin-top: 1.5rem;
   }
+
   .about-section p {
     font-size: 1rem;
   }
+
   .about-container {
     padding: 1.5rem;
     max-width: 95vw;
     margin: 2rem auto;
   }
+
   .about-container h1 {
     font-size: 1.2rem;
   }
+
   .about-container p {
     font-size: 1rem;
   }

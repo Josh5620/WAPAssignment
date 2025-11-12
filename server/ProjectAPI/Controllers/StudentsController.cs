@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjectAPI.Data;
 using ProjectAPI.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Security.Claims;
 
 namespace ProjectAPI.Controllers;
@@ -131,6 +132,142 @@ public class StudentsController : ControllerBase
             _logger.LogError(ex, "Error marking announcement {AnnouncementId} as read for user {UserId}", announcementId, userId);
             return StatusCode(500, new { error = "An error occurred while updating announcement status." });
         }
+    }
+
+    #endregion
+
+    #region Enrollments
+
+    [HttpGet("my-courses")]
+    public async Task<IActionResult> GetMyCourses(CancellationToken ct = default)
+    {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+        {
+            return Unauthorized(new { error = "Invalid or missing user context." });
+        }
+
+        var enrolments = await _context.Enrolments
+            .Where(e => e.UserId == userId)
+            .Include(e => e.Course)
+            .OrderBy(e => e.EnrolledAt)
+            .Select(e => new
+            {
+                enrollmentId = e.EnrolmentId,
+                e.CourseId,
+                courseTitle = e.Course.Title,
+                courseDescription = e.Course.Description,
+                e.Status,
+                e.EnrolledAt
+            })
+            .ToListAsync(ct);
+
+        return Ok(new
+        {
+            total = enrolments.Count,
+            courses = enrolments
+        });
+    }
+
+    [HttpPost("enrollments")]
+    public async Task<IActionResult> EnrollInCourse([FromBody] EnrollInCourseRequest request, CancellationToken ct = default)
+    {
+        if (request == null || request.CourseId == Guid.Empty)
+        {
+            return BadRequest(new { error = "CourseId is required." });
+        }
+
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+        {
+            return Unauthorized(new { error = "Invalid or missing user context." });
+        }
+
+        var course = await _context.Courses.FirstOrDefaultAsync(c => c.CourseId == request.CourseId, ct);
+        if (course == null)
+        {
+            return NotFound(new { error = "Course not found." });
+        }
+
+        var existing = await _context.Enrolments
+            .AnyAsync(e => e.CourseId == request.CourseId && e.UserId == userId, ct);
+
+        if (existing)
+        {
+            return Conflict(new { error = "You are already enrolled in this course." });
+        }
+
+        var enrolment = new Enrolment
+        {
+            CourseId = request.CourseId,
+            UserId = userId,
+            Status = "active",
+            EnrolledAt = DateTime.UtcNow
+        };
+
+        _context.Enrolments.Add(enrolment);
+        await _context.SaveChangesAsync(ct);
+
+        return Ok(new
+        {
+            enrollmentId = enrolment.EnrolmentId,
+            enrolment.CourseId,
+            enrolment.Status,
+            enrolment.EnrolledAt
+        });
+    }
+
+    [HttpDelete("enrollments/{enrollmentId:guid}")]
+    public async Task<IActionResult> Unenroll(Guid enrollmentId, CancellationToken ct = default)
+    {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+        {
+            return Unauthorized(new { error = "Invalid or missing user context." });
+        }
+
+        var enrolment = await _context.Enrolments
+            .FirstOrDefaultAsync(e => e.EnrolmentId == enrollmentId && e.UserId == userId, ct);
+
+        if (enrolment == null)
+        {
+            return NotFound(new { error = "Enrollment not found." });
+        }
+
+        _context.Enrolments.Remove(enrolment);
+        await _context.SaveChangesAsync(ct);
+
+        return NoContent();
+    }
+
+    #endregion
+
+    #region Certificates
+
+    [HttpGet("certificates")]
+    public async Task<IActionResult> GetMyCertificates(CancellationToken ct = default)
+    {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+        {
+            return Unauthorized(new { error = "Invalid or missing user context." });
+        }
+
+        var certificates = await _context.Certificates
+            .Where(c => c.StudentId == userId)
+            .Include(c => c.Course)
+            .OrderByDescending(c => c.IssueDate)
+            .Select(c => new
+            {
+                certificateId = c.CertificateId,
+                c.CourseId,
+                courseTitle = c.Course.Title,
+                c.IssueDate,
+                c.CertificateUrl
+            })
+            .ToListAsync(ct);
+
+        return Ok(certificates);
     }
 
     #endregion
@@ -1292,6 +1429,12 @@ public record CreateForumCommentRequest
     public string Content { get; init; } = string.Empty;
 
     public Guid? ParentCommentId { get; init; }
+}
+
+public record EnrollInCourseRequest
+{
+    [Required]
+    public Guid CourseId { get; init; }
 }
 
 public class ForumCommentResponse

@@ -20,6 +20,9 @@ const StudentDashboard = () => {
   const [notificationsMeta, setNotificationsMeta] = useState({ total: 0, unread: 0 });
   const [notificationsLoading, setNotificationsLoading] = useState(true);
   const [notificationsError, setNotificationsError] = useState(null);
+  const [myCourses, setMyCourses] = useState([]);
+  const [myCoursesLoading, setMyCoursesLoading] = useState(true);
+  const [myCoursesError, setMyCoursesError] = useState(null);
 
   useEffect(() => {
     const fetchProgress = async () => {
@@ -98,9 +101,38 @@ const StudentDashboard = () => {
     }
   };
 
+  const loadMyCourses = async () => {
+    if (!user) {
+      setMyCourses([]);
+      setMyCoursesLoading(false);
+      return;
+    }
+
+    try {
+      setMyCoursesLoading(true);
+      const response = await api.students.listMyCourses();
+      const courses = Array.isArray(response?.courses)
+        ? response.courses
+        : Array.isArray(response)
+          ? response
+          : [];
+      setMyCourses(courses);
+      setMyCoursesError(null);
+    } catch (err) {
+      console.error('Failed to load enrolled courses:', err);
+      setMyCoursesError('We could not load your enrolled courses.');
+    } finally {
+      setMyCoursesLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchNotifications();
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  useEffect(() => {
+    loadMyCourses();
   }, [user]);
 
   const handleNotificationRead = async (notificationId) => {
@@ -132,6 +164,64 @@ const StudentDashboard = () => {
     } catch (err) {
       console.error('Failed to mark all notifications as read:', err);
     }
+  };
+
+  const handleUnenroll = async (enrollmentId) => {
+    if (!enrollmentId) return;
+
+    try {
+      await api.students.unenroll(enrollmentId);
+      await loadMyCourses();
+    } catch (err) {
+      console.error('Failed to unenroll:', err);
+      setMyCoursesError('Unable to update enrollment. Please try again.');
+    }
+  };
+
+  const renderMyCourses = () => {
+    if (myCoursesLoading) {
+      return <li className="course-item is-loading">Loading your courses…</li>;
+    }
+
+    if (myCoursesError) {
+      return <li className="course-item is-error">{myCoursesError}</li>;
+    }
+
+    if (!myCourses.length) {
+      return (
+        <li className="course-item is-empty">
+          You are not enrolled in any courses yet. Explore the catalog to start growing!
+        </li>
+      );
+    }
+
+    return myCourses.map((course) => (
+      <li key={course.enrollmentId || course.courseId} className="course-item">
+        <div className="course-info">
+          <h3>{course.courseTitle}</h3>
+          {course.courseDescription && <p>{course.courseDescription}</p>}
+          <small>
+            Enrolled {course.enrolledAt ? new Date(course.enrolledAt).toLocaleDateString() : 'recently'}
+          </small>
+        </div>
+        <div className="course-actions">
+          <button
+            type="button"
+            className="btn-course-view"
+            onClick={() => navigate(`/courses/${course.courseId}`)}
+          >
+            Continue
+          </button>
+          <button
+            type="button"
+            className="btn-course-unenroll"
+            onClick={() => handleUnenroll(course.enrollmentId)}
+          >
+            Unenroll
+          </button>
+        </div>
+      </li>
+    ));
   };
 
   const renderNotifications = () => {
@@ -201,6 +291,29 @@ const StudentDashboard = () => {
         <section className="student-dashboard-header">
           <h1>Your Garden</h1>
           <p>{greeting}</p>
+        </section>
+
+        <section className="student-dashboard-courses">
+          <div className="courses-card">
+            <div className="courses-header">
+              <div>
+                <h2>My Courses</h2>
+                <p>
+                  {myCourses.length > 0
+                    ? `You are nurturing ${myCourses.length} course${myCourses.length === 1 ? '' : 's'}.`
+                    : 'Enroll in a course to start your learning journey.'}
+                </p>
+              </div>
+              <button
+                type="button"
+                className="btn-explore-courses"
+                onClick={() => navigate('/courses')}
+              >
+                Explore Courses
+              </button>
+            </div>
+            <ul className="courses-list">{renderMyCourses()}</ul>
+          </div>
         </section>
 
         <section className="student-dashboard-notifications">

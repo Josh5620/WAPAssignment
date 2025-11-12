@@ -75,7 +75,7 @@ const CourseDetails = ({ courseId, userRole, onBack, onStartLearning }) => {
         return;
       }
       
-      await quickApi.enrollInCourse(normalizedCourseId, token);
+      await quickApi.enrollInCourse(normalizedCourseId);
       setIsEnrolled(true);
       alert('Successfully enrolled in course!');
     } catch (err) {

@@ -27,6 +27,7 @@ namespace ProjectAPI.Data
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<AnnouncementRead> AnnouncementReads { get; set; }
         public DbSet<ForumComment> ForumComments { get; set; }
+        public DbSet<Certificate> Certificates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,9 +37,10 @@ namespace ProjectAPI.Data
             // Composite Primary Keys
             // ======================
             
-            // Enrolment: Composite key (UserId, CourseId)
+            // Enrolment: Unique enrollment per course per user
             modelBuilder.Entity<Enrolment>()
-                .HasKey(e => new { e.UserId, e.CourseId });
+                .HasIndex(e => new { e.UserId, e.CourseId })
+                .IsUnique();
 
             // ChapterProgress: Composite key (UserId, ChapterId)
             modelBuilder.Entity<ChapterProgress>()
@@ -113,6 +115,18 @@ namespace ProjectAPI.Data
                 .HasOne(e => e.Course)
                 .WithMany(c => c.Enrolments)
                 .HasForeignKey(e => e.CourseId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Certificate>()
+                .HasOne(c => c.Student)
+                .WithMany(p => p.Certificates)
+                .HasForeignKey(c => c.StudentId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Certificate>()
+                .HasOne(c => c.Course)
+                .WithMany(c => c.Certificates)
+                .HasForeignKey(c => c.CourseId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Profile -> ChapterProgress

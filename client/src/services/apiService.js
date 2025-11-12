@@ -335,46 +335,66 @@ export const deleteCourse = async (courseId, token) => {
 
 // ===== ENROLLMENT FUNCTIONS =====
 // Enroll in course function: POST to /enrolments with { courseId }, include bearer token
-export const enrolCourse = async (courseId, token) => {
+export const enrolCourse = async (courseId) => {
+  if (!courseId) {
+    throw new Error('courseId is required to enroll');
+  }
+
   try {
-    const response = await fetch(`${API_BASE_URL}/enrolments`, {
+    return await requestWithAuth('/students/enrollments', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ courseId })
+      body: { courseId }
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    return data;
   } catch (error) {
     console.error('Enroll course error:', error);
     throw error;
   }
 };
 
-// Get user enrollments function: GET /enrolments
-export const getUserEnrollments = async (token) => {
+export const getMyCourses = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/enrolments`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
+    return await requestWithAuth('/students/my-courses');
+  } catch (error) {
+    console.error('Get my courses error:', error);
+    throw error;
+  }
+};
+
+export const unenrollFromCourse = async (enrollmentId) => {
+  if (!enrollmentId) {
+    throw new Error('enrollmentId is required to unenroll');
+  }
+
+  try {
+    await requestWithAuth(`/students/enrollments/${enrollmentId}`, {
+      method: 'DELETE'
     });
+    return true;
+  } catch (error) {
+    console.error('Unenroll error:', error);
+    throw error;
+  }
+};
 
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+export const getStudentCertificates = async () => {
+  try {
+    return await requestWithAuth('/students/certificates');
+  } catch (error) {
+    console.error('Get certificates error:', error);
+    throw error;
+  }
+};
+
+// Get user enrollments function: wraps students/my-courses response
+export const getUserEnrollments = async () => {
+  try {
+    const response = await getMyCourses();
+    if (!response) return [];
+    if (Array.isArray(response)) return response;
+    if (Array.isArray(response?.courses)) {
+      return response.courses;
     }
-
-    const data = await response.json();
-    return data;
+    return [];
   } catch (error) {
     console.error('Get user enrollments error:', error);
     throw error;
@@ -382,10 +402,10 @@ export const getUserEnrollments = async (token) => {
 };
 
 // Check if user is enrolled in course
-export const checkEnrollment = async (courseId, token) => {
+export const checkEnrollment = async (courseId) => {
   try {
-    const enrollments = await getUserEnrollments(token);
-    return enrollments.some(enrollment => enrollment.courseId === courseId);
+    const enrollments = await getUserEnrollments();
+    return enrollments.some((enrollment) => enrollment.courseId === courseId);
   } catch (error) {
     console.error('Check enrollment error:', error);
     return false;
@@ -2294,6 +2314,10 @@ export const api = {
     markChapterComplete,
     getStudentProfile,
     updateStudentProfile,
+    enrollInCourse: enrolCourse,
+    listMyCourses: getMyCourses,
+    unenroll: unenrollFromCourse,
+    getCertificates: getStudentCertificates,
     getForumPosts,
     createForumPost,
     getForumComments,
@@ -2326,7 +2350,7 @@ export const quickApi = {
   login: (email, password) => login(email, password),
   getCourses: () => getCourses(),
   getCourse: (id) => getCourseById(id),
-  enrollInCourse: (courseId, token) => enrolCourse(courseId, token),
+  enrollInCourse: (courseId) => enrolCourse(courseId),
   seedData: () => seedTestData(),
   getDbStatus: () => getDatabaseStatus(),
   

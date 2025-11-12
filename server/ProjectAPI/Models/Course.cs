@@ -28,5 +28,6 @@ namespace ProjectAPI.Models
         public ICollection<Enrolment> Enrolments { get; set; } = new List<Enrolment>();
         public ICollection<ForumPost> ForumPosts { get; set; } = new List<ForumPost>();
         public ICollection<Testimonial> Testimonials { get; set; } = new List<Testimonial>();
+        public ICollection<Certificate> Certificates { get; set; } = new List<Certificate>();
     }
 }

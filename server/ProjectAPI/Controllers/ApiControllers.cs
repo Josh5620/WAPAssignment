@@ -811,7 +811,6 @@ public class LeaderboardController : ControllerBase
         {
             existing.XP = leaderboard.XP;
             existing.Streaks = leaderboard.Streaks;
-            existing.Badges = leaderboard.Badges;
         }
 
         await _context.SaveChangesAsync();

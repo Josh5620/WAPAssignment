@@ -1199,7 +1199,14 @@ public class StudentsController : ControllerBase
                 {
                     xp = profile.Leaderboard.XP,
                     streaks = profile.Leaderboard.Streaks,
-                    badges = profile.Leaderboard.Badges
+                    badges = profile.UserBadges.Select(ub => new
+                    {
+                        badgeId = ub.Badge.BadgeId,
+                        name = ub.Badge.Name,
+                        description = ub.Badge.Description,
+                        iconUrl = ub.Badge.IconUrl,
+                        category = ub.Badge.Category
+                    }).ToList()
                 } : null
             });
         }
@@ -1570,39 +1577,171 @@ public class StudentsController : ControllerBase
     {
         try
         {
-            var leaderboard = await _context.Leaderboards
-                .Include(l => l.Profile)
-                .OrderByDescending(l => l.XP)
-                .ThenByDescending(l => l.Streaks)
-                .Select(l => new
-                {
-                    userId = l.UserId,
-                    userName = l.Profile.FullName,
-                    xp = l.XP,
-                    streaks = l.Streaks,
-                    badges = l.Badges
-                })
+            // Get all students (users with role 'student')
+            var allStudents = await _context.Profiles
+                .Where(p => p.Role == "student")
+                .Include(p => p.UserBadges)
+                    .ThenInclude(ub => ub.Badge)
                 .ToListAsync(ct);
 
-            // Calculate rank
-            var leaderboardWithRank = leaderboard.Select((entry, index) => new
-            {
-                rank = index + 1,
-                userId = entry.userId,
-                userName = entry.userName,
-                xp = entry.xp,
-                streaks = entry.streaks,
-                badges = entry.badges,
-                isCurrentUser = userId.HasValue && entry.userId == userId.Value
-            }).ToList();
+            // Get all leaderboard entries
+            var leaderboardEntries = await _context.Leaderboards
+                .Include(l => l.Profile)
+                    .ThenInclude(p => p.UserBadges)
+                        .ThenInclude(ub => ub.Badge)
+                .ToListAsync(ct);
 
-            return Ok(leaderboardWithRank);
+            // Create a dictionary for quick lookup
+            var leaderboardDict = leaderboardEntries.ToDictionary(l => l.UserId);
+
+            // Build leaderboard - only show students who have actually earned XP (XP > 0)
+            var leaderboardData = allStudents
+                .Select(student => 
+                {
+                    var entry = leaderboardDict.GetValueOrDefault(student.UserId);
+                    return new
+                    {
+                        userId = student.UserId,
+                        userName = student.FullName,
+                        xp = entry?.XP ?? 0,
+                        streaks = entry?.Streaks ?? 0,
+                        badges = student.UserBadges
+                            .Select(ub => new
+                            {
+                                badgeId = ub.Badge.BadgeId,
+                                name = ub.Badge.Name,
+                                description = ub.Badge.Description,
+                                iconUrl = ub.Badge.IconUrl,
+                                category = ub.Badge.Category,
+                                earnedAt = ub.EarnedAt
+                            })
+                            .ToList(),
+                        isCurrentUser = userId.HasValue && student.UserId == userId.Value
+                    };
+                })
+                .Where(l => l.xp > 0) // Only show students who have earned XP
+                .OrderByDescending(l => l.xp)
+                .ThenByDescending(l => l.streaks)
+                .ThenBy(l => l.userName) // Tie-breaker: alphabetical by name
+                .Select((entry, index) => new
+                {
+                    rank = index + 1,
+                    userId = entry.userId,
+                    userName = entry.userName,
+                    xp = entry.xp,
+                    streaks = entry.streaks,
+                    badges = entry.badges,
+                    isCurrentUser = entry.isCurrentUser
+                })
+                .ToList();
+
+            _logger.LogInformation("📊 Leaderboard retrieved: {Count} students, CurrentUserId={UserId}", 
+                leaderboardData.Count, userId);
+
+            return Ok(leaderboardData);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error retrieving leaderboard");
             return StatusCode(500, new { error = "An error occurred while retrieving the leaderboard" });
         }
+    }
+
+    /// <summary>
+    /// Award XP to a student
+    /// </summary>
+    [HttpPost("award-xp")]
+    public async Task<IActionResult> AwardXP([FromBody] AwardXPRequest request, CancellationToken ct = default)
+    {
+        try
+        {
+            _logger.LogInformation("🎯 Awarding XP: UserId={UserId}, XPAmount={XPAmount}", request.UserId, request.XPAmount);
+            
+            if (request.UserId == Guid.Empty)
+            {
+                _logger.LogWarning("⚠️ Invalid UserId provided: {UserId}", request.UserId);
+                return BadRequest(new { error = "Invalid user ID" });
+            }
+
+            if (request.XPAmount <= 0)
+            {
+                _logger.LogWarning("⚠️ Invalid XP amount: {XPAmount}", request.XPAmount);
+                return BadRequest(new { error = "XP amount must be greater than 0" });
+            }
+
+            await AwardXPAsync(request.UserId, request.XPAmount, ct);
+            
+            // Verify XP was saved
+            var updatedLeaderboard = await _context.Leaderboards
+                .FirstOrDefaultAsync(l => l.UserId == request.UserId, ct);
+            
+            _logger.LogInformation("✅ XP awarded successfully. UserId={UserId}, New Total XP={XP}", 
+                request.UserId, updatedLeaderboard?.XP ?? 0);
+            
+            // Check for badges after awarding XP
+            var badgeService = new Services.BadgeService(_context);
+            var newBadges = await badgeService.CheckAndAwardBadges(request.UserId);
+            
+            return Ok(new
+            {
+                message = "XP awarded successfully",
+                xpAwarded = request.XPAmount,
+                totalXP = updatedLeaderboard?.XP ?? 0,
+                newBadges = newBadges.Select(b => new
+                {
+                    badgeId = b.BadgeId,
+                    name = b.Name,
+                    description = b.Description,
+                    iconUrl = b.IconUrl,
+                    category = b.Category
+                }).ToList()
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "❌ Error awarding XP for UserId={UserId}", request.UserId);
+            return StatusCode(500, new { error = "An error occurred while awarding XP", details = ex.Message });
+        }
+    }
+
+    #endregion
+
+    #region Request Models
+
+    /// <summary>
+    /// Clear all leaderboard data (reset all XP and streaks to 0)
+    /// </summary>
+    [HttpDelete("leaderboard/clear")]
+    public async Task<IActionResult> ClearLeaderboard(CancellationToken ct = default)
+    {
+        try
+        {
+            _logger.LogInformation("🗑️ Clearing all leaderboard data");
+            
+            // Remove all leaderboard entries
+            var allEntries = await _context.Leaderboards.ToListAsync(ct);
+            _context.Leaderboards.RemoveRange(allEntries);
+            await _context.SaveChangesAsync(ct);
+            
+            _logger.LogInformation("✅ Cleared {Count} leaderboard entries", allEntries.Count);
+            
+            return Ok(new
+            {
+                message = "Leaderboard cleared successfully",
+                entriesCleared = allEntries.Count
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "❌ Error clearing leaderboard");
+            return StatusCode(500, new { error = "An error occurred while clearing the leaderboard", details = ex.Message });
+        }
+    }
+
+    public class AwardXPRequest
+    {
+        public Guid UserId { get; set; }
+        public int XPAmount { get; set; }
     }
 
     #endregion
@@ -1635,6 +1774,11 @@ public class StudentsController : ControllerBase
         await _context.SaveChangesAsync(ct);
     }
 
+    /// <summary>
+    /// Awards XP to a user's leaderboard entry.
+    /// Creates a new entry if one doesn't exist, or adds to existing XP.
+    /// XP is cumulative - it accumulates over time and persists in the database.
+    /// </summary>
     private async Task AwardXPAsync(Guid userId, int xpAmount, CancellationToken ct)
     {
         var leaderboard = await _context.Leaderboards
@@ -1642,21 +1786,27 @@ public class StudentsController : ControllerBase
 
         if (leaderboard == null)
         {
+            // First time earning XP - create new leaderboard entry
             leaderboard = new Leaderboard
             {
                 UserId = userId,
                 XP = xpAmount,
-                Streaks = 0,
-                Badges = null
+                Streaks = 0
             };
             _context.Leaderboards.Add(leaderboard);
+            _logger.LogInformation("📝 Created new leaderboard entry for UserId={UserId} with {XP} XP", userId, xpAmount);
         }
         else
         {
+            // Add to existing XP (accumulative)
+            var oldXP = leaderboard.XP;
             leaderboard.XP += xpAmount;
+            _logger.LogInformation("📈 Updated XP for UserId={UserId}: {OldXP} + {Awarded} = {NewXP}", 
+                userId, oldXP, xpAmount, leaderboard.XP);
         }
 
         await _context.SaveChangesAsync(ct);
+        _logger.LogInformation("✅ Leaderboard saved to database for UserId={UserId}", userId);
     }
 
     private static List<ForumCommentResponse> BuildCommentTree(List<ForumComment> comments)

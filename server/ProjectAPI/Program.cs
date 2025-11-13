@@ -39,6 +39,7 @@ builder.Services.AddHttpClient("Gemini", client =>
 //  Register Services
 builder.Services.AddScoped<GeminiService>(sp =>
     new GeminiService(sp.GetRequiredService<IHttpClientFactory>().CreateClient("Gemini"), geminiKey));
+builder.Services.AddScoped<ProjectAPI.Services.BadgeService>();
 
 // JWT Authentication
 builder.Services.AddAuthentication(options =>

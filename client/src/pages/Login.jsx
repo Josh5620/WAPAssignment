@@ -58,19 +58,29 @@ const Login = () => {
 
     try {
       const userData = await loginRequest(formData.email, formData.password);
+      console.log('🔐 Login response data:', userData);
+      
       login(userData);
 
+      // Extract role from multiple possible locations
       const resolvedRole = userData?.role ?? userData?.user?.role ?? userData?.Role ?? '';
-      const normalizedRole = typeof resolvedRole === 'string' ? resolvedRole.toLowerCase() : '';
+      const normalizedRole = typeof resolvedRole === 'string' ? resolvedRole.toLowerCase().trim() : '';
+      
+      console.log('👔 Resolved role:', resolvedRole, '→ Normalized:', normalizedRole);
+      
+      // Navigate based on role
       if (normalizedRole === 'admin') {
+        console.log('➡️ Redirecting to admin dashboard');
         navigate('/admin-dashboard');
       } else if (normalizedRole === 'teacher') {
+        console.log('➡️ Redirecting to teacher dashboard');
         navigate('/teacher-dashboard');
       } else {
+        console.log('➡️ Redirecting to student dashboard (default)');
         navigate('/student-dashboard');
       }
     } catch (err) {
-      console.error('Login failed:', err);
+      console.error('❌ Login failed:', err);
       setApiError(err.message || 'Invalid email or password');
       setFormData((prev) => ({ ...prev, password: '' }));
     } finally {

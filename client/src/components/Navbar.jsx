@@ -114,6 +114,62 @@ const Navbar = () => {
     }
   };
 
+  // Determine navigation path based on notification message
+  const getNotificationPath = (message) => {
+    if (!message) return null;
+    
+    const msg = message.toLowerCase();
+    
+    // Forum replies
+    if (msg.includes('replied to your post') || msg.includes('replied to your comment')) {
+      return '/forum';
+    }
+    
+    // Course approval/rejection (for teachers)
+    if (msg.includes('course') && (msg.includes('approved') || msg.includes('rejected'))) {
+      if (role === 'teacher') {
+        return '/manage-course';
+      }
+      return '/teacher-dashboard';
+    }
+    
+    // Announcements
+    if (msg.includes('📣') || msg.startsWith('📣')) {
+      // Navigate to appropriate dashboard based on role
+      if (role === 'admin') return '/admin-dashboard';
+      if (role === 'teacher') return '/teacher-dashboard';
+      return '/student-dashboard';
+    }
+    
+    // Help request responses
+    if (msg.includes('help request') || msg.includes('reply from your teacher')) {
+      return '/student-dashboard';
+    }
+    
+    // Default: go to appropriate dashboard
+    if (role === 'admin') return '/admin-dashboard';
+    if (role === 'teacher') return '/teacher-dashboard';
+    return '/student-dashboard';
+  };
+
+  const handleNotificationClick = async (notification) => {
+    try {
+      // Mark as read if unread
+      if (!notification.isRead) {
+        await handleMarkNotificationRead(notification.notificationId);
+      }
+      
+      // Get navigation path
+      const path = getNotificationPath(notification.message);
+      if (path) {
+        setNotificationsOpen(false); // Close notification dropdown
+        navigate(path);
+      }
+    } catch (error) {
+      console.error('Failed to handle notification click:', error);
+    }
+  };
+
   const dashboardPath = getDashboardPath(role);
 
   const navLinks = [
@@ -260,6 +316,16 @@ const Navbar = () => {
                             className={`notification-dropdown__item ${
                               item.isRead ? 'is-read' : 'is-unread'
                             }`}
+                            onClick={() => handleNotificationClick(item)}
+                            style={{ cursor: 'pointer' }}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                handleNotificationClick(item);
+                              }
+                            }}
                           >
                             <p>{item.message}</p>
                             <div className="notification-dropdown__meta">
@@ -272,7 +338,10 @@ const Navbar = () => {
                               {!item.isRead && (
                                 <button
                                   type="button"
-                                  onClick={() => handleMarkNotificationRead(item.notificationId)}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleMarkNotificationRead(item.notificationId);
+                                  }}
                                 >
                                   Done
                                 </button>

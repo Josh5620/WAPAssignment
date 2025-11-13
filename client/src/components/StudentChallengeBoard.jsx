@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { getChapterChallenges } from '../data/chapterChallenges';
+import { api, quickApi } from '../services/apiService';
+import XPEarnedPopup from './XPEarnedPopup';
 import '../styles/StudentChallengeBoard.css';
 
 const DIFFICULTIES = [
@@ -30,6 +32,10 @@ const StudentChallengeBoard = ({ chapterId }) => {
     medium: { completed: 0, correct: 0, xpEarned: 0 },
     hard: { completed: 0, correct: 0, xpEarned: 0 },
   });
+  const [showXPPopup, setShowXPPopup] = useState(false);
+  const [completedDifficulty, setCompletedDifficulty] = useState(null);
+  const [completedXP, setCompletedXP] = useState(0);
+  const [newBadge, setNewBadge] = useState(null);
 
   const questions = challengeData[selectedDifficulty] || [];
   const totalQuestions = questions.length;
@@ -84,11 +90,106 @@ const StudentChallengeBoard = ({ chapterId }) => {
     setProgress((prev) => {
       const next = { ...prev };
       const earnedXp = correct ? currentQuestion?.xp ?? 0 : 0;
+      const newCompleted = next[selectedDifficulty].completed + 1;
+      const wasCompleted = next[selectedDifficulty].completed >= totalQuestions;
+      
       next[selectedDifficulty] = {
-        completed: Math.min(totalQuestions, next[selectedDifficulty].completed + 1),
+        completed: Math.min(totalQuestions, newCompleted),
         correct: correct ? next[selectedDifficulty].correct + 1 : next[selectedDifficulty].correct,
         xpEarned: next[selectedDifficulty].xpEarned + earnedXp,
       };
+
+      // Check if difficulty level was just completed
+      if (!wasCompleted && newCompleted >= totalQuestions) {
+        // Set popup data immediately
+        setCompletedDifficulty(selectedDifficulty);
+        setCompletedXP(next[selectedDifficulty].xpEarned);
+        
+        // Show XP popup after a short delay
+        setTimeout(async () => {
+          // Always show the popup first
+          setShowXPPopup(true);
+          
+          // Award XP and check for badges in the background
+          try {
+            const userProfile = quickApi.getUserProfile();
+            console.log('🎯 Awarding XP - User profile:', userProfile);
+            
+            if (!userProfile) {
+              console.warn('⚠️ No user profile found - cannot award XP to leaderboard');
+              return;
+            }
+
+            // Try multiple ways to get userId - handle nested user object structure
+            // Profile structure: { access_token, user: { userId, id, ... }, role, ... }
+            let userId = userProfile.user?.userId || 
+                        userProfile.user?.id || 
+                        userProfile.user?.UserId ||
+                        userProfile.id || 
+                        userProfile.UserId || 
+                        userProfile.userId;
+            
+            console.log('🎯 Extracted userId (raw):', userId, 'Type:', typeof userId);
+            console.log('🎯 User profile structure:', {
+              hasUser: !!userProfile.user,
+              userKeys: userProfile.user ? Object.keys(userProfile.user) : [],
+              topLevelKeys: Object.keys(userProfile),
+              userProfile: userProfile
+            });
+            
+            if (!userId) {
+              console.error('❌ Could not extract userId from profile. Profile keys:', Object.keys(userProfile));
+              console.error('❌ Full profile object:', JSON.stringify(userProfile, null, 2));
+              // Try to get it from localStorage directly
+              const rawProfile = localStorage.getItem('user_profile');
+              if (rawProfile) {
+                const parsed = JSON.parse(rawProfile);
+                console.log('🔍 Raw localStorage profile:', parsed);
+                userId = parsed.user?.userId || parsed.user?.id || parsed.id || parsed.userId;
+                console.log('🔍 Extracted from raw:', userId);
+              }
+              if (!userId) {
+                console.error('❌ Still no userId found. Cannot award XP.');
+                return;
+              }
+            }
+            
+            // Ensure userId is a string (GUID format)
+            userId = String(userId).trim();
+            console.log('🎯 Processed userId:', userId, 'XP to award:', next[selectedDifficulty].xpEarned);
+
+            // Award XP to leaderboard (this also checks for badges)
+            console.log('🎯 Calling awardXP API...');
+            const result = await api.students.awardXP(userId, next[selectedDifficulty].xpEarned);
+            console.log('✅ XP awarded successfully:', result);
+            console.log('✅ Total XP after award:', result?.totalXP);
+            
+            // Dispatch event to refresh leaderboard
+            const xpEvent = new CustomEvent('xp-awarded', { 
+              detail: { 
+                userId, 
+                xpAwarded: next[selectedDifficulty].xpEarned,
+                totalXP: result?.totalXP 
+              } 
+            });
+            console.log('📢 Dispatching xp-awarded event:', xpEvent.detail);
+            window.dispatchEvent(xpEvent);
+            console.log('✅ Event dispatched successfully');
+            
+            // Check if new badges were earned
+            if (result?.newBadges && result.newBadges.length > 0) {
+              console.log('🏆 New badges earned:', result.newBadges);
+              // Show the first newly earned badge
+              setNewBadge(result.newBadges[0]);
+            }
+          } catch (error) {
+            console.error('❌ Error awarding XP or checking badges:', error);
+            console.error('Error details:', error.message, error.stack);
+            // Popup is already shown, so user can still see their XP
+          }
+        }, 500);
+      }
+
       return next;
     });
   };
@@ -97,7 +198,17 @@ const StudentChallengeBoard = ({ chapterId }) => {
     if (currentIndex < totalQuestions - 1) {
       setCurrentIndex((prev) => prev + 1);
     } else {
+      // Restart patch - reset everything
       setCurrentIndex(0);
+      // Reset progress for this difficulty
+      setProgress((prev) => ({
+        ...prev,
+        [selectedDifficulty]: {
+          completed: 0,
+          correct: 0,
+          xpEarned: 0
+        }
+      }));
     }
     setSelectedOption(null);
     setIsCorrect(null);
@@ -133,8 +244,22 @@ const StudentChallengeBoard = ({ chapterId }) => {
   }
 
   return (
-    <div className="challenge-board">
-      <div className="challenge-map">
+    <>
+      {showXPPopup && (
+        <XPEarnedPopup
+          xpEarned={completedXP}
+          difficulty={completedDifficulty}
+          showBadge={newBadge}
+          onClose={() => {
+            setShowXPPopup(false);
+            setCompletedDifficulty(null);
+            setCompletedXP(0);
+            setNewBadge(null);
+          }}
+        />
+      )}
+      <div className="challenge-board">
+        <div className="challenge-map">
         {DIFFICULTIES.map(({ key, label, theme, hint }) => {
           const { correct, total, xpEarned, totalXp, growthLevel } = difficultyProgress(key);
           const isActive = key === selectedDifficulty;
@@ -227,7 +352,8 @@ const StudentChallengeBoard = ({ chapterId }) => {
           )}
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 

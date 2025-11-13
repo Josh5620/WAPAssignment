@@ -306,11 +306,28 @@
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
+  transition: all 0.2s ease;
+}
+
+.notification-item:hover:not(.is-loading):not(.is-error):not(.is-empty) {
+  background: rgba(161, 196, 126, 0.18);
+  border-color: rgba(74, 124, 89, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 124, 89, 0.2);
+}
+
+.notification-item:active:not(.is-loading):not(.is-error):not(.is-empty) {
+  transform: translateY(0);
 }
 
 .notification-item.is-unread {
   border-color: rgba(74, 124, 89, 0.45);
   background: rgba(161, 196, 126, 0.12);
+}
+
+.notification-item.is-unread:hover {
+  background: rgba(161, 196, 126, 0.22);
+  border-color: rgba(74, 124, 89, 0.6);
 }
 
 .notification-item.is-loading,

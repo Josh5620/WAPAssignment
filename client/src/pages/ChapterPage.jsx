@@ -11,6 +11,7 @@ import StudentFlashcardComponent from '../components/StudentFlashcardComponent.j
 import StudentChallengeBoard from '../components/StudentChallengeBoard.jsx';
 import StudentQuizComponent from '../components/StudentQuizComponent.jsx';
 import ChapterPracticeLab from '../components/ChapterPracticeLab.jsx';
+import { preloadPyodide } from '../utils/pyodidePreloader.js';
 
 const ChapterPage = () => {
   const { chapterId } = useParams();
@@ -46,6 +47,21 @@ const ChapterPage = () => {
   const [chapterData, setChapterData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Preload Pyodide in the background when chapter page loads
+  // This ensures it's ready when users open the practice lab
+  useEffect(() => {
+    // Check if this chapter has a practice lab
+    const hasPracticeLab = details?.practiceLab || chapterData?.content?.some(r => r.type === 'practice');
+    
+    if (hasPracticeLab) {
+      // Start preloading Pyodide in the background (non-blocking)
+      preloadPyodide().catch(err => {
+        // Silently fail - component will handle loading when needed
+        console.debug('Pyodide preload failed (will retry when needed):', err);
+      });
+    }
+  }, [details, chapterData]);
 
   // Fetch chapter data from backend using the master endpoint
   useEffect(() => {

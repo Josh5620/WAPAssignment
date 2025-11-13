@@ -12,17 +12,32 @@ const StudentProgress = ({ courseId }) => {
       try {
         setLoading(true);
         const userProfile = quickApi.getUserProfile();
-        if (!userProfile || !userProfile.id) {
+        console.log('📊 StudentProgress - User profile:', userProfile);
+        
+        if (!userProfile) {
+          console.warn('⚠️ No user profile found in localStorage');
           setError('Please log in to view your progress.');
+          setLoading(false);
           return;
         }
 
-        const data = await api.students.getStudentProgress(userProfile.id);
+        const userId = userProfile.id || userProfile.UserId || userProfile.userId || userProfile.user?.id || userProfile.user?.UserId;
+        console.log('📊 StudentProgress - Extracted userId:', userId);
+        
+        if (!userId) {
+          console.warn('⚠️ User profile exists but no userId found. Profile keys:', Object.keys(userProfile));
+          setError('Please log in to view your progress.');
+          setLoading(false);
+          return;
+        }
+
+        const data = await api.students.getStudentProgress(userId);
+        console.log('📊 StudentProgress - Loaded progress data:', data);
         setProgress(data);
         setError(null);
       } catch (err) {
-        console.error('Failed to load progress:', err);
-        setError('Failed to load progress. Please try again.');
+        console.error('❌ Failed to load progress:', err);
+        setError(err.message || 'Failed to load progress. Please try again.');
       } finally {
         setLoading(false);
       }
@@ -40,12 +55,13 @@ const StudentProgress = ({ courseId }) => {
       setLoading(true);
       setError(null);
       const userProfile = quickApi.getUserProfile();
-      if (!userProfile || !userProfile.id) {
+      const userId = userProfile?.id || userProfile?.UserId || userProfile?.userId;
+      if (!userProfile || !userId) {
         setError('Please log in to view your progress.');
         return;
       }
 
-      const data = await api.students.getStudentProgress(userProfile.id);
+      const data = await api.students.getStudentProgress(userId);
       setProgress(data);
     } catch (err) {
       console.error('Failed to load progress:', err);

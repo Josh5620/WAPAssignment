@@ -98,41 +98,86 @@ const requestWithAuth = async (path, options = {}) => {
 // Login function: POST to /auth/login (AuthController endpoint)
 export const login = async (email, password) => {
   try {
+    // Validate inputs
+    if (!email || !password) {
+      throw new Error('Email and password are required');
+    }
+
+    console.log('🔐 Attempting login for:', email);
+    
     const response = await fetch('http://localhost:5245/api/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        email,      // AuthController expects 'email' field
-        password    // AuthController expects 'password' field
+        email: email.trim(),      // AuthController expects 'email' field
+        password                 // AuthController expects 'password' field
       }),
     });
 
+    // Handle network errors
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+      let errorMessage = 'Invalid email or password';
+      
+      try {
+        const errorData = await response.json();
+        console.error('❌ Login error response:', errorData);
+        
+        // Provide more specific error messages
+        if (response.status === 401) {
+          errorMessage = errorData.error || 'Invalid email or password. Please check your credentials.';
+        } else if (response.status === 400) {
+          errorMessage = errorData.error || 'Please provide both email and password.';
+        } else if (response.status === 500) {
+          errorMessage = 'Server error. Please try again later.';
+        } else {
+          errorMessage = errorData.error || `Login failed (${response.status})`;
+        }
+      } catch (parseError) {
+        console.error('Failed to parse error response:', parseError);
+        if (response.status === 0 || response.status >= 500) {
+          errorMessage = 'Unable to connect to server. Please ensure the backend is running on http://localhost:5245';
+        }
+      }
+      
+      throw new Error(errorMessage);
     }
 
     const data = await response.json();
     console.log('✓ Login successful - raw backend response:', data);
     
+    // Validate response structure
+    if (!data.access_token || !data.user) {
+      console.error('❌ Invalid response structure:', data);
+      throw new Error('Invalid response from server. Please try again.');
+    }
+    
     // AuthController returns: { access_token, token_type, user: { userId, email, fullName, role } }
     // Normalize the response format for AuthContext
+    const userRole = data.user.role || data.user.Role || 'student';
     const normalizedData = {
       access_token: data.access_token,
       token: data.access_token,
       user: {
         ...data.user,
-        id: data.user.userId  // Add 'id' field that maps to 'userId' for compatibility
+        id: data.user.userId,  // Add 'id' field that maps to 'userId' for compatibility
+        role: userRole  // Ensure role is in user object too
       },
-      role: data.user.role
+      role: userRole  // Also at top level for easy access
     };
     
     console.log('✓ Normalized login data being returned:', normalizedData);
+    console.log('👔 User role in normalized data:', normalizedData.role, '| User role:', normalizedData.user.role);
     return normalizedData;
   } catch (error) {
-    console.error('Login error:', error);
+    console.error('❌ Login error:', error);
+    
+    // Provide helpful error messages
+    if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+      throw new Error('Unable to connect to server. Please ensure the backend is running on http://localhost:5245');
+    }
+    
     throw error;
   }
 };
@@ -185,30 +230,65 @@ export const updateProfile = async (token, profileData) => {
 };
 
 // Register function: POST to /auth/register (AuthController endpoint)
-export const register = async (fullName, email, password) => {
+export const register = async (fullName, email, password, role = 'student') => {
   try {
+    // Validate inputs
+    if (!fullName || !email || !password) {
+      throw new Error('Full name, email, and password are required');
+    }
+
+    console.log('📝 Attempting registration for:', email, 'with role:', role);
+    
     const response = await fetch('http://localhost:5245/api/auth/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        fullName,   // AuthController expects 'fullName' field
-        email,      // AuthController expects 'email' field
-        password    // AuthController expects 'password' field
+        fullName: fullName.trim(),   // AuthController expects 'fullName' field
+        email: email.trim(),         // AuthController expects 'email' field
+        password,                    // AuthController expects 'password' field
+        role: role.toLowerCase()     // AuthController expects 'role' field (student, teacher, or admin)
       }),
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+      let errorMessage = 'Registration failed';
+      
+      try {
+        const errorData = await response.json();
+        console.error('❌ Registration error response:', errorData);
+        
+        if (response.status === 400) {
+          errorMessage = errorData.error || 'Invalid registration data. Please check your information.';
+        } else if (response.status === 409) {
+          errorMessage = 'A user with this email already exists';
+        } else if (response.status === 500) {
+          errorMessage = 'Server error. Please try again later.';
+        } else {
+          errorMessage = errorData.error || `Registration failed (${response.status})`;
+        }
+      } catch (parseError) {
+        console.error('Failed to parse error response:', parseError);
+        if (response.status === 0 || response.status >= 500) {
+          errorMessage = 'Unable to connect to server. Please ensure the backend is running on http://localhost:5245';
+        }
+      }
+      
+      throw new Error(errorMessage);
     }
 
     const data = await response.json();
     console.log('✓ Registration successful:', data);
     return data;
   } catch (error) {
-    console.error('Registration error:', error);
+    console.error('❌ Registration error:', error);
+    
+    // Provide helpful error messages
+    if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+      throw new Error('Unable to connect to server. Please ensure the backend is running on http://localhost:5245');
+    }
+    
     throw error;
   }
 };
@@ -1811,6 +1891,27 @@ const getLeaderboard = async (userId = null) => {
   }
 };
 
+const clearLeaderboard = async () => {
+  try {
+    const token = getToken();
+    const response = await fetch(`${API_BASE_URL}/students/leaderboard/clear`, {
+      method: 'DELETE',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      }
+    });
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Clear leaderboard error:', error);
+    throw error;
+  }
+};
+
 const getNotifications = async (unreadOnly = false) => {
   const query = unreadOnly ? '?unreadOnly=true' : '';
   try {
@@ -1845,6 +1946,28 @@ const markAllNotificationsRead = async () => {
 };
 
 // ===== COMPREHENSIVE API OBJECT =====
+// Register helper function that accepts an object
+const registerUser = async (userData) => {
+  return await register(
+    userData.fullName,
+    userData.email,
+    userData.password,
+    userData.role || 'student'
+  );
+};
+
+// Check email availability helper
+const checkEmailAvailability = async (email) => {
+  try {
+    // For now, we'll just check if registration would fail due to existing email
+    // In a real implementation, you'd have a dedicated endpoint
+    return { available: true };
+  } catch (error) {
+    console.error('Email availability check error:', error);
+    return { available: true }; // Default to available if check fails
+  }
+};
+
 // Main API object that contains all services organized by category
 export const api = {
   guests: {
@@ -1854,6 +1977,8 @@ export const api = {
     getChapterPreview: getGuestChapterPreview,
     getTestimonials: getGuestTestimonials,
     searchContent: guestSearchContent,
+    register: registerUser,
+    checkEmailAvailability: checkEmailAvailability,
   },
   // Authentication
   auth: {
@@ -1933,13 +2058,107 @@ export const api = {
     getForumComments,
     createForumComment,
     createHelpRequest: createStudentHelpRequest,
-    getLeaderboard
+    getLeaderboard,
+    clearLeaderboard,
+    awardXP: async (userId, xpAmount) => {
+      try {
+        // Ensure userId is a valid GUID string
+        if (!userId) {
+          throw new Error('UserId is required');
+        }
+        
+        // Convert to string if it's not already, and ensure it's a valid GUID format
+        let userIdStr = typeof userId === 'string' ? userId : userId.toString();
+        
+        // Remove any whitespace
+        userIdStr = userIdStr.trim();
+        
+        // Validate GUID format (basic check)
+        const guidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+        if (!guidPattern.test(userIdStr)) {
+          console.error('❌ Invalid GUID format:', userIdStr);
+          throw new Error(`Invalid user ID format: ${userIdStr}`);
+        }
+        
+        console.log('🎯 API: Awarding XP - userId:', userIdStr, 'amount:', xpAmount);
+        console.log('🎯 API: Request body:', JSON.stringify({ userId: userIdStr, xpAmount }));
+        
+        const response = await requestWithAuth('/students/award-xp', {
+          method: 'POST',
+          body: JSON.stringify({ 
+            userId: userIdStr,
+            xpAmount: xpAmount 
+          })
+        });
+        
+        console.log('✅ API: XP awarded successfully:', response);
+        console.log('✅ API: Response totalXP:', response?.totalXP);
+        return response;
+      } catch (error) {
+        console.error('❌ API: Award XP error:', error);
+        console.error('Error details:', {
+          message: error.message,
+          status: error.status,
+          response: error.response,
+          userId: userId,
+          xpAmount: xpAmount
+        });
+        throw error;
+      }
+    }
   },
 
   notifications: {
     list: getNotifications,
     markRead: markNotificationRead,
     markAllRead: markAllNotificationsRead,
+  },
+
+  // Badge functions
+  badges: {
+    getAll: async () => {
+      try {
+        const token = getToken();
+        const response = await fetch(`${API_BASE_URL}/badges`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token ? `Bearer ${token}` : ''
+          }
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return await response.json();
+      } catch (error) {
+        console.error('Get badges error:', error);
+        throw error;
+      }
+    },
+    getStudentBadges: async () => {
+      try {
+        return await requestWithAuth('/badges/students/badges');
+      } catch (error) {
+        console.error('Get student badges error:', error);
+        throw error;
+      }
+    },
+    checkBadges: async (userId) => {
+      try {
+        // This will call the badge service to check and award badges
+        // We'll need to add this endpoint to the backend
+        const response = await fetch(`${API_BASE_URL}/badges/check/${userId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': getToken() ? `Bearer ${getToken()}` : ''
+          }
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return await response.json();
+      } catch (error) {
+        console.error('Check badges error:', error);
+        throw error;
+      }
+    }
   },
 
   // Teacher-specific functions

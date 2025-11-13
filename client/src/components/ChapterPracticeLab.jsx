@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Editor from '@monaco-editor/react';
 import '../styles/ChapterPracticeLab.css';
+import { isPyodideReady, isPyodideLoading, preloadPyodide } from '../utils/pyodidePreloader.js';
 
 const PYODIDE_CDN = 'https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js';
 
@@ -44,6 +45,8 @@ const ChapterPracticeLab = ({
     const [pyodideReady, setPyodideReady] = useState(false);
     const [pyodideError, setPyodideError] = useState(null);
     const [loadingPyodide, setLoadingPyodide] = useState(false);
+    const [loadProgress, setLoadProgress] = useState(0);
+    const [loadStartTime, setLoadStartTime] = useState(null);
     const [runHistory, setRunHistory] = useState([]);
     const [lastRunStatus, setLastRunStatus] = useState('idle');
     const [isExpanded, setIsExpanded] = useState(!collapsedInitially);
@@ -75,8 +78,33 @@ useEffect(() => {
         return;
     }
 
-    if (window.__pyodideInstance) {
+    // Check if already ready (from preloader)
+    if (isPyodideReady()) {
         setPyodideReady(true);
+        setLoadProgress(100);
+        return;
+    }
+
+    // Check if already loading (from preloader)
+    if (isPyodideLoading()) {
+        setLoadingPyodide(true);
+        setLoadProgress(50); // Assume halfway if preloading
+        // Wait for preloader to finish
+        try {
+            await preloadPyodide();
+            if (!cancelled) {
+                setPyodideReady(true);
+                setLoadProgress(100);
+            }
+        } catch (error) {
+            if (!cancelled) {
+                setPyodideError(error);
+            }
+        } finally {
+            if (!cancelled) {
+                setLoadingPyodide(false);
+            }
+        }
         return;
     }
 
@@ -87,24 +115,15 @@ useEffect(() => {
     try {
         setLoadingPyodide(true);
         setPyodideError(null);
+        setLoadProgress(10);
+        setLoadStartTime(Date.now());
 
-        if (!window.loadPyodide) {
-        await new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = PYODIDE_CDN;
-            script.async = true;
-            script.onload = resolve;
-            script.onerror = () => reject(new Error('Failed to load Pyodide script.'));
-            document.body.appendChild(script);
-        });
-        }
-
-        const instance = await window.loadPyodide({
-        indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.23.4/full/',
-        });
+        // Use preloader function which handles caching
+        setLoadProgress(30);
+        const instance = await preloadPyodide();
 
         if (!cancelled) {
-        window.__pyodideInstance = instance;
+        setLoadProgress(100);
         setPyodideReady(true);
         }
     } catch (error) {
@@ -161,12 +180,19 @@ const pushRunHistory = (entry) => {
 };
 
 const handleRun = async () => {
+    console.log('🚀 Run button clicked!');
+    console.log('Language:', language);
+    console.log('Pyodide ready:', pyodideReady);
+    console.log('Pyodide instance:', window.__pyodideInstance);
+    console.log('Current code:', code);
+    
     if (language !== 'python') {
     setOutput("⚙️ Only Python execution is currently supported in the Code Garden Lab.");
     return;
     }
 
     if (!window.__pyodideInstance) {
+    console.warn('⚠️ Pyodide not loaded yet');
     setOutput('⏳ Loading the Python runtime. Please try again in a few moments.');
     return;
     }
@@ -177,6 +203,8 @@ const handleRun = async () => {
 
     try {
     const pyodide = window.__pyodideInstance;
+    console.log('📝 Executing code with Pyodide...');
+    
     const wrappedCode = `
 import sys, io
 from contextlib import redirect_stdout, redirect_stderr
@@ -193,7 +221,11 @@ stderr = _stderr.getvalue()
 (stdout, stderr)
 `;
 
-    const [stdout, stderr] = await pyodide.runPythonAsync(wrappedCode);
+    console.log('📋 Wrapped code:', wrappedCode);
+    const result = await pyodide.runPythonAsync(wrappedCode);
+    console.log('✅ Code execution result:', result);
+    
+    const [stdout, stderr] = result;
     if (stderr) {
         const trimmedError = stderr.trim();
         const encouragement =
@@ -250,6 +282,8 @@ stderr = _stderr.getvalue()
 };
 
 const handleReset = () => {
+    console.log('🔄 Reset button clicked!');
+    console.log('Resetting to starter code:', starterCode);
     setCode(starterCode);
     setOutput('');
     setLastRunStatus('idle');
@@ -332,10 +366,26 @@ return (
                 ? '⚠️ Unable to load the Python runtime. Refresh to try again.'
                 : pyodideReady
                 ? '✅ Python runtime ready — powered by Pyodide.'
+                : loadingPyodide
+                ? '⏳ Loading Python runtime... (this may take a moment)'
                 : '⏳ Preparing the Python runtime…'}
             </div>
+            {loadingPyodide && (
+                <div style={{ marginTop: '0.5rem', fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)' }}>
+                    Downloading Pyodide (~10MB) - please wait...
+                    {loadStartTime && (
+                        <div style={{ marginTop: '0.25rem' }}>
+                            {(() => {
+                                const elapsed = Math.floor((Date.now() - loadStartTime) / 1000);
+                                const estimated = elapsed < 5 ? '10-30 seconds' : elapsed < 15 ? '5-15 seconds remaining' : 'Almost done...';
+                                return `⏱️ ${estimated}`;
+                            })()}
+                        </div>
+                    )}
+                </div>
+            )}
             <div className="practice-lab__runtime-meter">
-                <span />
+                <span style={{ width: `${loadProgress}%` }} />
             </div>
             </div>
         )}
@@ -378,16 +428,47 @@ return (
                 <button
                 type="button"
                 className="practice-lab__button practice-lab__button--run"
-                onClick={handleRun}
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🔘 Run button onClick triggered');
+                    if (!isRunning && (language !== 'python' || pyodideReady)) {
+                        handleRun();
+                    } else {
+                        console.warn('⚠️ Button click ignored - conditions not met:', {
+                            isRunning,
+                            language,
+                            pyodideReady
+                        });
+                    }
+                }}
                 disabled={isRunning || (language === 'python' && !pyodideReady)}
+                style={{ 
+                    cursor: (isRunning || (language === 'python' && !pyodideReady)) ? 'not-allowed' : 'pointer',
+                    opacity: (isRunning || (language === 'python' && !pyodideReady)) ? 0.6 : 1
+                }}
+                title={language === 'python' && !pyodideReady ? 'Waiting for Python runtime to load...' : ''}
                 >
-                {isRunning ? 'Running…' : 'Run Code'}
+                {isRunning ? 'Running…' : (language === 'python' && !pyodideReady) ? 'Loading...' : 'Run Code'}
                 </button>
                 <button
                 type="button"
                 className="practice-lab__button practice-lab__button--reset"
-                onClick={handleReset}
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🔘 Reset button onClick triggered');
+                    if (!isRunning) {
+                        handleReset();
+                    } else {
+                        console.warn('⚠️ Reset button click ignored - code is running');
+                    }
+                }}
                 disabled={isRunning}
+                style={{ 
+                    cursor: isRunning ? 'not-allowed' : 'pointer',
+                    opacity: isRunning ? 0.6 : 1
+                }}
                 >
                 Reset
                 </button>

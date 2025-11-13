@@ -262,11 +262,28 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
+  transition: all 0.2s ease;
+}
+
+.notification-dropdown__item:hover {
+  background: rgba(161, 196, 126, 0.2);
+  border-color: rgba(74, 124, 89, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(74, 124, 89, 0.15);
+}
+
+.notification-dropdown__item:active {
+  transform: translateY(0);
 }
 
 .notification-dropdown__item.is-unread {
   border-color: rgba(74, 124, 89, 0.4);
   background: rgba(161, 196, 126, 0.14);
+}
+
+.notification-dropdown__item.is-unread:hover {
+  background: rgba(161, 196, 126, 0.25);
+  border-color: rgba(74, 124, 89, 0.6);
 }
 
 .notification-dropdown__item p {

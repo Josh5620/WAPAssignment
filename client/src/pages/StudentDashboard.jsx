@@ -224,6 +224,53 @@ const StudentDashboard = () => {
     ));
   };
 
+  // Determine navigation path based on notification message
+  const getNotificationPath = (message) => {
+    if (!message) return null;
+    
+    const msg = message.toLowerCase();
+    
+    // Forum replies
+    if (msg.includes('replied to your post') || msg.includes('replied to your comment')) {
+      return '/forum';
+    }
+    
+    // Course approval/rejection (for teachers)
+    if (msg.includes('course') && (msg.includes('approved') || msg.includes('rejected'))) {
+      return '/manage-course';
+    }
+    
+    // Announcements
+    if (msg.includes('📣') || msg.startsWith('📣')) {
+      return '/student-dashboard';
+    }
+    
+    // Help request responses
+    if (msg.includes('help request') || msg.includes('reply from your teacher')) {
+      return '/student-dashboard';
+    }
+    
+    // Default: stay on dashboard
+    return '/student-dashboard';
+  };
+
+  const handleNotificationClick = async (notification) => {
+    try {
+      // Mark as read if unread
+      if (!notification.isRead) {
+        await handleNotificationRead(notification.notificationId);
+      }
+      
+      // Get navigation path
+      const path = getNotificationPath(notification.message);
+      if (path) {
+        navigate(path);
+      }
+    } catch (error) {
+      console.error('Failed to handle notification click:', error);
+    }
+  };
+
   const renderNotifications = () => {
     if (notificationsLoading) {
       return <li className="notification-item is-loading">Growing fresh updates…</li>;
@@ -241,6 +288,16 @@ const StudentDashboard = () => {
       <li
         key={notification.notificationId}
         className={`notification-item ${notification.isRead ? 'is-read' : 'is-unread'}`}
+        onClick={() => handleNotificationClick(notification)}
+        style={{ cursor: 'pointer' }}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleNotificationClick(notification);
+          }
+        }}
       >
         <div className="notification-message">{notification.message}</div>
         <div className="notification-meta">
@@ -249,7 +306,10 @@ const StudentDashboard = () => {
             <button
               type="button"
               className="btn-notification-read"
-              onClick={() => handleNotificationRead(notification.notificationId)}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleNotificationRead(notification.notificationId);
+              }}
             >
               Mark as read
             </button>

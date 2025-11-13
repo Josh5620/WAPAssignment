@@ -3,18 +3,23 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjectAPI.Models
 {
-    public class Leaderboard
+    [Table("UserBadges")]
+    public class UserBadge
     {
         [Key]
+        public Guid UserBadgeId { get; set; }
+        
         [ForeignKey("Profile")]
         public Guid UserId { get; set; }
         
-        public int XP { get; set; } = 0;
-        public int Streaks { get; set; } = 0;
+        [ForeignKey("Badge")]
+        public Guid BadgeId { get; set; }
         
-        // Removed string Badges field - now using proper relationship via UserBadge
-
+        public DateTime EarnedAt { get; set; } = DateTime.UtcNow;
+        
         // Navigation properties
         public Profile Profile { get; set; } = null!;
+        public Badge Badge { get; set; } = null!;
     }
 }
+

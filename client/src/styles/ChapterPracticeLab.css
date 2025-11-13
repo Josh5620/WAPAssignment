@@ -34,13 +34,15 @@
 
 .practice-lab__preview-content h3 {
   margin: 0 0 0.6rem 0;
-  font-family: 'Press Start 2P', cursive;
+  font-family: 'Pixelify Sans', cursive;
   font-size: 1rem;
+  font-weight: 600;
   color: #3b3a2f;
 }
 
 .practice-lab__preview-content p {
   margin: 0 0 0.8rem 0;
+  font-family: 'Pixelify Sans', cursive;
   line-height: 1.6;
   color: rgba(55, 61, 32, 0.8);
 }
@@ -48,6 +50,7 @@
 .practice-lab__preview-content ul {
   margin: 0;
   padding-left: 1.2rem;
+  font-family: 'Pixelify Sans', cursive;
   color: rgba(55, 61, 32, 0.75);
   line-height: 1.5;
 }
@@ -85,6 +88,7 @@
   border: 1px solid rgba(113, 119, 68, 0.35);
   border-radius: 999px;
   padding: 0.3rem 0.9rem;
+  font-family: 'Pixelify Sans', cursive;
   font-size: 0.75rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -94,12 +98,14 @@
 
 .practice-lab__header h3 {
   margin: 0;
-  font-family: 'Press Start 2P', cursive;
+  font-family: 'Pixelify Sans', cursive;
   font-size: 1rem;
+  font-weight: 600;
   color: #3b3a2f;
 }
 
 .practice-lab__status {
+  font-family: 'Pixelify Sans', cursive;
   font-size: 0.8rem;
   color: #7a6d5b;
 }
@@ -123,9 +129,10 @@
 
 .practice-lab__instructions h4 {
   margin: 0;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: rgba(55, 61, 32, 0.7);
 }
@@ -136,6 +143,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  font-family: 'Pixelify Sans', cursive;
   font-size: 0.95rem;
   line-height: 1.6;
   color: #4d4d3b;
@@ -146,6 +154,7 @@
   padding: 0.75rem 1rem;
   border: 1px dashed rgba(113, 119, 68, 0.4);
   border-radius: 12px;
+  font-family: 'Pixelify Sans', cursive;
   font-size: 0.82rem;
   line-height: 1.5;
   color: rgba(55, 61, 32, 0.75);
@@ -174,6 +183,7 @@
   border: none;
   border-radius: 999px;
   padding: 0.55rem 1.4rem;
+  font-family: 'Pixelify Sans', cursive;
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.05em;
@@ -221,6 +231,7 @@
   background: rgba(59, 92, 68, 0.3);
   color: #e8f5e3;
   padding: 0.6rem 1rem;
+  font-family: 'Pixelify Sans', cursive;
   font-size: 0.8rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -230,10 +241,258 @@
   margin: 0;
   padding: 1.1rem;
   color: #d6f2c4;
+  font-family: 'Pixelify Sans', cursive;
   font-size: 0.92rem;
   line-height: 1.6;
   min-height: 90px;
   white-space: pre-wrap;
+}
+
+/* Hero Section */
+.practice-lab__hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid rgba(113, 119, 68, 0.2);
+}
+
+.practice-lab__hero-main {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.practice-lab__hero-main h3 {
+  margin: 0;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #3b3a2f;
+}
+
+.practice-lab__glyph {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.practice-lab__eyebrow {
+  display: block;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(55, 61, 32, 0.6);
+  margin-bottom: 0.4rem;
+}
+
+.practice-lab__subtitle {
+  margin: 0.5rem 0 0 0;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(55, 61, 32, 0.75);
+}
+
+.practice-lab__hero-info {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.practice-lab__chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  background: rgba(113, 119, 68, 0.12);
+  border: 1px solid rgba(113, 119, 68, 0.25);
+  border-radius: 999px;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.75rem;
+  color: rgba(55, 61, 32, 0.7);
+}
+
+/* Runtime Status */
+.practice-lab__runtime {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(30, 35, 24, 0.4);
+  border-radius: 12px;
+  border: 1px solid rgba(59, 92, 68, 0.3);
+}
+
+.practice-lab__runtime-status {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.85rem;
+  color: #d6f2c4;
+  margin-bottom: 0.5rem;
+}
+
+.practice-lab__runtime.is-ready .practice-lab__runtime-status {
+  color: #a8d98a;
+}
+
+.practice-lab__runtime.is-error .practice-lab__runtime-status {
+  color: #f4a5a5;
+}
+
+.practice-lab__runtime-meter {
+  height: 4px;
+  background: rgba(59, 92, 68, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.practice-lab__runtime-meter span {
+  display: block;
+  height: 100%;
+  background: #4a7c59;
+  width: 0;
+  transition: width 0.3s ease;
+}
+
+.practice-lab__runtime.is-ready .practice-lab__runtime-meter span {
+  width: 100%;
+}
+
+/* Instructions Header */
+.practice-lab__instructions-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.practice-lab__difficulty {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.75rem;
+  color: rgba(55, 61, 32, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Bonus Quests */
+.practice-lab__quests {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(113, 119, 68, 0.2);
+}
+
+.practice-lab__quests h5 {
+  margin: 0 0 0.6rem 0;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(55, 61, 32, 0.7);
+}
+
+.practice-lab__quests ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: rgba(55, 61, 32, 0.75);
+}
+
+/* Console Status */
+.practice-lab__console-status {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-left: 0.5rem;
+}
+
+/* History */
+.practice-lab__history {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(113, 119, 68, 0.2);
+}
+
+.practice-lab__history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.practice-lab__history-header h5 {
+  margin: 0;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(55, 61, 32, 0.7);
+}
+
+.practice-lab__history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.practice-lab__history-item {
+  padding: 0.6rem 0.8rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  border-left: 3px solid rgba(113, 119, 68, 0.3);
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.8rem;
+}
+
+.practice-lab__history-item.is-success {
+  border-left-color: #4a7c59;
+  background: rgba(74, 124, 89, 0.1);
+}
+
+.practice-lab__history-item.is-error {
+  border-left-color: #c3876f;
+  background: rgba(195, 135, 111, 0.1);
+}
+
+.practice-lab__history-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.3rem;
+}
+
+.practice-lab__history-time {
+  font-size: 0.7rem;
+  color: rgba(55, 61, 32, 0.5);
+}
+
+.practice-lab__history-status {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.practice-lab__history-item.is-success .practice-lab__history-status {
+  color: #4a7c59;
+}
+
+.practice-lab__history-item.is-error .practice-lab__history-status {
+  color: #c3876f;
+}
+
+.practice-lab__history-message {
+  font-size: 0.75rem;
+  color: rgba(55, 61, 32, 0.7);
+  line-height: 1.4;
 }
 
 @media (max-width: 1024px) {
@@ -247,6 +506,15 @@
 
   .practice-lab__editor {
     order: 1;
+  }
+
+  .practice-lab__hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .practice-lab__hero-info {
+    width: 100%;
   }
 }
 

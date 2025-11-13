@@ -29,6 +29,8 @@ namespace ProjectAPI.Data
         public DbSet<ForumComment> ForumComments { get; set; }
         public DbSet<Certificate> Certificates { get; set; }
         public DbSet<QuizAttempt> QuizAttempts { get; set; }
+        public DbSet<Badge> Badges { get; set; }
+        public DbSet<UserBadge> UserBadges { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -255,6 +257,24 @@ namespace ProjectAPI.Data
                 .WithMany(pc => pc.Replies)
                 .HasForeignKey(fc => fc.ParentCommentId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            // UserBadge relationships
+            modelBuilder.Entity<UserBadge>()
+                .HasOne(ub => ub.Profile)
+                .WithMany(p => p.UserBadges)
+                .HasForeignKey(ub => ub.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UserBadge>()
+                .HasOne(ub => ub.Badge)
+                .WithMany(b => b.UserBadges)
+                .HasForeignKey(ub => ub.BadgeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Unique constraint: User can only earn a badge once
+            modelBuilder.Entity<UserBadge>()
+                .HasIndex(ub => new { ub.UserId, ub.BadgeId })
+                .IsUnique();
 
             // ======================
             // Indexes for Performance

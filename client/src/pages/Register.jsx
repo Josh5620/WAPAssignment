@@ -7,11 +7,20 @@ import '../styles/Register.css';
 import { api } from '../services/apiService';
 
 const validatePassword = (value) => {
-  if (!value || value.length < 8) return false;
+  if (!value || value.length < 8) return { valid: false, missing: [] };
   const hasUpper = /[A-Z]/.test(value);
   const hasLower = /[a-z]/.test(value);
   const hasNumber = /\d/.test(value);
-  return hasUpper && hasLower && hasNumber;
+  
+  const missing = [];
+  if (!hasUpper) missing.push('uppercase letter');
+  if (!hasLower) missing.push('lowercase letter');
+  if (!hasNumber) missing.push('number');
+  
+  return {
+    valid: hasUpper && hasLower && hasNumber,
+    missing
+  };
 };
 
 const Register = () => {
@@ -31,6 +40,7 @@ const Register = () => {
   const [checkingEmail, setCheckingEmail] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordValidation, setPasswordValidation] = useState({ valid: false, missing: [] });
 
   useEffect(() => {
     if (success) {
@@ -57,8 +67,18 @@ const Register = () => {
 
     if (!formData.password) {
       nextErrors.password = 'Password is required';
-    } else if (!validatePassword(formData.password)) {
-      nextErrors.password = 'Password must include uppercase, lowercase, and a number';
+    } else {
+      const passwordValidation = validatePassword(formData.password);
+      if (!passwordValidation.valid) {
+        if (formData.password.length < 8) {
+          nextErrors.password = 'Password must be at least 8 characters long';
+        } else if (passwordValidation.missing.length > 0) {
+          const missingList = passwordValidation.missing.join(', ');
+          nextErrors.password = `Password is missing: ${missingList}`;
+        } else {
+          nextErrors.password = 'Password must include uppercase, lowercase, and a number';
+        }
+      }
     }
 
     if (formData.confirmPassword !== formData.password) {
@@ -79,6 +99,16 @@ const Register = () => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value,
     }));
+    
+    // Real-time password validation
+    if (name === 'password') {
+      const validation = validatePassword(value);
+      setPasswordValidation(validation);
+      // Clear password error if password becomes valid
+      if (validation.valid && errors.password) {
+        setErrors((prev) => ({ ...prev, password: '' }));
+      }
+    }
   };
 
   const handleEmailBlur = async () => {
@@ -106,15 +136,17 @@ const Register = () => {
     setApiError('');
 
     try {
-      await api.guests.register({
+      console.log('📝 Registering user with role:', formData.role);
+      const result = await api.guests.register({
         fullName: formData.fullName,
         email: formData.email,
         password: formData.password,
-        role: formData.role,
+        role: formData.role, // This should be 'student' or 'teacher'
       });
+      console.log('✓ Registration result:', result);
       setSuccess(true);
     } catch (err) {
-      console.error('Registration failed:', err);
+      console.error('❌ Registration failed:', err);
       setApiError(err.message || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
@@ -195,9 +227,17 @@ const Register = () => {
                 </button>
               </div>
               {errors.password && <span className="auth-field__error">{errors.password}</span>}
+              {!errors.password && formData.password && !passwordValidation.valid && (
+                <span className="auth-field__error" style={{ fontSize: '0.85rem', marginTop: '0.25rem' }}>
+                  Missing: {passwordValidation.missing.join(', ')}
+                  {formData.password.length < 8 && ` (needs ${8 - formData.password.length} more character${8 - formData.password.length > 1 ? 's' : ''})`}
+                </span>
+              )}
               {!errors.password && (
                 <span className="auth-field__hint">
-                  Use at least 8 characters with uppercase, lowercase, and a number.
+                  {passwordValidation.valid 
+                    ? '✓ Password meets all requirements' 
+                    : 'Use at least 8 characters with uppercase, lowercase, and a number.'}
                 </span>
               )}
             </div>

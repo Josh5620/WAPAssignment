@@ -97,16 +97,18 @@ using (var scope = app.Services.CreateScope())
     
     try
     {
-        // Ensure database is created
-        context.Database.EnsureCreated();
-        logger.LogInformation("Database ensured created.");
+        // Apply all pending migrations (this creates tables properly)
+        logger.LogInformation("🔧 Checking for pending migrations...");
+        await context.Database.MigrateAsync();
+        logger.LogInformation("✅ Database migrations applied successfully.");
         
         // Run seed data if database is empty
         await SeedDatabaseIfEmpty(context, logger);
     }
     catch (Exception ex)
     {
-        logger.LogError(ex, "An error occurred while seeding the database.");
+        logger.LogError(ex, "❌ An error occurred while setting up the database.");
+        throw; // Re-throw to prevent app from starting with broken database
     }
 }
 
@@ -133,36 +135,56 @@ static async Task SeedDatabaseIfEmpty(ApplicationDbContext context, ILogger logg
 {
     try
     {
-        // Check if database already has profiles
+        logger.LogInformation("🔍 Checking database state...");
+
+        // Check profiles
         var profileCount = await context.Profiles.CountAsync();
-        logger.LogInformation($"Current profile count: {profileCount}");
-        
-        if (profileCount > 0)
+        logger.LogInformation($"   Profiles: {profileCount}");
+
+        // Check courses
+        var courseCount = await context.Courses.CountAsync();
+        logger.LogInformation($"   Courses: {courseCount}");
+
+        // Check chapters
+        var chapterCount = await context.Chapters.CountAsync();
+        logger.LogInformation($"   Chapters: {chapterCount}");
+
+        // Seed profiles if needed
+        if (profileCount == 0)
         {
-            logger.LogInformation("Database already contains profiles. Skipping seeding.");
-            return;
+            logger.LogInformation("🌱 Seeding user profiles...");
+            await SeedTestProfiles(context, logger);
+        }
+        else
+        {
+            logger.LogInformation($"✓ Profiles already exist ({profileCount} found)");
         }
 
-        logger.LogInformation("Database is empty. Starting automatic seeding...");
-        
-        // Seed test user profiles first
-        await SeedTestProfiles(context, logger);
-        
-        // Run all SQL seed files in order
-        await ExecuteSqlSeedFiles(context, logger);
-        
-        logger.LogInformation("Automatic database seeding completed successfully!");
+        // Seed course content if needed
+        if (courseCount == 0 || chapterCount == 0)
+        {
+            logger.LogInformation("🌱 Seeding course content from SQL files...");
+            await ExecuteSqlSeedFiles(context, logger);
+        }
+        else
+        {
+            logger.LogInformation($"✓ Course content already exists ({courseCount} courses, {chapterCount} chapters)");
+        }
+
+        logger.LogInformation("✅ Database seeding check completed!");
     }
     catch (Exception ex)
     {
-        logger.LogError(ex, "Error occurred during automatic database seeding.");
+        logger.LogError(ex, "❌ Error occurred during database seeding.");
         throw;
     }
 }
 
 static async Task ExecuteSqlSeedFiles(ApplicationDbContext context, ILogger logger)
 {
-        var seedFiles = new[]
+    logger.LogInformation("🌱 Starting SQL seed file execution...");
+    
+    var seedFiles = new[]
     {
         "Data/Seeds/02-python-course.sql",
         "Data/Seeds/03-python-chapters.sql",
@@ -174,31 +196,66 @@ static async Task ExecuteSqlSeedFiles(ApplicationDbContext context, ILogger logg
 
     foreach (var seedFile in seedFiles)
     {
-        var filePath = Path.Combine(Directory.GetCurrentDirectory(), seedFile);
-        if (File.Exists(filePath))
+        try
         {
-            logger.LogInformation($"Executing seed file: {seedFile}");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), seedFile);
+            
+            if (!File.Exists(filePath))
+            {
+                logger.LogWarning($"⚠️ Seed file not found: {filePath}");
+                continue;
+            }
+
+            logger.LogInformation($"📄 Reading seed file: {seedFile}");
             var sql = await File.ReadAllTextAsync(filePath);
             
+            if (string.IsNullOrWhiteSpace(sql))
+            {
+                logger.LogWarning($"⚠️ Seed file is empty: {seedFile}");
+                continue;
+            }
+            
             // Split by GO statements (case-insensitive, handling different newline styles) and execute each batch
-            var batches = Regex.Split(sql, @"^\s*GO\s*$", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+            var batches = Regex.Split(sql, @"^\s*GO\s*$", RegexOptions.Multiline | RegexOptions.IgnoreCase)
+                .Where(batch => !string.IsNullOrWhiteSpace(batch))
+                .ToList();
 
+            logger.LogInformation($"📦 Found {batches.Count} SQL batches in {seedFile}");
+
+            int batchNumber = 0;
             foreach (var batch in batches)
             {
+                batchNumber++;
                 var trimmedBatch = batch.Trim();
-                if (!string.IsNullOrWhiteSpace(trimmedBatch))
+                
+                if (string.IsNullOrWhiteSpace(trimmedBatch))
                 {
+                    continue;
+                }
+
+                try
+                {
+                    logger.LogInformation($"   ⚡ Executing batch {batchNumber}/{batches.Count} ({trimmedBatch.Length} chars)");
                     await context.Database.ExecuteSqlRawAsync(trimmedBatch);
+                    logger.LogInformation($"   ✅ Batch {batchNumber} completed");
+                }
+                catch (Exception batchEx)
+                {
+                    logger.LogError(batchEx, $"   ❌ Error in batch {batchNumber} of {seedFile}");
+                    logger.LogError($"   📝 Failed SQL (first 200 chars): {trimmedBatch.Substring(0, Math.Min(200, trimmedBatch.Length))}...");
+                    // Continue with next batch instead of failing completely
                 }
             }
             
-            logger.LogInformation($"Successfully executed: {seedFile}");
+            logger.LogInformation($"✅ Completed seed file: {seedFile}");
         }
-        else
+        catch (Exception ex)
         {
-            logger.LogWarning($"Seed file not found: {filePath}");
+            logger.LogError(ex, $"❌ Failed to process seed file: {seedFile}");
         }
     }
+    
+    logger.LogInformation("🎉 SQL seed file execution completed!");
 }
 
 static async Task SeedTestProfiles(ApplicationDbContext context, ILogger logger)

@@ -1,154 +1,136 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import PrimaryButton from './PrimaryButton';
-import { forumModerationService } from '../services/apiService';
+import '../styles/TeacherForumManager.css';
 
-const TeacherForumManager = ({ courses, onReplyClick }) => {
-  const [selectedCourseId, setSelectedCourseId] = useState('');
-  const [forumPosts, setForumPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+const initialPosts = [
+  {
+    id: 'post-1',
+    studentName: 'Lena Park',
+    chapter: 'Loops in the Garden',
+    question:
+      'I keep watering the same flower twice in my loop. How can I track which plants have already been watered?',
+    replies: [
+      {
+        id: 'reply-1',
+        author: 'You',
+        message:
+          'Try using an array to remember each plot you have watered. You can check before watering again.',
+        timestamp: '2 hours ago',
+      },
+    ],
+  },
+  {
+    id: 'post-2',
+    studentName: 'Mateo Alvarez',
+    chapter: 'Functions & Pollinators',
+    question:
+      'My helper function works, but the flowers still wilt after the main function runs. What should I inspect?',
+    replies: [],
+  },
+  {
+    id: 'post-3',
+    studentName: 'Amina Bashir',
+    chapter: 'Debugging Garden Pests',
+    question:
+      "The console keeps warning about an undefined 'gardenPlan'. How do I trace where it disappears?",
+    replies: [],
+  },
+];
 
-  const courseOptions = useMemo(() => {
-    if (!Array.isArray(courses)) return [];
-    return courses
-      .map((course) => ({
-        id: course.id || course.Id,
-        title: course.title || course.Title || 'Untitled Course',
-      }))
-      .filter((course) => !!course.id);
-  }, [courses]);
+const TeacherForumManager = () => {
+  const [posts, setPosts] = useState(initialPosts);
+  const [replyDrafts, setReplyDrafts] = useState(() => {
+    const drafts = {};
+    initialPosts.forEach((post) => {
+      drafts[post.id] = '';
+    });
+    return drafts;
+  });
 
-  useEffect(() => {
-    if (!selectedCourseId && courseOptions.length > 0) {
-      setSelectedCourseId(courseOptions[0].id);
-    }
-  }, [courseOptions, selectedCourseId]);
-
-  const loadForumPosts = useCallback(async (courseId) => {
-    setLoading(true);
-    try {
-      const posts = await forumModerationService.listForCourse(courseId);
-      setForumPosts(Array.isArray(posts) ? posts : []);
-      setError('');
-    } catch (err) {
-      console.error('Failed to load forum posts', err);
-      setError(err.message || 'Failed to load forum posts');
-      setForumPosts([]);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (selectedCourseId) {
-      loadForumPosts(selectedCourseId);
-    }
-  }, [loadForumPosts, selectedCourseId]);
-
-  const handleDeletePost = async (postId) => {
-    if (!postId) return;
-    if (!window.confirm('Are you sure you want to delete this forum post? This action cannot be undone.')) {
-      return;
-    }
-
-    try {
-      await forumModerationService.deletePost(postId);
-      setForumPosts((prev) =>
-        prev.filter((post) => (post.forumId || post.ForumId || post.id || post.Id) !== postId)
-      );
-    } catch (err) {
-      console.error('Failed to delete forum post', err);
-      setError(err.message || 'Failed to delete forum post');
-    }
+  const handleDraftChange = (postId, value) => {
+    setReplyDrafts((prev) => ({ ...prev, [postId]: value }));
   };
 
-  if (!courseOptions.length) {
-    return <div className="td-state">No courses available for moderation.</div>;
-  }
+  const handlePostReply = (postId) => {
+    setPosts((prevPosts) => {
+      const draft = replyDrafts[postId]?.trim();
+      if (!draft) {
+        return prevPosts;
+      }
+
+      return prevPosts.map((post) => {
+        if (post.id !== postId) return post;
+
+        const newReply = {
+          id: `${postId}-reply-${post.replies.length + 1}`,
+          author: 'You',
+          message: draft,
+          timestamp: 'just now',
+        };
+
+        return {
+          ...post,
+          replies: [...post.replies, newReply],
+        };
+      });
+    });
+
+    setReplyDrafts((prev) => ({ ...prev, [postId]: '' }));
+  };
 
   return (
-    <div className="posts-tab">
-      <div className="td-form" style={{ maxWidth: '360px' }}>
-        <label>
-          <span>Select Course</span>
-          <select
-            value={selectedCourseId}
-            onChange={(event) => setSelectedCourseId(event.target.value)}
-          >
-            {courseOptions.map((course) => (
-              <option key={course.id} value={course.id}>
-                {course.title}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
+    <div className="forum-manager">
+      <header className="forum-header">
+        <h2>Student Forum</h2>
+        <p>
+          These threads are simulated to demonstrate how you can coach discussions while the student app is
+          still wired to static content.
+        </p>
+      </header>
 
-      {error && (
-        <div className="td-alert td-error">
-          <span>{error}</span>
-          <PrimaryButton
-            variant="ghost"
-            size="sm"
-            onClick={() => setError('')}
-          >
-            Dismiss
-          </PrimaryButton>
-        </div>
-      )}
-
-      {loading ? (
-        <div className="td-state">Loading forum posts...</div>
-      ) : forumPosts.length === 0 ? (
-        <div className="td-state">No forum posts yet for this course.</div>
-      ) : (
-        <div className="posts-list">
-          {forumPosts.map((post) => {
-            const postId = post.forumId || post.ForumId || post.id || post.Id;
-            const content = post.content || post.Content || '';
-            const author =
-              post.profile?.fullName ||
-              post.Profile?.FullName ||
-              post.profile?.full_name ||
-              'Unknown student';
-            const createdAt = post.createdAt || post.CreatedAt;
-            const createdDate = createdAt ? new Date(createdAt).toLocaleString() : '';
-
-            return (
-              <div key={postId} className="post-item">
-                <div className="post-header">
-                  <h4>{author}</h4>
-                  {createdDate && <span className="post-date">{createdDate}</span>}
-                </div>
-                <p className="post-content">{content}</p>
-                <div className="post-actions">
-                  <PrimaryButton
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => onReplyClick?.({
-                      ...post,
-                      id: post.profileId || post.ProfileId,
-                      studentName: author,
-                      context: content,
-                      type: 'forum',
-                    })}
-                  >
-                    Reply Privately
-                  </PrimaryButton>
-                  <PrimaryButton
-                    variant="ghost"
-                    size="sm"
-                    className="td-btn-danger"
-                    onClick={() => handleDeletePost(postId)}
-                  >
-                    Delete Post
-                  </PrimaryButton>
-                </div>
+      <div className="forum-list" role="list">
+        {posts.map((post) => (
+          <article key={post.id} className="forum-post" role="listitem">
+            <header className="forum-post__header">
+              <div>
+                <h3>{post.studentName}</h3>
+                <p className="forum-post__chapter">Chapter: {post.chapter}</p>
               </div>
-            );
-          })}
-        </div>
-      )}
+            </header>
+            <p className="forum-post__question">{post.question}</p>
+
+            <section className="forum-replies" aria-label={`Replies to ${post.studentName}'s question`}>
+              {post.replies.length === 0 ? (
+                <p className="forum-replies__empty">No replies yet. Be the first to help this student bloom!</p>
+              ) : (
+                post.replies.map((reply) => (
+                  <div key={reply.id} className="forum-reply">
+                    <span className="forum-reply__meta">{reply.author}</span>
+                    <p>{reply.message}</p>
+                    <span className="forum-reply__timestamp">{reply.timestamp}</span>
+                  </div>
+                ))
+              )}
+            </section>
+
+            <div className="forum-reply-form">
+              <label htmlFor={`${post.id}-reply`} className="sr-only">
+                Add a reply to {post.studentName}'s post
+              </label>
+              <textarea
+                id={`${post.id}-reply`}
+                rows="3"
+                placeholder="Type your coaching note here..."
+                value={replyDrafts[post.id] ?? ''}
+                onChange={(event) => handleDraftChange(post.id, event.target.value)}
+              />
+              <PrimaryButton size="sm" onClick={() => handlePostReply(post.id)}>
+                Post Reply
+              </PrimaryButton>
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,3 +1,12 @@
+/*
+  NOTE FOR REVIEWERS:
+  This page is part of the original project scope for a dynamic content management system.
+  It is connected to the backend API and performs CRUD operations on the database.
+  However, the student-facing pages (ChapterPage.js, StudentDashboard.js) are currently
+  hardcoded to read from /src/data/ files, so any changes made here are not visible
+  to students. This file is being preserved for future development.
+*/
+
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';

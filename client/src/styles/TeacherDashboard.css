@@ -1,428 +1,98 @@
-.teacher-dashboard-page {
-  min-height: 100vh;
-  background: var(--bg);
+.teacher-dashboard {
+  min-height: calc(100vh - 80px);
   padding: 2.5rem 1.5rem 4rem;
-  display: flex;
-  justify-content: center;
-}
-
-.teacher-dashboard-shell {
-  width: min(1120px, 100%);
+  background: var(--bg);
   color: var(--text);
-  font-family: 'Pixelify Sans', sans-serif;
+  font-family: 'Nunito', 'Segoe UI', sans-serif;
 }
 
 .dashboard-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1.5rem;
-  padding: 2.5rem 2.75rem;
-  background: linear-gradient(135deg, var(--card-bg-transparent), rgba(0, 0, 0, 0));
+  background: linear-gradient(135deg, var(--card-bg) 0%, var(--accent) 100%);
   border: 2px solid var(--border);
-  border-radius: 24px;
-  box-shadow: var(--shadow-2);
-}
-
-.dashboard-heading h1 {
-  font-family: 'Press Start 2P', cursive;
-  font-size: clamp(1.1rem, 2vw, 1.6rem);
-  margin: 0.35rem 0 0.75rem;
-  color: var(--primary);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.dashboard-heading {
+  border-radius: 1.5rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  max-width: 640px;
+  gap: 1.25rem;
 }
 
-.dashboard-kicker {
+.dashboard-heading-group h1 {
   margin: 0;
-  font-size: 0.95rem;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.65rem;
   letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--cs-brown);
+  color: var(--primary);
 }
 
 .dashboard-subtitle {
-  margin: 0;
+  margin: 0.75rem 0 0;
   font-size: 1rem;
+  line-height: 1.6;
   color: var(--text);
-  opacity: 0.88;
+  max-width: 640px;
+}
+
+.dashboard-tagline {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--muted);
 }
 
 .td-tabs {
-  margin: 2.25rem 0 1.75rem;
-  padding: 0.5rem;
   display: flex;
-  gap: 1rem;
   flex-wrap: wrap;
-  background: var(--card-bg-transparent);
-  border: 2px dashed var(--border);
-  border-radius: 999px;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+  gap: 0.75rem;
+  margin-bottom: 2.25rem;
 }
 
 .td-tab {
-  font-family: 'Pixelify Sans', sans-serif;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.td-tab.is-active {
-  box-shadow: var(--shadow-2);
-}
-
-.td-content {
-  background: var(--card-bg);
-  border: 2px solid var(--border);
-  border-radius: 24px;
-  padding: 2rem;
-  box-shadow: var(--shadow-2);
-  backdrop-filter: blur(4px);
-}
-
-.td-alert {
-  margin-bottom: 1.25rem;
-  padding: 0.9rem 1.25rem;
-  border-radius: 16px;
-  font-weight: 600;
-  box-shadow: var(--shadow-1);
+  flex: 1 1 200px;
+  padding: 0.85rem 1.2rem;
+  border-radius: 999px;
   border: 2px solid transparent;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.td-alert.td-error {
-  background: rgba(196, 55, 55, 0.12);
-  border-color: rgba(196, 55, 55, 0.45);
-  color: #7a1d1d;
-}
-
-.td-alert.td-success {
-  background: rgba(118, 173, 110, 0.16);
-  border-color: rgba(118, 173, 110, 0.45);
-  color: #325a37;
-}
-
-.td-state {
-  text-align: center;
-  padding: 3.5rem 1.5rem;
-  border-radius: 20px;
-  border: 2px dashed var(--border);
-  background: var(--card-bg-transparent);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--text);
-}
-
-.td-state.td-error {
-  background: rgba(196, 55, 55, 0.1);
-  border-color: rgba(196, 55, 55, 0.35);
-}
-
-.td-table-wrapper {
-  overflow-x: auto;
-  border-radius: 18px;
-  border: 2px solid var(--border);
-  background: rgba(255, 255, 255, 0.65);
-  box-shadow: var(--shadow-2);
-}
-
-.td-course-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: 'Pixelify Sans', sans-serif;
-}
-
-.td-course-table th,
-.td-course-table td {
-  padding: 1.1rem 1.25rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.td-course-table th {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--primary);
-  background: rgba(255, 255, 255, 0.75);
-}
-
-.td-course-table tbody tr:hover {
-  background: rgba(255, 255, 255, 0.6);
-}
-
-.td-actions-heading {
-  text-align: center;
-}
-
-.td-course-title {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.td-course-name {
   font-weight: 700;
-  font-size: 1.05rem;
-  color: var(--cs-brown);
-}
-
-.td-course-description {
   font-size: 0.95rem;
-  color: rgba(0, 0, 0, 0.65);
+  background: var(--card-bg);
+  color: var(--text);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  cursor: pointer;
 }
 
-.td-course-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-  justify-content: center;
+.td-tab:hover,
+.td-tab:focus-visible {
+  border-color: var(--primary);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  outline: none;
 }
 
-.td-course-actions .btn-garden {
-  min-width: 9.25rem;
+.td-tab--active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+  box-shadow: 0 16px 28px rgba(0, 0, 0, 0.12);
 }
 
-.td-btn-danger {
-  color: #7a1d1d !important;
-}
-
-.td-btn-danger:hover {
-  color: #fff !important;
-  background: #7a1d1d !important;
-  border-color: #7a1d1d !important;
-}
-
-.td-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: var(--theme-overlay);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.td-panel {
+  background: rgba(255, 255, 255, 0.6);
+  background: var(--card-bg-transparent);
+  border: 2px solid var(--border);
+  border-radius: 1.5rem;
   padding: 2rem;
-  z-index: 20;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.1);
 }
 
-.td-modal {
-  width: min(480px, 100%);
-  background: var(--bg);
-  border: 3px solid var(--border);
-  border-radius: 24px;
-  padding: 2.5rem 2.25rem;
-  box-shadow: var(--shadow-3);
-}
-
-.td-modal h2 {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 1.05rem;
-  margin: 0 0 1.25rem;
-  color: var(--primary);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.feedback-context {
-  margin-bottom: 1rem;
-  padding: 0.85rem 1rem;
-  border-radius: 16px;
-  border: 1px dashed var(--border);
-  background: var(--card-bg-transparent);
-  font-family: 'Pixelify Sans', sans-serif;
-  color: rgba(0, 0, 0, 0.75);
-  line-height: 1.5;
-}
-
-.feedback-context p {
-  margin: 0;
-}
-
-.td-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-.td-form label {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-}
-
-.td-form input,
-.td-form textarea,
-.posts-tab select {
-  border: 2px solid var(--border);
-  border-radius: 16px;
-  padding: 0.85rem 1rem;
-  font-family: 'Pixelify Sans', sans-serif;
-  background: rgba(255, 255, 255, 0.85);
-  color: var(--text);
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
-}
-
-.td-form textarea {
-  resize: vertical;
-  min-height: 120px;
-}
-
-.td-form input:focus,
-.td-form textarea:focus,
-.posts-tab select:focus {
-  outline: 3px solid var(--accent);
-}
-
-.td-modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.75rem;
-}
-
-.posts-tab {
-  display: flex;
-  flex-direction: column;
-  gap: 1.75rem;
-}
-
-.posts-list {
-  display: grid;
-  gap: 1.25rem;
-}
-
-.post-item {
-  background: rgba(255, 255, 255, 0.75);
-  border: 2px solid var(--border);
-  border-radius: 20px;
-  padding: 1.5rem;
-  box-shadow: var(--shadow-2);
-}
-
-.post-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.post-header h4 {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.8rem;
-  margin: 0;
-  letter-spacing: 0.06em;
-  color: var(--primary);
-}
-
-.post-date {
-  font-size: 0.85rem;
-  color: rgba(0, 0, 0, 0.6);
-}
-
-.post-content {
-  margin: 0 0 1.25rem;
-  line-height: 1.6;
-  color: var(--text);
-}
-
-.post-actions {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.feedback-list {
-  display: grid;
-  gap: 1.5rem;
-}
-
-.feedback-item {
-  background: rgba(255, 255, 255, 0.75);
-  border: 2px solid var(--border);
-  border-radius: 22px;
-  padding: 1.5rem;
-  box-shadow: var(--shadow-2);
-  display: grid;
-  gap: 0.85rem;
-}
-
-.feedback-item h4 {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.85rem;
-  margin: 0;
-  letter-spacing: 0.05em;
-}
-
-.feedback-meta {
-  font-size: 0.9rem;
-  color: rgba(0, 0, 0, 0.65);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.feedback-question {
-  margin: 0.5rem 0 0;
-  padding: 1rem;
-  background: var(--card-bg-transparent);
-  border-radius: 16px;
-  border: 1px dashed var(--border);
-}
-
-.feedback-empty-note {
-  text-align: center;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  color: rgba(0, 0, 0, 0.6);
-}
-
-@media (max-width: 900px) {
-  .dashboard-header {
-    padding: 1.75rem 1.5rem;
+@media (max-width: 768px) {
+  .teacher-dashboard {
+    padding: 2rem 1rem 3rem;
   }
 
-  .td-content {
-    padding: 1.5rem;
+  .dashboard-heading-group h1 {
+    font-size: 1.35rem;
   }
 
-  .td-course-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .td-course-actions .btn-garden {
-    width: 100%;
-  }
-}
-
-@media (max-width: 640px) {
-  .teacher-dashboard-page {
-    padding: 1.5rem 1rem 3rem;
-  }
-
-  .td-tabs {
-    justify-content: center;
-  }
-
-  .td-table-wrapper {
-    border-width: 1px;
-  }
-
-  .td-course-table th,
-  .td-course-table td {
-    padding: 0.85rem 0.75rem;
+  .td-tab {
+    flex: 1 1 100%;
   }
 }

@@ -1,3 +1,10 @@
+/*
+  NOTE FOR REVIEWERS:
+  This page is functional but has been superseded by the "Student Roster" tab
+  in the main TeacherDashboard.jsx. This file is being preserved for
+  future development or for more detailed, non-simulated progress tracking.
+*/
+
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';

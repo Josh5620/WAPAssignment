@@ -33,15 +33,14 @@ const StudentHelpRequest = ({ chapterId }) => {
       setQuestion('');
       setStatus({
         type: 'success',
-        message: 'Your question has been shared with your teacher. Watch for a reply soon!',
+        message: 'Your question has been sent to your teacher. Watch for a reply soon!',
       });
     } catch (error) {
       console.error('Failed to send help request', error);
       storePendingQuestion({ chapterId, question: trimmed });
       setStatus({
-        type: 'info',
-        message:
-          'We’re still planting this feature! Your question has been saved locally and will be sent once the teacher inbox is ready.',
+        type: 'error',
+        message: `Error: ${error.message}. Your question was saved locally and you can try sending again later.`,
       });
     } finally {
       setSubmitting(false);

@@ -325,6 +325,7 @@ public class TeachersController : ControllerBase
                 approvalStatus = course.ApprovalStatus,
                 rejectionReason = course.RejectionReason,
                 teacherId = course.TeacherId,
+                chapterCount = course.Chapters.Count,
                 totalChapters = course.Chapters.Count,
                 totalEnrollments = course.Enrolments.Count,
                 chapters = course.Chapters

@@ -15,8 +15,11 @@ const normalizeCourse = (course) => ({
   chapterCount:
     course?.chapterCount ??
     course?.ChapterCount ??
+    course?.totalChapters ??
+    course?.TotalChapters ??
     (Array.isArray(course?.chapters) ? course.chapters.length : null) ??
-    (Array.isArray(course?.Chapters) ? course.Chapters.length : null),
+    (Array.isArray(course?.Chapters) ? course.Chapters.length : null) ??
+    0,
 });
 
 const CourseList = ({ userRole, onCourseSelect, onStartLearning, onEnrollNow }) => {
@@ -89,11 +92,9 @@ const CourseList = ({ userRole, onCourseSelect, onStartLearning, onEnrollNow }) 
                     </div>
                   )}
 
-                  {typeof course.chapterCount === 'number' && (
-                    <div className="course-meta-line">
-                      <strong>Chapters:</strong> {course.chapterCount}
-                    </div>
-                  )}
+                  <div className="course-meta-line">
+                    <strong>Chapters:</strong> {course.chapterCount ?? 0}
+                  </div>
                 </div>
 
                 <div className="course-card-actions">

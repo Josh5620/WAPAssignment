@@ -1,10 +1,11 @@
 /* Flip Card Container */
 .path-card {
-  width: 180px;
-  height: 180px;
+  width: 100%;
+  height: 100%;
   perspective: 1000px;
   cursor: pointer;
   position: relative;
+  aspect-ratio: 1 / 1;
 }
 
 .path-card::after {
@@ -86,7 +87,7 @@
 }
 
 .path-card-icon-large {
-  font-size: 3rem;
+  font-size: clamp(2rem, 8vw, 3.5rem);
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
@@ -164,7 +165,7 @@
 
 .path-card-title {
   font-family: 'Press Start 2P', cursive;
-  font-size: 0.6rem;
+  font-size: clamp(0.5rem, 1.2vw, 0.65rem);
   color: var(--primary);
   margin: 0.2rem;
   flex-shrink: 0;
@@ -184,7 +185,7 @@
   padding-left: 0;
   margin: 0;
   font-family: 'Pixelify Sans', cursive;
-  font-size: 0.75rem;
+  font-size: clamp(0.65rem, 1.5vw, 0.8rem);
   color: var(--cs-brown);
   flex-grow: 1;
   overflow: hidden;

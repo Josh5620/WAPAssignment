@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectAPI.Data;
 using ProjectAPI.Models;
+using ProjectAPI.DTOs;
+using ProjectAPI.Services;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
@@ -276,83 +278,286 @@ public class StudentsController : ControllerBase
 
     /// <summary>
     /// Master Key Endpoint: Get complete chapter content with all related resources, questions, and flashcards
+    /// Uses DTO pattern to structure content into logical sections
     /// </summary>
     [HttpGet("chapters/{chapterId}/content")]
     public async Task<IActionResult> GetChapterContent(Guid chapterId, CancellationToken ct = default)
     {
         try
         {
+            // Load chapter with all necessary data
+            // Use separate queries to ensure all data is loaded correctly
             var chapter = await _context.Chapters
                 .Include(ch => ch.Course)
-                .Include(ch => ch.Resources)
-                    .ThenInclude(r => r.Questions)
-                        .ThenInclude(q => q.QuestionOptions)
-                .Include(ch => ch.Resources)
-                    .ThenInclude(r => r.Flashcards)
                 .FirstOrDefaultAsync(ch => ch.ChapterId == chapterId, ct);
-
+            
             if (chapter == null)
             {
                 return NotFound(new { error = "Chapter not found" });
             }
+            
+            // Explicitly load Resources separately to ensure they're loaded
+            await _context.Entry(chapter)
+                .Collection(ch => ch.Resources)
+                .Query()
+                .Include(r => r.Questions)
+                    .ThenInclude(q => q.QuestionOptions)
+                .Include(r => r.Flashcards)
+                .LoadAsync(ct);
 
-            // Build the complete response with all nested content
-            var content = new
+            // Build DTO with structured content
+            var dto = new ChapterContentDto
             {
-                chapterId = chapter.ChapterId,
-                chapterTitle = chapter.Title,
-                chapterSummary = chapter.Summary,
-                number = chapter.Number,
-                courseId = chapter.CourseId,
-                course = new
+                ChapterId = chapter.ChapterId,
+                ChapterTitle = chapter.Title,
+                ChapterSummary = chapter.Summary,
+                Number = chapter.Number,
+                CourseId = chapter.CourseId,
+                Course = new CourseInfoDto
                 {
-                    courseId = chapter.Course.CourseId,
-                    title = chapter.Course.Title,
-                    description = chapter.Course.Description
+                    CourseId = chapter.Course.CourseId,
+                    Title = chapter.Course.Title,
+                    Description = chapter.Course.Description
                 },
-                content = chapter.Resources
-                    .OrderBy(r => r.ResourceId)
-                    .Select(r => new
-                    {
-                        resourceId = r.ResourceId,
-                        type = r.Type,
-                        content = r.Content,
-                        // Include flashcards for this resource
-                        flashcards = r.Flashcards
-                            .OrderBy(f => f.OrderIndex)
-                            .Select(f => new
-                            {
-                                fcId = f.FcId,
-                                frontText = f.FrontText,
-                                backText = f.BackText,
-                                orderIndex = f.OrderIndex
-                            })
-                            .ToList(),
-                        // Include questions with their options for this resource
-                        questions = r.Questions
-                            .OrderBy(q => q.QuestionId)
-                            .Select(q => new
-                            {
-                                questionId = q.QuestionId,
-                                stem = q.Stem,
-                                difficulty = q.Difficulty,
-                                explanation = q.Explanation,
-                                options = q.QuestionOptions
-                                    .OrderBy(qo => qo.OptionId)
-                                    .Select(qo => new
-                                    {
-                                        optionId = qo.OptionId,
-                                        optionText = qo.OptionText,
-                                        isCorrect = qo.IsCorrect
-                                    })
-                                    .ToList()
-                            })
-                            .ToList()
-                    })
-                    .ToList()
+                Notes = null // Initialize explicitly
             };
 
-            return Ok(content);
+            // Resources should already be loaded above, but verify
+            if (chapter.Resources == null || !chapter.Resources.Any())
+            {
+                _logger.LogWarning("⚠️ Resources collection is still null or empty after explicit load. Trying direct query...");
+                // Fallback: direct query
+                var directResources = await _context.Resources
+                    .Where(r => r.ChapterId == chapterId)
+                    .Include(r => r.Questions)
+                        .ThenInclude(q => q.QuestionOptions)
+                    .Include(r => r.Flashcards)
+                    .ToListAsync(ct);
+                
+                if (directResources.Any())
+                {
+                    _logger.LogInformation("✅ Found {Count} resources via direct query", directResources.Count);
+                    chapter.Resources = directResources;
+                }
+                else
+                {
+                    _logger.LogWarning("⚠️ No resources found in database for chapter {ChapterId}", chapterId);
+                }
+            }
+            
+            _logger.LogInformation("🔍 Looking for lesson resource. Total resources: {Count}", chapter.Resources?.Count ?? 0);
+            if (chapter.Resources != null && chapter.Resources.Any())
+            {
+                _logger.LogInformation("📋 Resource types found: {Types}", 
+                    string.Join(", ", chapter.Resources.Select(r => $"{r.Type} (ID: {r.ResourceId})")));
+                
+                // Log content preview for lesson resources
+                var lessonResources = chapter.Resources.Where(r => 
+                    r.Type.ToLower() == "lesson" || r.Type.ToLower() == "note" || r.Type.ToLower() == "text");
+                foreach (var res in lessonResources)
+                {
+                    _logger.LogInformation("📄 Lesson resource found: Type={Type}, Content length={Length}, Preview={Preview}",
+                        res.Type, 
+                        res.Content?.Length ?? 0,
+                        res.Content?.Substring(0, Math.Min(100, res.Content?.Length ?? 0)) ?? "null");
+                }
+            }
+            
+            // Try multiple ways to find the lesson resource
+            var lessonResource = chapter.Resources?.FirstOrDefault(r => {
+                var type = r.Type?.ToLower() ?? "";
+                return type == "lesson" || type == "note" || type == "text";
+            });
+            
+            // If not found, try case-insensitive search
+            if (lessonResource == null)
+            {
+                lessonResource = chapter.Resources?.FirstOrDefault(r => {
+                    var type = r.Type?.ToLower() ?? "";
+                    return type.Contains("lesson") || type.Contains("note");
+                });
+            }
+            
+            if (lessonResource != null)
+            {
+                _logger.LogInformation("✅ Found lesson resource. Type: {Type}, Content length: {Length}", 
+                    lessonResource.Type, lessonResource.Content?.Length ?? 0);
+                
+                if (string.IsNullOrWhiteSpace(lessonResource.Content))
+                {
+                    _logger.LogWarning("⚠️ Lesson resource Content is null or empty! Creating empty notes DTO.");
+                    // Still create a Notes DTO even if content is empty
+                    dto.Notes = new ChapterNotesDto { FullContent = null };
+                }
+                else
+                {
+                    // Parse the notes content into structured sections
+                    dto.Notes = ChapterContentParser.ParseNotesContent(lessonResource.Content);
+                    _logger.LogInformation("📝 Parsed notes. HasFullContent: {HasFull}, HasIntroduction: {HasIntro}, Subtopics: {SubCount}, CodeSamples: {CodeCount}",
+                        !string.IsNullOrEmpty(dto.Notes?.FullContent),
+                        !string.IsNullOrEmpty(dto.Notes?.Introduction),
+                        dto.Notes?.Subtopics?.Count ?? 0,
+                        dto.Notes?.CodeSamples?.Count ?? 0);
+                }
+            }
+            else
+            {
+                _logger.LogWarning("⚠️ No lesson resource found for chapter {ChapterId}. Available types: {Types}",
+                    chapterId,
+                    chapter.Resources != null ? string.Join(", ", chapter.Resources.Select(r => r.Type).Distinct()) : "none");
+                
+                // Check if this chapter exists in the database but just doesn't have a lesson resource
+                // This might be a chapter that was created but not seeded with resources
+                var allResourcesForChapter = await _context.Resources
+                    .Where(r => r.ChapterId == chapterId)
+                    .Select(r => new { r.ResourceId, r.Type, HasContent = !string.IsNullOrEmpty(r.Content) })
+                    .ToListAsync(ct);
+                
+                _logger.LogInformation("🔍 Direct database check: Found {Count} total resources for chapter {ChapterId}: {Resources}",
+                    allResourcesForChapter.Count,
+                    chapterId,
+                    string.Join(", ", allResourcesForChapter.Select(r => $"{r.Type} (HasContent: {r.HasContent})")));
+                
+                // Try to find a lesson resource from ANY chapter with the same number and title
+                // This handles cases where chapters were created with different IDs but same content
+                // Look across all courses to find seeded chapters
+                var seededChapter = await _context.Chapters
+                    .Where(ch => ch.Number == chapter.Number && 
+                                ch.Title == chapter.Title &&
+                                ch.ChapterId != chapterId) // Different ID but same content
+                    .Include(ch => ch.Resources)
+                    .FirstOrDefaultAsync(ct);
+                
+                // If not found by exact title match, try partial match (in case titles differ slightly)
+                if (seededChapter == null)
+                {
+                    seededChapter = await _context.Chapters
+                        .Where(ch => ch.Number == chapter.Number &&
+                                    ch.Title.Contains(chapter.Title.Substring(0, Math.Min(20, chapter.Title.Length))) &&
+                                    ch.ChapterId != chapterId)
+                        .Include(ch => ch.Resources)
+                        .FirstOrDefaultAsync(ct);
+                }
+                
+                if (seededChapter != null && seededChapter.Resources != null)
+                {
+                    var seededLessonResource = seededChapter.Resources
+                        .FirstOrDefault(r => r.Type.ToLower() == "lesson");
+                    
+                    if (seededLessonResource != null && !string.IsNullOrWhiteSpace(seededLessonResource.Content))
+                    {
+                        _logger.LogInformation("✅ Found lesson resource in seeded chapter {SeededChapterId}. Copying to current chapter {ChapterId}...",
+                            seededChapter.ChapterId, chapterId);
+                        
+                        // Create a new lesson resource for this chapter using the seeded content
+                        var newLessonResource = new ProjectAPI.Models.Resource
+                        {
+                            ResourceId = Guid.NewGuid(),
+                            ChapterId = chapterId,
+                            Type = "lesson",
+                            Content = seededLessonResource.Content
+                        };
+                        
+                        _context.Resources.Add(newLessonResource);
+                        await _context.SaveChangesAsync(ct);
+                        
+                        _logger.LogInformation("✅ Created lesson resource for chapter {ChapterId}", chapterId);
+                        
+                        // Now parse the notes
+                        dto.Notes = ChapterContentParser.ParseNotesContent(newLessonResource.Content);
+                        _logger.LogInformation("📝 Parsed notes. HasFullContent: {HasFull}, Subtopics: {SubCount}, CodeSamples: {CodeCount}",
+                            !string.IsNullOrEmpty(dto.Notes?.FullContent),
+                            dto.Notes?.Subtopics?.Count ?? 0,
+                            dto.Notes?.CodeSamples?.Count ?? 0);
+                    }
+                    else
+                    {
+                        _logger.LogWarning("⚠️ Seeded chapter found but has no lesson resource with content");
+                    }
+                }
+                else
+                {
+                    _logger.LogWarning("⚠️ No seeded chapter found with Number={Number}, Title={Title}",
+                        chapter.Number, chapter.Title);
+                }
+                
+                // If still no notes, use chapter summary as fallback
+                if (dto.Notes == null && !string.IsNullOrWhiteSpace(chapter.Summary))
+                {
+                    _logger.LogInformation("📝 Using chapter summary as notes content (fallback)");
+                    dto.Notes = ChapterContentParser.ParseNotesContent(chapter.Summary);
+                }
+                
+                // Final fallback: create empty notes DTO so frontend doesn't get undefined
+                if (dto.Notes == null)
+                {
+                    _logger.LogWarning("⚠️ No notes content available. Creating empty notes DTO.");
+                    dto.Notes = new ChapterNotesDto 
+                    { 
+                        FullContent = chapter.Summary ?? "No notes available for this chapter."
+                    };
+                }
+            }
+
+            // Process flashcards
+            var flashcardResource = chapter.Resources.FirstOrDefault(r => r.Type.ToLower() == "flashcard");
+            if (flashcardResource != null)
+            {
+                dto.Flashcards = flashcardResource.Flashcards
+                    .OrderBy(f => f.OrderIndex)
+                    .Select(f => new FlashcardDto
+                    {
+                        FcId = f.FcId,
+                        FrontText = f.FrontText,
+                        BackText = f.BackText,
+                        OrderIndex = f.OrderIndex
+                    })
+                    .ToList();
+            }
+
+            // Process quiz
+            var quizResource = chapter.Resources.FirstOrDefault(r => r.Type.ToLower() == "mcq");
+            if (quizResource != null)
+            {
+                dto.Quiz = new QuizResourceDto
+                {
+                    ResourceId = quizResource.ResourceId,
+                    Questions = quizResource.Questions
+                        .OrderBy(q => q.QuestionId)
+                        .Select(q => new QuestionDto
+                        {
+                            QuestionId = q.QuestionId,
+                            Stem = q.Stem,
+                            Difficulty = q.Difficulty,
+                            Explanation = q.Explanation,
+                            Options = q.QuestionOptions
+                                .OrderBy(qo => qo.OptionId)
+                                .Select(qo => new DTOs.QuestionOptionDto
+                                {
+                                    OptionId = qo.OptionId,
+                                    OptionText = qo.OptionText,
+                                    IsCorrect = qo.IsCorrect
+                                })
+                                .ToList()
+                        })
+                        .ToList()
+                };
+            }
+
+            // Final safety check: ensure Notes is never null before returning
+            if (dto.Notes == null)
+            {
+                _logger.LogWarning("⚠️ Notes is still null before return. Creating fallback Notes DTO.");
+                dto.Notes = new ChapterNotesDto 
+                { 
+                    FullContent = chapter.Summary ?? "No notes available for this chapter."
+                };
+            }
+
+            _logger.LogInformation("📤 Returning DTO. HasNotes: {HasNotes}, NotesFullContentLength: {Length}",
+                dto.Notes != null, dto.Notes?.FullContent?.Length ?? 0);
+
+            return Ok(dto);
         }
         catch (Exception ex)
         {
@@ -809,29 +1014,36 @@ public class StudentsController : ControllerBase
             }
 
             // Update ChapterProgress table for this user and chapter
+            // Only mark as completed if quiz is passed (>= 70%)
+            // Accumulate quiz attempts instead of overwriting them
             var existingProgress = await _context.ChapterProgress
                 .FirstOrDefaultAsync(cp => cp.UserId == userId && cp.ChapterId == request.ChapterId, ct);
 
             if (existingProgress != null)
             {
-                // Update existing progress
-                existingProgress.Completed = true;
-                existingProgress.McqsAttempted = totalQuestions;
-                existingProgress.McqsCorrect = correctAnswers;
-                existingProgress.CompletedAt = DateTime.UtcNow;
+                // Update existing progress - accumulate attempts
+                // Only mark as completed if passed (>= 70%)
+                if (passed)
+                {
+                    existingProgress.Completed = true;
+                    existingProgress.CompletedAt = DateTime.UtcNow;
+                }
+                existingProgress.McqsAttempted += totalQuestions; // Accumulate instead of overwrite
+                existingProgress.McqsCorrect += correctAnswers; // Accumulate instead of overwrite
                 _context.ChapterProgress.Update(existingProgress);
             }
             else
             {
                 // Create new progress record
+                // Only mark as completed if passed (>= 70%)
                 var newProgress = new ChapterProgress
                 {
                     UserId = userId,
                     ChapterId = request.ChapterId,
-                    Completed = true,
+                    Completed = passed, // Only true if passed
                     McqsAttempted = totalQuestions,
                     McqsCorrect = correctAnswers,
-                    CompletedAt = DateTime.UtcNow
+                    CompletedAt = passed ? DateTime.UtcNow : null
                 };
                 await _context.ChapterProgress.AddAsync(newProgress, ct);
             }
@@ -1019,6 +1231,77 @@ public class StudentsController : ControllerBase
         {
             _logger.LogError(ex, "Error retrieving progress for user {UserId}", userId);
             return StatusCode(500, new { error = "An error occurred while retrieving progress" });
+        }
+    }
+
+    /// <summary>
+    /// Check if a chapter is unlocked (previous chapter completed with passing score)
+    /// </summary>
+    [HttpGet("chapters/{chapterId}/unlocked")]
+    public async Task<IActionResult> IsChapterUnlocked(Guid chapterId, CancellationToken ct = default)
+    {
+        try
+        {
+            // Get user ID from JWT token
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+            {
+                return Unauthorized(new { error = "Invalid or missing user identification" });
+            }
+
+            // Get the chapter with its course
+            var chapter = await _context.Chapters
+                .Include(ch => ch.Course)
+                .FirstOrDefaultAsync(ch => ch.ChapterId == chapterId, ct);
+
+            if (chapter == null)
+            {
+                return NotFound(new { error = "Chapter not found" });
+            }
+
+            // Get all chapters for the course, ordered by number
+            var courseChapters = await _context.Chapters
+                .Where(ch => ch.CourseId == chapter.CourseId)
+                .OrderBy(ch => ch.Number)
+                .ToListAsync(ct);
+
+            // First chapter is always unlocked
+            if (chapter.Number == 1)
+            {
+                return Ok(new { unlocked = true, reason = "First chapter" });
+            }
+
+            // Find previous chapter from the course chapters list
+            var previousChapter = courseChapters
+                .FirstOrDefault(ch => ch.Number == chapter.Number - 1);
+
+            if (previousChapter == null)
+            {
+                return Ok(new { unlocked = true, reason = "No previous chapter" });
+            }
+
+            // Check if previous chapter is completed (quiz passed >= 70%)
+            var previousProgress = await _context.ChapterProgress
+                .FirstOrDefaultAsync(cp => cp.UserId == userId && cp.ChapterId == previousChapter.ChapterId, ct);
+
+            var unlocked = previousProgress != null && previousProgress.Completed;
+
+            return Ok(new
+            {
+                unlocked,
+                previousChapterId = previousChapter.ChapterId,
+                previousChapterNumber = previousChapter.Number,
+                previousChapterTitle = previousChapter.Title,
+                reason = unlocked 
+                    ? "Previous chapter completed" 
+                    : "Previous chapter quiz not passed (need >= 70%)"
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error checking if chapter {ChapterId} is unlocked", chapterId);
+            return StatusCode(500, new { error = "An error occurred while checking chapter unlock status" });
         }
     }
 

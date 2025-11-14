@@ -1,8 +1,11 @@
 .student-dashboard-page {
   width: 100%;
   padding-top: 80px;
+  padding-bottom: 3rem;
   max-width: 100%;
   margin: 0 auto;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Loading State */
@@ -86,10 +89,80 @@
   letter-spacing: 0.02rem;
 }
 
+.student-dashboard-enrollment-prompt {
+  max-width: 600px;
+  margin: 2rem auto 4rem;
+  padding: 0 1rem 2rem;
+  box-sizing: border-box;
+}
+
+.enrollment-prompt-card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 3px solid var(--cs-olive7);
+  border-radius: 24px;
+  box-shadow: 0 12px 30px rgba(55, 61, 32, 0.15);
+  padding: 3rem 2rem 3.5rem;
+  text-align: center;
+  overflow: visible;
+}
+
+.enrollment-prompt-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  animation: grow 2s ease-in-out infinite;
+}
+
+.enrollment-prompt-card h2 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  color: var(--cs-olive9);
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.enrollment-prompt-card p {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: var(--cs-brown);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-enroll-now {
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+  background: var(--cs-olive7);
+  color: var(--cs-beige);
+  border: 3px solid var(--cs-olive8);
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+  white-space: nowrap;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+.btn-enroll-now:hover {
+  background: var(--cs-olive8);
+  border-color: var(--cs-olive9);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(55, 61, 32, 0.2);
+}
+
+.btn-enroll-now:active {
+  transform: translateY(0);
+}
+
 .student-dashboard-courses {
   max-width: 900px;
-  margin: 0 auto 2.5rem;
-  padding: 0 1rem;
+  margin: 0 auto 4rem;
+  padding: 0 1rem 2rem;
   box-sizing: border-box;
 }
 
@@ -258,8 +331,9 @@
 
 .student-dashboard-notifications {
   max-width: 900px;
-  margin: 0 auto 2.5rem;
+  margin: 0 auto 4rem;
   padding: 0 1rem;
+  padding-bottom: 2rem;
   box-sizing: border-box;
 }
 
@@ -270,7 +344,7 @@
   box-shadow: 0 12px 30px rgba(55, 61, 32, 0.12);
   padding: 1.75rem 2rem;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .notifications-card::before {
@@ -407,18 +481,20 @@
   display: grid;
   grid-template-columns: repeat(7, 160px);
   grid-template-rows: repeat(2, 160px);
-  gap: 1rem;
+  gap: clamp(0.75rem, 1.5vw, 1.5rem);
   max-width: 1400px;
-  margin: 0;
-  padding: 2rem 1rem;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(0.5rem, 2vw, 1.5rem);
   justify-content: center;
-  overflow-x: auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .path-card-wrapper {
   width: 160px;
   height: 160px;
-  margin: 0;
+  margin: 0 auto;
+  aspect-ratio: 1 / 1;
 }
 
 .path-card-wrapper .path-card {
@@ -502,22 +578,41 @@
 
 @media (max-width: 1400px) {
   .garden-path-grid {
-    grid-template-columns: repeat(7, 160px);
-    grid-template-rows: repeat(2, 160px);
-    gap: 1rem;
-    justify-content: flex-start;
+    grid-template-columns: repeat(7, 150px);
+    grid-template-rows: repeat(2, 150px);
+    gap: clamp(0.5rem, 1.2vw, 1rem);
     max-width: 100%;
-    overflow-x: auto;
   }
 
   .path-card-wrapper {
-    width: 160px;
-    height: 160px;
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .garden-path-grid {
+    grid-template-columns: repeat(7, 140px);
+    grid-template-rows: repeat(2, 140px);
+    gap: clamp(0.5rem, 1vw, 0.875rem);
   }
 
-  .path-card {
-    width: 100%;
-    height: 100%;
+  .path-card-wrapper {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .garden-path-grid {
+    grid-template-columns: repeat(7, 120px);
+    grid-template-rows: repeat(2, 120px);
+    gap: clamp(0.4rem, 0.8vw, 0.75rem);
+  }
+
+  .path-card-wrapper {
+    width: 120px;
+    height: 120px;
   }
 }
 
@@ -576,17 +671,18 @@
   }
 
   .garden-path-grid {
-    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    grid-template-columns: repeat(auto-fit, 140px);
     grid-template-rows: auto;
+    gap: 1rem;
     justify-content: center;
+    padding: 1.5rem 1rem;
   }
 
   .path-card-wrapper {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1 / 1;
-    max-width: 200px;
+    width: 140px;
+    height: 140px;
     margin: 0 auto;
+    aspect-ratio: 1 / 1;
   }
 
   .path-card {

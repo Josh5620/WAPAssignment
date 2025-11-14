@@ -57,10 +57,7 @@ const ChapterNavigation = ({ chapters, currentChapterIndex, userProgress, onChap
                 </div>
                 {chapter.summary && (
                   <div className="chapter-summary">
-                    {chapter.summary.length > 60 
-                      ? `${chapter.summary.substring(0, 60)}...`
-                      : chapter.summary
-                    }
+                    {chapter.summary}
                   </div>
                 )}
               </div>

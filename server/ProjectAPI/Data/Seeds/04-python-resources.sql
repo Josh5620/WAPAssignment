@@ -1,6 +1,6 @@
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('496be445-8701-4718-a4c0-c9a2d5f5676c', '6726025c-c216-4846-a277-7c4474860331', 'lesson', N'Python is an interpreted, high-level programming language known for its readability and 
+VALUES ('0ef0368b-9961-4d2b-9fe8-bed5037b9604', 'a174faa7-02b8-4d5d-8c98-9ba1cb6a0445', 'lesson', N'Python is an interpreted, high-level programming language known for its readability and 
 simplicity. Unlike languages such as C or Java, Python relies on indentation (whitespace) to 
 define blocks of code, rather than braces {}. 
 Variables 
@@ -48,15 +48,15 @@ Comments
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('f9579fd7-08e2-403f-8cfd-988d5b9dd0f1', '6726025c-c216-4846-a277-7c4474860331', 'flashcard', 'Basics (Syntax, Variables, Data Types, I/O) Flashcards');
+VALUES ('6c884f30-bfa8-460c-af95-cf9dbcc43fe0', 'a174faa7-02b8-4d5d-8c98-9ba1cb6a0445', 'flashcard', 'Basics (Syntax, Variables, Data Types, I/O) Flashcards');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('8e001a06-149e-474b-becf-67b8849e5306', '6726025c-c216-4846-a277-7c4474860331', 'mcq', 'Basics (Syntax, Variables, Data Types, I/O) Quiz');
+VALUES ('04720c36-a4e7-4b34-ac76-650dd439af3c', 'a174faa7-02b8-4d5d-8c98-9ba1cb6a0445', 'mcq', 'Basics (Syntax, Variables, Data Types, I/O) Quiz');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('b7f52ad6-aa2d-4aed-8c2f-61f3bba869a0', '88a180a2-2c08-42a7-a890-1e8747b30031', 'lesson', N'Control flow determines how Python executes code based on conditions or repetition. 
+VALUES ('54a04fb0-6b7c-4ce0-af61-d9de77d556dd', '4ff8d615-3666-4311-82f9-ee1a0e92a2c9', 'lesson', N'Control flow determines how Python executes code based on conditions or repetition. 
 Conditional Statements 
 • if/elif/else → used for decision making. 
 *insert code example below* 
@@ -95,15 +95,15 @@ print(squares)  # [4, 16]');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('62412cc5-beeb-447d-ac6b-8cd0faae1237', '88a180a2-2c08-42a7-a890-1e8747b30031', 'flashcard', 'Control Flow (if/elif, loops, comprehensions) Flashcards');
+VALUES ('b9e1b72f-8d29-4682-a5d7-a2c2defc950e', '4ff8d615-3666-4311-82f9-ee1a0e92a2c9', 'flashcard', 'Control Flow (if/elif, loops, comprehensions) Flashcards');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('1964b3eb-b0a6-4082-b31d-6b9d88f66baa', '88a180a2-2c08-42a7-a890-1e8747b30031', 'mcq', 'Control Flow (if/elif, loops, comprehensions) Quiz');
+VALUES ('ef4689e9-97de-4632-b7ff-23cb814975ce', '4ff8d615-3666-4311-82f9-ee1a0e92a2c9', 'mcq', 'Control Flow (if/elif, loops, comprehensions) Quiz');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('1ef72c17-8604-405a-8fb3-9e68519bd889', '4a1ba0c6-6dc2-4ca9-8e77-c34ca3ae8f35', 'lesson', N'Functions let you organise code into reusable blocks, while modules allow you to reuse 
+VALUES ('ee1a75dd-a420-42c5-980b-dadaf20999fd', '01f3739c-27ea-4156-9010-b783291a1fa8', 'lesson', N'Functions let you organise code into reusable blocks, while modules allow you to reuse 
 code across programs. 
 Defining Functions 
 • Use def keyword: 
@@ -156,15 +156,15 @@ pip install requests');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('a943620d-1aa7-46ab-9dbc-629f2853b9ea', '4a1ba0c6-6dc2-4ca9-8e77-c34ca3ae8f35', 'flashcard', 'Functions & Modules Flashcards');
+VALUES ('0adebfe9-d6c2-4018-b670-db46753fe73d', '01f3739c-27ea-4156-9010-b783291a1fa8', 'flashcard', 'Functions & Modules Flashcards');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('f9f6169b-91c6-453a-a7a8-8c01c82049dd', '4a1ba0c6-6dc2-4ca9-8e77-c34ca3ae8f35', 'mcq', 'Functions & Modules Quiz');
+VALUES ('9b815b10-b3eb-47ce-9313-cbb42a8d56a3', '01f3739c-27ea-4156-9010-b783291a1fa8', 'mcq', 'Functions & Modules Quiz');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('1bdc00f9-cf7c-4a5c-8317-b9bbb2adf6a7', 'd03876a5-8c5d-46b4-bdb8-f416f291cae0', 'lesson', N'Data structures are containers that store and organise data. Python provides powerful built-
+VALUES ('dd37dd92-3ca6-4664-bdb3-5ca4df9f395a', 'dc7ac71b-5111-4e79-a5a0-5f1d4a75985b', 'lesson', N'Data structures are containers that store and organise data. Python provides powerful built-
 ins: 
 Lists 
 • Ordered, mutable sequences. 
@@ -200,15 +200,15 @@ Copying
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('91ae0acd-81df-4ee7-ac73-169b7d0dc8ef', 'd03876a5-8c5d-46b4-bdb8-f416f291cae0', 'flashcard', 'Data Structures (Lists, Tuples, Dicts, Sets) Flashcards');
+VALUES ('32f1394d-75ee-4a07-9e46-401dc6515be1', 'dc7ac71b-5111-4e79-a5a0-5f1d4a75985b', 'flashcard', 'Data Structures (Lists, Tuples, Dicts, Sets) Flashcards');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('81a8d3c7-c96f-42af-a618-601baad05c41', 'd03876a5-8c5d-46b4-bdb8-f416f291cae0', 'mcq', 'Data Structures (Lists, Tuples, Dicts, Sets) Quiz');
+VALUES ('ec409155-4fe1-45d1-9a1e-42207fb73aa6', 'dc7ac71b-5111-4e79-a5a0-5f1d4a75985b', 'mcq', 'Data Structures (Lists, Tuples, Dicts, Sets) Quiz');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('2cf9fde3-b5c4-4b1e-84b6-2028479193b1', '52e3d2b6-b7a2-46a7-9a9c-99e80cef3275', 'lesson', N'Object-Oriented Programming (OOP) in Python helps you model real-world entities using 
+VALUES ('e1465e4c-5474-486f-a6fe-b29d49794f8c', 'b2ec6ebd-c44c-4f2c-b397-a65240c517b1', 'lesson', N'Object-Oriented Programming (OOP) in Python helps you model real-world entities using 
 classes and objects. Exceptions let you handle errors gracefully. 
 Classes & Objects 
 • Class → blueprint for objects. 
@@ -256,15 +256,15 @@ finally:
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('4be11bbe-7a3c-4325-b300-70211cb39be9', '52e3d2b6-b7a2-46a7-9a9c-99e80cef3275', 'flashcard', 'OOP & Exceptions Flashcards');
+VALUES ('168eabcb-e695-4429-986e-b67d8701fbbf', 'b2ec6ebd-c44c-4f2c-b397-a65240c517b1', 'flashcard', 'OOP & Exceptions Flashcards');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('eb67e2b9-1cea-4161-a49f-d315d939f80d', '52e3d2b6-b7a2-46a7-9a9c-99e80cef3275', 'mcq', 'OOP & Exceptions Quiz');
+VALUES ('fab5a523-a0b1-45fb-8afd-5ec3d1f515db', 'b2ec6ebd-c44c-4f2c-b397-a65240c517b1', 'mcq', 'OOP & Exceptions Quiz');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('649a85a2-1a6f-49cd-829b-3dddf7012e9a', '32026dab-05cf-411c-8688-9e820d7f81a8', 'lesson', N'In Python, you can read and write files easily by using the open() function. This allows your 
+VALUES ('1a186a40-df28-4839-b533-6531f7552c9b', 'a370e0b9-1d9b-4842-a153-1e4703e4b6a1', 'lesson', N'In Python, you can read and write files easily by using the open() function. This allows your 
 programs  to  store  information  permanently,  instead  of  losing  data  each  time  the  program 
 stops.   Exception   handling   helps   you   prevent   your   program   from   crashing   when   an 
 unexpected error occurs, such as a missing file or invalid input. 
@@ -382,15 +382,15 @@ raise MyError("A custom error occurred.")');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('ae886e69-f8e1-40fe-83d5-113d470e4ac8', '32026dab-05cf-411c-8688-9e820d7f81a8', 'flashcard', 'File Handling and Exceptions Flashcards');
+VALUES ('7cfed0da-f213-421b-8eaf-b178072c1a44', 'a370e0b9-1d9b-4842-a153-1e4703e4b6a1', 'flashcard', 'File Handling and Exceptions Flashcards');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('7d5b28b1-f6d3-4934-8f12-06b07fecf5a3', '32026dab-05cf-411c-8688-9e820d7f81a8', 'mcq', 'File Handling and Exceptions Quiz');
+VALUES ('b183edc9-4751-4baa-9c31-242b59f7669f', 'a370e0b9-1d9b-4842-a153-1e4703e4b6a1', 'mcq', 'File Handling and Exceptions Quiz');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('b1ec5811-ea22-4919-8553-84fb3969e652', '8e4fa95b-511c-4ecd-9759-8b60c1dd4c11', 'lesson', N'Python  has  many  built-in  and  external  libraries  that  make  coding  easier  and  more  powerful. 
+VALUES ('a3fb6f72-7873-49e6-9dc9-2f2cc037b791', '62544299-ee99-4cc1-8c1b-c18b6b7ce52e', 'lesson', N'Python  has  many  built-in  and  external  libraries  that  make  coding  easier  and  more  powerful. 
 A library is  a  collection  of  ready-made  functions  and  modules  that  help  you  perform  tasks 
 without writing all the code yourself. 
 You can import these libraries using the import statement. 
@@ -521,15 +521,15 @@ pip install numpy');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('3d2d15f9-40b4-493b-bfb3-35912d0f0d80', '8e4fa95b-511c-4ecd-9759-8b60c1dd4c11', 'flashcard', 'Using Python Libraries (Math, Random, and NumPy) Flashcards');
+VALUES ('18a45925-da62-4c48-b644-5395688cca12', '62544299-ee99-4cc1-8c1b-c18b6b7ce52e', 'flashcard', 'Using Python Libraries (Math, Random, and NumPy) Flashcards');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('ee422531-c77a-41e6-8efe-02308031828c', '8e4fa95b-511c-4ecd-9759-8b60c1dd4c11', 'mcq', 'Using Python Libraries (Math, Random, and NumPy) Quiz');
+VALUES ('f5077a67-f6a3-4b05-a251-97dcd75b2fcc', '62544299-ee99-4cc1-8c1b-c18b6b7ce52e', 'mcq', 'Using Python Libraries (Math, Random, and NumPy) Quiz');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('5f17077d-96e7-4371-9a3b-fb4cefd40f6d', '7e7d010e-97a9-4689-91f2-fc8ed2bbdc31', 'lesson', N'Object-Oriented  Programming  (OOP)  helps  organize  code  by  grouping  data  and  behaviors 
+VALUES ('4e867979-5ade-4bff-9b31-a2ceb89b3750', '3623e7c0-270e-45e8-949a-ba7c2a50f791', 'lesson', N'Object-Oriented  Programming  (OOP)  helps  organize  code  by  grouping  data  and  behaviors 
 into reusable structures called classes. 
 Objects  are  created  from  these  classes  and  can  interact  with  each  other,  just  like  real-world 
 entities. 
@@ -720,15 +720,15 @@ my_car.start()');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('99407aec-73aa-4660-ab26-c1927f29937a', '7e7d010e-97a9-4689-91f2-fc8ed2bbdc31', 'flashcard', 'Advanced Object-Oriented Programming (OOP) Flashcards');
+VALUES ('28112e46-77ce-4a04-b6ee-838cd3c49b99', '3623e7c0-270e-45e8-949a-ba7c2a50f791', 'flashcard', 'Advanced Object-Oriented Programming (OOP) Flashcards');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('a12c50e5-dc55-4d56-a51c-668f8a5e934d', '7e7d010e-97a9-4689-91f2-fc8ed2bbdc31', 'mcq', 'Advanced Object-Oriented Programming (OOP) Quiz');
+VALUES ('4b390ebe-4ea0-462d-924e-982535f37c1b', '3623e7c0-270e-45e8-949a-ba7c2a50f791', 'mcq', 'Advanced Object-Oriented Programming (OOP) Quiz');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('70fc31cf-1503-48d6-95d2-ca82c1abfab0', '6e3d42c0-7adf-4c39-8206-38c4b4dc2e27', 'lesson', N'Modern  Python  programs  often  need  to store, read,  and exchange data  between  different 
+VALUES ('98f085b7-e5d0-45b4-a98d-f5b3e8d3d71e', '2c5a4390-d024-4291-aa1f-074d1048e5c9', 'lesson', N'Modern  Python  programs  often  need  to store, read,  and exchange data  between  different 
 systems or applications. 
 The most common formats for this purpose are JSON (JavaScript Object Notation), CSV 
 (Comma-Separated Values), and APIs (Application Programming Interfaces). 
@@ -879,15 +879,15 @@ Together, these tools help Python interact with the real world beyond your compu
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('7368c838-6c64-460f-b6f4-58e8e73aa1e0', '6e3d42c0-7adf-4c39-8206-38c4b4dc2e27', 'flashcard', 'Working with Data (JSON, CSV, and APIs) Flashcards');
+VALUES ('f73d32ba-de50-47c9-ab02-d9efba19200c', '2c5a4390-d024-4291-aa1f-074d1048e5c9', 'flashcard', 'Working with Data (JSON, CSV, and APIs) Flashcards');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('2855b473-0d75-4d2c-b7e1-798a3d298dbc', '6e3d42c0-7adf-4c39-8206-38c4b4dc2e27', 'mcq', 'Working with Data (JSON, CSV, and APIs) Quiz');
+VALUES ('b1790f11-48d3-43de-adf4-ed9334bf0530', '2c5a4390-d024-4291-aa1f-074d1048e5c9', 'mcq', 'Working with Data (JSON, CSV, and APIs) Quiz');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('fcfe0d57-44da-4115-92c0-17ccaba07f93', 'b7360b9c-a840-40f9-af2d-40e9e3b14be8', 'lesson', N'Python  is  not  limited  to  text-based  programs — you  can  also  build  visual  applications  and 
+VALUES ('0658438a-fd1c-46dd-9c97-432f88fff557', '88e2d775-9a23-4616-b76c-8a5a8925af82', 'lesson', N'Python  is  not  limited  to  text-based  programs — you  can  also  build  visual  applications  and 
 games. 
 Two popular tools for this are Tkinter, which is used for creating Graphical User Interfaces 
 (GUIs), and Pygame, which is used for making simple 2D games. 
@@ -1051,9 +1051,9 @@ For example, a Tkinter window could collect player names before starting a Pygam
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('cc042033-fb05-4117-86cb-41c9cd29e25d', 'b7360b9c-a840-40f9-af2d-40e9e3b14be8', 'flashcard', 'Graphical  User  Interface  (GUI)  and  Game  Basics  using  Tkinter  and Flashcards');
+VALUES ('1d7630ce-ef18-419d-9fa9-f7e4bbb4e83a', '88e2d775-9a23-4616-b76c-8a5a8925af82', 'flashcard', 'Graphical  User  Interface  (GUI)  and  Game  Basics  using  Tkinter  and Flashcards');
 GO
 
 INSERT INTO Resources (ResourceId, ChapterId, Type, Content) 
-VALUES ('6f9b15a0-2c89-4eee-9caa-4d046939509c', 'b7360b9c-a840-40f9-af2d-40e9e3b14be8', 'mcq', 'Graphical  User  Interface  (GUI)  and  Game  Basics  using  Tkinter  and Quiz');
+VALUES ('d5ae3cac-2618-4b1d-9fd4-b64ee90c7b50', '88e2d775-9a23-4616-b76c-8a5a8925af82', 'mcq', 'Graphical  User  Interface  (GUI)  and  Game  Basics  using  Tkinter  and Quiz');
 GO

@@ -1,0 +1,197 @@
+/* Student Progress Card Styles */
+.student-progress {
+  background: #ffffff;
+  border: 2px solid #4a7c59;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(74, 124, 89, 0.1);
+}
+
+.student-progress h3 {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1.5rem;
+  color: #2d4a35;
+  margin: 0 0 0.5rem 0;
+  text-align: center;
+  font-weight: 600;
+}
+
+.progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.progress-item {
+  background: #f8f9f5;
+  border-radius: 12px;
+  padding: 1.25rem;
+  border: 1px solid rgba(74, 124, 89, 0.2);
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid rgba(74, 124, 89, 0.15);
+}
+
+.progress-header h4 {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1.1rem;
+  color: #2d4a35;
+  margin: 0;
+  font-weight: 500;
+}
+
+.progress-percentage {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4a7c59;
+  background: rgba(74, 124, 89, 0.1);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 12px;
+  background: rgba(74, 124, 89, 0.15);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4a7c59 0%, #6b9c7a 100%);
+  border-radius: 6px;
+  transition: width 0.6s ease;
+  box-shadow: 0 2px 4px rgba(74, 124, 89, 0.3);
+}
+
+.progress-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.progress-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(74, 124, 89, 0.1);
+}
+
+.progress-stat:last-child {
+  border-bottom: none;
+}
+
+.stat-label {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.9rem;
+  color: #2d4a35;
+  font-weight: 500;
+}
+
+.stat-value {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.95rem;
+  color: #4a7c59;
+  font-weight: 600;
+}
+
+/* Loading State */
+.progress-loading {
+  text-align: center;
+  padding: 2rem;
+  font-family: 'Pixelify Sans', cursive;
+  color: #4a7c59;
+  font-size: 1rem;
+}
+
+/* Error State */
+.progress-error {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 193, 7, 0.1);
+  border: 2px solid rgba(255, 193, 7, 0.3);
+  border-radius: 12px;
+}
+
+.progress-error p {
+  font-family: 'Pixelify Sans', cursive;
+  color: #856404;
+  margin-bottom: 1rem;
+}
+
+.progress-error button {
+  background: #ffc107;
+  color: #2d4a35;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-family: 'Pixelify Sans', cursive;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.progress-error button:hover {
+  background: #ffb300;
+}
+
+/* Empty State */
+.progress-empty {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(74, 124, 89, 0.05);
+  border: 2px dashed rgba(74, 124, 89, 0.3);
+  border-radius: 12px;
+}
+
+.progress-empty p {
+  font-family: 'Pixelify Sans', cursive;
+  color: #4a7c59;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .student-progress {
+    padding: 1rem;
+  }
+
+  .student-progress h3 {
+    font-size: 1.25rem;
+  }
+
+  .progress-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .progress-percentage {
+    font-size: 1.25rem;
+    align-self: flex-end;
+  }
+
+  .progress-stat {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .stat-value {
+    align-self: flex-end;
+  }
+}
+

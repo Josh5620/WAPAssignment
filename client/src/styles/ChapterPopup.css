@@ -1,0 +1,214 @@
+.chapter-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(55, 61, 32, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.chapter-popup-content {
+  background: var(--cs-beige);
+  border-radius: 24px;
+  border: 3px solid var(--cs-olive9);
+  box-shadow: 0 20px 60px rgba(55, 61, 32, 0.3);
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+  position: relative;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.chapter-popup-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--cs-olive9);
+  border-radius: 20px 20px 0 0;
+  border-bottom: 3px solid var(--cs-olive7);
+}
+
+.chapter-popup-number {
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.chapter-popup-number span {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.chapter-popup-title-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.chapter-popup-title-section h3 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(0.7rem, 2vw, 0.9rem);
+  color: white;
+  margin: 0;
+  line-height: 1.4;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.chapter-popup-close {
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.chapter-popup-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.chapter-popup-body {
+  padding: 2rem 1.5rem;
+}
+
+.chapter-popup-summary {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 2px solid var(--cs-olive6);
+}
+
+.chapter-popup-summary h4 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.85rem;
+  color: var(--cs-olive9);
+  margin: 0 0 1rem 0;
+  line-height: 1.4;
+}
+
+.chapter-popup-summary p {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.95rem;
+  color: var(--cs-brown);
+  line-height: 1.7;
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.chapter-popup-actions {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  border-top: 2px solid rgba(113, 119, 68, 0.2);
+}
+
+.chapter-popup-start-btn {
+  background: linear-gradient(135deg, rgba(74, 124, 89, 0.95) 0%, rgba(113, 119, 68, 0.85) 100%);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 0.85rem 2rem;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(74, 124, 89, 0.3);
+}
+
+.chapter-popup-start-btn:hover {
+  background: linear-gradient(135deg, rgba(74, 124, 89, 1) 0%, rgba(113, 119, 68, 0.95) 100%);
+  box-shadow: 0 6px 20px rgba(74, 124, 89, 0.4);
+  transform: translateY(-2px);
+}
+
+.chapter-popup-start-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(74, 124, 89, 0.3);
+}
+
+@media (max-width: 768px) {
+  .chapter-popup-content {
+    max-width: 95%;
+    margin: 1rem;
+  }
+
+  .chapter-popup-header {
+    padding: 1.25rem;
+  }
+
+  .chapter-popup-number {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .chapter-popup-number span {
+    font-size: 1rem;
+  }
+
+  .chapter-popup-body {
+    padding: 1.5rem 1rem;
+  }
+
+  .chapter-popup-summary {
+    padding: 1.25rem;
+  }
+
+  .chapter-popup-actions {
+    padding: 1.25rem;
+  }
+
+  .chapter-popup-start-btn {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+  }
+}
+

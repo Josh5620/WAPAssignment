@@ -11,6 +11,8 @@ const normalizeCourse = (course) => ({
   chapterCount:
     course?.chapterCount ??
     course?.ChapterCount ??
+    course?.totalChapters ??
+    course?.TotalChapters ??
     (Array.isArray(course?.chapters) ? course.chapters.length : undefined) ??
     (Array.isArray(course?.Chapters) ? course.Chapters.length : undefined) ??
     0,

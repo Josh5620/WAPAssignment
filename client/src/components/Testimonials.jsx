@@ -10,12 +10,17 @@ const Testimonials = ({ courseId, limit }) => {
   const loadTestimonials = useCallback(async () => {
     try {
       setLoading(true);
-      const data = await api.guests.getTestimonials({ courseId, limit });
-      setTestimonials(data.testimonials || []);
       setError(null);
+      console.log('Loading testimonials...', { courseId, limit });
+      const data = await api.guests.getTestimonials({ courseId, limit });
+      console.log('Testimonials API response:', data);
+      const testimonialsList = data.testimonials || data || [];
+      console.log('Setting testimonials:', testimonialsList);
+      setTestimonials(Array.isArray(testimonialsList) ? testimonialsList : []);
     } catch (err) {
       console.error('Failed to load testimonials:', err);
       setError('Failed to load testimonials. Please try again.');
+      setTestimonials([]);
     } finally {
       setLoading(false);
     }
@@ -57,11 +62,11 @@ const Testimonials = ({ courseId, limit }) => {
 
       <div className="testimonials-grid">
         {testimonials.map((testimonial) => (
-          <div key={testimonial.id} className="testimonial-card">
+          <div key={testimonial.testimonialId} className="testimonial-card">
             <div className="testimonial-header">
               <div className="testimonial-author">
-                <h4>{testimonial.name}</h4>
-                <p className="testimonial-role">{testimonial.role}</p>
+                <h4>{testimonial.user?.fullName || 'Anonymous'}</h4>
+                <p className="testimonial-role">{testimonial.user?.role || 'Student'}</p>
               </div>
               {testimonial.rating && (
                 <div className="testimonial-rating">
@@ -70,7 +75,7 @@ const Testimonials = ({ courseId, limit }) => {
               )}
             </div>
             <div className="testimonial-content">
-              <p>"{testimonial.content}"</p>
+              <p>"{testimonial.comment}"</p>
             </div>
           </div>
         ))}

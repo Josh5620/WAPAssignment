@@ -1,1584 +1,1584 @@
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('09024563-f6c5-4c3e-b9c3-33f0e9332895', '1605d0f3-5d88-404a-b246-82c20a799a25', N'Braces {}', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bd34ed21-638c-4f7e-a4b2-6852cee2e386', '87203c71-2856-47d3-849c-95d029ac30be', N'Braces {}', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('46ad5773-72fc-4c23-8ebb-a5d3b8bfda72', '1605d0f3-5d88-404a-b246-82c20a799a25', N'Indentation', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cae7c607-f46d-459c-a861-f3596d613525', '87203c71-2856-47d3-849c-95d029ac30be', N'Indentation', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('946a0e1e-3199-42d1-9914-f361d3cc67f6', '1605d0f3-5d88-404a-b246-82c20a799a25', N'Semicolons', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5ab41624-2202-49e6-8a0c-47204c7449dc', '87203c71-2856-47d3-849c-95d029ac30be', N'Semicolons', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('00edbd36-baeb-4dbe-96e4-9e9355e3aea4', '1605d0f3-5d88-404a-b246-82c20a799a25', N'Parentheses', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fb996694-75f1-408d-83b4-3325f85f9001', '87203c71-2856-47d3-849c-95d029ac30be', N'Parentheses', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c52afb23-bbde-4ce3-8045-c2820160a9ed', '31069484-87e8-4f95-9b99-c07ba54ac174', N'int', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9305f75e-aa4b-423f-9877-920aea0a27dd', 'fe8a733e-ac67-4e58-813b-9a69bd12e9c7', N'int', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e3ab8165-46ba-49fc-b2e0-78b5e9b31b30', '31069484-87e8-4f95-9b99-c07ba54ac174', N'float', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a7d69968-6fdf-45d9-8ffc-f73d98f4f619', 'fe8a733e-ac67-4e58-813b-9a69bd12e9c7', N'float', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('eaf34ae0-aec4-4d21-9428-2930962b316f', '31069484-87e8-4f95-9b99-c07ba54ac174', N'str', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('22ecf921-53ec-4036-b0d0-b88df8668525', 'fe8a733e-ac67-4e58-813b-9a69bd12e9c7', N'str', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8cbee24c-be6e-40a1-a96a-6609d940a8e4', '31069484-87e8-4f95-9b99-c07ba54ac174', N'bool', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fa7997cf-8846-4c34-a1dc-229407354a95', 'fe8a733e-ac67-4e58-813b-9a69bd12e9c7', N'bool', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('51fae982-5a78-4588-86d6-122c2c2736a6', 'd6c46dc8-7cb4-4408-a3e0-b0a2c449ea42', N'0', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('07dc04a8-b745-42df-8fc1-3dd1567db720', '6e927ad1-d206-4d5c-b60c-68a7eb75da34', N'0', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('23b3cd47-6932-4b9d-a5fa-fa854b09f1c7', 'd6c46dc8-7cb4-4408-a3e0-b0a2c449ea42', N'""', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c825e3ca-f0e6-4829-b008-85b0ee7d684f', '6e927ad1-d206-4d5c-b60c-68a7eb75da34', N'""', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('49658f46-089c-4a0d-a4eb-a8f1e23dde3c', 'd6c46dc8-7cb4-4408-a3e0-b0a2c449ea42', N'None', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bcb141ed-7e26-4496-90b1-498aa3c45e72', '6e927ad1-d206-4d5c-b60c-68a7eb75da34', N'None', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('10de1e3e-90d4-4fb3-989a-d40900323000', 'd6c46dc8-7cb4-4408-a3e0-b0a2c449ea42', N'False', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a3b9bade-528a-483a-b8b2-e138e27b3eee', '6e927ad1-d206-4d5c-b60c-68a7eb75da34', N'False', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('51b2875e-6dfc-43af-9a35-5e5179f2e9d3', '50270130-d2d2-4acd-aec5-3bc99dd5718a', N'Hi Ali', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8344e0f2-b50d-4957-9fa4-3792b4e3c9eb', '4623ac9e-96fa-460c-9e27-1755a575e6fb', N'Hi Ali', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('09bbac41-a0f8-43ae-b577-5a2d1c898c26', '50270130-d2d2-4acd-aec5-3bc99dd5718a', N'HiAli', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ef398f33-02fd-4b4d-8ba5-4208beaa384c', '4623ac9e-96fa-460c-9e27-1755a575e6fb', N'HiAli', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0cd2f817-1487-43c2-8d00-e1442d762f68', '50270130-d2d2-4acd-aec5-3bc99dd5718a', N'Hi-Ali', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f9968a32-4770-49d9-b20c-f4d932a6fe0e', '4623ac9e-96fa-460c-9e27-1755a575e6fb', N'Hi-Ali', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9bb54e0f-1e6b-425a-a223-a128069f1888', '50270130-d2d2-4acd-aec5-3bc99dd5718a', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e8595aaa-114f-4280-a53f-993309e09414', '4623ac9e-96fa-460c-9e27-1755a575e6fb', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('169cf983-64c9-4c9b-b84a-c087a26250c8', '3119fde6-a5fa-4293-b531-07d288dcdbe6', N'//', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2e744159-eb15-4476-ab47-74b83f47f28f', '1932a17e-4682-422b-9bb5-46e77f33d9b7', N'//', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('daa4575a-85b6-4b3c-bad0-142c52a65591', '3119fde6-a5fa-4293-b531-07d288dcdbe6', N'<!-- -->', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b63112b0-be25-4302-8d86-9613a7fd2f42', '1932a17e-4682-422b-9bb5-46e77f33d9b7', N'<!-- -->', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ff5cd479-7d15-462d-93e2-8a2f2fda765c', '3119fde6-a5fa-4293-b531-07d288dcdbe6', N'#', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f1b5a5c7-9de9-45c8-9e08-5f71c04d2e52', '1932a17e-4682-422b-9bb5-46e77f33d9b7', N'#', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3e77e112-aedf-4996-8a6e-8004b7e940f7', '3119fde6-a5fa-4293-b531-07d288dcdbe6', N'--', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0dc0917c-34ec-4e66-9543-ebfe379464c1', '1932a17e-4682-422b-9bb5-46e77f33d9b7', N'--', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f430455a-c623-4481-a44f-95e5616a04b3', '6beb4e49-ed4e-48e5-81a8-e43fc4d91cb7', N'Pyt', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('04026607-c5df-4e72-b6ca-764cfbd25805', 'bba64e66-f8b2-4084-a3e7-e0d3b0514f25', N'Pyt', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8659a9ee-c8f5-42cb-b5f2-1315438b803c', '6beb4e49-ed4e-48e5-81a8-e43fc4d91cb7', N'tho', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('93e16b81-9556-4ac8-a6e5-98635661c48a', 'bba64e66-f8b2-4084-a3e7-e0d3b0514f25', N'tho', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('706d158c-6bc3-4e5a-a87c-fc5861fea97b', '6beb4e49-ed4e-48e5-81a8-e43fc4d91cb7', N'yth', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5ef99960-f94a-49e1-b35f-e5750f5bfed7', 'bba64e66-f8b2-4084-a3e7-e0d3b0514f25', N'yth', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('828963d8-8408-4ea0-84e7-a62302cd6c06', '6beb4e49-ed4e-48e5-81a8-e43fc4d91cb7', N'hon', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3f4b3965-3847-4194-bb97-e9835d56ab13', 'bba64e66-f8b2-4084-a3e7-e0d3b0514f25', N'hon', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('16f67d38-a21f-40e8-bf0c-ac134ad8badf', '1e83ffcb-5162-442e-894b-1a80bd8d48b3', N'str()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('723617fb-eee3-4aef-ab12-e98a41ddf88f', '223ca97e-a859-4cac-8d97-4c4ed058c7bb', N'str()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('486231f6-5e7f-4963-aef7-13d50ea14379', '1e83ffcb-5162-442e-894b-1a80bd8d48b3', N'int()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e6e2820d-5e36-4a21-9e51-b0e796b7676f', '223ca97e-a859-4cac-8d97-4c4ed058c7bb', N'int()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7fa3f4ee-01ea-440d-a869-c2169bd758b6', '1e83ffcb-5162-442e-894b-1a80bd8d48b3', N'float()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('eb61c9f9-6bfa-44ed-ab28-048bdffe99c9', '223ca97e-a859-4cac-8d97-4c4ed058c7bb', N'float()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9f0b0cd3-8db0-4bf2-bb52-28907bdd7b53', '1e83ffcb-5162-442e-894b-1a80bd8d48b3', N'eval()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1caac05a-d4dd-4a1e-bc5d-3f525d375128', '223ca97e-a859-4cac-8d97-4c4ed058c7bb', N'eval()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c45f9e1e-a44d-446d-bb16-dddfccb22a34', '06da611d-ef4b-4f2c-9bdd-5bdb3b460a77', N'[1,2,3]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a217dd67-b637-468c-8251-45fd2de9885b', 'bf25a36b-b935-4f07-843b-092941795a49', N'[1,2,3]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ed52e251-5ae1-4f6b-b9de-05832947ca65', '06da611d-ef4b-4f2c-9bdd-5bdb3b460a77', N'""', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f879395c-be14-4485-b5d3-c43a9a67a9ef', 'bf25a36b-b935-4f07-843b-092941795a49', N'""', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('da93d22d-ff71-439a-a98a-5ad5a7b7ffb1', '06da611d-ef4b-4f2c-9bdd-5bdb3b460a77', N'"False"', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('57a92147-3d28-43cc-8066-a4cccafb669e', 'bf25a36b-b935-4f07-843b-092941795a49', N'"False"', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bdc617c4-258c-4f3d-a715-4367f923e5c0', '06da611d-ef4b-4f2c-9bdd-5bdb3b460a77', N'10', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8614894c-bc0b-4651-a41b-567a12e27f9f', 'bf25a36b-b935-4f07-843b-092941795a49', N'10', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dffe2d2b-92cd-4d5f-a772-78fe6aec4e89', '47ffdf4e-6665-444a-83ba-9138f1638194', N'Returns 3', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1f6c9a70-2a28-4749-9be2-fddde8e70bf9', 'e0d05213-63ed-47d4-92b0-679a4f9e34b9', N'Returns 3', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('beafe5d8-4e79-4636-9ddd-a387716b3816', '47ffdf4e-6665-444a-83ba-9138f1638194', N'Returns 3.0', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ab26aec7-ec50-4e7c-bcb3-4abf32a6122e', 'e0d05213-63ed-47d4-92b0-679a4f9e34b9', N'Returns 3.0', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c48f657a-b97c-47bc-a46c-abc682926272', '47ffdf4e-6665-444a-83ba-9138f1638194', N'Error', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b983fde3-1687-4ed0-8794-dc48f71977ca', 'e0d05213-63ed-47d4-92b0-679a4f9e34b9', N'Error', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('66bf6835-9277-4b43-9080-89252e5f54ac', '47ffdf4e-6665-444a-83ba-9138f1638194', N'None', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cab59f72-2cab-4485-8989-eaec41c88dce', 'e0d05213-63ed-47d4-92b0-679a4f9e34b9', N'None', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6822eae6-997c-4b41-836a-dc8f7e451cef', '38cd7a7f-5caf-4bc6-a0cd-2783a6eec31b', N'print("Age is {age}")', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('48d528f7-b24e-4ef4-b6e2-4f9539329cb9', '0bd63721-da77-42d6-8429-94a24fc35229', N'print("Age is {age}")', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7a6c475e-d2c1-4963-99a3-4f0f47acc791', '38cd7a7f-5caf-4bc6-a0cd-2783a6eec31b', N'print(f"Age is {age}")', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9548c9a7-58c6-490f-9378-f7a6f8a7e1d1', '0bd63721-da77-42d6-8429-94a24fc35229', N'print(f"Age is {age}")', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d79a1384-5a61-45ef-b8a7-c7b805313847', '38cd7a7f-5caf-4bc6-a0cd-2783a6eec31b', N'print(f''Age is age'')', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0b77290a-5ccb-4d41-9857-6300885786d9', '0bd63721-da77-42d6-8429-94a24fc35229', N'print(f''Age is age'')', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f097f568-f777-4ed9-9a9a-d12db456a400', '38cd7a7f-5caf-4bc6-a0cd-2783a6eec31b', N'print(f(Age is age))', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('806ee652-64b1-4e10-bc45-2bd286c090a8', '0bd63721-da77-42d6-8429-94a24fc35229', N'print(f(Age is age))', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b6f2e931-3a65-482e-9d21-4e543c0bea11', '7c3e226c-d854-40e7-8874-66d55aea5369', N'int x = 10', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('244d1981-d373-4b71-9e82-1a4d5fe93dad', '3664e800-e68d-4a2e-b494-6f31eaece92c', N'int x = 10', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f371de07-6571-4ab0-a5bf-bad437afc7ab', '7c3e226c-d854-40e7-8874-66d55aea5369', N'x = 10; x = "hello"', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('764871f8-4a1b-4fb4-b532-1a5a58853166', '3664e800-e68d-4a2e-b494-6f31eaece92c', N'x = 10; x = "hello"', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bacbccd6-896b-462e-b3d9-33b301c1806a', '7c3e226c-d854-40e7-8874-66d55aea5369', N'float y = 5.6', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('08fcf140-4c0b-4125-8ce3-c855e8d990a2', '3664e800-e68d-4a2e-b494-6f31eaece92c', N'float y = 5.6', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9f4606c8-c3d0-4f6e-8220-44b0754f9b88', '7c3e226c-d854-40e7-8874-66d55aea5369', N'def func(): pass', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0f37dbd6-68be-491e-80b7-d21d7e1221cf', '3664e800-e68d-4a2e-b494-6f31eaece92c', N'def func(): pass', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6c9db0ca-6bac-4e8d-8154-52ba74e270c5', 'aa0ddc50-92ec-408c-8302-67b1fec60717', N'A B C *', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3403143e-e460-4710-91b8-4aa90b4707d1', '52f648ea-be51-4d50-8038-ad793b5da4cd', N'A B C *', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('67b6daed-04ec-43bb-819a-8358d6bb1331', 'aa0ddc50-92ec-408c-8302-67b1fec60717', N'A B C*', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('74a10c5e-5f22-4599-b48b-901ab5502ad0', '52f648ea-be51-4d50-8038-ad793b5da4cd', N'A B C*', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('01a383f1-cf22-4e05-b79a-ac6c32cd32dd', 'aa0ddc50-92ec-408c-8302-67b1fec60717', N'ABC*', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('43249178-e4da-4515-8a1d-75e45a83943a', '52f648ea-be51-4d50-8038-ad793b5da4cd', N'ABC*', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('da704772-cfbf-4334-aa84-968e29295396', 'aa0ddc50-92ec-408c-8302-67b1fec60717', N'A-B-C*', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('aefd9ce1-8c6e-4f3e-acce-45448c803bf0', '52f648ea-be51-4d50-8038-ad793b5da4cd', N'A-B-C*', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('05bc0165-3fb6-4e03-ad9f-71547eec7b36', '43b60803-bce6-4701-9ee0-5a2b232885e0', N'"abc"[0:3]', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('330f5ab5-8624-4d90-9c02-ef32711f2f08', '9f235f9a-c99e-4473-9729-0d67615817cd', N'"abc"[0:3]', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('42d65b36-87d7-4050-9174-a45e55686a65', '43b60803-bce6-4701-9ee0-5a2b232885e0', N'"a" + "b" + "c"', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4aecec5e-c6ab-4cd2-8717-e7747d50f026', '9f235f9a-c99e-4473-9729-0d67615817cd', N'"a" + "b" + "c"', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5da6b999-3033-466c-91ca-74f44a17c305', '43b60803-bce6-4701-9ee0-5a2b232885e0', N'"abc".strip()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('858f415a-9f53-4101-89bc-1fab49eddbe3', '9f235f9a-c99e-4473-9729-0d67615817cd', N'"abc".strip()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0d93a295-12b4-404a-9888-a746741f849a', '43b60803-bce6-4701-9ee0-5a2b232885e0', N'str("abc")', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('18a6724c-9d14-4453-b633-94b2d603bdea', '9f235f9a-c99e-4473-9729-0d67615817cd', N'str("abc")', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1b2004ea-bcd3-487c-9706-c779b8393257', '16c6436c-36a9-4132-b52c-89b3d0d3df67', N'str()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e8e5ff9c-ce7c-4afb-aa8c-e42948b26ad2', 'e6ceab0e-d4b2-4699-a5f9-3c14f014c951', N'str()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('28181260-78d6-4c4d-8308-3b34847f0bc2', '16c6436c-36a9-4132-b52c-89b3d0d3df67', N'repr()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('01f1c1a8-6c8b-421e-ba94-3a211d6e5346', 'e6ceab0e-d4b2-4699-a5f9-3c14f014c951', N'repr()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ee517172-9bd1-4892-81c4-dd1bd67779b5', '16c6436c-36a9-4132-b52c-89b3d0d3df67', N'print()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('49b7b49e-7133-43c5-9bfd-204fdfd007c5', 'e6ceab0e-d4b2-4699-a5f9-3c14f014c951', N'print()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7f483636-2e8c-4f29-a5a0-0aa9dd3fac3a', '16c6436c-36a9-4132-b52c-89b3d0d3df67', N'debug()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d9bb448d-d6d4-472e-897f-6ad7cfb185aa', 'e6ceab0e-d4b2-4699-a5f9-3c14f014c951', N'debug()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b5f36805-e1b6-4707-8725-1ac7ee768c7a', '6887c2c6-d11a-4143-93ed-fd5bc30cd8e4', N'str', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b7af7608-1c71-471e-92d9-df4fd0ac50c6', '338464af-84c6-45c6-8031-dd3bd77520d5', N'str', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('57c154ca-cb7f-4f3b-81d6-e629f6dbffaa', '6887c2c6-d11a-4143-93ed-fd5bc30cd8e4', N'int', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('41001b1e-5898-437b-a521-88c8dda88d6c', '338464af-84c6-45c6-8031-dd3bd77520d5', N'int', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('69d69379-7d5b-461e-a7c2-ee8bbf5ce7d9', '6887c2c6-d11a-4143-93ed-fd5bc30cd8e4', N'float', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d1595f1b-d802-41cb-919e-103c0f4ac0e0', '338464af-84c6-45c6-8031-dd3bd77520d5', N'float', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('65166db3-a4e6-4d3a-9b14-e5efdf38ae72', '6887c2c6-d11a-4143-93ed-fd5bc30cd8e4', N'list', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('38fd2856-c1b1-4c75-a11e-07d0f2d00a80', '338464af-84c6-45c6-8031-dd3bd77520d5', N'list', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('af486682-4b10-483c-aa0c-19c5eaf11f3f', '7bee1b90-4bb9-420e-aa21-5175250fd5ab', N'py', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f472b435-1a2f-4882-8f54-5fb11159f075', '67e91331-453c-408d-beda-42e3b07beadf', N'py', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bd15df22-e342-4224-8775-afd3ff1058d8', '7bee1b90-4bb9-420e-aa21-5175250fd5ab', N'on', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1f593047-fbd5-45f1-92f1-9c1485f509dd', '67e91331-453c-408d-beda-42e3b07beadf', N'on', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4f387352-ef48-4abb-9b6e-61a714aac00d', '7bee1b90-4bb9-420e-aa21-5175250fd5ab', N'th', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b6918166-ae82-4294-8e4f-74da1843a9ef', '67e91331-453c-408d-beda-42e3b07beadf', N'th', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a638984e-504a-47dd-93b3-913940275372', '7bee1b90-4bb9-420e-aa21-5175250fd5ab', N'no', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4a251017-6ab3-4682-b768-16f4eb8c4ed9', '67e91331-453c-408d-beda-42e3b07beadf', N'no', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f3be478e-a3b9-4c84-b484-b47f6fdfa1b7', '7e30acc7-c46c-4b34-b8ab-093389f5df9e', N'cut()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5695e621-590b-4070-a656-e28c4183f812', 'ec9e90c1-c983-4a27-a791-336926d93d72', N'cut()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e58074ee-7aca-458e-8e0c-544292a52499', '7e30acc7-c46c-4b34-b8ab-093389f5df9e', N'trim()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6da63446-facb-457f-a756-d157ddd7d956', 'ec9e90c1-c983-4a27-a791-336926d93d72', N'trim()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1f70862a-d020-4772-a21a-854f5e669504', '7e30acc7-c46c-4b34-b8ab-093389f5df9e', N'strip()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1b2c54d3-0a02-4341-83ce-5d93999d4b44', 'ec9e90c1-c983-4a27-a791-336926d93d72', N'strip()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('11112fb2-4bf2-4076-a83d-845bf20c175b', '7e30acc7-c46c-4b34-b8ab-093389f5df9e', N'clean()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('96e29344-41a7-4d13-b2f5-e4595f70a2a9', 'ec9e90c1-c983-4a27-a791-336926d93d72', N'clean()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('257c0695-ace8-4a11-83a7-7c40d81d4d26', 'cb37bf6c-30dd-4403-b77b-a8edbb7dcc55', N'10.0', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1c8c8ede-266c-4b6c-a099-b51ec6333447', '5a4fc8c5-ada7-4910-8e5f-796982de6d7b', N'10.0', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a3bba764-3ae2-4474-b588-0b319efa23e6', 'cb37bf6c-30dd-4403-b77b-a8edbb7dcc55', N'Error', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('78c91f6a-b445-47fa-b62c-d73383af5fa9', '5a4fc8c5-ada7-4910-8e5f-796982de6d7b', N'Error', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a4b989f3-1629-4610-b380-d7c23f0484ef', 'cb37bf6c-30dd-4403-b77b-a8edbb7dcc55', N'None', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('41142f3b-d6ed-4d4c-a50b-15ba30bdded3', '5a4fc8c5-ada7-4910-8e5f-796982de6d7b', N'None', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('48f2c3a5-a763-4ae9-841a-92ccec5ecd4d', 'cb37bf6c-30dd-4403-b77b-a8edbb7dcc55', N'NaN', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a4764e08-01b3-4c6b-b9a4-9cf836920d21', '5a4fc8c5-ada7-4910-8e5f-796982de6d7b', N'NaN', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d5cfe45d-f8ea-4ed1-b6d0-d551b189bd7b', '59126cdf-ea1e-4aaf-9efd-c0210c1f749e', N'a = b; b = a', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fe962551-70fa-4444-97a8-46a501d192d9', '7f8094c0-9144-4305-ab92-a7eca16aba45', N'a = b; b = a', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f65fe3d9-78a7-4e85-acde-feade2b3047b', '59126cdf-ea1e-4aaf-9efd-c0210c1f749e', N'a, b = b, a', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('935e79c6-c158-43b3-8812-06c277d06076', '7f8094c0-9144-4305-ab92-a7eca16aba45', N'a, b = b, a', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2aabe69f-3afe-4f2b-a6c8-833d741474c7', '59126cdf-ea1e-4aaf-9efd-c0210c1f749e', N'swap(a,b)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fa8e3ffc-25fb-4db3-b61e-e0a4685df8f6', '7f8094c0-9144-4305-ab92-a7eca16aba45', N'swap(a,b)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('50c1380e-bd49-446f-8299-0e291e2d00e8', '59126cdf-ea1e-4aaf-9efd-c0210c1f749e', N'temp = a; b = a; a = b', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c3ec1152-b6b4-4b34-bc08-6b96d6645a30', '7f8094c0-9144-4305-ab92-a7eca16aba45', N'temp = a; b = a; a = b', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('777b7ed1-1c6b-46d8-8fac-d9b0c4613147', 'b62839a2-95b2-42c7-ae33-ea938732620e', N'It skips spaces', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bbe14cb7-6c34-4ecc-8a1f-eca6deddab78', '097a301c-528e-48ee-b96f-b02bbb43fd3c', N'It skips spaces', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bb0c0f18-2d93-46ef-a42f-4e035a80761f', 'b62839a2-95b2-42c7-ae33-ea938732620e', N'It prevents newlines', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6d5dfdd2-3022-49e8-aacc-a93d33beebba', '097a301c-528e-48ee-b96f-b02bbb43fd3c', N'It prevents newlines', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b3c8dde1-71ea-460c-a153-b3b913c0d141', 'b62839a2-95b2-42c7-ae33-ea938732620e', N'It adds commas', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9ab2eff6-dc94-4f8e-8c4a-75a1329c6740', '097a301c-528e-48ee-b96f-b02bbb43fd3c', N'It adds commas', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ade59de3-7618-4658-96a6-d9db71aab602', 'b62839a2-95b2-42c7-ae33-ea938732620e', N'It repeats output', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('265644bd-4bcb-4be7-bf20-13d30f0db5fd', '097a301c-528e-48ee-b96f-b02bbb43fd3c', N'It repeats output', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('24845e34-3a47-4aca-a516-0c115252c91b', '57e6f0ec-c167-46c3-b146-2fef826cb259', N'stop', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('960df651-ea64-47bf-995c-fe23a9b005f9', '5dce621c-425f-4705-a5db-0bc91ee57b84', N'stop', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f72ab05e-7c03-4823-9965-8b9490513ab7', '57e6f0ec-c167-46c3-b146-2fef826cb259', N'break', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5c2652d5-60c8-4bec-89a7-ffdb4fd08429', '5dce621c-425f-4705-a5db-0bc91ee57b84', N'break', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a4c8f422-aae9-484b-8081-d5523440fd2c', '57e6f0ec-c167-46c3-b146-2fef826cb259', N'exit', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fecdc64e-7b6e-4582-880e-858c50a3f3a2', '5dce621c-425f-4705-a5db-0bc91ee57b84', N'exit', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ed60a5d0-1868-460f-8bdb-22d3a25d782c', '57e6f0ec-c167-46c3-b146-2fef826cb259', N'continue', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('42c8d5b6-026c-4097-9ded-cc2b703fa6be', '5dce621c-425f-4705-a5db-0bc91ee57b84', N'continue', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f81bf077-8183-43e0-89a2-b33b0bdb2380', 'd76e0272-6357-4823-9662-d130344a458b', N'" "', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bb956992-865e-4617-bc22-2779d1092a9b', '8faf6f7a-34a5-4753-afc9-750f172b21ed', N'" "', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dd9eae3b-6d65-46b8-84b2-4f06f66393e6', 'd76e0272-6357-4823-9662-d130344a458b', N'[]', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('77260643-bfbe-45d6-94e6-fcd5149fee15', '8faf6f7a-34a5-4753-afc9-750f172b21ed', N'[]', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c452134c-0929-4d63-9e90-a37786cadbc8', 'd76e0272-6357-4823-9662-d130344a458b', N'[0]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2d038beb-cec7-4a98-9329-0c05466f4cb1', '8faf6f7a-34a5-4753-afc9-750f172b21ed', N'[0]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('df1d4745-23b3-470c-9265-0a68e27b8fbf', 'd76e0272-6357-4823-9662-d130344a458b', N'"False"', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4aa611de-9dab-4795-9958-e2f6aace0eb4', '8faf6f7a-34a5-4753-afc9-750f172b21ed', N'"False"', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d4f2b175-9cc2-414b-aea8-e3b7698863d6', '0c9bc6cc-b1d3-43a6-9a8e-2679028ebf2e', N'Skips a loop iteration', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('61b0d899-ed02-4d21-b774-6316b5dec3e7', '6c852119-bcff-43ac-b250-6385331a789c', N'Skips a loop iteration', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('132ce473-7832-485c-8b9e-2e861426c1a6', '0c9bc6cc-b1d3-43a6-9a8e-2679028ebf2e', N'Placeholder (does nothing)', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4e72c1c5-45f8-4dc7-8250-4710667a3331', '6c852119-bcff-43ac-b250-6385331a789c', N'Placeholder (does nothing)', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8897baf1-8ce4-4b26-be3b-4b12aeb8fd5c', '0c9bc6cc-b1d3-43a6-9a8e-2679028ebf2e', N'Exits the program', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a8fbd386-4f84-4ea7-955d-fca7975554e5', '6c852119-bcff-43ac-b250-6385331a789c', N'Exits the program', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('37e45478-10ee-4a83-9b7e-7042319d01d0', '0c9bc6cc-b1d3-43a6-9a8e-2679028ebf2e', N'Returns from a function', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0ffc1a00-259e-496b-b15b-90f9239b4b7f', '6c852119-bcff-43ac-b250-6385331a789c', N'Returns from a function', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('03245edc-fbd4-4e7f-b683-c69e21628cab', 'c0408398-833b-43a8-adb6-139d62fbe3e8', N'while', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a3b5c3cc-0ffd-4692-a800-0de1a416db8b', '7293687d-0499-43b7-9c88-a6bc398a78e0', N'while', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4ce2b150-e8ec-4f61-8638-95da094d6f90', 'c0408398-833b-43a8-adb6-139d62fbe3e8', N'repeat', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('57ff233a-3c5f-442d-8414-dec6ceccad3f', '7293687d-0499-43b7-9c88-a6bc398a78e0', N'repeat', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8ca29925-08c7-4ddb-94be-d3bc527e8cf6', 'c0408398-833b-43a8-adb6-139d62fbe3e8', N'for', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fefd7c54-12a3-4f04-8a1f-162e0c12da57', '7293687d-0499-43b7-9c88-a6bc398a78e0', N'for', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9be5ed76-e408-440d-8b79-9bfe4374bf74', 'c0408398-833b-43a8-adb6-139d62fbe3e8', N'goto', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('68f72c4b-cd22-4e92-8a03-e3cc2055bba0', '7293687d-0499-43b7-9c88-a6bc398a78e0', N'goto', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0580e62f-ab50-4e1a-92ab-823b1fcba439', 'd730ddb7-bcd4-4c9a-b30c-077bb155a858', N'Hi', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7ef53288-36d5-463c-9706-fd74b5057d36', '1a9f3414-c37f-49b1-8a53-00c89ce9e7dd', N'Hi', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0cc6de4d-ff7e-487e-bef7-a6c43b32157a', 'd730ddb7-bcd4-4c9a-b30c-077bb155a858', N'HiHi', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a011effc-68ab-4ae5-8d0f-72a5daf3b4b6', '1a9f3414-c37f-49b1-8a53-00c89ce9e7dd', N'HiHi', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1b5fbd2c-7c1a-4c03-abb2-3f1e6fc45294', 'd730ddb7-bcd4-4c9a-b30c-077bb155a858', N'Hi (printed twice)', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c5b3add9-7e67-4de4-b5de-0c0cd27d7324', '1a9f3414-c37f-49b1-8a53-00c89ce9e7dd', N'Hi (printed twice)', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c3005632-bf6e-4a3c-941e-5d23c1736f06', 'd730ddb7-bcd4-4c9a-b30c-077bb155a858', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('778facfa-e7d8-48d1-8885-f109a7779b36', '1a9f3414-c37f-49b1-8a53-00c89ce9e7dd', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d90dfab4-a74f-4ef4-90b0-9f130a885b8a', '2f5e0356-c5b6-4264-800f-6a1fc86d1e02', N'0', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5ed8ed4b-d33b-492c-8047-d9c3c144d8bf', '62573a63-aeaa-4304-a9f5-224d1ba29545', N'0', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('20974ffc-7391-4bc1-83f8-f8a1d2a90f09', '2f5e0356-c5b6-4264-800f-6a1fc86d1e02', N'2', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bc8f2753-bc42-472a-8f6e-06a04de1fc7a', '62573a63-aeaa-4304-a9f5-224d1ba29545', N'2', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d6c4f496-5270-41d1-8aea-de12c283346a', '2f5e0356-c5b6-4264-800f-6a1fc86d1e02', N'3', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e4dfece2-7d86-4811-a284-b9d1dd605c9c', '62573a63-aeaa-4304-a9f5-224d1ba29545', N'3', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a0200366-48ae-4b26-802f-9350449c7898', '2f5e0356-c5b6-4264-800f-6a1fc86d1e02', N'4', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b0788732-6c0b-4022-aa68-90870a40d81d', '62573a63-aeaa-4304-a9f5-224d1ba29545', N'4', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e497cd14-3057-4a63-95e7-b606ea591a8b', '42bd57c2-b3fb-4845-89d6-7990686861d1', N'break', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0e2a87e7-2943-45bc-a6a6-d0a8211e64a8', 'fb8ac8d9-2d69-4bc3-95d9-6390f5633f38', N'break', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2e8431b0-f546-45b1-9aef-f0cfe4e3a61b', '42bd57c2-b3fb-4845-89d6-7990686861d1', N'continue', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bf165f6b-ee77-438c-b4cf-0f1e2dcb8b98', 'fb8ac8d9-2d69-4bc3-95d9-6390f5633f38', N'continue', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('924df0f9-17dc-432c-ac70-7b73d6cc0872', '42bd57c2-b3fb-4845-89d6-7990686861d1', N'pass', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('39c66c53-018b-44b0-a901-456a1016500a', 'fb8ac8d9-2d69-4bc3-95d9-6390f5633f38', N'pass', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('68227ecb-803a-4ecb-97ce-f24fda39a564', '42bd57c2-b3fb-4845-89d6-7990686861d1', N'skip', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dae728ea-70cf-4ab7-b07e-1f856a84c269', 'fb8ac8d9-2d69-4bc3-95d9-6390f5633f38', N'skip', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1923e4b1-e5ad-42c4-831e-9d8e335d10e6', '67cf48c5-bb94-4062-85eb-7467895b2bed', N'[n for n in range(11) if n % 2 == 0]', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3d108a08-ded8-4b4f-9d52-2f9174f730b2', '12f9207b-8db1-4930-ae64-2eb25ec98089', N'[n for n in range(11) if n % 2 == 0]', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2ba3c03c-1a6d-4ef3-8615-705084a3db53', '67cf48c5-bb94-4062-85eb-7467895b2bed', N'{n for n in range(11) if n % 2 == 0}', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('74d4bf5f-6d66-42d8-834f-935624b75c17', '12f9207b-8db1-4930-ae64-2eb25ec98089', N'{n for n in range(11) if n % 2 == 0}', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('051c4348-ca50-4a32-95f8-3d5ca778a99a', '67cf48c5-bb94-4062-85eb-7467895b2bed', N'(n for n in range(11) if n % 2 == 0)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('683642f4-49ad-4174-b16f-cf15a3b06ded', '12f9207b-8db1-4930-ae64-2eb25ec98089', N'(n for n in range(11) if n % 2 == 0)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8a64cc36-1a83-4369-b610-35c5865790c5', '67cf48c5-bb94-4062-85eb-7467895b2bed', N'n for n in range(11) if n % 2 == 0', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d4f1821c-74de-430d-a901-7596b67f9c5c', '12f9207b-8db1-4930-ae64-2eb25ec98089', N'n for n in range(11) if n % 2 == 0', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('99e82c59-880f-4ae8-b4d6-1d0c4095de9a', '979d53c2-1e5c-4eb8-a6f8-e2e55e5bcc3d', N'if condition: print("Hi")', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1a08551f-fe90-40ee-9719-6c94d8e71c57', '7eceeaa6-5ea7-4b03-b0a3-521a08bd4c86', N'if condition: print("Hi")', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b0ca9714-ab4f-4b39-90a1-c470e714ee27', '979d53c2-1e5c-4eb8-a6f8-e2e55e5bcc3d', N'for i in [1,2,3]: print(i)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b66cfd56-99bd-40a0-9a60-273d36443b41', '7eceeaa6-5ea7-4b03-b0a3-521a08bd4c86', N'for i in [1,2,3]: print(i)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1416faa4-9ebe-4e2f-9650-5688413edb67', '979d53c2-1e5c-4eb8-a6f8-e2e55e5bcc3d', N'while True print("Hi")', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e7769993-0f73-48de-a98f-3fe7d985265d', '7eceeaa6-5ea7-4b03-b0a3-521a08bd4c86', N'while True print("Hi")', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c8529021-01a1-417b-a40b-f50f0c76aa0f', '979d53c2-1e5c-4eb8-a6f8-e2e55e5bcc3d', N'pass', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e97ef3dd-a773-42b9-a30b-e5732d40c3aa', '7eceeaa6-5ea7-4b03-b0a3-521a08bd4c86', N'pass', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('949a2da5-a654-4153-aa21-59369e2e1804', 'f4419218-44e5-4064-89a9-4d86ad20ed91', N'0 1 2', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0f29ced9-f032-4590-98e7-15bfddf5b3d7', 'dfd88bc8-fade-4afe-9bfc-94eb5fc3a7f3', N'0 1 2', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6970de9b-3397-4503-93e1-a6932bc7b970', 'f4419218-44e5-4064-89a9-4d86ad20ed91', N'0 2', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('21076605-d72b-4b95-ae41-d670bd89a1dc', 'dfd88bc8-fade-4afe-9bfc-94eb5fc3a7f3', N'0 2', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ca947927-569c-4ba3-ad2d-d151ddf16615', 'f4419218-44e5-4064-89a9-4d86ad20ed91', N'1 2', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9e55a47c-6b6d-487a-9299-3e59cd7b7104', 'dfd88bc8-fade-4afe-9bfc-94eb5fc3a7f3', N'1 2', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('059c0aae-9b01-43e7-be4b-cd535b254f6b', 'f4419218-44e5-4064-89a9-4d86ad20ed91', N'2', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8893b95b-9e21-44cb-8152-4fabf96b0150', 'dfd88bc8-fade-4afe-9bfc-94eb5fc3a7f3', N'2', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c50200d9-696e-4b07-85bb-00f66024e109', '4326c78e-ead4-439d-a39a-91e8c91e8a02', N'3 pairs', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('220c1b80-ac8c-449e-ac49-2b945066fd4d', 'e63b3350-ce5b-4128-b170-21dbb9eb6721', N'3 pairs', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ea425740-15de-4e61-bc49-bd4965985c8a', '4326c78e-ead4-439d-a39a-91e8c91e8a02', N'5 pairs', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fd193fa7-e4df-49c4-8155-b0e1664d5ac0', 'e63b3350-ce5b-4128-b170-21dbb9eb6721', N'5 pairs', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5d676db5-0fce-49a0-98d1-d4adc4afb499', '4326c78e-ead4-439d-a39a-91e8c91e8a02', N'6 pairs', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0a4452a5-e4fe-46ef-b020-b5f675ee8ff9', 'e63b3350-ce5b-4128-b170-21dbb9eb6721', N'6 pairs', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('746ead9c-a0e1-410e-8aaf-1d4f4d0bfe23', '4326c78e-ead4-439d-a39a-91e8c91e8a02', N'9 pairs', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ec143104-8390-49fe-a05a-fc5d3369f56b', 'e63b3350-ce5b-4128-b170-21dbb9eb6721', N'9 pairs', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('38678406-b6de-4cf6-9645-dd9c8ea29eb9', '5ee99144-a75f-4124-9605-a4b1b86ab5fc', N'{n:n**2 for n in range(1,6)}', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('137d5e5f-c218-4a8e-93ad-0448fd5f8090', '4032f1b8-afb2-4744-8c55-6d54e8e18448', N'{n:n**2 for n in range(1,6)}', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b79fd9ed-c309-4c0b-bf27-15cc94a5ccf4', '5ee99144-a75f-4124-9605-a4b1b86ab5fc', N'[n:n**2 for n in range(1,6)]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('47210d34-4bc2-4f0d-90ba-8b37710b0455', '4032f1b8-afb2-4744-8c55-6d54e8e18448', N'[n:n**2 for n in range(1,6)]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c39ec589-3576-4d74-a83f-b627ee7e0f5b', '5ee99144-a75f-4124-9605-a4b1b86ab5fc', N'{n,n**2 for n in range(1,6)}', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('75cd7995-a44e-4112-b57e-3254e2514e17', '4032f1b8-afb2-4744-8c55-6d54e8e18448', N'{n,n**2 for n in range(1,6)}', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('189d7692-f612-4769-a223-9a677f9e019a', '5ee99144-a75f-4124-9605-a4b1b86ab5fc', N'(n:n**2 for n in range(1,6))', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0c38eb8c-0dc2-4ea8-8f02-7e645a6dd6e6', '4032f1b8-afb2-4744-8c55-6d54e8e18448', N'(n:n**2 for n in range(1,6))', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('78ab5660-a487-48db-9e83-45c9bf7b7b6e', '89d2731f-137e-453d-b228-a064295e67d7', N'[1,2]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b16288e9-57f3-4850-b726-95770b05ab72', '2fa01da9-a1a7-4ba3-83ea-f1b56e403a10', N'[1,2]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a262faef-9478-41f6-8415-9998deb28977', '89d2731f-137e-453d-b228-a064295e67d7', N'[3,4]', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5031c004-fc04-4a8b-94b1-3e313c515893', '2fa01da9-a1a7-4ba3-83ea-f1b56e403a10', N'[3,4]', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e05f113a-ab4c-40a2-b861-4f19ca4479ee', '89d2731f-137e-453d-b228-a064295e67d7', N'[2,3,4]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f90eafde-8503-442b-a657-45c20280d9eb', '2fa01da9-a1a7-4ba3-83ea-f1b56e403a10', N'[2,3,4]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('464498a1-8cd4-4a08-8565-bf84d4119153', '89d2731f-137e-453d-b228-a064295e67d7', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4e88aae6-47df-4735-b45e-356e30f0112c', '2fa01da9-a1a7-4ba3-83ea-f1b56e403a10', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('95e647a5-cf14-4bd3-ac15-34d3ade96d10', '7b444402-8ddc-41a4-ac19-94a05d84e18b', N'while False:', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('744c84f4-6a23-4315-9419-4add1ec05192', '2bad0489-92aa-45c1-a833-6d51f4b21baf', N'while False:', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('86119d26-3c6c-47eb-9fdd-67318fa9b3fb', '7b444402-8ddc-41a4-ac19-94a05d84e18b', N'while 0:', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bab0aa9f-5724-4c17-8c72-4f2c7b3ebaa4', '2bad0489-92aa-45c1-a833-6d51f4b21baf', N'while 0:', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('95271971-fd51-47be-83ab-91ac282f5420', '7b444402-8ddc-41a4-ac19-94a05d84e18b', N'while "":', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7ca1f3d6-a99e-4965-bb04-4c8737b73dab', '2bad0489-92aa-45c1-a833-6d51f4b21baf', N'while "":', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('233162b0-b18f-49d3-8151-c4c13c1a0880', '7b444402-8ddc-41a4-ac19-94a05d84e18b', N'while 1:', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ed40c8fd-6c02-41b8-a343-b6509c67091f', '2bad0489-92aa-45c1-a833-6d51f4b21baf', N'while 1:', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('84f9bfc4-96d0-41d4-85a4-65feb64e6659', 'ba8b7458-8927-48a3-8a1e-39d426c92b2b', N'They are always faster.', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4247d51c-b96b-428a-9f9b-7e7267a7551c', '24db3a0c-17fc-4e40-afab-ceb2fb8786eb', N'They are always faster.', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('50ed1826-b941-4ee5-9f8b-8f8d3921118d', 'ba8b7458-8927-48a3-8a1e-39d426c92b2b', N'They can replace any loop.', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8a5f3cd4-5f80-41e4-aaf9-d689e3e20e20', '24db3a0c-17fc-4e40-afab-ceb2fb8786eb', N'They can replace any loop.', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cd142ce4-8d43-4752-bd77-a49306285eb8', 'ba8b7458-8927-48a3-8a1e-39d426c92b2b', N'They create new collections concisely.', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('854ae424-4c07-43c9-abd2-9b80e534df2c', '24db3a0c-17fc-4e40-afab-ceb2fb8786eb', N'They create new collections concisely.', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2148f1e2-1056-4ba5-b6e1-03a5bfee4155', 'ba8b7458-8927-48a3-8a1e-39d426c92b2b', N'They cannot use conditions.', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('052cf10c-f3f9-4f26-a5ac-5fa3b6a64b06', '24db3a0c-17fc-4e40-afab-ceb2fb8786eb', N'They cannot use conditions.', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d5f1e95f-483d-4126-b1b6-8a2f58ca4d73', '744407a7-ca8a-4714-8827-461fd61e640f', N'0', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0ada5edb-08b8-44ba-a702-a0ccb2eb5945', '62518f7e-254e-4db4-a79a-16829737b6dc', N'0', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c6b2f7dc-16bd-4b03-b7af-d9fb1d7ffcfc', '744407a7-ca8a-4714-8827-461fd61e640f', N'2', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b8ee141a-b1c6-43df-8e08-ed59106fb979', '62518f7e-254e-4db4-a79a-16829737b6dc', N'2', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f132b843-9e39-422c-88e6-0ea224c8a168', '744407a7-ca8a-4714-8827-461fd61e640f', N'3', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('68736b76-aa86-4d63-8923-35d465b377bc', '62518f7e-254e-4db4-a79a-16829737b6dc', N'3', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cad7607f-f816-4a32-9626-6a53801ed963', '744407a7-ca8a-4714-8827-461fd61e640f', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('276082cb-c607-492d-a27c-229c35e6d2ab', '62518f7e-254e-4db4-a79a-16829737b6dc', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9ed90533-401f-48f2-8356-cfd15577603e', 'cd02b498-3232-4d82-a8cd-3f9558d6e4db', N'except', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('31165cb2-2802-4193-a32f-07f1bccb9e92', 'b4fb920d-fbc9-4201-af61-f975f78de108', N'except', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5dff8c1e-c48a-4e26-933b-163600deb079', 'cd02b498-3232-4d82-a8cd-3f9558d6e4db', N'else (with loop)', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d4cdc92a-6e75-415c-b376-25d4cf1d20f2', 'b4fb920d-fbc9-4201-af61-f975f78de108', N'else (with loop)', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('41b4b759-ac4e-45af-95eb-18616b54df39', 'cd02b498-3232-4d82-a8cd-3f9558d6e4db', N'finally', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('393d95ee-88d7-4ea5-bd87-34fe22e8f468', 'b4fb920d-fbc9-4201-af61-f975f78de108', N'finally', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c0f39c92-48fb-429b-b401-480125f841da', 'cd02b498-3232-4d82-a8cd-3f9558d6e4db', N'pass', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4f12de11-f6a9-456d-be3e-56b78bf72997', 'b4fb920d-fbc9-4201-af61-f975f78de108', N'pass', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('886b1e58-47fd-4fa4-b5b9-d943e2c024bb', 'c7184d4b-dd9d-42e8-ae00-d334b5209556', N'0 1 2', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('273236b1-c358-443e-a23d-15875d2dd242', '7d435de3-72b7-4035-b11a-ed0446b74323', N'0 1 2', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d51b7da5-8280-43e3-9a4b-760b2f910f36', 'c7184d4b-dd9d-42e8-ae00-d334b5209556', N'0 2', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('81c2f50d-031d-4075-bb9d-9c06712b157c', '7d435de3-72b7-4035-b11a-ed0446b74323', N'0 2', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('522ac004-c91a-444e-912d-e559cb580cd9', 'c7184d4b-dd9d-42e8-ae00-d334b5209556', N'0 2 4', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('744c37cd-34ac-4cc4-bec9-1485c567c575', '7d435de3-72b7-4035-b11a-ed0446b74323', N'0 2 4', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1b759eed-568a-44c1-a095-202165bf39d3', 'c7184d4b-dd9d-42e8-ae00-d334b5209556', N'Infinite loop', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c9dba979-9832-4c83-b684-c6bd5b47559d', '7d435de3-72b7-4035-b11a-ed0446b74323', N'Infinite loop', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('550d570f-8342-493b-ae4e-72f98769aa70', '395c1b18-2f8b-4ffc-a299-2dc049517428', N'[x for row in lst for x in row]', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c56a7b78-9d42-4d2e-98fc-438a020be20e', '270dc336-94a8-41f8-b7b4-f2d8f306cd11', N'[x for row in lst for x in row]', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e1780699-ffcf-442d-964e-a7ca0bac6366', '395c1b18-2f8b-4ffc-a299-2dc049517428', N'[row for x in lst for row in x]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('94a177bc-4f14-43c0-9ac7-c7618d1c6e32', '270dc336-94a8-41f8-b7b4-f2d8f306cd11', N'[row for x in lst for row in x]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('317d93a1-61e6-4eac-a1b0-f9a2bde0c31a', '395c1b18-2f8b-4ffc-a299-2dc049517428', N'{x for row in lst for x in row}', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cde62895-e795-40be-87ac-6c73def4879a', '270dc336-94a8-41f8-b7b4-f2d8f306cd11', N'{x for row in lst for x in row}', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0cc02709-1905-458c-94a5-3f8a9503eefc', '395c1b18-2f8b-4ffc-a299-2dc049517428', N'x for row in lst for x in row', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a92e8d87-7364-4819-8b83-e48f4852a843', '270dc336-94a8-41f8-b7b4-f2d8f306cd11', N'x for row in lst for x in row', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8cac6dd0-49b7-4341-a150-4475b757170a', '74ff29b7-1c04-4bdb-aad7-ed2f19b19bdf', N'They are slow', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2b970233-500d-47b6-881a-6fd5058feddb', '97d8299c-b1f1-48b7-96c7-7b32baf15485', N'They are slow', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('187c8893-b5ce-44bb-aa96-2ed7fd11b291', '74ff29b7-1c04-4bdb-aad7-ed2f19b19bdf', N'They are unreadable', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b8c4d6bf-897e-4b68-a605-234c6f2b127b', '97d8299c-b1f1-48b7-96c7-7b32baf15485', N'They are unreadable', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0f76911c-5f01-4b78-a935-d92a10ad5ffe', '74ff29b7-1c04-4bdb-aad7-ed2f19b19bdf', N'They don’t exist', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a86ae2cf-d635-4b24-88ff-4002f11b5435', '97d8299c-b1f1-48b7-96c7-7b32baf15485', N'They don’t exist', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d358c6d4-13b7-4c05-8020-b210d70f6a68', '74ff29b7-1c04-4bdb-aad7-ed2f19b19bdf', N'They cause errors', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('abdc10d8-8f21-4b8e-8cdb-af5fd3264813', '97d8299c-b1f1-48b7-96c7-7b32baf15485', N'They cause errors', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bccfad30-1859-43a7-9a61-ecdb86deb313', '6b5bca53-24fc-4da7-8e9a-e3c35a41efdc', N'func', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('edf3c082-360a-4f3a-82b8-16f9dbb69e58', '87162ed0-f2fb-424f-b137-92623832a195', N'func', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('40789280-3fe4-4219-8b78-df53f89cfe5d', '6b5bca53-24fc-4da7-8e9a-e3c35a41efdc', N'def', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0675d5d0-0d01-470e-805c-c069e6a99692', '87162ed0-f2fb-424f-b137-92623832a195', N'def', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('10cdd63d-1dcb-44a3-88fc-cfc40186d046', '6b5bca53-24fc-4da7-8e9a-e3c35a41efdc', N'function', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9dd9e9f6-8dcb-4c50-a47c-52c1ab0bd84f', '87162ed0-f2fb-424f-b137-92623832a195', N'function', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cc9f3630-e441-46ea-99e2-6600e9c7a8cd', '6b5bca53-24fc-4da7-8e9a-e3c35a41efdc', N'define', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('59b3df29-f919-4386-9c04-6781294a48c1', '87162ed0-f2fb-424f-b137-92623832a195', N'define', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('79de2280-6e83-443c-95bf-bb77f7e17eae', '384222bf-655a-47cd-bb8d-0f74803083b3', N'0', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b1dd6a14-0ed9-4894-8fac-434ae9b9c01e', '0c747fac-1959-401d-81ba-f30cd093f1e2', N'0', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2c6c5d73-14a1-4828-9fe7-f4c3bcdafb27', '384222bf-655a-47cd-bb8d-0f74803083b3', N'None', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0a13de29-0191-4324-bb5c-72c247725b25', '0c747fac-1959-401d-81ba-f30cd093f1e2', N'None', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1ce6754d-5996-45db-948d-683d48bc90c1', '384222bf-655a-47cd-bb8d-0f74803083b3', N'False', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a983dcf1-a87e-4f75-977e-e6e9ad3f45c2', '0c747fac-1959-401d-81ba-f30cd093f1e2', N'False', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9d79580f-00aa-413c-9aa8-07687f525b97', '384222bf-655a-47cd-bb8d-0f74803083b3', N'“”', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f55a8353-f60b-4b28-8f07-4e0ad6588383', '0c747fac-1959-401d-81ba-f30cd093f1e2', N'“”', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dfe2c49c-23fd-45db-a349-f01628c5194c', '66de43b4-6c3b-476f-b575-1080f19ca7b7', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b5e9385c-b898-4844-a4cd-befb7ecb29a5', '0f8de010-a648-4680-9d3f-01fcf8bc9ab8', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6f420895-ba1e-4d75-8b15-03249916e46d', '66de43b4-6c3b-476f-b575-1080f19ca7b7', N'None', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('55bda868-bba5-40f4-ad07-2e7a04532faa', '0f8de010-a648-4680-9d3f-01fcf8bc9ab8', N'None', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('58093899-2263-4113-b56a-80b8c0a887b1', '66de43b4-6c3b-476f-b575-1080f19ca7b7', N'5', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6a66cab7-1b5e-4659-9fa5-4e48564d8f70', '0f8de010-a648-4680-9d3f-01fcf8bc9ab8', N'5', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('12bd76f1-0a5d-47f2-99e5-1230c9a178b2', '66de43b4-6c3b-476f-b575-1080f19ca7b7', N'"5"', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c994eca1-a7f6-454c-a8c2-99f888dac898', '0f8de010-a648-4680-9d3f-01fcf8bc9ab8', N'"5"', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('af2c6151-520b-462e-be89-4f2e255e6a4a', 'd8a3ef79-6af9-4737-9ba9-e849aea3c4e1', N'args', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dd677d9e-0254-4bc9-9cea-4587d0aacaff', '1f672f43-3992-4d8c-992c-bc08cc0ad041', N'args', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4175ca08-f792-4382-9013-b6f8cd830666', 'd8a3ef79-6af9-4737-9ba9-e849aea3c4e1', N'*args', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ffb57dee-5b05-419b-90d9-06705c385af3', '1f672f43-3992-4d8c-992c-bc08cc0ad041', N'*args', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1995e942-d08e-47b8-a525-d9a7e902a711', 'd8a3ef79-6af9-4737-9ba9-e849aea3c4e1', N'**kwargs', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8d508f0b-7ceb-409c-b46d-e6662f0450ae', '1f672f43-3992-4d8c-992c-bc08cc0ad041', N'**kwargs', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b91f36ee-4c30-430f-960f-d02f078e4896', 'd8a3ef79-6af9-4737-9ba9-e849aea3c4e1', N'list()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1e4b7ef0-d563-4e4c-9f88-f289d3e40d44', '1f672f43-3992-4d8c-992c-bc08cc0ad041', N'list()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('07a23f9b-9f70-414b-9930-9b06ec7d5357', 'c0614419-63fd-4f15-ad28-55fe15619915', N'numpy', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('02d5ff81-6427-426e-bb9b-762cb8b0c760', '30644753-2661-46d7-bcb6-dd876dd5f815', N'numpy', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('53c51ca0-e3b0-4aaf-96ba-8b6674bfd196', 'c0614419-63fd-4f15-ad28-55fe15619915', N'requests', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('926b1f7a-d988-4087-b59e-606206b416de', '30644753-2661-46d7-bcb6-dd876dd5f815', N'requests', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2d2f8237-c937-4059-812f-db154defc3b7', 'c0614419-63fd-4f15-ad28-55fe15619915', N'math', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ca20c029-b95f-4108-aef8-d2bf2290017b', '30644753-2661-46d7-bcb6-dd876dd5f815', N'math', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c7eacc84-71e2-40d2-9935-a05ca41928b2', 'c0614419-63fd-4f15-ad28-55fe15619915', N'pandas', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e372ca83-7b3f-48b5-8db2-bbc4e3ccee14', '30644753-2661-46d7-bcb6-dd876dd5f815', N'pandas', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('86c35ef7-f435-4da0-ab00-84340707c236', '93788442-9040-4c75-9695-61ec8b5d6bd0', N'3 4', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c3d2dbb0-a01a-4ab1-af5f-b2a817bdf8a3', '6a195d4b-bcb0-4021-9b9f-1af8c1bea81e', N'3 4', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('29cd8a1e-4e6c-4087-8386-59aabe4f0ca8', '93788442-9040-4c75-9695-61ec8b5d6bd0', N'4 3', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('143669a3-9e8a-4a16-9e38-b16de722fdfd', '6a195d4b-bcb0-4021-9b9f-1af8c1bea81e', N'4 3', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9be18589-713e-4e97-b017-722c0e325f42', '93788442-9040-4c75-9695-61ec8b5d6bd0', N'(4,3)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d8ed0fe5-34c8-41a6-9444-1561c94157bc', '6a195d4b-bcb0-4021-9b9f-1af8c1bea81e', N'(4,3)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('65e55e6a-2fb1-4cf4-8d91-c5aeb2955ca2', '93788442-9040-4c75-9695-61ec8b5d6bd0', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d5365d1b-a4cb-4bc6-9533-eb7e84d6b38a', '6a195d4b-bcb0-4021-9b9f-1af8c1bea81e', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('90940b8c-11fb-465c-9f37-f122f2e666f0', 'b04b64a1-650e-4e2e-ac18-e9ca40488742', N'It creates a new variable.', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('089af798-9dcd-4073-9a62-96dd69e41b82', 'b94823e8-839d-41cf-a474-dbd0492a4230', N'It creates a new variable.', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1973e1e1-ebf3-4ec1-8a04-d02adda123af', 'b04b64a1-650e-4e2e-ac18-e9ca40488742', N'It modifies a variable outside the function.', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('283c7cf5-9e3e-4c92-b4c6-9599836e9cd7', 'b94823e8-839d-41cf-a474-dbd0492a4230', N'It modifies a variable outside the function.', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('032f1c05-5b4f-4ae2-a41e-52bb5ff9c935', 'b04b64a1-650e-4e2e-ac18-e9ca40488742', N'It deletes a variable.', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3b382ef1-2523-43a2-8836-0060ba71f202', 'b94823e8-839d-41cf-a474-dbd0492a4230', N'It deletes a variable.', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b44a7aca-da65-420e-9152-c6cf68bece06', 'b04b64a1-650e-4e2e-ac18-e9ca40488742', N'It copies a variable.', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5b4e1135-0081-45e9-b4d7-cfddf4ec470c', 'b94823e8-839d-41cf-a474-dbd0492a4230', N'It copies a variable.', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('129c384b-10e9-4d90-89e9-4c03c9fa0343', '8fdab4f1-ad05-4fd3-ae14-74134d30b594', N'“comment”', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cef02f01-b73f-4205-868c-1bfbd4915111', '9068ec72-b439-4446-9d9f-b549458e1a7d', N'“comment”', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6db26c71-fafc-487c-bd76-d09a16ed9936', '8fdab4f1-ad05-4fd3-ae14-74134d30b594', N'# docstring', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6ee05583-d271-4cc5-a67d-a4f4a2102f0a', '9068ec72-b439-4446-9d9f-b549458e1a7d', N'# docstring', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e451bd2e-bc31-426f-9382-4fbbc6665666', '8fdab4f1-ad05-4fd3-ae14-74134d30b594', N'“""This is a docstring."""', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bf55ded9-8c98-44a1-b410-134da4fffd3c', '9068ec72-b439-4446-9d9f-b549458e1a7d', N'“""This is a docstring."""', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('89fa937b-4511-4b53-8bad-49defb3f3319', '8fdab4f1-ad05-4fd3-ae14-74134d30b594', N'/* docstring */', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('23f5724b-0358-4c00-8920-cae755b75764', '9068ec72-b439-4446-9d9f-b549458e1a7d', N'/* docstring */', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a471f37c-5dba-4b94-a437-29587699a6fa', 'c3652a80-7e55-4ba2-8ba5-6f9b57241637', N'import math.sqrt', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d8b993e6-c6e7-479b-be40-513b4867cc94', 'c2447676-9ce3-423b-af97-fec0aee84e62', N'import math.sqrt', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c14e6922-0814-4259-a32d-eecb2ecc7b7b', 'c3652a80-7e55-4ba2-8ba5-6f9b57241637', N'from math import sqrt', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('032c9401-c628-4510-aaff-86c594226cf2', 'c2447676-9ce3-423b-af97-fec0aee84e62', N'from math import sqrt', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9b599c2b-8769-4c20-9bc1-ca9956ec05b4', 'c3652a80-7e55-4ba2-8ba5-6f9b57241637', N'import sqrt from math', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('202e5ae7-d3a8-4320-90b1-7532c9d2456b', 'c2447676-9ce3-423b-af97-fec0aee84e62', N'import sqrt from math', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('064cdd44-a9af-49a2-b589-8085b10d672e', 'c3652a80-7e55-4ba2-8ba5-6f9b57241637', N'math sqrt()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('71e76344-379a-485e-b57d-d35136eb1831', 'c2447676-9ce3-423b-af97-fec0aee84e62', N'math sqrt()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1ef509ad-4dc0-48f8-9a95-7727e4ac5621', 'f57117c5-4e9f-4753-9b1b-eaee2c962f76', N'install pkg', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('522692e8-e864-4241-b555-0e2b774abb9e', 'cbd0395d-2c4e-4ef3-ac7b-28888a1745f5', N'install pkg', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9e33ad1b-a50a-4a2e-b2fb-0a7cb6d641d2', 'f57117c5-4e9f-4753-9b1b-eaee2c962f76', N'pip install pkg', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0362485d-67de-4852-972d-aebd5495b5f0', 'cbd0395d-2c4e-4ef3-ac7b-28888a1745f5', N'pip install pkg', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('339d9363-5cd7-486d-a7e7-67377cfee4bb', 'f57117c5-4e9f-4753-9b1b-eaee2c962f76', N'py install pkg', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dac22ad5-878f-4d76-b89e-a55772c4d6cd', 'cbd0395d-2c4e-4ef3-ac7b-28888a1745f5', N'py install pkg', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0998b9d2-c9db-4057-9d45-5578ea138e78', 'f57117c5-4e9f-4753-9b1b-eaee2c962f76', N'python get pkg', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3226a2d6-4af6-40a2-8477-08116653dc02', 'cbd0395d-2c4e-4ef3-ac7b-28888a1745f5', N'python get pkg', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('df6709e6-6780-49af-970b-b15bc26e4930', '9b456337-b8f1-44e3-9089-382c24afdbc3', N'return 1,2', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7a42cb65-a3da-4e4f-b287-6e1f2d3c2046', '56ec7038-3493-406d-add9-cd47b134221d', N'return 1,2', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9a01c9dc-47cb-4f0b-bdd6-f82f6463205c', '9b456337-b8f1-44e3-9089-382c24afdbc3', N'return [1,2]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f48dc1b6-8c3b-4ef3-9154-c5a69466ef94', '56ec7038-3493-406d-add9-cd47b134221d', N'return [1,2]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('24ec913f-2da3-4f83-9f29-995058b0088b', '9b456337-b8f1-44e3-9089-382c24afdbc3', N'return (1,2)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2de4cac5-ed0f-4339-8323-2826cade5447', '56ec7038-3493-406d-add9-cd47b134221d', N'return (1,2)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8ab72b07-f0fb-4a8e-ae33-a5027312594e', '9b456337-b8f1-44e3-9089-382c24afdbc3', N'All of the above', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7f321c01-99b1-4f64-8c4f-4ba1c7b271a5', '56ec7038-3493-406d-add9-cd47b134221d', N'All of the above', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9845215a-b832-4365-b9f0-f03d20ee43fa', 'e7e6b29e-0dbd-4105-a4ca-37ff4fdb8c1a', N'Function returning another function.', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8b73ddae-acee-43f2-892b-c7ea09ff5eb5', 'a8ee9fb4-6ecb-46ad-bb74-8aac04e2e57d', N'Function returning another function.', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c31f2fc7-3d95-4a13-b767-278a23d9e511', 'e7e6b29e-0dbd-4105-a4ca-37ff4fdb8c1a', N'Function without return.', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('53c7f743-2b61-4628-ae30-a5a40d318f58', 'a8ee9fb4-6ecb-46ad-bb74-8aac04e2e57d', N'Function without return.', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d22962ef-3b6f-487d-a65b-6f8e15aabd96', 'e7e6b29e-0dbd-4105-a4ca-37ff4fdb8c1a', N'Function with default parameter.', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('69238655-1db1-4b72-98f3-c72e691fb129', 'a8ee9fb4-6ecb-46ad-bb74-8aac04e2e57d', N'Function with default parameter.', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c65c7c56-b039-4688-85e0-ee08839ca9c3', 'e7e6b29e-0dbd-4105-a4ca-37ff4fdb8c1a', N'Function with print only.', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3716be66-b196-487e-b4c1-de39b606deef', 'a8ee9fb4-6ecb-46ad-bb74-8aac04e2e57d', N'Function with print only.', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1cb49a26-ee78-46cb-9012-aec6871edde6', 'b3e9e284-7474-45dd-b04e-840c758f8ada', N'add(3,2)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('aaca4b97-b14b-4030-8415-d066ce8adecb', 'b9781e34-e97a-40d9-83bf-7b9c1081e20e', N'add(3,2)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6ab32b7c-5371-4a3e-a493-545e92083b5f', 'b3e9e284-7474-45dd-b04e-840c758f8ada', N'add(y=2,x=3)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cbabe6d5-1fbc-457d-9758-f87c123abf36', 'b9781e34-e97a-40d9-83bf-7b9c1081e20e', N'add(y=2,x=3)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b8c6bf19-1be1-46d4-8f6a-0cab369d0176', 'b3e9e284-7474-45dd-b04e-840c758f8ada', N'add(3,y=2)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fb4b23aa-b960-4a08-8ac7-4221acc65cf8', 'b9781e34-e97a-40d9-83bf-7b9c1081e20e', N'add(3,y=2)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b31da274-0019-442b-82f0-f03b8f32ce48', 'b3e9e284-7474-45dd-b04e-840c758f8ada', N'All of these', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('12fab7d3-ecc7-440c-af72-cf8cb2ca276b', 'b9781e34-e97a-40d9-83bf-7b9c1081e20e', N'All of these', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c6f34003-3a61-4bb9-8002-f61225136839', '1db1d5ee-f3fc-4eac-82f3-e52514be06f6', N'int', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6108383e-6be8-41ad-adb5-774108cf67d7', '0e218d60-28a1-4b22-90db-f5b3d724e7b0', N'int', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7d5a9c25-8ad0-48f1-a920-8e20d894291d', '1db1d5ee-f3fc-4eac-82f3-e52514be06f6', N'None', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('118bd108-5782-4a04-9ba2-c38ee8128bb6', '0e218d60-28a1-4b22-90db-f5b3d724e7b0', N'None', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('20468bf2-e79d-4420-985e-4c499db4307a', '1db1d5ee-f3fc-4eac-82f3-e52514be06f6', N'[]', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a5171e30-1ece-485e-8b8a-82deaa4e7321', '0e218d60-28a1-4b22-90db-f5b3d724e7b0', N'[]', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('62c98558-835b-4b7f-9414-31ca70eb2476', '1db1d5ee-f3fc-4eac-82f3-e52514be06f6', N'0', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('41007d10-a673-454b-b99d-3fdee7a6af65', '0e218d60-28a1-4b22-90db-f5b3d724e7b0', N'0', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f001f1e9-1f9c-4e16-a0c3-0b19a05c22bd', '387e1f31-25f1-4d66-9d19-4e69c6fa80cd', N'import math as m', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('00597ec3-56ed-4901-a3fa-2dce9e14f21c', '05e09a68-87b2-4f98-85a6-17ac051a77ae', N'import math as m', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ae06f75a-d3bc-4fdb-b972-31d1d88b33a6', '387e1f31-25f1-4d66-9d19-4e69c6fa80cd', N'import m = math', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0433feba-b25f-4d69-b3ce-c1442b9d8945', '05e09a68-87b2-4f98-85a6-17ac051a77ae', N'import m = math', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('70e594b3-e6f8-4a8a-ac5c-35991f6bedc5', '387e1f31-25f1-4d66-9d19-4e69c6fa80cd', N'math = import m', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('289d0acd-8f3e-4c27-86d2-de35b4dfe511', '05e09a68-87b2-4f98-85a6-17ac051a77ae', N'math = import m', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6ab793e7-4476-4b4a-b389-67da210d547a', '387e1f31-25f1-4d66-9d19-4e69c6fa80cd', N'alias math as m', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1ff20a62-9d70-4522-b091-2cf4a05c4cb9', '05e09a68-87b2-4f98-85a6-17ac051a77ae', N'alias math as m', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d0756144-8188-4cf4-9ec7-70592bb98b1b', '0ba65237-42a2-4b21-8207-f0faedfb60c4', N'Runs the function.', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('449bd540-550b-4eb5-8931-6ff5ce4fec7b', '336cf9ed-e4cc-4138-b173-a4cf211f852e', N'Runs the function.', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1d5365b1-bf34-4a81-aed2-6cb5f809aac2', '0ba65237-42a2-4b21-8207-f0faedfb60c4', N'Prints docstring.', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2fc73b9c-f7e9-419c-9f1d-ffb8c8513297', '336cf9ed-e4cc-4138-b173-a4cf211f852e', N'Prints docstring.', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('996002f7-4608-463b-bd69-0205039dd272', '0ba65237-42a2-4b21-8207-f0faedfb60c4', N'Deletes function.', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0beba139-5ce6-44ab-9db0-f688440a2164', '336cf9ed-e4cc-4138-b173-a4cf211f852e', N'Deletes function.', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ab27ac80-3837-4591-8b60-f4ed8b26104d', '0ba65237-42a2-4b21-8207-f0faedfb60c4', N'Nothing.', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3e9a3cc8-6c86-4b17-8a12-4faa6f0d7ec7', '336cf9ed-e4cc-4138-b173-a4cf211f852e', N'Nothing.', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b1683b87-fae2-413f-8fe3-50e6b054ed91', '5b25328c-2fd0-4f6f-95ad-0d66c086ea39', N'python -m venv env', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ddc129c6-dbf8-4488-a199-6511f455fbea', '88bd48fc-aaf6-4088-a376-8316a41da757', N'python -m venv env', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('33130aea-960c-47d6-a975-a3d819d8b16a', '5b25328c-2fd0-4f6f-95ad-0d66c086ea39', N'pip create env', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bfcb58dc-f8b2-4752-a48e-79dab3d5156a', '88bd48fc-aaf6-4088-a376-8316a41da757', N'pip create env', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f97ea580-ae25-42ca-a7b9-61db2307a6b5', '5b25328c-2fd0-4f6f-95ad-0d66c086ea39', N'venv install env', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2251d25f-2ba2-4601-861c-d0c08679980a', '88bd48fc-aaf6-4088-a376-8316a41da757', N'venv install env', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3b16d15d-b6d9-4c3e-ab92-c84a77184d6b', '5b25328c-2fd0-4f6f-95ad-0d66c086ea39', N'py env create', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('26b3d852-1848-4a03-912b-4f90f0004115', '88bd48fc-aaf6-4088-a376-8316a41da757', N'py env create', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('94a5c814-9fc1-453a-813e-750cb76d9708', '7b5e99a8-fb59-44bb-8c55-7b9fd41bd7b1', N'Global', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('38d1d565-a7fe-405d-ad35-75aec5113846', '3ebeea6c-46a4-4ea2-8074-5d541c6ce55b', N'Global', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('55f3e785-086a-4fa2-aa1a-1e601d0e6be0', '7b5e99a8-fb59-44bb-8c55-7b9fd41bd7b1', N'Built-in', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('017bf0e1-904c-4eb9-8db4-93574b9e859d', '3ebeea6c-46a4-4ea2-8074-5d541c6ce55b', N'Built-in', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b6b562ad-f3e4-4458-886b-a2438042eba6', '7b5e99a8-fb59-44bb-8c55-7b9fd41bd7b1', N'Local', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('779296ac-7239-4cc6-80c2-8eb9e797b33e', '3ebeea6c-46a4-4ea2-8074-5d541c6ce55b', N'Local', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('34bd73c9-cc3e-4807-8f81-57e797d8bf23', '7b5e99a8-fb59-44bb-8c55-7b9fd41bd7b1', N'Module', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('76ac8cf6-e354-4f19-a180-c16b15b4fdbe', '3ebeea6c-46a4-4ea2-8074-5d541c6ce55b', N'Module', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f67f0558-aab3-497e-87e7-e0c26718954c', '2cf4ab55-2b09-4165-98c0-7fb11b6c7195', N'FIFO', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a92857e8-0299-4469-9a3a-11ec2ca2a94f', '2f2fa335-3d6c-4397-8651-ae8f66c7e4f0', N'FIFO', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a1aa424b-ae8b-486b-9b76-79c87fec0063', '2cf4ab55-2b09-4165-98c0-7fb11b6c7195', N'LIFO', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('211584f0-90a4-46df-bbd9-370b7cf879cd', '2f2fa335-3d6c-4397-8651-ae8f66c7e4f0', N'LIFO', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3de76bc4-48f0-4e52-9bbc-4cbaea879729', '2cf4ab55-2b09-4165-98c0-7fb11b6c7195', N'LEGB (Local, Enclosing, Global, Built-in)', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9eb16d1b-756f-40ec-940f-a8bd61113f7c', '2f2fa335-3d6c-4397-8651-ae8f66c7e4f0', N'LEGB (Local, Enclosing, Global, Built-in)', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d7ee8618-383d-4cdc-8ccf-dd2bfc99a16b', '2cf4ab55-2b09-4165-98c0-7fb11b6c7195', N'None', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('954b9ed6-b93e-42c0-b7d6-f62bfc61e8d9', '2f2fa335-3d6c-4397-8651-ae8f66c7e4f0', N'None', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1b5700e1-114c-41d5-95e8-a49f7105ea63', '427630ec-1ba8-439e-9d01-a18600fe57bb', N'Avoids reusing code', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4e3b3b10-5a8c-46b9-b89d-18d4cd5e70e5', 'f66f7a40-8495-4eeb-b1d2-0934985089da', N'Avoids reusing code', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d9fee5f7-ca56-4e51-b37f-5326510d0182', '427630ec-1ba8-439e-9d01-a18600fe57bb', N'Organises and reuses functions', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('25c20b48-1662-4504-abe8-a1fdd1ac966b', 'f66f7a40-8495-4eeb-b1d2-0934985089da', N'Organises and reuses functions', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('324c35a2-4f78-414c-a306-8d38ccfa0473', '427630ec-1ba8-439e-9d01-a18600fe57bb', N'Slows execution', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6bda9a1e-5227-4fb9-8b66-1eaa5446dcc0', 'f66f7a40-8495-4eeb-b1d2-0934985089da', N'Slows execution', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('11a64b2b-0b26-4930-8641-d3d7e66d0864', '427630ec-1ba8-439e-9d01-a18600fe57bb', N'Creates errors', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('933ec2be-dab6-4949-a764-ebd0df797b14', 'f66f7a40-8495-4eeb-b1d2-0934985089da', N'Creates errors', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6ab4720d-f43d-44a3-bb9a-0278c43a262c', 'df90f682-4b13-4910-a73c-1eb246ac991f', N'tuple', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('04d834d5-fcd7-438e-9b04-d2daef887228', 'fdb23c57-d863-43d6-ba53-042c63a96b81', N'tuple', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('488736bb-31dc-492c-a41d-47a37f6ac18b', 'df90f682-4b13-4910-a73c-1eb246ac991f', N'str', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('79a590fa-2a08-463d-81a6-c59bd81eba26', 'fdb23c57-d863-43d6-ba53-042c63a96b81', N'str', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('887ba312-3919-47da-8af1-288c026361dc', 'df90f682-4b13-4910-a73c-1eb246ac991f', N'list', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3a1b653d-2318-4ef8-84d9-4e4c7c38916d', 'fdb23c57-d863-43d6-ba53-042c63a96b81', N'list', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('35957b6e-fdba-413a-991e-88d7a5436e0e', 'df90f682-4b13-4910-a73c-1eb246ac991f', N'int', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b887a886-0803-4fe3-8598-63924a559ea3', 'fdb23c57-d863-43d6-ba53-042c63a96b81', N'int', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('333ee808-5e0c-4037-aaf8-c9c1da123d46', '13e13769-e04e-40c2-8561-afc6fef95afe', N'nums(2)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e1fe86e4-7394-47f5-b4db-60a9493ff3ed', '5ec823ab-4cf5-46f6-8b17-26442240eac9', N'nums(2)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('09919170-4e14-466c-b7ef-c523ce29c44b', '13e13769-e04e-40c2-8561-afc6fef95afe', N'nums{1}', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0ce1dab4-a01b-4f84-89f9-5fd9aadde434', '5ec823ab-4cf5-46f6-8b17-26442240eac9', N'nums{1}', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dd884608-270a-48c4-a330-2e063807994a', '13e13769-e04e-40c2-8561-afc6fef95afe', N'nums[1]', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3cbfa80e-902d-458c-ad04-f0e71f08f0d8', '5ec823ab-4cf5-46f6-8b17-26442240eac9', N'nums[1]', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ad2cba47-ea1b-4ff7-b3a2-1f27aa45b28f', '13e13769-e04e-40c2-8561-afc6fef95afe', N'nums[2]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4e66795a-1aed-40d5-b4de-f813561e81b2', '5ec823ab-4cf5-46f6-8b17-26442240eac9', N'nums[2]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7b39399f-74b6-4dd6-aa0a-323bd52be966', '7148f7ef-ca13-477f-9d48-6e1f38b4cae2', N'tuple(list)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4fde2e3e-6dc2-4437-a1b4-4a5954968653', '5f0f9022-838a-480f-acc4-25fe5f24ddd4', N'tuple(list)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fa1aba83-667c-452b-a28d-5a2763f8d243', '7148f7ef-ca13-477f-9d48-6e1f38b4cae2', N'set(list)', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('956d4b29-97de-427a-9447-ba595a2c15f2', '5f0f9022-838a-480f-acc4-25fe5f24ddd4', N'set(list)', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a6ed7192-9fba-4717-8e57-5a280a150f08', '7148f7ef-ca13-477f-9d48-6e1f38b4cae2', N'dict(list)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f25323f4-2409-44f7-a2bb-ec44352b0b6a', '5f0f9022-838a-480f-acc4-25fe5f24ddd4', N'dict(list)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e0c10500-3c20-4bc2-a8f8-2daac9fc89e5', '7148f7ef-ca13-477f-9d48-6e1f38b4cae2', N'list.remove()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d8d9b99d-22e6-4d20-bf7a-1e2cfcce5baa', '5f0f9022-838a-480f-acc4-25fe5f24ddd4', N'list.remove()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('584cb6ef-e40c-4218-ae13-ebcb9bbb33e8', '2eefc26f-adbd-4be8-a34d-e00b72d14ef2', N'pop()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2965efc2-3f7a-47d3-9967-3cb7ba87ed31', '001e6678-c88f-4d0c-b7ce-59cacb0a2417', N'pop()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8affea06-3121-423b-b92f-74f87902064b', '2eefc26f-adbd-4be8-a34d-e00b72d14ef2', N'remove()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('90dbae38-ee1f-4c40-80d6-e59ff33d2904', '001e6678-c88f-4d0c-b7ce-59cacb0a2417', N'remove()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('84d455d6-699f-4f73-9b06-28fcfd84019b', '2eefc26f-adbd-4be8-a34d-e00b72d14ef2', N'del()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('01f31102-f01c-4ef4-822d-bc9784b9318b', '001e6678-c88f-4d0c-b7ce-59cacb0a2417', N'del()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1bfc9b01-d428-4ea3-b228-2672d6fdee74', '2eefc26f-adbd-4be8-a34d-e00b72d14ef2', N'cut()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('29e6a4af-f875-471d-a3ab-3753faf2e290', '001e6678-c88f-4d0c-b7ce-59cacb0a2417', N'cut()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('62d9b22c-6496-4114-8bd5-ae8674ef6f6d', '95f75bb2-c7a4-462b-a25c-e906e9b663ad', N'None', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('abd17b10-230a-4536-98b8-fd2986f66b28', '4af0b463-eb7b-485f-9ad0-05c77b1a77f2', N'None', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f96a8a62-12a0-49c2-8097-d8b13c07d90a', '95f75bb2-c7a4-462b-a25c-e906e9b663ad', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4cb39a0f-3a6e-4123-ba36-f0bd9d0575ab', '4af0b463-eb7b-485f-9ad0-05c77b1a77f2', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a9c2422b-170f-4d27-8292-add63be1cfee', '95f75bb2-c7a4-462b-a25c-e906e9b663ad', N'0', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('74fe3a07-444a-434f-ba3f-9a38737b9bd8', '4af0b463-eb7b-485f-9ad0-05c77b1a77f2', N'0', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7559ade0-e8c5-4cea-8de2-81851248be95', '95f75bb2-c7a4-462b-a25c-e906e9b663ad', N'20', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9120782f-534d-488f-b087-6388ac63bf25', '4af0b463-eb7b-485f-9ad0-05c77b1a77f2', N'20', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('14438060-1fd3-4b8b-b6d2-ee6df8676ba9', 'f71a0c1d-d574-49cb-8485-4ac3dd15a665', N'(1)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2d8ad09c-6b1a-479d-8eed-0dbcc085dcb9', '94a1a897-f2ca-4537-b1e9-d81256ea4c4b', N'(1)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a47d4106-1598-4f72-a9ab-7fa695381593', 'f71a0c1d-d574-49cb-8485-4ac3dd15a665', N'(1,)', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9910031e-3ca2-4b2f-952a-a4ae48e0670e', '94a1a897-f2ca-4537-b1e9-d81256ea4c4b', N'(1,)', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('44ec1cb8-b888-44ea-bd52-6545185181a5', 'f71a0c1d-d574-49cb-8485-4ac3dd15a665', N'[1,]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b2034ea7-bda1-43a8-b17a-5de598eacf84', '94a1a897-f2ca-4537-b1e9-d81256ea4c4b', N'[1,]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d3c3349a-651d-4f0a-ae33-d1084624b893', 'f71a0c1d-d574-49cb-8485-4ac3dd15a665', N'{1}', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('87375c33-4a57-4f73-aef1-2c796a8a9daa', '94a1a897-f2ca-4537-b1e9-d81256ea4c4b', N'{1}', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6503d7d4-f0ae-4bff-9aea-4dca65025624', '0844fc03-21fd-40ff-a4d5-a4963be5f649', N'sorted()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7f686443-7c4e-4f5a-9863-48ee040f6066', '6d455ac7-354e-4b9b-8038-8456ce3665e1', N'sorted()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a98c694a-7c0d-4752-9a5d-c8eb266ae81b', '0844fc03-21fd-40ff-a4d5-a4963be5f649', N'list.sort()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5dd00c29-63a8-4753-ad11-b4ebe0757527', '6d455ac7-354e-4b9b-8038-8456ce3665e1', N'list.sort()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('39029e84-67fe-481a-8601-81fc928ed21d', '0844fc03-21fd-40ff-a4d5-a4963be5f649', N'arrange()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c6767505-4bae-4d5b-8048-50090f932183', '6d455ac7-354e-4b9b-8038-8456ce3665e1', N'arrange()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ebdf86bf-e0f1-4877-95db-a5b1bfc8e364', '0844fc03-21fd-40ff-a4d5-a4963be5f649', N'order()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f23171ad-f8ef-4382-8082-685018ba3fef', '6d455ac7-354e-4b9b-8038-8456ce3665e1', N'order()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('80bc93fb-11a7-4f7c-8390-a6f93d605c37', 'cec2ee90-f152-4dbe-8ae4-54c613b605c8', N'A+B', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1e286add-efd7-4654-a442-6921000e46a3', 'bbba7d13-d15e-4a3d-a0bd-ca4f72165272', N'A+B', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('91224fb0-35d1-4ea5-935c-c2e52ffcdc37', 'cec2ee90-f152-4dbe-8ae4-54c613b605c8', N'A-B', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3239f0af-552b-40a2-85c2-58d660abdd97', 'bbba7d13-d15e-4a3d-a0bd-ca4f72165272', N'A-B', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ba9e9fa4-d9bd-4390-8664-ed7dbf55fde6', 'cec2ee90-f152-4dbe-8ae4-54c613b605c8', N'A&B', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d48574d1-65ef-4575-bbdb-ed39a778ed85', 'bbba7d13-d15e-4a3d-a0bd-ca4f72165272', N'A&B', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8467646b-4da4-4b44-98c3-2ea7f8ebf48a', 'cec2ee90-f152-4dbe-8ae4-54c613b605c8', N'A|B', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1e0c8f29-0ab1-42f8-bb94-8fc6f360f9bd', 'bbba7d13-d15e-4a3d-a0bd-ca4f72165272', N'A|B', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('eb3284d1-9ecc-49f3-b11b-c332c4cd23db', '8a0a2c83-0bb7-41fe-bd4a-2a724fd17815', N'{1,2,3}', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('08011407-dd26-44eb-a1c3-1ce1e0ea8b11', '231ea1a4-c693-4061-87ec-b61703ea167b', N'{1,2,3}', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3deab94a-c80b-4ea4-b975-cba7800b6d40', '8a0a2c83-0bb7-41fe-bd4a-2a724fd17815', N'{"a":1, "b":2}', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('74ba4a7f-1b32-481b-8c76-a208ba4b7c8a', '231ea1a4-c693-4061-87ec-b61703ea167b', N'{"a":1, "b":2}', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('891d9f30-b50b-4173-9f85-555fb3f25d64', '8a0a2c83-0bb7-41fe-bd4a-2a724fd17815', N'[("a",1)]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a6aa197b-9d64-4162-af6d-8e26bf3a7fcd', '231ea1a4-c693-4061-87ec-b61703ea167b', N'[("a",1)]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('64215056-5d49-4867-81f6-10b8d5a6a175', '8a0a2c83-0bb7-41fe-bd4a-2a724fd17815', N'("a":1)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f27b31f0-abb2-42d9-a78f-c732d6b24f1d', '231ea1a4-c693-4061-87ec-b61703ea167b', N'("a":1)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7f864c61-16ce-4813-ba1b-e301f6e37568', '2283b15f-69aa-4f0a-91f6-611202847d19', N'{"x":1}', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('23437225-f4ce-4a1a-8918-bfde7c6ca63a', '527bbb5b-fa08-4224-9f7f-b1281d8c51a5', N'{"x":1}', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e0610359-25c2-4aa7-9d6a-7dc0ee2e24c5', '2283b15f-69aa-4f0a-91f6-611202847d19', N'{"x":1,"y":2}', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3b1093a3-27e8-4b58-9b3e-713c8181e07d', '527bbb5b-fa08-4224-9f7f-b1281d8c51a5', N'{"x":1,"y":2}', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('91faa89f-1d05-4a46-b97a-aee31345408f', '2283b15f-69aa-4f0a-91f6-611202847d19', N'[1,2]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('744e9957-bae1-4101-902d-9384b5bd307d', '527bbb5b-fa08-4224-9f7f-b1281d8c51a5', N'[1,2]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f37bcec8-b696-466d-9025-82fb1d73bb60', '2283b15f-69aa-4f0a-91f6-611202847d19', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('38d8ae2d-ae24-4383-8431-7593b5beb3ba', '527bbb5b-fa08-4224-9f7f-b1281d8c51a5', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b8a21158-7573-434b-aafb-7408c19703cd', '9fc40a75-6167-4b18-8c86-8b3cfa906c96', N'list', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9f25ec14-2b2c-41ec-bd3b-33d40be6d2ce', 'ff4ca3f6-83ef-4537-81ab-bf3ab5ec9dfe', N'list', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0aeba77a-9507-42de-acbd-30c0dba7e8c2', '9fc40a75-6167-4b18-8c86-8b3cfa906c96', N'set', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('13b867c5-fc98-4539-83ec-4aa815007366', 'ff4ca3f6-83ef-4537-81ab-bf3ab5ec9dfe', N'set', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('06aa2bdb-2486-4f55-8a07-8e88e90f3d69', '9fc40a75-6167-4b18-8c86-8b3cfa906c96', N'tuple', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a3e3be75-d192-4e62-a9e6-2dec62e8d8ad', 'ff4ca3f6-83ef-4537-81ab-bf3ab5ec9dfe', N'tuple', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f988f7ff-66fc-479f-b429-4f8c09088836', '9fc40a75-6167-4b18-8c86-8b3cfa906c96', N'dict', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('863a5a3b-874f-4c8c-a5d9-997f718cbdab', 'ff4ca3f6-83ef-4537-81ab-bf3ab5ec9dfe', N'dict', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2108bd84-ac17-4915-a044-800ec0cae71e', '90719fb7-7015-4766-bbe1-3f344dc1aacf', N'[1,2]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7957a5cd-d248-4248-9759-bfc216eb62b6', 'dfee9166-b191-4bba-bf20-5552be37ede9', N'[1,2]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ba3a84c5-a67b-4f00-a5b7-bd8b3ce5c79e', '90719fb7-7015-4766-bbe1-3f344dc1aacf', N'[1,2,3]', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4a5e2985-706d-4d45-82b7-b3752efe0eb7', 'dfee9166-b191-4bba-bf20-5552be37ede9', N'[1,2,3]', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('501bd48c-c9a2-4fde-beeb-56e5b40db46d', '90719fb7-7015-4766-bbe1-3f344dc1aacf', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('23a3f852-09a7-4f8f-91bd-1c5deb9a2f9b', 'dfee9166-b191-4bba-bf20-5552be37ede9', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d6df23f0-475e-492e-b92f-741c56dca164', '90719fb7-7015-4766-bbe1-3f344dc1aacf', N'None', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('84a85af2-2a61-47a7-9599-0dd8b2378296', 'dfee9166-b191-4bba-bf20-5552be37ede9', N'None', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f5f4d757-0b8d-406c-8907-945101ce2114', '0c624dce-a254-4a2f-85a6-f5aedc6b8d2c', N'length()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a5e8653f-d5f9-4bdf-8865-5a12d4751201', '60be590c-afa9-4a08-8953-0b06ca29a5c4', N'length()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('908285db-b117-422e-bd5c-6da969946bc7', '0c624dce-a254-4a2f-85a6-f5aedc6b8d2c', N'len()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('832ac24b-8a83-4b89-af9f-d706f29fa072', '60be590c-afa9-4a08-8953-0b06ca29a5c4', N'len()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0adf05a2-fa2f-48cb-832d-14860af20866', '0c624dce-a254-4a2f-85a6-f5aedc6b8d2c', N'count()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('45b8c416-3a61-429c-9a8f-aee217e55b2a', '60be590c-afa9-4a08-8953-0b06ca29a5c4', N'count()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7cb18b90-635a-4fb9-995a-fba3bf8c27df', '0c624dce-a254-4a2f-85a6-f5aedc6b8d2c', N'size()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('33b4d190-c6a8-4d70-9f6e-178cb66f6c76', '60be590c-afa9-4a08-8953-0b06ca29a5c4', N'size()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6e407ebe-dd94-46a4-9164-90b44efe18fa', '99450076-0152-4c13-a273-47f8b44683d6', N'{v:k for k,v in d.items()}', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('50608793-291e-4c19-af67-78618f9af6f3', '98ceb4d8-13ac-46a3-a9fb-01e172df03f4', N'{v:k for k,v in d.items()}', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ef729407-3965-496f-a3ee-538b746c9434', '99450076-0152-4c13-a273-47f8b44683d6', N'{k:v for k,v in d.items()}', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('39160b16-4669-4819-861e-7066573dd48f', '98ceb4d8-13ac-46a3-a9fb-01e172df03f4', N'{k:v for k,v in d.items()}', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0fe61a57-5f9d-4612-b0fe-f5d28d418130', '99450076-0152-4c13-a273-47f8b44683d6', N'[v:k for k,v in d.items()]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ae20f4c2-8432-448e-b71e-8f0c624e903d', '98ceb4d8-13ac-46a3-a9fb-01e172df03f4', N'[v:k for k,v in d.items()]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('42dba2d7-12bf-435f-86cf-bdc11434b223', '99450076-0152-4c13-a273-47f8b44683d6', N'(v:k for k,v in d.items())', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('26f468a7-26bb-4e4e-b5d4-0ace22d08e3e', '98ceb4d8-13ac-46a3-a9fb-01e172df03f4', N'(v:k for k,v in d.items())', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('564c7176-3739-4de1-9faf-978a02e7b81d', '4e318e24-20db-4d25-a021-3e1c2acc7076', N'A|B', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d33ee173-9213-4e6d-83f6-85b5e06efa09', 'c3bd6d3a-0957-4e46-80da-1ef8322759b7', N'A|B', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dff67677-84c4-4c2b-a390-d65c0480e280', '4e318e24-20db-4d25-a021-3e1c2acc7076', N'A-B', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('eab85228-92b0-4da9-91df-afce576bf662', 'c3bd6d3a-0957-4e46-80da-1ef8322759b7', N'A-B', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2d0c2aa6-e673-443c-b207-1399024b46b8', '4e318e24-20db-4d25-a021-3e1c2acc7076', N'A&B', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cf99be69-3b17-414a-b6e1-36ea54aaf38a', 'c3bd6d3a-0957-4e46-80da-1ef8322759b7', N'A&B', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('935541f6-b05b-4312-b2d5-496a9f101102', '4e318e24-20db-4d25-a021-3e1c2acc7076', N'A^B', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7c8b6e77-31a0-4e54-8784-04d33fb5b0f8', 'c3bd6d3a-0957-4e46-80da-1ef8322759b7', N'A^B', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('db931344-06d9-476b-8ba7-bf74b5bdfab3', '822d75a8-fda1-495a-a840-c629ca175f03', N'{1,2,2,3}', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7290b880-35eb-40ea-a448-82bc8d34d5db', 'afecf6b5-41e0-4a52-a6d8-f7a20fdc520b', N'{1,2,2,3}', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1a1afd96-6cf0-4bb9-8333-956e2b4df98d', '822d75a8-fda1-495a-a840-c629ca175f03', N'{1,2,3}', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e7e5c9a8-6ca6-40bb-ab31-3af4e534c254', 'afecf6b5-41e0-4a52-a6d8-f7a20fdc520b', N'{1,2,3}', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c2b40400-4313-44e8-9939-0fb5041b5a98', '822d75a8-fda1-495a-a840-c629ca175f03', N'[1,2,3]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2783b8cd-bc49-4fa0-a7ba-8811d272c9aa', 'afecf6b5-41e0-4a52-a6d8-f7a20fdc520b', N'[1,2,3]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('08317fb7-9de6-4bdf-8721-ca8ad4a22091', '822d75a8-fda1-495a-a840-c629ca175f03', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e1405629-684a-4526-8ec4-1e3e9724166d', 'afecf6b5-41e0-4a52-a6d8-f7a20fdc520b', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9d6ace9a-d715-4932-943e-21232868b91f', 'bc371d42-a64a-477e-8f1b-6caa54987192', N'nums[3]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d7051e64-c01b-44e0-b407-03dbfa1b51c0', '1b2638e7-4be0-4348-8551-e28e99265cb8', N'nums[3]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5b84ecc4-3b0c-4f8e-878a-c0d6f8e41470', 'bc371d42-a64a-477e-8f1b-6caa54987192', N'nums[-3:]', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('00f5fc3c-edfa-4da1-af08-9ea3ae425cb5', '1b2638e7-4be0-4348-8551-e28e99265cb8', N'nums[-3:]', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3682e6bf-9dbe-41c8-9691-2381aedf69d2', 'bc371d42-a64a-477e-8f1b-6caa54987192', N'nums[:3]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f9040e79-bdeb-4636-a8aa-ef21695ba0e4', '1b2638e7-4be0-4348-8551-e28e99265cb8', N'nums[:3]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e3fe0be5-53fd-4591-aba5-67047605f3b6', 'bc371d42-a64a-477e-8f1b-6caa54987192', N'nums[:-3]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0ae0a614-c7c0-4b0a-8ee1-545fc7645cdd', '1b2638e7-4be0-4348-8551-e28e99265cb8', N'nums[:-3]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ef57a46e-7d84-4180-b71a-3b6ded906510', '857e64cd-c2a9-49d3-891a-7e629bdd9a3e', N'They are mutable.', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('68913910-4736-47bb-b4bf-7df327d09c3a', '37338a49-efaf-44a7-a5ca-f91f407bf457', N'They are mutable.', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9b374292-85ec-4223-bf46-bb8f274cb3ae', '857e64cd-c2a9-49d3-891a-7e629bdd9a3e', N'Can be used as dict keys.', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d70afea0-1ceb-42df-b39a-c58ffba047cc', '37338a49-efaf-44a7-a5ca-f91f407bf457', N'Can be used as dict keys.', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('126120d6-42e6-4122-94d8-bff7c6fd9139', '857e64cd-c2a9-49d3-891a-7e629bdd9a3e', N'Slower than lists.', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('754fbbf0-7a6c-4095-b137-09b595808792', '37338a49-efaf-44a7-a5ca-f91f407bf457', N'Slower than lists.', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0470554c-4801-4487-9de3-0b24a7e5afb3', '857e64cd-c2a9-49d3-891a-7e629bdd9a3e', N'Not indexable.', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('397ea60a-600d-4e19-9dee-7b462da3aae1', '37338a49-efaf-44a7-a5ca-f91f407bf457', N'Not indexable.', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1c555ffc-fc51-4e6f-b9d6-f5519d3ce0dd', '04c884f3-e300-488a-a1bf-8743c447e5bc', N'["hi","hello","hey"]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('895f9203-5d26-4f90-a751-715249a46322', 'a3fd3ed5-9d88-454e-9929-fb5ae272464e', N'["hi","hello","hey"]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cc41a5f1-2e0c-4fb2-98aa-8bab765474ec', '04c884f3-e300-488a-a1bf-8743c447e5bc', N'["h","h","h"]', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fccb3e85-cd87-4f8e-bdac-7547597c96f6', 'a3fd3ed5-9d88-454e-9929-fb5ae272464e', N'["h","h","h"]', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('68c788f9-bfc7-44b9-ad60-0355d74c5a70', '04c884f3-e300-488a-a1bf-8743c447e5bc', N'["i","e","y"]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('329ac4da-753e-4565-8853-cb04f91066e0', 'a3fd3ed5-9d88-454e-9929-fb5ae272464e', N'["i","e","y"]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d24ba5b1-90e3-45fd-aefb-b3dc495a8881', '04c884f3-e300-488a-a1bf-8743c447e5bc', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('331a7093-70ec-4fec-83b6-4c3171455565', 'a3fd3ed5-9d88-454e-9929-fb5ae272464e', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('df334706-c366-4622-912f-56c5c68db17f', 'd5903123-df58-4288-bfb9-20831978a8c5', N'It’s faster', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cbd408d9-7133-42d8-9e05-4dff219a21f1', '68109c44-4105-4aa7-9242-35da0bbe95bd', N'It’s faster', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c6e8ebc8-dd38-46d4-a895-4c0a130a1295', 'd5903123-df58-4288-bfb9-20831978a8c5', N'To copy nested structures safely', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1f616e4c-94db-48e7-8203-20feabed60ed', '68109c44-4105-4aa7-9242-35da0bbe95bd', N'To copy nested structures safely', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0bdc843e-d57d-464f-b320-3e03326bb9c4', 'd5903123-df58-4288-bfb9-20831978a8c5', N'It uses less memory', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8f460f4e-66a0-415f-b5ff-dd9e3268df39', '68109c44-4105-4aa7-9242-35da0bbe95bd', N'It uses less memory', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7b154c4d-fb52-49f7-af75-fd7bb54832cf', 'd5903123-df58-4288-bfb9-20831978a8c5', N'It removes duplicates', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('961f687a-6240-4e19-817b-80058d9b00a5', '68109c44-4105-4aa7-9242-35da0bbe95bd', N'It removes duplicates', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('44acfbff-c3e8-48cc-8efa-04a02dfbe2f3', '07cca6f1-ecd6-44b8-9c59-75ec32925bdd', N'class', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('33b8c10d-02d3-49de-8900-bbfea6e4db0d', '1d60401c-b4ab-4de5-a276-a5244ce61841', N'class', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bb95a505-df09-4199-9740-fc216a95328a', '07cca6f1-ecd6-44b8-9c59-75ec32925bdd', N'def', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4acc9e2e-d31e-4a7c-be46-cd3ebb257952', '1d60401c-b4ab-4de5-a276-a5244ce61841', N'def', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('febd8a65-d703-42f2-bf93-e5f51be73944', '07cca6f1-ecd6-44b8-9c59-75ec32925bdd', N'object', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a63f6831-6cfb-4a2b-af95-ea6469187858', '1d60401c-b4ab-4de5-a276-a5244ce61841', N'object', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('85dbd19e-127e-49b4-b8b5-7b0e71accb57', '07cca6f1-ecd6-44b8-9c59-75ec32925bdd', N'new', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('32c19ec2-de6e-49aa-a03c-7ba33f9ae22d', '1d60401c-b4ab-4de5-a276-a5244ce61841', N'new', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3f962618-82ab-4f19-a641-225f7b4c9da5', 'c510f5cb-c2cf-4e45-b929-0ebce303adaf', N'Refers to module', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c3953690-daad-4a8c-87b7-0f74e1f3f567', 'c6d76856-f5d8-4e90-b461-ef5f9091faab', N'Refers to module', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ee0f4d81-bb2a-4117-a591-183363a430f9', 'c510f5cb-c2cf-4e45-b929-0ebce303adaf', N'Refers to the object instance', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dc5dcaff-4f38-48f4-b113-04a52165621c', 'c6d76856-f5d8-4e90-b461-ef5f9091faab', N'Refers to the object instance', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3e464bbb-6b04-45e8-8650-6479becba6a7', 'c510f5cb-c2cf-4e45-b929-0ebce303adaf', N'Refers to class', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b00a2952-f983-476c-ad4f-2e557c41cec7', 'c6d76856-f5d8-4e90-b461-ef5f9091faab', N'Refers to class', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3cd97d61-2b4d-4099-89a6-249434a0dbf2', 'c510f5cb-c2cf-4e45-b929-0ebce303adaf', N'Refers to parent', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bc1eea64-5e32-4bf8-bcfb-3bcfea17decf', 'c6d76856-f5d8-4e90-b461-ef5f9091faab', N'Refers to parent', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('24225065-da0c-4a6c-a8bd-c024d1a4414f', '54c524f7-251d-4a8f-a27a-23bd0dac4c6b', N'start()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('550abfe5-f746-45a5-9bac-638347b17bb7', '82eccd27-d6fe-4ad5-a13b-871bdfa03fcd', N'start()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8e07a9eb-6ac9-4822-9e01-3b250b03b385', '54c524f7-251d-4a8f-a27a-23bd0dac4c6b', N'new()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('96e31c93-8dc9-4196-a221-f33758f4d82b', '82eccd27-d6fe-4ad5-a13b-871bdfa03fcd', N'new()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fb97427d-59a6-4cd3-95ca-1e2ccc663699', '54c524f7-251d-4a8f-a27a-23bd0dac4c6b', N'init()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e5b3f85c-2f14-471b-abb1-8a6a14300fbc', '82eccd27-d6fe-4ad5-a13b-871bdfa03fcd', N'init()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1e974f26-760c-4f36-8045-82c676d6b587', '54c524f7-251d-4a8f-a27a-23bd0dac4c6b', N'begin()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('71d4932f-cb32-4e12-a076-f9fd9a1549fc', '82eccd27-d6fe-4ad5-a13b-871bdfa03fcd', N'begin()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('416eee4e-c1e3-421c-8c83-7518b0a66b6f', '192ea41e-ab44-46b2-b662-580d58340a60', N'Bound to object', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1dc8fc76-008f-4ea4-ba9b-17299f000118', '63b44d52-bdd4-4913-a03b-820d3a3b1735', N'Bound to object', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1ec2434a-33b0-4991-b5d8-0e2af2916fe1', '192ea41e-ab44-46b2-b662-580d58340a60', N'Bound to class', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a47064d9-37a0-4163-996d-980e7554fbc8', '63b44d52-bdd4-4913-a03b-820d3a3b1735', N'Bound to class', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ab5bca6e-477d-44ac-b268-6b0795bb9c36', '192ea41e-ab44-46b2-b662-580d58340a60', N'No binding needed', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b5a45769-32db-40c9-a997-ea469dc30f61', '63b44d52-bdd4-4913-a03b-820d3a3b1735', N'No binding needed', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8ccdc309-d7ce-4efb-9dc7-19789aa7d3d9', '192ea41e-ab44-46b2-b662-580d58340a60', N'Creates static variable', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('96cf5a42-cf5b-4b3c-9281-bdebbfce1b94', '63b44d52-bdd4-4913-a03b-820d3a3b1735', N'Creates static variable', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('182791e6-654f-4d3a-8e0f-d64856b7b76d', '4a9e61ae-5afe-4db2-8be7-72093b26dbc7', N'try', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('74af9e04-b5eb-45a2-b673-56358be82a9e', '5848cb8a-ff9b-4285-9211-117f4d18140a', N'try', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7c0ae311-6733-4570-ac2c-7e568eeda9be', '4a9e61ae-5afe-4db2-8be7-72093b26dbc7', N'except', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e8414d30-fe7d-4734-8fed-24f0950262d0', '5848cb8a-ff9b-4285-9211-117f4d18140a', N'except', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8dde3a1f-6545-477d-94a6-d30324975f1c', '4a9e61ae-5afe-4db2-8be7-72093b26dbc7', N'finally', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d0a29ba3-2598-4a17-8518-4eacc252733f', '5848cb8a-ff9b-4285-9211-117f4d18140a', N'finally', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9b5b9622-8553-4bc8-b5f7-5b9c8f77a3c5', '4a9e61ae-5afe-4db2-8be7-72093b26dbc7', N'raise', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('19adb274-2091-48b3-9b59-ec765ab27012', '5848cb8a-ff9b-4285-9211-117f4d18140a', N'raise', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9f21d141-341e-4dab-b88c-e0cda6567351', '45182939-98d4-4f87-b9e1-b2c74e1d30c4', N'Child class can’t override parent method', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('58d95b51-b840-4442-bbaa-ca8122bc1e10', 'e91a4ac3-f185-4740-8404-d547972a6c08', N'Child class can’t override parent method', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('18ba9407-df15-4b59-a088-42b3c96db5ba', '45182939-98d4-4f87-b9e1-b2c74e1d30c4', N'Parent inherits from child', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f838e9f2-95f7-4fbb-9a5c-181321615b95', 'e91a4ac3-f185-4740-8404-d547972a6c08', N'Parent inherits from child', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6057186c-d53f-4912-b0ea-79b8702be9c0', '45182939-98d4-4f87-b9e1-b2c74e1d30c4', N'Child inherits methods/attributes from parent', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('687da5d3-710a-4445-b585-f38c1cdf1b86', 'e91a4ac3-f185-4740-8404-d547972a6c08', N'Child inherits methods/attributes from parent', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('38611a8b-c323-42bd-a586-4daca4f46fef', '45182939-98d4-4f87-b9e1-b2c74e1d30c4', N'Inheritance not supported in Python', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('10536c68-9525-4ae0-9a33-fad4d9a92b5d', 'e91a4ac3-f185-4740-8404-d547972a6c08', N'Inheritance not supported in Python', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('feb8ef88-5281-460f-88a4-6dd8ea0d097a', '0dd1e5b5-aa7a-4c8a-b72f-bf8139f70338', N'False', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f87491da-045f-4fe9-ab35-4e86777ec3fd', '2fdc2af2-b9ba-4aaf-b458-ff8cd3d97d3f', N'False', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9218faa7-2e7d-4325-93c6-4b5bd02ae5e4', '0dd1e5b5-aa7a-4c8a-b72f-bf8139f70338', N'True', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1bab1d70-23f2-4217-bb72-d273f1015b16', '2fdc2af2-b9ba-4aaf-b458-ff8cd3d97d3f', N'True', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3266c247-4859-4e1a-838d-9ccf36fced52', '0dd1e5b5-aa7a-4c8a-b72f-bf8139f70338', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4b363930-fc11-41e8-9ef0-05bfb09f50ea', '2fdc2af2-b9ba-4aaf-b458-ff8cd3d97d3f', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8d06ecdc-9923-4b48-9af0-e52c1374a47d', '0dd1e5b5-aa7a-4c8a-b72f-bf8139f70338', N'None', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('30a2c662-7211-4e95-998a-3e08d0d0a5b9', '2fdc2af2-b9ba-4aaf-b458-ff8cd3d97d3f', N'None', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('66f775bc-48f6-4e60-9d73-2c21246eb973', 'ab416132-764e-4399-b261-282b8bf0ae1f', N'class', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ef204349-8552-4e39-b1a4-0cb547a05679', '63109771-eabd-4dd8-8f95-67d14b6067f1', N'class', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0c73827a-24d4-4aba-8b90-a2869f393d93', 'ab416132-764e-4399-b261-282b8bf0ae1f', N'object', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('aa0c19fa-4e15-4e66-adae-c3d62d4760d4', '63109771-eabd-4dd8-8f95-67d14b6067f1', N'object', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c054c7af-2717-4d0d-9204-0da8fa3d84c1', 'ab416132-764e-4399-b261-282b8bf0ae1f', N'base', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6f7a4c57-da6c-4992-b9dd-151f33ae0f02', '63109771-eabd-4dd8-8f95-67d14b6067f1', N'base', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f38e8d33-325c-4419-a7b5-204108f406c9', 'ab416132-764e-4399-b261-282b8bf0ae1f', N'None', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('650b639e-fce8-4422-8091-383e20d47050', '63109771-eabd-4dd8-8f95-67d14b6067f1', N'None', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7dc4d330-feb0-45a3-a2e7-e0e1f6bb9c82', 'a6e6125a-f6ad-4c5e-9929-04d90714a692', N'try', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8e4b1962-c723-48fd-ad34-d30b2d1aaf66', '89c35c5c-54e4-44c7-a7d6-2b25496560be', N'try', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1117a31a-d39a-472b-ab54-8b252959a32d', 'a6e6125a-f6ad-4c5e-9929-04d90714a692', N'except', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3dcfe6a9-f3cd-40bd-9524-595eb785130c', '89c35c5c-54e4-44c7-a7d6-2b25496560be', N'except', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b5fb98bd-03aa-4e4e-a934-6d986358f1dd', 'a6e6125a-f6ad-4c5e-9929-04d90714a692', N'else', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9a903012-d686-4092-9586-d53e3b284891', '89c35c5c-54e4-44c7-a7d6-2b25496560be', N'else', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a4766a5c-3ab1-47ab-bef5-06464ae617bb', 'a6e6125a-f6ad-4c5e-9929-04d90714a692', N'finally', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('00cd583b-d394-4f17-8ac1-0c253ab5f45a', '89c35c5c-54e4-44c7-a7d6-2b25496560be', N'finally', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('51b2c9e5-e0dd-43ee-99e2-b5ceb84948fd', '69dab2d1-afe6-4adc-a277-aa3c2c64795d', N'throw', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('75ad4caf-6179-4e56-b8f8-d0fbe3cfe9bd', 'a8557f4c-e828-4550-870d-a9d471d40ab7', N'throw', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4a2c5e32-6e87-4d38-82af-7370b0b1d164', '69dab2d1-afe6-4adc-a277-aa3c2c64795d', N'raise', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('05b54ac7-cdeb-4a24-a5a0-ca121887a297', 'a8557f4c-e828-4550-870d-a9d471d40ab7', N'raise', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b249cf0e-c9de-4226-a357-ce28410a2be7', '69dab2d1-afe6-4adc-a277-aa3c2c64795d', N'except', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f820f676-748a-4315-92e2-1e3b3e759197', 'a8557f4c-e828-4550-870d-a9d471d40ab7', N'except', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('eff920d6-392b-416e-8e7c-86967fca5096', '69dab2d1-afe6-4adc-a277-aa3c2c64795d', N'error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('aecd9c7d-74b5-4b2e-a920-0e3c0ecb2b5d', 'a8557f4c-e828-4550-870d-a9d471d40ab7', N'error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('96a9e2b1-c7a5-4af5-b09f-c9b80aba5b4a', 'fbcac487-2086-4615-9dab-abeb3822c94b', N'A', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('875cb1de-c0df-4930-bbdc-6d779761e8e1', 'fdea7eb2-6476-4707-bf57-0054d349418c', N'A', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('97ca832b-2666-41a4-afe9-b2732dfd276a', 'fbcac487-2086-4615-9dab-abeb3822c94b', N'B', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d8c5b540-abe5-4df7-a5df-d99ab9cef2b8', 'fdea7eb2-6476-4707-bf57-0054d349418c', N'B', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('49041fc7-9b79-4488-816e-884eb7e7d492', 'fbcac487-2086-4615-9dab-abeb3822c94b', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dd7d3470-2247-427c-a945-b12f407d5ff2', 'fdea7eb2-6476-4707-bf57-0054d349418c', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dc4186c3-1bc5-471b-a294-70f7f816745e', 'fbcac487-2086-4615-9dab-abeb3822c94b', N'None', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d2bc87d8-e40e-48da-9ebd-7ab5038ae337', 'fdea7eb2-6476-4707-bf57-0054d349418c', N'None', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0538acc4-8491-45c9-a0d5-43a3be668048', 'adc61782-d223-404c-86dd-fd82f8abbf9d', N'class MyError: pass', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fb01aba6-1951-4421-928c-cb655821443f', '53c107af-d9b0-4daf-af70-d8028555639d', N'class MyError: pass', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4f85f998-c838-482e-a8c1-fcafc1b0d441', 'adc61782-d223-404c-86dd-fd82f8abbf9d', N'class MyError(Exception): pass', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ac1146a0-0dcd-427f-934c-144aa35c8ff2', '53c107af-d9b0-4daf-af70-d8028555639d', N'class MyError(Exception): pass', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('53d48e70-bf48-48d3-b730-fb7ac5c5985c', 'adc61782-d223-404c-86dd-fd82f8abbf9d', N'def MyError(): pass', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8827f838-1b12-4c20-b1b9-5a696e1fca51', '53c107af-d9b0-4daf-af70-d8028555639d', N'def MyError(): pass', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('25c662e4-965a-4265-813b-6241d7a7e33a', 'adc61782-d223-404c-86dd-fd82f8abbf9d', N'raise MyError', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a4bfa7ee-4c1b-4dbe-a6b2-d2f5cf6a7aa0', '53c107af-d9b0-4daf-af70-d8028555639d', N'raise MyError', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('da48015e-8842-4d84-bb3e-862ef2337143', '90b6f063-d5d7-4fbf-a378-aa2c29a1b784', N'Using multiple classes with same method names', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0ef43582-ec43-4a34-8f3b-d955f1002f95', '9850f5e0-eee2-4e5b-957f-be63ddb25a7d', N'Using multiple classes with same method names', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('81b9d79b-6411-43ba-bfbf-c405e953bf9a', '90b6f063-d5d7-4fbf-a378-aa2c29a1b784', N'Using only one method per class', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('55076b2b-bcb2-4ad5-ba1d-b66cab8c649c', '9850f5e0-eee2-4e5b-957f-be63ddb25a7d', N'Using only one method per class', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a3811a58-b223-4cd2-8d98-1ec6e7eb83a8', '90b6f063-d5d7-4fbf-a378-aa2c29a1b784', N'Changing variable type', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('26d03f02-53dd-443a-978d-9a87d253879c', '9850f5e0-eee2-4e5b-957f-be63ddb25a7d', N'Changing variable type', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('239b2ba5-6185-49f5-a48e-8c8aefeade05', '90b6f063-d5d7-4fbf-a378-aa2c29a1b784', N'Writing multiple init methods', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bc731325-d120-4576-8a60-968fac246ab9', '9850f5e0-eee2-4e5b-957f-be63ddb25a7d', N'Writing multiple init methods', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a6912dfb-4b4a-400d-b50b-c2710a9aa1d7', 'f14f9d47-c521-4916-a1aa-8c864446e24c', N'new', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2f9f220e-272c-48ef-a708-dea6f2199a4c', '5039299a-0e8c-4b9d-b589-aec2721a859d', N'new', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9a5ce6f2-9ba2-44a1-ab08-75979f81c4ca', 'f14f9d47-c521-4916-a1aa-8c864446e24c', N'create', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3c905fbc-cf34-4824-97c4-7ba1a17f82b3', '5039299a-0e8c-4b9d-b589-aec2721a859d', N'create', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('eebad6e0-ac5b-49de-a5ed-18144ffe7454', 'f14f9d47-c521-4916-a1aa-8c864446e24c', N'obj', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('259e00a3-76b5-48e1-b336-018336522eee', '5039299a-0e8c-4b9d-b589-aec2721a859d', N'obj', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b62baf4a-a303-4bae-b015-f7360ec54d3f', 'f14f9d47-c521-4916-a1aa-8c864446e24c', N'class', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d2950fd8-6106-4e5f-9110-19d57022fc53', '5039299a-0e8c-4b9d-b589-aec2721a859d', N'class', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9a64f862-429a-459c-ba30-977eb6a04dac', 'ed224955-5439-4405-a441-8d4f333b8fad', N'Program ignores it', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f095f591-1a5b-4276-828d-40899e05b9f8', '2b07474d-0e26-4727-be4f-4cb1ac9ce1be', N'Program ignores it', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a36da0c6-4d33-4218-be0a-237eeafadac3', 'ed224955-5439-4405-a441-8d4f333b8fad', N'Program crashes', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7d32db96-f846-4307-97fa-dd9a4a313c13', '2b07474d-0e26-4727-be4f-4cb1ac9ce1be', N'Program crashes', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8a722de8-7417-4f21-9637-1ba1690343cf', 'ed224955-5439-4405-a441-8d4f333b8fad', N'Error gets logged silently', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7815389c-0d28-4add-a19a-17739fd198a9', '2b07474d-0e26-4727-be4f-4cb1ac9ce1be', N'Error gets logged silently', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7dda6029-f46e-4ec6-8efb-951dfa5e2d32', 'ed224955-5439-4405-a441-8d4f333b8fad', N'Nothing', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3cfeec89-176a-469d-82b6-955df5a140ae', '2b07474d-0e26-4727-be4f-4cb1ac9ce1be', N'Nothing', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bac08de7-0e19-4a63-b171-4e63d14cf789', '31e0900e-41d4-4031-a4e4-c649f718566b', N'Inheritance + Polymorphism', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('60aad590-7227-4eca-a89d-9eb6ff50dad3', 'd34d025f-09a9-441c-b674-d804990c43f3', N'Inheritance + Polymorphism', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5596f732-63dd-4a1c-a044-45908b153d06', '31e0900e-41d4-4031-a4e4-c649f718566b', N'Encapsulation', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a5aa666b-0177-4359-94e3-588fdb067997', 'd34d025f-09a9-441c-b674-d804990c43f3', N'Encapsulation', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('77f97edb-c943-4b5a-8f60-2cc9d3781f18', '31e0900e-41d4-4031-a4e4-c649f718566b', N'Abstraction', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cc537e6b-e05c-4326-9325-036cada13f1f', 'd34d025f-09a9-441c-b674-d804990c43f3', N'Abstraction', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a0d19796-0104-45b8-83ec-3a9c3e44f0cf', '31e0900e-41d4-4031-a4e4-c649f718566b', N'Composition', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('28014639-65ab-47d1-a617-26793758787c', 'd34d025f-09a9-441c-b674-d804990c43f3', N'Composition', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5094707d-4fa9-4cb9-8a79-e44647a4b1d5', 'b13f13be-b412-40d8-bc21-ab367e61ea15', N'Generic', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c55ccdda-7762-49d6-b39a-bfd91bc2fc93', '67647cd9-046a-4338-887d-95316f641703', N'Generic', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f4990c36-e7e6-430b-b27e-c54f71bfdbca', 'b13f13be-b412-40d8-bc21-ab367e61ea15', N'Meow', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8249a5d4-ffc5-4aa6-bba7-404d4142cf6a', '67647cd9-046a-4338-887d-95316f641703', N'Meow', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fc1f1e17-3a0a-488c-bf42-3f002351689c', 'b13f13be-b412-40d8-bc21-ab367e61ea15', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e9638d24-6da7-41dc-9a4d-fd11d85f2bad', '67647cd9-046a-4338-887d-95316f641703', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('39284eea-a0ad-42ff-94bc-1b8c470d03b4', 'b13f13be-b412-40d8-bc21-ab367e61ea15', N'None', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('94a9d6f0-645f-448a-b301-840a0f8bb7e5', '67647cd9-046a-4338-887d-95316f641703', N'None', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('142d34ad-ffc5-498d-83d9-0abf386d13f2', '5263d28d-a8f9-4912-8b76-db4016199762', N'Error', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('641be02b-af63-414c-abf3-9979ff7c2b2f', '060326eb-51be-4407-86f8-7643fd137469', N'Error', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('75dfc610-a851-4992-8b01-dd04afdab5b8', '5263d28d-a8f9-4912-8b76-db4016199762', N'No error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3d86bb98-e4c5-47e2-84a2-0ee64c962e45', '060326eb-51be-4407-86f8-7643fd137469', N'No error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f790c6a2-89b7-4217-8073-240cb63ad41d', '5263d28d-a8f9-4912-8b76-db4016199762', N'Error + No error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('08bfe0c1-4742-440d-ad50-62adc54786e3', '060326eb-51be-4407-86f8-7643fd137469', N'Error + No error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('22d6cd2f-4560-464d-b7f7-65c9cd5dfa91', '5263d28d-a8f9-4912-8b76-db4016199762', N'Crash', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('515d49ea-9935-4d56-8528-1d5acc180596', '060326eb-51be-4407-86f8-7643fd137469', N'Crash', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c09ef8b4-45a9-41ea-978c-1dc9c67c9883', '7a126e54-9c80-4c3f-a4a2-71be6e736f25', N'To confuse users', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8a432233-489a-4d1c-a1d7-19813f569a7a', '3296ae3f-9873-4db8-9747-61f05ed65ca8', N'To confuse users', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5ce5ecbc-501c-4d6e-9426-d207211a3758', '7a126e54-9c80-4c3f-a4a2-71be6e736f25', N'For meaningful, specific error handling', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('092eb82a-3565-47da-9972-f8b9b4970a60', '3296ae3f-9873-4db8-9747-61f05ed65ca8', N'For meaningful, specific error handling', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('73535cfc-c7ee-453a-b6c3-57e0d404624a', '7a126e54-9c80-4c3f-a4a2-71be6e736f25', N'To replace built-in errors', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('685389eb-f3c6-45c4-b37b-9403dfb77fce', '3296ae3f-9873-4db8-9747-61f05ed65ca8', N'To replace built-in errors', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b66d6917-5819-4635-8462-75a52016c951', '7a126e54-9c80-4c3f-a4a2-71be6e736f25', N'To avoid debugging', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('645cbb51-d9d1-408a-a95d-fd155962af77', '3296ae3f-9873-4db8-9747-61f05ed65ca8', N'To avoid debugging', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('adf31bb3-0234-423b-887d-1edab30e076b', '211b423c-95db-416b-8902-cb78aebb744b', N'repr', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('630e303f-ca23-4aa1-93e5-17ece16c90fd', 'f4d41c0f-b1e7-402c-aac6-7061e0f4c981', N'repr', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1ccbff77-1dcf-4d94-b12b-1cf131cacde8', '211b423c-95db-416b-8902-cb78aebb744b', N'str', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ef991042-a4d6-432b-bf45-f42c5357ac63', 'f4d41c0f-b1e7-402c-aac6-7061e0f4c981', N'str', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2adde8a0-8935-4182-acaa-67f75e7d06c4', '211b423c-95db-416b-8902-cb78aebb744b', N'format', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c5cd2b27-068c-420b-a29d-aca6abdb9531', 'f4d41c0f-b1e7-402c-aac6-7061e0f4c981', N'format', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('63a9c80f-69c5-4ffd-9e9a-1aca011ee6b1', '211b423c-95db-416b-8902-cb78aebb744b', N'print', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8c6480fe-d964-410e-a12b-5ea540afb932', 'f4d41c0f-b1e7-402c-aac6-7061e0f4c981', N'print', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ba5d900d-97ec-4c13-98e9-1ce18b17c6a0', 'd51b6bcc-01f5-42eb-b528-ab23df153e18', N'file()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9cd77aab-b9e1-4011-9abf-b537d3ea5ad3', 'b1fabe0d-3c35-4b4c-8819-5b5d32636b1f', N'file()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('536e13b2-0df4-4b0a-ab5b-e43ad58da919', 'd51b6bcc-01f5-42eb-b528-ab23df153e18', N'open()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f304015d-d737-407e-8c65-e9e8ac898a56', 'b1fabe0d-3c35-4b4c-8819-5b5d32636b1f', N'open()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('800fdb54-8254-4748-986c-47e7b0c9f043', 'd51b6bcc-01f5-42eb-b528-ab23df153e18', N'read()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('54b638a6-9404-404e-880d-110293a541a2', 'b1fabe0d-3c35-4b4c-8819-5b5d32636b1f', N'read()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c4b87e52-219e-4ad0-9014-9452ff81e520', 'd51b6bcc-01f5-42eb-b528-ab23df153e18', N'load()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6bb82834-c5f3-4c95-9439-d3698d89ee12', 'b1fabe0d-3c35-4b4c-8819-5b5d32636b1f', N'load()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('44ab78cd-6619-4c17-bfb7-ef35d43b98f9', '39c1ee17-388b-4878-95e6-e39188616f02', N'"r"', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dab6396b-2a5d-4184-846d-85aee87bdee1', '5b25bee3-e0f1-469b-a2cc-228cb2271c55', N'"r"', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ec2c683d-69f0-4ad1-b2f2-0ec5b7dd406c', '39c1ee17-388b-4878-95e6-e39188616f02', N'"w"', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e330be77-7072-4a7a-9dd1-621c96b6236c', '5b25bee3-e0f1-469b-a2cc-228cb2271c55', N'"w"', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a915ec26-31d7-451b-b083-9229e1210cd7', '39c1ee17-388b-4878-95e6-e39188616f02', N'"a"', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('291f72e6-9f75-482b-bb36-b79652fca7f2', '5b25bee3-e0f1-469b-a2cc-228cb2271c55', N'"a"', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('db8c34be-06ce-4ca4-b0f2-8a117bd91908', '39c1ee17-388b-4878-95e6-e39188616f02', N'"x"', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('48c7f99f-ff79-4d26-abe8-14a3033c7791', '5b25bee3-e0f1-469b-a2cc-228cb2271c55', N'"x"', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('718ae3ae-74ac-46e3-b067-bc94cf7af83c', 'ea858541-342c-435f-a40c-a763c817aeb6', N'catch', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4dac59e0-d73d-4a8b-b118-5706422e0a83', '9303b7e1-1874-4e1e-b3d5-e45b1ffdde6d', N'catch', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5edef165-75ca-4fdc-9f53-715ce5910a74', 'ea858541-342c-435f-a40c-a763c817aeb6', N'except', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('55fbc2d1-16dd-440b-8f7b-9c4bf43b4d58', '9303b7e1-1874-4e1e-b3d5-e45b1ffdde6d', N'except', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ea1853ae-8e99-4711-a0de-8c93d89c8ea7', 'ea858541-342c-435f-a40c-a763c817aeb6', N'error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6b715f28-522f-40dd-b528-61567c6842bd', '9303b7e1-1874-4e1e-b3d5-e45b1ffdde6d', N'error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c6c9b2d5-b7c1-454a-a541-333f3deb0a09', 'ea858541-342c-435f-a40c-a763c817aeb6', N'handle', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('59f102da-0e6a-470c-9c8e-efab2beed04d', '9303b7e1-1874-4e1e-b3d5-e45b1ffdde6d', N'handle', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3273735f-b03a-4707-9dd4-fdbc34acbd29', '53228ba5-24cd-4249-9d56-63bd1c0690fd', N'read()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b608face-b860-403b-91b6-67a1239e3b06', '33ff25b9-649f-49d1-97f6-6bffb365b36a', N'read()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dad7d537-3c98-4e44-b5e5-da39af8e5ef5', '53228ba5-24cd-4249-9d56-63bd1c0690fd', N'readline()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2a2cd974-9ee8-49d6-99df-691766e944cb', '33ff25b9-649f-49d1-97f6-6bffb365b36a', N'readline()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6a594ae3-83d4-4f11-b61d-d1f40c96f4fe', '53228ba5-24cd-4249-9d56-63bd1c0690fd', N'readlines()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a095d4d3-d9bd-4441-9f72-25ce3a6025c2', '33ff25b9-649f-49d1-97f6-6bffb365b36a', N'readlines()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0e84eaa2-62f2-45b8-b81b-308cced967e4', '53228ba5-24cd-4249-9d56-63bd1c0690fd', N'lines()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('36a7f91b-45d7-4186-a95c-8af20dd6e054', '33ff25b9-649f-49d1-97f6-6bffb365b36a', N'lines()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5b2d6838-888f-4eda-8420-646858d374bc', '754efb68-f338-40d6-a2ac-ffc0fd18d7f6', N'Reads it', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c2e952ee-6058-45c5-b9be-503a8acc7bc5', '4fba50de-54e1-419e-90d9-8358d2ca1bc8', N'Reads it', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ed3d4b00-4070-48fb-a188-a9854fc15961', '754efb68-f338-40d6-a2ac-ffc0fd18d7f6', N'Appends to it', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3a597989-a334-48e4-992a-f37cb7822083', '4fba50de-54e1-419e-90d9-8358d2ca1bc8', N'Appends to it', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1d44827a-dbe1-4315-a374-2f43a445503a', '754efb68-f338-40d6-a2ac-ffc0fd18d7f6', N'Overwrites it', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a73da5a2-3b9b-46c8-89af-b15d94c8becf', '4fba50de-54e1-419e-90d9-8358d2ca1bc8', N'Overwrites it', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c48c9fb0-df3a-4353-a81c-863a5eace96d', '754efb68-f338-40d6-a2ac-ffc0fd18d7f6', N'Deletes it', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('87cf715b-d2b4-42d4-9f7e-c314a7fe577d', '4fba50de-54e1-419e-90d9-8358d2ca1bc8', N'Deletes it', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d728ad0d-234c-4154-a03c-a7d8962f26df', 'c0d97bd2-6aab-4cda-ba83-6bdaa2c37fcf', N'False', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('046d55f5-5cd2-47b8-9dc6-d80932dc5f28', '224096b3-c5d4-4ade-b45a-db3c34cbcc04', N'False', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('779c852f-2889-414b-ad7f-1126ad36399d', 'c0d97bd2-6aab-4cda-ba83-6bdaa2c37fcf', N'True', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('79767165-7de8-4597-9f82-6ec036b78968', '224096b3-c5d4-4ade-b45a-db3c34cbcc04', N'True', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f2318c40-4f76-4a5d-a53a-e3f1e65d9b6c', 'c0d97bd2-6aab-4cda-ba83-6bdaa2c37fcf', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3a3ffcd6-889a-46c8-aeda-d8816487dbfb', '224096b3-c5d4-4ade-b45a-db3c34cbcc04', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('35d011ec-727d-48f8-9f3f-3c1b14951041', 'c0d97bd2-6aab-4cda-ba83-6bdaa2c37fcf', N'None', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f8ce1448-99d1-44a4-b686-a8410127e8c0', '224096b3-c5d4-4ade-b45a-db3c34cbcc04', N'None', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('35498687-94d7-4f3b-a39c-38e9d782be9d', '09f54778-02a9-4101-aade-5582f6be0855', N'It creates the file', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('963b3a59-e776-4025-b69f-1181f94799f1', '2563823f-ddf7-4baf-be5f-182a2d3ac64d', N'It creates the file', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('211a60d9-c16a-465c-af86-47aa27b43a2e', '09f54778-02a9-4101-aade-5582f6be0855', N'It raises an error', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0ff0b4cd-7084-4e37-8d5c-103a965569b7', '2563823f-ddf7-4baf-be5f-182a2d3ac64d', N'It raises an error', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8595a044-0c42-4546-8d37-453d273b4117', '09f54778-02a9-4101-aade-5582f6be0855', N'It returns None', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('03e384d5-f0fa-46a8-8b4d-facbca4d0695', '2563823f-ddf7-4baf-be5f-182a2d3ac64d', N'It returns None', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('95d4ebb5-fe5f-4f3f-9813-4260b89e981d', '09f54778-02a9-4101-aade-5582f6be0855', N'It opens an empty file', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f140455e-c2ea-4a80-a109-54e81c0c07ed', '2563823f-ddf7-4baf-be5f-182a2d3ac64d', N'It opens an empty file', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b6729b54-e3a0-4aa9-a0cd-5fc4221b8151', '4cc82bda-daf9-4ff9-8947-1fcffbbe4228', N'raise "Error"', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c01151cc-6df8-44e0-afba-540a37d9396d', '13875f5a-dd79-4d42-a169-64bedb00a92b', N'raise "Error"', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('46afc337-c220-48cb-8312-419c22a3c20e', '4cc82bda-daf9-4ff9-8947-1fcffbbe4228', N'raise Exception("Error")', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c9b237b5-2857-48b2-9dd1-bf33850a4448', '13875f5a-dd79-4d42-a169-64bedb00a92b', N'raise Exception("Error")', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('19981a40-af72-49ec-913a-82e1615b147f', '4cc82bda-daf9-4ff9-8947-1fcffbbe4228', N'error("Error")', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('96a5fe14-f966-4244-9c61-b4adb90be240', '13875f5a-dd79-4d42-a169-64bedb00a92b', N'error("Error")', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e9d9d395-696a-44d7-a7ee-cbde8ff95758', '4cc82bda-daf9-4ff9-8947-1fcffbbe4228', N'throw("Error")', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c51e61cc-0da3-417c-ae60-766f04e0ede0', '13875f5a-dd79-4d42-a169-64bedb00a92b', N'throw("Error")', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('57d4e673-893f-4fe9-b4d3-3654c7d6e571', '4c6414e3-e3cd-4888-80e9-84330c7ed4e7', N'f.close()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('92424a5d-d4e3-4811-b484-285eaffdb1dd', '4f1e15a2-4672-4ea4-b3f7-2f59a8ed7ce6', N'f.close()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('301ef3da-b37c-489e-a223-0d56e81487e4', '4c6414e3-e3cd-4888-80e9-84330c7ed4e7', N'auto.open()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ed9be30d-9350-4eca-9586-79d554e5b543', '4f1e15a2-4672-4ea4-b3f7-2f59a8ed7ce6', N'auto.open()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('56f6b663-7431-4638-8137-be0be0a72d24', '4c6414e3-e3cd-4888-80e9-84330c7ed4e7', N'with open(...) as f:', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ed296baa-5733-4036-b339-930dec4ce6bb', '4f1e15a2-4672-4ea4-b3f7-2f59a8ed7ce6', N'with open(...) as f:', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('32f1bf3c-5128-4f26-90b2-a4002736a52d', '4c6414e3-e3cd-4888-80e9-84330c7ed4e7', N'readfile()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('966a1456-2420-4364-b258-4eb407d827ae', '4f1e15a2-4672-4ea4-b3f7-2f59a8ed7ce6', N'readfile()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('59c794a6-f48f-4395-ad01-7a10eef9875c', 'b7c3b23b-8f18-44e2-a936-b431f397ab6a', N'"rb+"', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('abda95d0-cae1-47a0-bf62-507f42db6d14', 'abd9fc97-d23a-477a-96ed-0ff917222981', N'"rb+"', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('44f4e0e7-fd06-4467-b00e-b3adce9c23a0', 'b7c3b23b-8f18-44e2-a936-b431f397ab6a', N'"r+"', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4269ddbf-2bbc-4a26-875d-94e63ddc206c', 'abd9fc97-d23a-477a-96ed-0ff917222981', N'"r+"', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('702b2832-7edc-423f-9ab1-d3496161617f', 'b7c3b23b-8f18-44e2-a936-b431f397ab6a', N'"wb"', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('94e4d157-2b5c-4399-89f4-f8ca82347803', 'abd9fc97-d23a-477a-96ed-0ff917222981', N'"wb"', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a15c7657-e586-4bda-8387-358f6401dc84', 'b7c3b23b-8f18-44e2-a936-b431f397ab6a', N'"a+"', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5b05aa6c-00f7-4763-a2a4-b112166c3024', 'abd9fc97-d23a-477a-96ed-0ff917222981', N'"a+"', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('88538a53-5037-4909-a425-7bfbd601fe3a', '0650216c-1398-47dd-9f11-f5588db04321', N'Oops', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d2de57a4-29b3-4a49-85a6-5440dde88fcd', 'a13d1e42-14f6-4ec0-8c2a-c7b356ec0245', N'Oops', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e91428cc-b5b4-4c18-bbbc-ec61a7d0a42d', '0650216c-1398-47dd-9f11-f5588db04321', N'Done', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8a650a15-5f85-4a92-b864-06a863bf0fa4', 'a13d1e42-14f6-4ec0-8c2a-c7b356ec0245', N'Done', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('11e7bde8-641a-49e9-a5f9-d5ae2c51ec35', '0650216c-1398-47dd-9f11-f5588db04321', N'Oops then Done', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b928381c-0e49-498e-aca2-39eecdfb08f1', 'a13d1e42-14f6-4ec0-8c2a-c7b356ec0245', N'Oops then Done', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f0002039-73b7-44f6-a80b-967d7e190b59', '0650216c-1398-47dd-9f11-f5588db04321', N'Program crash', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('91437129-fe29-48aa-a5b3-c3504d032391', 'a13d1e42-14f6-4ec0-8c2a-c7b356ec0245', N'Program crash', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('045f5319-aa51-47b5-af1a-8df1743a2d07', 'abf3a318-0ce6-44d2-b05a-ba130e2cd760', N'TypeError', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d7dc219b-d954-455f-a3f8-2f7ebf95b1cc', '2b77038d-9d6d-4a7b-8f07-fe5433e500b0', N'TypeError', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c2408c7f-b497-47d5-b021-423924a3f79f', 'abf3a318-0ce6-44d2-b05a-ba130e2cd760', N'NameError', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8d35b1f2-82db-43f1-b1c1-02b3eea92336', '2b77038d-9d6d-4a7b-8f07-fe5433e500b0', N'NameError', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9c9fd217-28f8-4a1e-bdc5-632842eb8809', 'abf3a318-0ce6-44d2-b05a-ba130e2cd760', N'ValueError', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e45cc547-0dd3-4469-836c-676597d91b29', '2b77038d-9d6d-4a7b-8f07-fe5433e500b0', N'ValueError', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d4210b3d-779f-43d6-8cc9-066ecf8a63d8', 'abf3a318-0ce6-44d2-b05a-ba130e2cd760', N'SyntaxError', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3f222cf1-5e20-4925-b804-021932d7076b', '2b77038d-9d6d-4a7b-8f07-fe5433e500b0', N'SyntaxError', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8e53652b-ea1a-4614-8a18-321ab8a8c787', '44186bb0-bb9f-4605-bab5-1b9db66bcb93', N'The line number', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('90d258cf-8f2c-4cd6-a7b5-9e29096c86d4', '56f45268-c433-4041-8e39-947c20203196', N'The line number', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a4caf11d-7f75-49d2-8f5f-6cc23a9b5bb1', '44186bb0-bb9f-4605-bab5-1b9db66bcb93', N'The exception message', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1425fe53-cc7f-443b-81e5-4bb0188800fa', '56f45268-c433-4041-8e39-947c20203196', N'The exception message', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1751f6a7-ce62-4742-aeba-716fb064f172', '44186bb0-bb9f-4605-bab5-1b9db66bcb93', N'The error variable', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0fffaec1-25ba-4d51-8fdd-bdf2bad906cd', '56f45268-c433-4041-8e39-947c20203196', N'The error variable', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('642342ae-c021-4092-a7c3-03e601b0ef8a', '44186bb0-bb9f-4605-bab5-1b9db66bcb93', N'Nothing', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7841f54e-b154-40d9-8f7f-0738c720534a', '56f45268-c433-4041-8e39-947c20203196', N'Nothing', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1ebd1222-7b3c-4db7-8b9d-a0bec5db05bb', '8d55e77d-b743-4814-8ccd-259683f5ae75', N'class MyError: pass', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f50a24ec-3306-4c37-af29-497836717c3d', 'd5254690-26e4-4672-8893-378257df9cfd', N'class MyError: pass', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e3cb7042-2b3a-4a61-afd8-5b545b2320a0', '8d55e77d-b743-4814-8ccd-259683f5ae75', N'class MyError(Exception): pass', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5fab63d0-8a74-460b-baf5-6c451025004a', 'd5254690-26e4-4672-8893-378257df9cfd', N'class MyError(Exception): pass', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e4576a28-eab7-46f6-a8c9-46c2b0884bc3', '8d55e77d-b743-4814-8ccd-259683f5ae75', N'def MyError(): pass', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ed1795b6-c7fd-42ff-a492-38a629b9e3b8', 'd5254690-26e4-4672-8893-378257df9cfd', N'def MyError(): pass', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('076a3477-3546-4ec6-b2ff-d562fdf1930a', '8d55e77d-b743-4814-8ccd-259683f5ae75', N'MyError = Error()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d2147049-92d4-4af9-94de-ca1173ebd320', 'd5254690-26e4-4672-8893-378257df9cfd', N'MyError = Error()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('957b700f-16bb-4fc5-b05c-5bc9b39cc2d0', '4fb360df-690f-46b3-8ee4-1d6072c043c9', N'Only “Check done”', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d79777f8-f58a-4022-8c45-118e18e2998d', '718bd6d8-5b42-4223-aae3-9b82ef5d60f4', N'Only “Check done”', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7cf30719-fcd0-4433-a36d-d73e3eb0c1e2', '4fb360df-690f-46b3-8ee4-1d6072c043c9', N'Error followed by “Check done”', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b2a88bfa-6634-4b20-8019-63d93e8736c8', '718bd6d8-5b42-4223-aae3-9b82ef5d60f4', N'Error followed by “Check done”', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('17044fa7-fce5-489a-9c41-05c425e6eb7f', '4fb360df-690f-46b3-8ee4-1d6072c043c9', N'No output', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f87c215b-f38a-4311-8e55-f81fe8be0017', '718bd6d8-5b42-4223-aae3-9b82ef5d60f4', N'No output', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3e148c52-8605-4108-bf92-1fa48a986286', '4fb360df-690f-46b3-8ee4-1d6072c043c9', N'Program crash', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('92b439d6-b371-478e-8cbb-16620a91fbae', '718bd6d8-5b42-4223-aae3-9b82ef5d60f4', N'Program crash', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4eec3bed-e0dc-41c1-9214-c750d49c3b70', 'ba928910-aad5-4841-bfc3-8e43f98f3314', N'throw', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('27448405-9bec-407e-9fe0-aa216471cf6e', '1a62bf67-d110-46d7-8f07-8198187ed9cb', N'throw', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cd22b487-0289-4ced-832d-455a76578be7', 'ba928910-aad5-4841-bfc3-8e43f98f3314', N'raise', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('004d741d-38e9-44ea-a38a-fd4ea6fa03f2', '1a62bf67-d110-46d7-8f07-8198187ed9cb', N'raise', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9c2677c6-dc2c-4dad-8434-cb5c37082411', 'ba928910-aad5-4841-bfc3-8e43f98f3314', N'except', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3545def3-4bc7-4e60-9bc0-3db4affffbc6', '1a62bf67-d110-46d7-8f07-8198187ed9cb', N'except', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('02ae172c-363d-4dfe-a4e2-7f3e7182f411', 'ba928910-aad5-4841-bfc3-8e43f98f3314', N'error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('aa2c79ba-bccf-41be-b99c-13c99e54f617', '1a62bf67-d110-46d7-8f07-8198187ed9cb', N'error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('57c40dec-481c-4465-818d-ffc1169f8e31', 'a29d6c13-da03-4fe3-9183-ef7477936462', N'Files are automatically closed when using with', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fb2bddd6-594f-4650-aa52-b68519dc06f4', '86075e15-d6c6-454f-bd47-7dee43338c26', N'Files are automatically closed when using with', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d5b05c37-59c9-4eae-95b5-10e4eaa6c71b', 'a29d6c13-da03-4fe3-9183-ef7477936462', N'Files never close', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fc4f2a98-58a9-441b-8acc-a35b2efe87ad', '86075e15-d6c6-454f-bd47-7dee43338c26', N'Files never close', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b2e8a8da-9169-495d-bb4b-ed8f49de68a3', 'a29d6c13-da03-4fe3-9183-ef7477936462', N'Manual close is mandatory', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('238b67ad-a632-458f-b168-e3b20d5b8521', '86075e15-d6c6-454f-bd47-7dee43338c26', N'Manual close is mandatory', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e26027f9-1ba6-4246-aead-a44d6136f936', 'a29d6c13-da03-4fe3-9183-ef7477936462', N'open() is deprecated', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c8e7dfbe-ae95-4fdc-9909-c72a4b71e234', '86075e15-d6c6-454f-bd47-7dee43338c26', N'open() is deprecated', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('20dd9c5b-d7c9-4c69-80bf-b4112d01e315', 'a3f9603c-0873-4699-b9c0-9ad0acdba20f', N'To prevent the program from crashing when files are missing or unreadable', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7dc693a0-2f2e-4745-8248-672f535df8a6', '07c4951c-d668-4b89-a0e5-b93609febe73', N'To prevent the program from crashing when files are missing or unreadable', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b9d1e964-c4d8-4321-9e42-fa4e7ab87995', 'a3f9603c-0873-4699-b9c0-9ad0acdba20f', N'To make the code faster', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f9e599bb-e416-4240-87f9-50f0ba5409af', '07c4951c-d668-4b89-a0e5-b93609febe73', N'To make the code faster', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('56810ba7-f741-4258-9a72-6c3ca8959bed', 'a3f9603c-0873-4699-b9c0-9ad0acdba20f', N'To save memory', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9584ec1b-1880-484d-993f-a768ce4bc063', '07c4951c-d668-4b89-a0e5-b93609febe73', N'To save memory', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fb66a0c9-716a-42f1-8203-07b5fac06783', 'a3f9603c-0873-4699-b9c0-9ad0acdba20f', N'To delete unused files', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d61fdb51-6966-4e96-85e0-23d8cfcb2e6d', '07c4951c-d668-4b89-a0e5-b93609febe73', N'To delete unused files', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2dcad74c-b20d-4e39-91a2-441d5f54d416', '7b59edeb-6a93-408e-aa0e-fdf285ff0578', N'sqrt()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f1e889c9-050f-4974-ad76-132543df93ac', 'a82df52a-5fd8-4028-b8c9-f6a56ff154c3', N'sqrt()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('77cb9787-8e7d-4901-8a51-804fdfc47ae7', '7b59edeb-6a93-408e-aa0e-fdf285ff0578', N'math.sqrt()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9aacbaca-feed-4318-826e-dfec046d3bce', 'a82df52a-5fd8-4028-b8c9-f6a56ff154c3', N'math.sqrt()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('82cb300f-f0b1-4051-8d3d-30e382f93114', '7b59edeb-6a93-408e-aa0e-fdf285ff0578', N'square()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b9fd5d3d-1940-4479-b966-b65e55502a76', 'a82df52a-5fd8-4028-b8c9-f6a56ff154c3', N'square()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('34058104-db3a-4a42-9eb4-3af3f582f3b4', '7b59edeb-6a93-408e-aa0e-fdf285ff0578', N'root()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c09ad874-a8cc-47b5-9443-f743b2648112', 'a82df52a-5fd8-4028-b8c9-f6a56ff154c3', N'root()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bf2c76f6-2201-4222-82cf-7028a69d2d62', 'a7a8ddfc-8ea9-42f5-a83a-bfff69a9805d', N'File operations', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5e0ed224-49cf-4704-ac0b-323260b58783', '32a48302-edad-4150-a3f4-1d465ab53560', N'File operations', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6f30a292-cc00-4722-95f2-0c830afebb7c', 'a7a8ddfc-8ea9-42f5-a83a-bfff69a9805d', N'Generating random numbers', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0507e0c4-07c9-420e-9991-4ee2cef68c55', '32a48302-edad-4150-a3f4-1d465ab53560', N'Generating random numbers', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9d8a7106-d48b-4aa8-95af-a64327ec207d', 'a7a8ddfc-8ea9-42f5-a83a-bfff69a9805d', N'Sorting data', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c0483a50-7b7c-4e42-8a12-7fcc5f7fc3ca', '32a48302-edad-4150-a3f4-1d465ab53560', N'Sorting data', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8b1fa255-75ab-4161-b67d-2b0216430302', 'a7a8ddfc-8ea9-42f5-a83a-bfff69a9805d', N'Creating classes', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('166a2c24-a585-44f6-952a-4b02f36b3572', '32a48302-edad-4150-a3f4-1d465ab53560', N'Creating classes', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('433c8996-1037-4e5b-982f-75f744bb8b88', 'fa1325d1-cd73-4eba-b2d7-fe3ee998aa9a', N'install numpy', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1d665b3b-7c64-4303-8b51-9fb06daa4dc2', '15dddc95-dbff-46c1-b378-1e1a581f0c90', N'install numpy', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('02b06fa2-1df0-4ea1-8ef7-66a3e79e6b47', 'fa1325d1-cd73-4eba-b2d7-fe3ee998aa9a', N'import numpy', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('81db0f8d-3fc0-4bbd-ba45-c36211f392a1', '15dddc95-dbff-46c1-b378-1e1a581f0c90', N'import numpy', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e6e8455b-ec06-419a-b591-f7d7d234318f', 'fa1325d1-cd73-4eba-b2d7-fe3ee998aa9a', N'pip install numpy', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('24835a3b-60f7-4137-93d5-6a0ccb815775', '15dddc95-dbff-46c1-b378-1e1a581f0c90', N'pip install numpy', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b90253ef-a69f-47ce-bbca-1422c990210d', 'fa1325d1-cd73-4eba-b2d7-fe3ee998aa9a', N'setup numpy', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('803bc357-c669-470c-84ce-f47aff0d0a62', '15dddc95-dbff-46c1-b378-1e1a581f0c90', N'setup numpy', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('960131be-57bd-4a63-87ed-0216fd476456', 'f2cb1456-674d-4fec-9481-f0764f58e378', N'5', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cb5f6978-e8e3-4593-bb6c-a7b0797848e2', '8be7aa6d-f60d-47f9-9def-4009c72c0e9e', N'5', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('379e5e40-8ff6-4f0d-86b8-b714418739be', 'f2cb1456-674d-4fec-9481-f0764f58e378', N'4.9', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1c49cb75-675c-4e4e-a076-00849e46d5a7', '8be7aa6d-f60d-47f9-9def-4009c72c0e9e', N'4.9', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c58651e6-312f-4263-93ee-46b5021fef4c', 'f2cb1456-674d-4fec-9481-f0764f58e378', N'4', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d19ec8e9-1667-4d04-96ce-3487fc4d5d61', '8be7aa6d-f60d-47f9-9def-4009c72c0e9e', N'4', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('aecdbef0-1f76-40ce-b1e2-09cf0b65c189', 'f2cb1456-674d-4fec-9481-f0764f58e378', N'3', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9f88396e-9168-4f8e-98e6-a6fe7d936551', '8be7aa6d-f60d-47f9-9def-4009c72c0e9e', N'3', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4f34ef00-d51a-4992-90ca-37ef4a8da993', '48dd13c1-7b0a-4b43-bbea-0bee2fb36308', N'Always ''a''', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c702026a-72bb-4ae2-9808-0481ee797cc4', 'e7526e98-9b48-4d4f-a94c-d4efb21c5d61', N'Always ''a''', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('82925021-6f3f-4d60-a741-786209794474', '48dd13c1-7b0a-4b43-bbea-0bee2fb36308', N'One random element', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('17ccba77-f902-427f-8caf-5334e6c53940', 'e7526e98-9b48-4d4f-a94c-d4efb21c5d61', N'One random element', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('63320f82-92fe-4a19-a311-e5be841208c5', '48dd13c1-7b0a-4b43-bbea-0bee2fb36308', N'The whole list', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0e47ef93-0901-431e-9413-fcef934463ce', 'e7526e98-9b48-4d4f-a94c-d4efb21c5d61', N'The whole list', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f9242cef-a05f-499c-a091-9dd4e1d10c0d', '48dd13c1-7b0a-4b43-bbea-0bee2fb36308', N'A number', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('248ecbb7-42ec-4754-9094-95c57fea6d6f', 'e7526e98-9b48-4d4f-a94c-d4efb21c5d61', N'A number', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('777d0de3-c4db-484a-b658-e147f2802b71', '85ed9f18-4299-4e51-b544-a5c96d320fdf', N'random.number(5,15)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e7cbb1b4-2164-4cad-917a-0c1b2b898102', '92a8af62-73a7-4cc3-8c1d-ece9297bad06', N'random.number(5,15)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('459b1899-9630-498a-917c-707058b365f7', '85ed9f18-4299-4e51-b544-a5c96d320fdf', N'random.randint(5,15)', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('49e17554-0aed-4e57-ac37-68f6f9d3ec08', '92a8af62-73a7-4cc3-8c1d-ece9297bad06', N'random.randint(5,15)', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('65050e80-7b55-489b-9712-cd36950ad317', '85ed9f18-4299-4e51-b544-a5c96d320fdf', N'random.range(5,15)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('984681ef-83b3-4694-bf78-d733208eba5f', '92a8af62-73a7-4cc3-8c1d-ece9297bad06', N'random.range(5,15)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9842c2ca-3fe5-4077-8194-2651102b11b8', '85ed9f18-4299-4e51-b544-a5c96d320fdf', N'rand(5,15)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ddc551a8-76b4-46b8-b9ed-63861200d9c2', '92a8af62-73a7-4cc3-8c1d-ece9297bad06', N'rand(5,15)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('179a5b94-9344-45af-a4d0-3fe799c1610a', '454ab577-d509-46fc-bb50-a0f0178bdac2', N'np.sum()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f87fdb34-8a3e-4498-92c5-10cd2ebd33b2', '4465cb29-cf0b-42eb-a719-689b5c10c9bc', N'np.sum()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bfed9781-6b51-4dc6-8f5e-8cae3656c093', '454ab577-d509-46fc-bb50-a0f0178bdac2', N'np.avg()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8c963aee-c061-4062-ad97-146d019be804', '4465cb29-cf0b-42eb-a719-689b5c10c9bc', N'np.avg()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ed6f4714-e9dd-43fa-888b-7fe4012aef58', '454ab577-d509-46fc-bb50-a0f0178bdac2', N'np.mean()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('54276696-a7c9-4514-98d8-45294aec64dd', '4465cb29-cf0b-42eb-a719-689b5c10c9bc', N'np.mean()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8aef5a39-4b0a-4dfe-a005-f08415c74538', '454ab577-d509-46fc-bb50-a0f0178bdac2', N'np.total()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('47838df4-57ed-43d0-bf70-832575e84e42', '4465cb29-cf0b-42eb-a719-689b5c10c9bc', N'np.total()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('173efa13-9158-45cf-8e85-c7bd963bfc7c', 'be3040d2-6766-405b-a503-2c0907fcf06d', N'import np as numpy', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('31e1a462-713a-41b9-a452-d2da9f50abd2', '5617ba61-0875-41f0-a46e-1832f5c5dea5', N'import np as numpy', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f4a6ca6b-6443-45cb-a515-025b969dbc02', 'be3040d2-6766-405b-a503-2c0907fcf06d', N'from numpy import np', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2d32aba1-6abe-45de-ade4-26f0206336fe', '5617ba61-0875-41f0-a46e-1832f5c5dea5', N'from numpy import np', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2c7cdbbd-2ad5-4d2b-ab3c-d84e5524e54c', 'be3040d2-6766-405b-a503-2c0907fcf06d', N'import numpy as np', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('abf62b81-7077-4b83-a5cb-69c3c4afffbe', '5617ba61-0875-41f0-a46e-1832f5c5dea5', N'import numpy as np', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5c298063-5ceb-4d89-b1c7-4eebc9315706', 'be3040d2-6766-405b-a503-2c0907fcf06d', N'import numpy()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cc831041-8da2-4f3e-acfd-b20613a049f1', '5617ba61-0875-41f0-a46e-1832f5c5dea5', N'import numpy()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a21b205a-0938-4e45-ad2b-1aaf73551371', 'eebef106-88ea-4ffd-b331-5c0a533dc300', N'[1, 2, 3, 4, 5]', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7509a3bb-cd6c-4331-b969-b6a370befd1f', '3defc1a7-76f5-406b-8035-89f1fd47859d', N'[1, 2, 3, 4, 5]', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('15e5ac76-bf69-4f93-b2af-acf2f682df89', 'eebef106-88ea-4ffd-b331-5c0a533dc300', N'[1, 2, 3, 4, 5, 6]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0b7751e6-bf78-4ffb-bb3b-9744621c5922', '3defc1a7-76f5-406b-8035-89f1fd47859d', N'[1, 2, 3, 4, 5, 6]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('56789dfe-b945-45c5-a722-bdfd97901032', 'eebef106-88ea-4ffd-b331-5c0a533dc300', N'[0, 1, 2, 3, 4, 5]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('285d73f2-cac5-46fa-89ee-483373221687', '3defc1a7-76f5-406b-8035-89f1fd47859d', N'[0, 1, 2, 3, 4, 5]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bf40e461-042a-4c96-b8c5-51bcfb5e68a4', 'eebef106-88ea-4ffd-b331-5c0a533dc300', N'[2, 3, 4, 5, 6]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('00c18c72-03d5-4172-8ab0-689ebb431407', '3defc1a7-76f5-406b-8035-89f1fd47859d', N'[2, 3, 4, 5, 6]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d1d45ae6-1c8f-4cd3-8825-b51039ca2a8c', '46ee21ef-17c6-40d0-8544-7a7f19b363f3', N'The power function', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fb67f7ac-1b48-4b58-b239-c4bcccee365f', 'f0e3208f-ce30-4c85-a63f-771eef2a9990', N'The power function', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('82b69160-912f-4ffb-9603-b111e2094337', '46ee21ef-17c6-40d0-8544-7a7f19b363f3', N'The circle’s radius', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b93dd317-ad7e-4147-a893-3bd799e3d957', 'f0e3208f-ce30-4c85-a63f-771eef2a9990', N'The circle’s radius', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('606cb97c-995b-468a-9710-34d6313127bc', '46ee21ef-17c6-40d0-8544-7a7f19b363f3', N'The constant π', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2f034d90-0a65-4688-b195-7250936d9921', 'f0e3208f-ce30-4c85-a63f-771eef2a9990', N'The constant π', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b55a5fde-ef29-4777-930e-9e532cd0abed', '46ee21ef-17c6-40d0-8544-7a7f19b363f3', N'The value of e', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('34fb5671-97cf-4f1d-892d-de281e5a149c', 'f0e3208f-ce30-4c85-a63f-771eef2a9990', N'The value of e', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f7c187fb-41e7-4176-aaca-fcc3ffd467e4', '1e965b83-d78b-4267-9670-8a3554ae784d', N'Rotates the matrix', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e8bb972a-69cb-477e-9871-50dddc40cb4a', '1dfef902-d4b4-4203-851c-588934bd0392', N'Rotates the matrix', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5112b89c-6a88-41c0-b822-c961b8ba3387', '1e965b83-d78b-4267-9670-8a3554ae784d', N'Swaps rows and columns', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d1335604-02db-46cb-8fba-5cb432054610', '1dfef902-d4b4-4203-851c-588934bd0392', N'Swaps rows and columns', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('36a8de89-7235-4143-9e92-1375d733ed45', '1e965b83-d78b-4267-9670-8a3554ae784d', N'Reverses data', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1cbd0d16-c57e-4457-b2f3-0040454e2661', '1dfef902-d4b4-4203-851c-588934bd0392', N'Reverses data', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c2fdd3ef-605a-490a-9a9c-4fd9bda303f0', '1e965b83-d78b-4267-9670-8a3554ae784d', N'Sorts the matrix', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('458eb4d1-9ec4-4fd5-8b0f-3a682eb5aed3', '1dfef902-d4b4-4203-851c-588934bd0392', N'Sorts the matrix', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2ccd7243-9f95-408b-9dd8-9e3f1ead988f', '437b6c1c-8836-422d-bad8-21e3e1eb8803', N'random.mix()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dc748f87-6db2-4890-bd83-125339d82003', '9c007608-c915-4583-85af-4db9370f8a95', N'random.mix()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('88221a6f-cd5a-4f90-8023-f0de7dd278b6', '437b6c1c-8836-422d-bad8-21e3e1eb8803', N'random.shuffle()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d34563c1-e440-411e-85db-abb03860d015', '9c007608-c915-4583-85af-4db9370f8a95', N'random.shuffle()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3366048e-30b2-4f6f-afef-00305c733206', '437b6c1c-8836-422d-bad8-21e3e1eb8803', N'random.sort()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('29bb691e-b591-4ea7-a0b9-fc42922fe102', '9c007608-c915-4583-85af-4db9370f8a95', N'random.sort()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d1fadb4c-fc48-41c3-8b22-6f713d8beb9c', '437b6c1c-8836-422d-bad8-21e3e1eb8803', N'shuffle.random()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5af6a1e2-21ba-450e-a8fa-f9425f412390', '9c007608-c915-4583-85af-4db9370f8a95', N'shuffle.random()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5418bddf-7944-412d-8ab1-7d8efc12d986', '275e2d95-fd91-4aad-b006-0c640ae451e2', N'np.max()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ae076690-50aa-45d5-bb5f-9760c70f9a4a', '2261fc2d-8989-4a72-8275-2c36d6a33cd2', N'np.max()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5fdee281-bf8e-40d2-a991-1dd7a46a4709', '275e2d95-fd91-4aad-b006-0c640ae451e2', N'np.high()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('83813d93-3482-41fe-926a-a4bc779301c2', '2261fc2d-8989-4a72-8275-2c36d6a33cd2', N'np.high()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('60b2cf37-7da9-4df5-8dfb-bbcb24b24aaa', '275e2d95-fd91-4aad-b006-0c640ae451e2', N'np.maximum()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6f83de77-1aa4-4b6c-8742-3020102bc31e', '2261fc2d-8989-4a72-8275-2c36d6a33cd2', N'np.maximum()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5000737c-334e-4d01-9d98-eb55bfea40b7', '275e2d95-fd91-4aad-b006-0c640ae451e2', N'np.maximum_value()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0fe96194-0825-4936-a108-a8c9fc7419be', '2261fc2d-8989-4a72-8275-2c36d6a33cd2', N'np.maximum_value()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fc517ab5-0f2d-4c4f-a4b4-36578e9d59ca', 'a03108f9-afca-43e2-bcff-ea7b8213301b', N'8', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('86e898c3-8e57-4650-9e61-2c330a20f151', '92215513-d8e0-433d-9a72-356b557b1e0f', N'8', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('70fb4739-6378-4813-a399-68d528c87b0c', 'a03108f9-afca-43e2-bcff-ea7b8213301b', N'16.0', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b1b72b0e-f2bf-40e1-9e68-f687132b7c3b', '92215513-d8e0-433d-9a72-356b557b1e0f', N'16.0', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7ddf2664-cfdd-4322-983e-a6d963753e9d', 'a03108f9-afca-43e2-bcff-ea7b8213301b', N'16', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2e227624-b267-4b5a-92c9-2a148bdf74f4', '92215513-d8e0-433d-9a72-356b557b1e0f', N'16', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3f565870-4db8-4814-aa81-93237ce5a9d5', 'a03108f9-afca-43e2-bcff-ea7b8213301b', N'4', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8baac5b8-98c4-4727-8ca1-bcf16c991b65', '92215513-d8e0-433d-9a72-356b557b1e0f', N'4', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('093da6b8-ca99-4f22-bad2-573ebe1a56ca', '5056d3f1-e60b-4322-aebd-774ca89300dc', N'[0, 0, 0]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ccc1bd8e-5b03-4876-91e6-8188223b635e', '188ceb86-686a-4954-bb25-a5e5e0f9bbf3', N'[0, 0, 0]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1f83ef05-2fac-4a63-a752-f35ca2a2f6e3', '5056d3f1-e60b-4322-aebd-774ca89300dc', N'[1, 1, 1]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('944780cf-b072-45ec-b8ea-ea5314f118ab', '188ceb86-686a-4954-bb25-a5e5e0f9bbf3', N'[1, 1, 1]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('aa26d3c9-2b99-4a57-ac85-2ceb34b415db', '5056d3f1-e60b-4322-aebd-774ca89300dc', N'[1.0, 1.0, 1.0]', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('262279a0-b28d-4083-bbaa-935daa6c8e41', '188ceb86-686a-4954-bb25-a5e5e0f9bbf3', N'[1.0, 1.0, 1.0]', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b382b68e-239f-4a8b-8b32-f2e6e74be5c0', '5056d3f1-e60b-4322-aebd-774ca89300dc', N'[1, 0, 1]', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bfce7963-9ebd-449e-8b43-e7f2e30ba48d', '188ceb86-686a-4954-bb25-a5e5e0f9bbf3', N'[1, 0, 1]', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('146bc147-c374-46b8-a6c0-5dcb7d91254f', '82ebe978-073a-4b54-9515-6adb305358cb', N'Returns random integer', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a44d28e4-bbf9-4148-8af0-8bdb44676256', 'ee72ae07-9125-4e0d-9232-da1933eb9103', N'Returns random integer', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('04a4df06-fc37-41f3-bcc0-471863a56695', '82ebe978-073a-4b54-9515-6adb305358cb', N'Returns random float between 1 and 5', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0c1258ed-7ce3-457a-adab-4f08e12c8da7', 'ee72ae07-9125-4e0d-9232-da1933eb9103', N'Returns random float between 1 and 5', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3b66a344-534c-4d46-8041-6d8136c06746', '82ebe978-073a-4b54-9515-6adb305358cb', N'Always 1', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6a894738-6636-4e75-90b4-7210f105d7c9', 'ee72ae07-9125-4e0d-9232-da1933eb9103', N'Always 1', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a6d24cf8-46b0-4ed1-8af0-38826d31f4e5', '82ebe978-073a-4b54-9515-6adb305358cb', N'Always 5', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('05195806-2006-43d1-9385-f70ce6c55155', 'ee72ae07-9125-4e0d-9232-da1933eb9103', N'Always 5', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9c2a83c4-af5f-4e33-9e13-7cacaa7381df', '3db6ccd3-f2a0-4f25-b8a8-ce93ecb94c42', N'math.floor(3.2)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ce2c7cad-9d95-4b94-992d-9447e8b731a8', '27d5a14d-fa16-40fb-a469-a24d6a694fe1', N'math.floor(3.2)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('69cc6571-4fda-4bd1-854b-c744d8732d8a', '3db6ccd3-f2a0-4f25-b8a8-ce93ecb94c42', N'math.ceil(3.2)', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('143ff1de-a912-4f86-a3aa-91e8549b342b', '27d5a14d-fa16-40fb-a469-a24d6a694fe1', N'math.ceil(3.2)', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('048269f2-d519-475d-9b64-1c6e6931f96a', '3db6ccd3-f2a0-4f25-b8a8-ce93ecb94c42', N'round.up(3.2)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a187eb27-96f2-4a34-8d54-dc3b1d520de1', '27d5a14d-fa16-40fb-a469-a24d6a694fe1', N'round.up(3.2)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d816957e-6bd0-430e-8687-5add79bc410b', '3db6ccd3-f2a0-4f25-b8a8-ce93ecb94c42', N'ceil(3.2)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f5378866-23ee-4ddc-aef0-70092a0b33ac', '27d5a14d-fa16-40fb-a469-a24d6a694fe1', N'ceil(3.2)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e79350fe-f832-4e72-82ce-bd670f3de038', 'd6e80a9b-13cd-42b2-8d95-dbd04fe155c0', N'np.linspace()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0105d0b0-9626-48d9-add7-d3aa38637ceb', 'b0c276bb-d152-46d9-ada5-a675df7d992c', N'np.linspace()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3a1a4131-7b49-4cd7-b392-c0fe9a764754', 'd6e80a9b-13cd-42b2-8d95-dbd04fe155c0', N'np.spread()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c9639a58-c8c3-4842-949a-7bc730be19d4', 'b0c276bb-d152-46d9-ada5-a675df7d992c', N'np.spread()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e5301c7a-2e5c-4bcc-99e7-c4ad89f44f6e', 'd6e80a9b-13cd-42b2-8d95-dbd04fe155c0', N'np.equal()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('40e37945-e694-4a92-a67b-9351038fd73b', 'b0c276bb-d152-46d9-ada5-a675df7d992c', N'np.equal()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e031b11c-a927-4ba7-a4d6-06261b6549d2', 'd6e80a9b-13cd-42b2-8d95-dbd04fe155c0', N'np.fill()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('636f44d8-1c2b-4d16-9d9e-4c1eeddf3e67', 'b0c276bb-d152-46d9-ada5-a675df7d992c', N'np.fill()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9040d692-2a03-4557-ad9a-b6805cd570a1', '49560992-7e8e-4cde-ab2f-80c062b589c0', N'Slower execution', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3d480c8e-5d4d-4db4-b314-10e821c0c515', '237cdc9a-e5a3-4f81-9518-15cf2b1803a3', N'Slower execution', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b7c41401-309b-4fb9-896d-58b14b40b09c', '49560992-7e8e-4cde-ab2f-80c062b589c0', N'Simpler syntax only', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('489356fe-3ccb-4b2c-b894-a5156666a586', '237cdc9a-e5a3-4f81-9518-15cf2b1803a3', N'Simpler syntax only', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b7cd1bb7-cdf6-4491-8ca6-23824b21d986', '49560992-7e8e-4cde-ab2f-80c062b589c0', N'Faster and more efficient for calculations', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0078b359-4f26-4abe-ae66-ca3ee5999c6f', '237cdc9a-e5a3-4f81-9518-15cf2b1803a3', N'Faster and more efficient for calculations', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('963b942e-55cb-4169-9fb0-fa7e759b8724', '49560992-7e8e-4cde-ab2f-80c062b589c0', N'Easier file handling', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b76bad11-70bd-4d71-bc7a-dd61de70c570', '237cdc9a-e5a3-4f81-9518-15cf2b1803a3', N'Easier file handling', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f1061719-9b33-43ff-b736-9bb808fba1b7', 'f859946b-a4d3-4509-8638-5e91bd21064e', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1daa6a77-cfbc-4b9d-97f3-afece33a7c69', 'b45ee1ae-e5f0-4dc1-8ac4-1d8589156953', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('977f3916-e356-465c-ba44-8e03711e8079', 'f859946b-a4d3-4509-8638-5e91bd21064e', N'0', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7ea01786-f9cf-4c1a-944b-7670eb7c071b', 'b45ee1ae-e5f0-4dc1-8ac4-1d8589156953', N'0', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('edf76ce4-c642-4f55-9158-14e7a0caf727', 'f859946b-a4d3-4509-8638-5e91bd21064e', N'1', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d618918e-e1dc-45ee-bd67-b86fdf822b49', 'b45ee1ae-e5f0-4dc1-8ac4-1d8589156953', N'1', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d4897df1-c674-4c39-b55a-4f89e7957604', 'f859946b-a4d3-4509-8638-5e91bd21064e', N'Random between 0–1', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8aa03934-9c81-412c-985b-47a9712f4cae', 'b45ee1ae-e5f0-4dc1-8ac4-1d8589156953', N'Random between 0–1', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a1f146ae-2f85-47d9-8b07-2b08efeeb482', 'ba5a80d7-e747-4a90-95b2-9451b7718f2a', N'object', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9fe4c5f9-b684-441d-aae3-a73358927fde', '876da0d6-bdce-4286-aa6d-3ea2f5006ba7', N'object', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('449ea950-5a0d-4b71-bb2d-9a534535015b', 'ba5a80d7-e747-4a90-95b2-9451b7718f2a', N'class', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1b8f89a3-9db9-4d05-b2c6-5e8b89b6c16a', '876da0d6-bdce-4286-aa6d-3ea2f5006ba7', N'class', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2d72de52-cfbe-4bf9-9b28-7331e6729429', 'ba5a80d7-e747-4a90-95b2-9451b7718f2a', N'define', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ec23f347-1581-4d1e-96db-08f2c11ad486', '876da0d6-bdce-4286-aa6d-3ea2f5006ba7', N'define', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bb89c318-7904-483e-b833-b6710125a548', 'ba5a80d7-e747-4a90-95b2-9451b7718f2a', N'new', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4d64c98e-4ecb-4f46-8f7d-d740b03e32c1', '876da0d6-bdce-4286-aa6d-3ea2f5006ba7', N'new', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9b9026bd-a3ab-454d-b7f4-bf1e91de0aa7', 'd29efb48-9436-4363-8e0b-776184132a12', N'start()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1cfa9b5d-c66a-4d2a-9717-e567bf689fa1', 'a423816e-8e70-421b-910f-6e2ebadcaf5b', N'start()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9468511a-f0df-4d34-adf0-537dc5ec5c47', 'd29efb48-9436-4363-8e0b-776184132a12', N'run()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('185d3e86-acb0-4e66-b376-b0e112b372b9', 'a423816e-8e70-421b-910f-6e2ebadcaf5b', N'run()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3be03207-cdb6-4d74-b981-000d6d79cdf2', 'd29efb48-9436-4363-8e0b-776184132a12', N'__init__()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('05a66ee5-422f-41a8-971a-0a2fe331a98d', 'a423816e-8e70-421b-910f-6e2ebadcaf5b', N'__init__()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('54ef8e20-5edb-4043-bc96-5d7ccf2953b2', 'd29efb48-9436-4363-8e0b-776184132a12', N'begin()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('460b6078-a043-4ca9-a7e3-8fa15f9d6fa9', 'a423816e-8e70-421b-910f-6e2ebadcaf5b', N'begin()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ebd9d8b7-f720-4fad-b0a1-985a3493ca97', '2ba8182f-53e6-417d-bb34-3be1b080c342', N'A built-in function', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c849c51d-7a40-44d9-a2ce-06717815c8aa', 'd04e891b-5dff-4486-b015-6ddf34a665d4', N'A built-in function', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1762aad2-d5af-4296-93d1-5aa772f4b72d', '2ba8182f-53e6-417d-bb34-3be1b080c342', N'A variable', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('60823b8b-007b-4ede-9dcd-5b492aa65cdc', 'd04e891b-5dff-4486-b015-6ddf34a665d4', N'A variable', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('25636612-bbec-454f-97b3-c62c69bef8cc', '2ba8182f-53e6-417d-bb34-3be1b080c342', N'An instance of a class', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e675902c-827f-463c-90c2-34e1f37cf2e3', 'd04e891b-5dff-4486-b015-6ddf34a665d4', N'An instance of a class', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b5d76abd-5466-4478-a274-d00e5a1277df', '2ba8182f-53e6-417d-bb34-3be1b080c342', N'A method', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6c7705d0-587b-43f8-b6d2-7ce581b30442', 'd04e891b-5dff-4486-b015-6ddf34a665d4', N'A method', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('378a6dba-f5d8-400e-8d00-aa577083fd7a', '75d22c91-3685-461c-999a-65190ce08b83', N'Polymorphism', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b2a589d0-716a-4530-b0c4-3d144ea4a67f', 'eae1df62-2987-413c-aaac-59a41f9a60f4', N'Polymorphism', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('195b8063-6a50-4540-8879-ce923a1e316e', '75d22c91-3685-461c-999a-65190ce08b83', N'Inheritance', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ebe1b626-687c-457d-a9c7-c9f646c74426', 'eae1df62-2987-413c-aaac-59a41f9a60f4', N'Inheritance', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('65f03859-a268-42ec-be50-2171ddfc9e31', '75d22c91-3685-461c-999a-65190ce08b83', N'Abstraction', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a2ce78df-1d9b-4732-b6bd-00b626dae016', 'eae1df62-2987-413c-aaac-59a41f9a60f4', N'Abstraction', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('06cee7e4-47d4-467f-8d72-27955ca5d355', '75d22c91-3685-461c-999a-65190ce08b83', N'Encapsulation', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2a14d9b6-59b5-4bc3-a45c-190effdf24b2', 'eae1df62-2987-413c-aaac-59a41f9a60f4', N'Encapsulation', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cb90460f-90af-4e41-9f97-7bb30d1fedeb', 'c4f7b555-8ffd-4ae7-b735-54663f8f2e97', N'_', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('18cbc204-f82f-4040-ac5a-a56ee53c0f61', '7f0f7f0f-b620-4c9f-a8fe-96b9ac091842', N'_', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8470754d-815c-4ac2-87ae-1b081cf37627', 'c4f7b555-8ffd-4ae7-b735-54663f8f2e97', N'__', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3f138cc6-1b8e-45d7-afec-75acc74305ca', '7f0f7f0f-b620-4c9f-a8fe-96b9ac091842', N'__', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('29f4e2fa-35be-45e4-b764-bad1eb9d586f', 'c4f7b555-8ffd-4ae7-b735-54663f8f2e97', N'hide', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('850431fb-bac0-4a1a-afa9-db541bb53c3a', '7f0f7f0f-b620-4c9f-a8fe-96b9ac091842', N'hide', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('60f7daec-9f90-46cc-a37a-c55e10a46fe2', 'c4f7b555-8ffd-4ae7-b735-54663f8f2e97', N'lock', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('944af486-7b7a-4b9d-b738-58ca1982dac9', '7f0f7f0f-b620-4c9f-a8fe-96b9ac091842', N'lock', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('21eb8074-19cf-406e-918e-0c455f4ba134', 'f1c89b13-4b93-4b99-acd6-448ac5873189', N'To skip parent class', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1e0b1b9a-cb11-4d1b-9ecb-b77048a23d68', '71b6a7ac-86d5-4673-8b3a-be756a4fedef', N'To skip parent class', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('78a29b2f-9f9e-415b-80bf-a427e929f384', 'f1c89b13-4b93-4b99-acd6-448ac5873189', N'To call the parent’s method or constructor', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('84a479de-7fa2-43e0-ae2e-e8aa30a02d9e', '71b6a7ac-86d5-4673-8b3a-be756a4fedef', N'To call the parent’s method or constructor', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5ef4c6c3-0eb6-4525-9e39-5b97a0acbddd', 'f1c89b13-4b93-4b99-acd6-448ac5873189', N'To delete the parent', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('64474cb7-e36a-4341-8838-e0a9cba68ff2', '71b6a7ac-86d5-4673-8b3a-be756a4fedef', N'To delete the parent', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('41edac22-045d-489d-9ca3-98dc4069715d', 'f1c89b13-4b93-4b99-acd6-448ac5873189', N'To define a child method', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b484f69f-22dd-4069-985a-a48cf688dcad', '71b6a7ac-86d5-4673-8b3a-be756a4fedef', N'To define a child method', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0f0a5ade-e2f3-44c4-b3f3-4e2c9b764d93', '70a716de-6004-4d22-a952-a650d9829e36', N'A', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('25fec9a2-fadc-4f5a-b2bd-a2de24e5c48c', '2255a41e-ae8b-494b-9961-1973c0f3463e', N'A', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e3bacb22-1fc7-4d50-bd57-086f550a6f58', '70a716de-6004-4d22-a952-a650d9829e36', N'B', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('06006b74-14a7-48fa-b1a4-cc275d7fa970', '2255a41e-ae8b-494b-9961-1973c0f3463e', N'B', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c6595dd2-f719-4c8d-8eda-e13d99edc911', '70a716de-6004-4d22-a952-a650d9829e36', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c50c96af-97f3-4a38-87e4-88c6043a3f21', '2255a41e-ae8b-494b-9961-1973c0f3463e', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('241bf99f-6105-46e1-87c8-84e2517ecc94', '70a716de-6004-4d22-a952-a650d9829e36', N'None', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b26d4815-39bb-479c-9941-ec28a57f51ca', '2255a41e-ae8b-494b-9961-1973c0f3463e', N'None', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ee697432-5f1f-4da5-bb52-8e1bf66a9ce6', 'cc91273b-3b4b-46fd-956a-af5c48f98259', N'It runs normally', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bd212d2e-b95c-46c6-94c3-f9dde657feda', '184d5a1a-24d9-4ebb-8b28-be12b4d5b9fa', N'It runs normally', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b64207ec-a73d-40c2-a2dd-051df8ce776c', 'cc91273b-3b4b-46fd-956a-af5c48f98259', N'It raises an error', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9d786a2b-0064-43ca-a6f1-5124309c3d3b', '184d5a1a-24d9-4ebb-8b28-be12b4d5b9fa', N'It raises an error', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9b378a4d-1f3e-4304-bda5-729847ce8243', 'cc91273b-3b4b-46fd-956a-af5c48f98259', N'It returns None', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('43dba026-153c-4d28-9658-caf511529d84', '184d5a1a-24d9-4ebb-8b28-be12b4d5b9fa', N'It returns None', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9c177cd8-ccc1-4555-8202-58daace73d74', 'cc91273b-3b4b-46fd-956a-af5c48f98259', N'It prints “abstract”', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b3ae46ea-55ea-4829-8f2c-4126fc58426c', '184d5a1a-24d9-4ebb-8b28-be12b4d5b9fa', N'It prints “abstract”', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a81a84d7-6d90-43cb-b966-67c053c9d8d6', 'a11192bd-918d-48c7-b249-88512d9ce994', N'Creates a string variable', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0fd7a6e8-7417-4ccf-8fb4-2144ac1aad01', '172d5040-4ff4-40e8-bfab-404c7171a071', N'Creates a string variable', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('45f5e60a-2f1b-4265-aaaa-9bdc9bbbca18', 'a11192bd-918d-48c7-b249-88512d9ce994', N'Returns a string representation of the object', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bca63d91-60bb-440a-9d05-8a64610abdcb', '172d5040-4ff4-40e8-bfab-404c7171a071', N'Returns a string representation of the object', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ec698f91-525e-4c87-b10b-551046ef4e2c', 'a11192bd-918d-48c7-b249-88512d9ce994', N'Deletes an object', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d65f3cbf-c3b2-463f-888d-9dc7ba5805e2', '172d5040-4ff4-40e8-bfab-404c7171a071', N'Deletes an object', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('040fad16-f522-4637-8f62-8f229cb09995', 'a11192bd-918d-48c7-b249-88512d9ce994', N'Prints an error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a7a1041a-c5f1-4ee7-aa2c-4f141ec41ef5', '172d5040-4ff4-40e8-bfab-404c7171a071', N'Prints an error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0dab996b-d4fc-4f45-bdfc-5cd19aa6a64a', '2e615867-705e-40a9-8a1c-8d62b2a4a469', N'They use self', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2bbdbc04-eb3a-4cfa-a92f-071d3cff1272', '795dacb3-9f93-4593-820b-4b42c119c5ca', N'They use self', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5fbfbb85-7450-4d16-81c7-ad5f3c551440', '2e615867-705e-40a9-8a1c-8d62b2a4a469', N'They use cls', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('af824039-4e8b-4876-98cc-42dd41fcb0d6', '795dacb3-9f93-4593-820b-4b42c119c5ca', N'They use cls', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('700a912f-2e70-4a98-960c-b1e06a175cf8', '2e615867-705e-40a9-8a1c-8d62b2a4a469', N'They need no parameters', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e430ab56-2b41-4af2-8757-75e641e2ca2b', '795dacb3-9f93-4593-820b-4b42c119c5ca', N'They need no parameters', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('878effb3-00b4-4cbe-b40e-95b2d1ddd8d0', '2e615867-705e-40a9-8a1c-8d62b2a4a469', N'They can’t be used', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cab4dbc3-149c-4aee-bb43-1fe227718306', '795dacb3-9f93-4593-820b-4b42c119c5ca', N'They can’t be used', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6506ea8d-f93f-4749-a644-f47a762e69fe', 'd5ee481e-d532-4134-ac2e-ff522d544ac6', N'To rename variables', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('69a52dc5-d1c0-45bd-9d65-86ddb9c1cd3b', 'd1242cc2-86da-408e-8224-c7e99c65eff0', N'To rename variables', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ef4fa130-f33b-4de7-9002-fa7698c510b4', 'd5ee481e-d532-4134-ac2e-ff522d544ac6', N'To allow the same method name with different behaviors', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('70911a8c-6b20-4a4a-9826-0d9d7ef2467c', 'd1242cc2-86da-408e-8224-c7e99c65eff0', N'To allow the same method name with different behaviors', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7464baae-e2f8-4722-9e8d-77fbf6172114', 'd5ee481e-d532-4134-ac2e-ff522d544ac6', N'To hide code', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3fcb36c7-de87-4acc-ab37-7d98e932cf40', 'd1242cc2-86da-408e-8224-c7e99c65eff0', N'To hide code', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c302e918-40d6-4696-b40c-5fff9ee19963', 'd5ee481e-d532-4134-ac2e-ff522d544ac6', N'To stop inheritance', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('051b8d3d-0516-4473-98b6-7536884d3926', 'd1242cc2-86da-408e-8224-c7e99c65eff0', N'To stop inheritance', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8c1e6d59-3dea-4648-a52c-448f3f2bd540', '1709e41c-3927-4c3e-90bf-8ca0bbb0b304', N'A B', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cde10b06-fd26-497e-a299-c20d0df812dd', 'b4232fd0-0f87-437f-a3fd-78ebb31f3378', N'A B', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('152e1be0-7d26-4d22-b5de-2c7fe39309a6', '1709e41c-3927-4c3e-90bf-8ca0bbb0b304', N'B A', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('08d6966b-9d4f-44b7-a2a7-66e39ac84b5e', 'b4232fd0-0f87-437f-a3fd-78ebb31f3378', N'B A', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b0029e18-2c05-4414-85eb-3590133fa868', '1709e41c-3927-4c3e-90bf-8ca0bbb0b304', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2e9005d8-8a22-480a-80c6-09738fa31679', 'b4232fd0-0f87-437f-a3fd-78ebb31f3378', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8013958d-301e-4cf6-a67d-03fcc20226b2', '1709e41c-3927-4c3e-90bf-8ca0bbb0b304', N'A A', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b69de42c-efc3-42e6-a32f-7c8cff17551c', 'b4232fd0-0f87-437f-a3fd-78ebb31f3378', N'A A', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6455d413-7eb7-44b5-96a8-5c889ec03fbb', 'b2a29744-b617-483f-b8a2-7efd135e8e32', N'Abstraction', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dedf2824-0095-4721-ad2d-6bde7a5910d1', '770ecc9e-3eb3-47ca-aa83-930fa877a8a0', N'Abstraction', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dfc29f26-d3f5-435e-97a9-3d0f42667c67', 'b2a29744-b617-483f-b8a2-7efd135e8e32', N'Polymorphism', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('eddba860-0e60-4ff4-b533-ff8be5e7a2ea', '770ecc9e-3eb3-47ca-aa83-930fa877a8a0', N'Polymorphism', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f8d7dbe3-9717-451a-aff3-1f317735b1e7', 'b2a29744-b617-483f-b8a2-7efd135e8e32', N'Encapsulation', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('083e6695-3b8a-4598-b3fb-99dd9a9f7747', '770ecc9e-3eb3-47ca-aa83-930fa877a8a0', N'Encapsulation', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('81aa473a-c618-4a14-9827-236934980f16', 'b2a29744-b617-483f-b8a2-7efd135e8e32', N'Inheritance', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e15c68b6-5c24-49b2-a487-f9a373e3f4ff', '770ecc9e-3eb3-47ca-aa83-930fa877a8a0', N'Inheritance', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bee04d74-c2c4-48d2-9c78-5ffb7daba148', '14f68693-c4d2-40e7-bc68-460a0c850a13', N'Prints “A”', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3fc77fd4-45e4-4114-863b-9eddf38a975b', 'e74f7226-873b-4bbd-b930-5812b23c3aad', N'Prints “A”', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8da31eea-0d3f-4868-a330-bb6411bd0d16', '14f68693-c4d2-40e7-bc68-460a0c850a13', N'Prints object memory location', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ce06b61e-8ab5-4277-b2c1-11e284678862', 'e74f7226-873b-4bbd-b930-5812b23c3aad', N'Prints object memory location', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9ddb10de-71d6-4ce1-866f-c6ed7dc8d1f8', '14f68693-c4d2-40e7-bc68-460a0c850a13', N'Prints “None”', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7bd086c6-346d-42d0-9abd-2f3c4c58ab5c', 'e74f7226-873b-4bbd-b930-5812b23c3aad', N'Prints “None”', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('acf29393-19af-420d-8344-2a2929962e82', '14f68693-c4d2-40e7-bc68-460a0c850a13', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1a247a9d-4c39-45a8-90e3-61d037a95d6d', 'e74f7226-873b-4bbd-b930-5812b23c3aad', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('60ce8a43-71a1-4fc7-950d-711469937bd2', '231fd249-5e2d-4288-a8e8-e937e49f1647', N'Engine started', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e84b40d5-8689-4b7b-94be-55cfcb97d4d4', 'bd555055-06dd-486e-ab6e-2ab97dd99589', N'Engine started', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('36972271-5452-44b1-b418-39e695874a63', '231fd249-5e2d-4288-a8e8-e937e49f1647', N'Car started', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d53cf2fc-3d45-482b-8de3-908c8f0ce447', 'bd555055-06dd-486e-ab6e-2ab97dd99589', N'Car started', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a5a97049-c209-4433-be7e-4b4100373938', '231fd249-5e2d-4288-a8e8-e937e49f1647', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('71f9bddf-faa0-4a49-9255-f881062a8597', 'bd555055-06dd-486e-ab6e-2ab97dd99589', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dfc97a76-b6ec-437a-a076-6ecb6af19fd0', '231fd249-5e2d-4288-a8e8-e937e49f1647', N'None', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('addcc271-f5ad-4b75-8eaa-7eddb900e302', 'bd555055-06dd-486e-ab6e-2ab97dd99589', N'None', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8d0c9304-08dd-46d1-9ea3-e389f2ef8e56', 'f35773aa-ea93-4cc3-8b81-fcb8f3937d57', N'@static', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('df6e2eec-abbe-42d3-a82f-9fcf15841a57', '2db644ca-65c0-4eb7-b694-04dd7e51ccda', N'@static', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1060ac16-9e11-4408-bfa3-c2c122d37476', 'f35773aa-ea93-4cc3-8b81-fcb8f3937d57', N'@staticmethod', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('27ef0997-598c-47b0-9240-8173d2ba91cf', '2db644ca-65c0-4eb7-b694-04dd7e51ccda', N'@staticmethod', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('84bb29e9-39ad-4bf8-a29e-aee0b72e924b', 'f35773aa-ea93-4cc3-8b81-fcb8f3937d57', N'@class', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2093a738-bf6f-40b9-b9c6-7080d9cfb056', '2db644ca-65c0-4eb7-b694-04dd7e51ccda', N'@class', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fd3bd64a-2f80-44ef-918d-ff0eb8f7d083', 'f35773aa-ea93-4cc3-8b81-fcb8f3937d57', N'@static_func', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d87c0254-1a62-4188-bc8c-1d5c9f4194b8', '2db644ca-65c0-4eb7-b694-04dd7e51ccda', N'@static_func', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('673cf3d7-7497-469b-99e3-d73f4a9b7499', 'b789a4b9-205a-40bb-ad2b-02eebfb25501', N'Custom', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8516509b-85ff-41e8-8719-d9e38ab19e66', 'f2dd8b18-3da9-4093-933d-4c0a5c4829f9', N'Custom', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2dc860de-6ed3-4dec-af0f-002712e2f65a', 'b789a4b9-205a-40bb-ad2b-02eebfb25501', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('64371e21-5a2d-40b2-ac39-c6fffcbbbca5', 'f2dd8b18-3da9-4093-933d-4c0a5c4829f9', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('15886dd2-70c8-4ead-be94-d82f7dc3122c', 'b789a4b9-205a-40bb-ad2b-02eebfb25501', N'A()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('adf4bb22-513c-447f-9038-563344058489', 'f2dd8b18-3da9-4093-933d-4c0a5c4829f9', N'A()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a9eb3990-1dec-4c11-956a-b22c09fa1ed0', 'b789a4b9-205a-40bb-ad2b-02eebfb25501', N'None', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('27e7c335-afbe-4fc9-aa98-675c0f366f34', 'f2dd8b18-3da9-4093-933d-4c0a5c4829f9', N'None', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('39fe3359-81d5-40f9-9d77-3203b80eb76a', '097b5822-4cc5-4696-a610-f52b177f2f8c', N'Polymorphism', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6a018d42-e05a-4595-a2c6-0a34f9e0255b', 'dcc45b07-4265-4480-80d2-dfb9e4812c19', N'Polymorphism', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0de75b2e-7a04-4bbd-a54d-51786e47daa3', '097b5822-4cc5-4696-a610-f52b177f2f8c', N'Encapsulation', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3460cbe4-3162-47f0-9d16-21a5fe858bde', 'dcc45b07-4265-4480-80d2-dfb9e4812c19', N'Encapsulation', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c0b4f942-7529-4925-b6f4-99ea2755b63b', '097b5822-4cc5-4696-a610-f52b177f2f8c', N'Compilation', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e9593c64-11e4-4d53-8dd7-b73ffdfc19c7', 'dcc45b07-4265-4480-80d2-dfb9e4812c19', N'Compilation', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5440f1db-4b28-4161-9f41-e06268040468', '097b5822-4cc5-4696-a610-f52b177f2f8c', N'Abstraction', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d077a46c-dc29-4127-b9c7-1d542ff66f67', 'dcc45b07-4265-4480-80d2-dfb9e4812c19', N'Abstraction', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6502fe00-5f64-4161-9d54-34a0c0a0d78b', '6e1aceaa-1cd0-4930-a935-f6dc10929a8f', N'is-a', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a4a4dc50-a17d-43cc-93d9-9432ff32a4ac', '65db8d52-3548-4bd0-a6a6-d3f80b097df2', N'is-a', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4f28d96b-1210-49ab-aff6-2d3e01c8a89a', '6e1aceaa-1cd0-4930-a935-f6dc10929a8f', N'has-a', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('da1da540-4532-4f96-9cbd-e5fd99279966', '65db8d52-3548-4bd0-a6a6-d3f80b097df2', N'has-a', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('03f16dc6-9836-4dc9-9049-59f806667e24', '6e1aceaa-1cd0-4930-a935-f6dc10929a8f', N'inherits-from', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0b3d1f4d-629e-4308-aee5-e2219aba2aa2', '65db8d52-3548-4bd0-a6a6-d3f80b097df2', N'inherits-from', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('be7c6289-ba8f-40d0-970e-61361054c395', '6e1aceaa-1cd0-4930-a935-f6dc10929a8f', N'part-of', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('31be747b-031f-4c62-a90e-37bb628fe8cc', '65db8d52-3548-4bd0-a6a6-d3f80b097df2', N'part-of', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('51320e36-d0aa-4f8f-bd94-28c5160e0e92', 'f7ae65cf-49cc-42ff-a8de-1f0d25d72d12', N'True', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6f5af921-aaa6-4046-90b8-e22c7d5a5a92', '99cb88f1-5616-4ce2-a6f2-a6105fc04b31', N'True', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f88c4a3a-922b-4f9c-98f0-c24c7726af57', 'f7ae65cf-49cc-42ff-a8de-1f0d25d72d12', N'False', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('12b581ca-7871-49c5-83e3-8bebfe742433', '99cb88f1-5616-4ce2-a6f2-a6105fc04b31', N'False', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('173500d0-3eb5-475b-8417-a4426a15bce8', 'f7ae65cf-49cc-42ff-a8de-1f0d25d72d12', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1a70d33f-b4d5-456d-b20f-88fae77c8299', '99cb88f1-5616-4ce2-a6f2-a6105fc04b31', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2e02bd23-66ef-47f7-b9f6-82e432fce7ae', 'f7ae65cf-49cc-42ff-a8de-1f0d25d72d12', N'None', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1bac0cd1-2e55-4cb9-81fb-c22a04996766', '99cb88f1-5616-4ce2-a6f2-a6105fc04b31', N'None', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a058d850-07d6-480b-8568-b249d1b9b3a2', 'e42d0bf2-cd9d-414f-9702-0cbb01ae0f4f', N'Java Syntax Object Notation', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('db940967-4113-46d8-a1d2-fa2af91f99aa', 'a41f2fed-8cfa-4dc0-89b8-89bc7d156474', N'Java Syntax Object Notation', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fd671b15-c8ca-494f-8010-400853d1f368', 'e42d0bf2-cd9d-414f-9702-0cbb01ae0f4f', N'JavaScript Object Notation', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c25d09fe-1664-4bb3-b05b-573b2f0a8d07', 'a41f2fed-8cfa-4dc0-89b8-89bc7d156474', N'JavaScript Object Notation', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('57f58a8d-fd34-4b64-be95-081d5659b6b2', 'e42d0bf2-cd9d-414f-9702-0cbb01ae0f4f', N'Joint System Output Node', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('891a8684-0496-49ab-a5a8-131e0d80b583', 'a41f2fed-8cfa-4dc0-89b8-89bc7d156474', N'Joint System Output Node', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('058adea5-7486-417f-bf34-0aa694e05164', 'e42d0bf2-cd9d-414f-9702-0cbb01ae0f4f', N'Java Source Output Name', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6ff296c2-4e11-4c7a-a8ed-7708ec8bf08a', 'a41f2fed-8cfa-4dc0-89b8-89bc7d156474', N'Java Source Output Name', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5160b163-a8b8-41bd-8a00-e8821280d24e', '2d064aaf-5c80-4e0d-8eaa-81da36bf1c22', N'json.load()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6d5d71f3-3f3a-4c99-9e85-c162abc41151', 'a2c1ffc0-ca2e-4c88-8b3d-40c299787089', N'json.load()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e1aa73f3-1d7f-4392-8e36-bfbfe2e2651a', '2d064aaf-5c80-4e0d-8eaa-81da36bf1c22', N'json.dumps()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bcd0f013-3775-4df8-8cf5-9e858293de49', 'a2c1ffc0-ca2e-4c88-8b3d-40c299787089', N'json.dumps()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('566a8986-dd44-4ff2-bbcc-2e9ed7c64ee5', '2d064aaf-5c80-4e0d-8eaa-81da36bf1c22', N'json.write()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2ff00c11-43c9-4e09-b28d-e5ee4da9e49a', 'a2c1ffc0-ca2e-4c88-8b3d-40c299787089', N'json.write()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ddde4223-067e-4b37-8952-3514027ef32d', '2d064aaf-5c80-4e0d-8eaa-81da36bf1c22', N'json.export()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('232b2ec8-5ee4-453a-a782-6fc6d9af6840', 'a2c1ffc0-ca2e-4c88-8b3d-40c299787089', N'json.export()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('11a0d6c3-a0f7-4676-a38e-0f48b673b302', 'c78d9cbc-ca47-4e34-990e-c004a77546ac', N'Tabs', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('85c1f8b7-7985-4ff4-8c18-62a3a8831403', '1ef2e250-1c77-4fcb-882d-92e6d39dd45e', N'Tabs', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('560ba00f-cb5e-4ae2-a488-e244ea914f6c', 'c78d9cbc-ca47-4e34-990e-c004a77546ac', N'Spaces', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('589a4b72-da74-4d9f-883f-c2a13cb60666', '1ef2e250-1c77-4fcb-882d-92e6d39dd45e', N'Spaces', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b20b57b5-0112-4727-baa0-859cb7f37667', 'c78d9cbc-ca47-4e34-990e-c004a77546ac', N'Commas', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ee76b861-5f01-440c-a63b-9d86f43b6a0e', '1ef2e250-1c77-4fcb-882d-92e6d39dd45e', N'Commas', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('412bcbd5-ef5a-455b-a4bd-5852fe6cdcb8', 'c78d9cbc-ca47-4e34-990e-c004a77546ac', N'Semicolons', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4993a01e-2052-4f4a-967c-3b045517e387', '1ef2e250-1c77-4fcb-882d-92e6d39dd45e', N'Semicolons', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8a821812-adba-4c20-baf4-56358a5905cb', '9d5bdb82-9930-4e6c-b75d-929958e981cb', N'csv', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6416362e-d0b8-4b86-8761-7880ba5cd88e', '30b7ea97-0a71-4545-a01e-e2cb40f1672b', N'csv', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2a0e94b2-b8f2-45f7-a599-226c300dbb7a', '9d5bdb82-9930-4e6c-b75d-929958e981cb', N'excel', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('94dbd135-0038-494c-be9e-25e67d4f3019', '30b7ea97-0a71-4545-a01e-e2cb40f1672b', N'excel', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2d82b52d-05b8-45d2-9e3f-cd4b97bc1112', '9d5bdb82-9930-4e6c-b75d-929958e981cb', N'spreadsheet', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('21fdc6c0-dcbc-4954-8b0c-cc2248785466', '30b7ea97-0a71-4545-a01e-e2cb40f1672b', N'spreadsheet', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4b87a32e-676c-4438-8935-d1b4eb04713a', '9d5bdb82-9930-4e6c-b75d-929958e981cb', N'file', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fa4225e9-9ab5-42b6-beb6-11fef0f79d53', '30b7ea97-0a71-4545-a01e-e2cb40f1672b', N'file', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cfcdeb72-7c95-4d94-9796-ac10f9957bb8', 'd4ab993a-a31a-4947-a872-b3394a72b823', N'Edits files', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6fc6fe92-41df-40e7-b973-8037010fd8e0', '93da1f13-96e2-4794-bcc2-e18be2cea18e', N'Edits files', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9caa3d91-7bc6-4229-bb8d-45150370faea', 'd4ab993a-a31a-4947-a872-b3394a72b823', N'Connects software systems', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('72fe73b7-61ee-4f29-a6bd-da3f2454b734', '93da1f13-96e2-4794-bcc2-e18be2cea18e', N'Connects software systems', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bccc99b9-5bb5-4b08-8fc1-2f7ed0255337', 'd4ab993a-a31a-4947-a872-b3394a72b823', N'Runs loops', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8ce50574-3e7f-4571-8a2b-3405be5bb7f9', '93da1f13-96e2-4794-bcc2-e18be2cea18e', N'Runs loops', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e5f60713-0fe4-42d4-a0b9-9ff20ff09874', 'd4ab993a-a31a-4947-a872-b3394a72b823', N'Handles only local data', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a1599685-a268-4d56-bf66-780b73889ddf', '93da1f13-96e2-4794-bcc2-e18be2cea18e', N'Handles only local data', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('edeb8045-e048-4993-837d-7376e096d2a6', '823a44e4-80fe-433e-80fc-7a1523da4551', N'import requests', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1e576b4d-d299-4fa5-b93f-c84dc76abaa4', '707a5297-7a55-4ec7-a0ed-4e70a4c988b5', N'import requests', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('12f85ccf-3c48-46f2-9961-67e0f65e313d', '823a44e4-80fe-433e-80fc-7a1523da4551', N'install requests', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('01713354-f1aa-4431-a0b5-c910ab6d18c7', '707a5297-7a55-4ec7-a0ed-4e70a4c988b5', N'install requests', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f0c438fd-85d6-4ad2-9ad5-952f44da0649', '823a44e4-80fe-433e-80fc-7a1523da4551', N'pip install requests', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('38de8ae8-7818-46b3-8c80-41cb5e494bbc', '707a5297-7a55-4ec7-a0ed-4e70a4c988b5', N'pip install requests', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('55fa8b60-ccc1-440e-9b5b-cea7d2684708', '823a44e4-80fe-433e-80fc-7a1523da4551', N'setup requests', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('da760c53-1ae7-4fc6-a868-950318b58c41', '707a5297-7a55-4ec7-a0ed-4e70a4c988b5', N'setup requests', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7db96039-8f01-43a1-99e2-4410b782c3ad', '8910eea9-e2e7-41e2-b67b-ddcd80ed0f1f', N'Loads JSON into a variable', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1ee91067-1c3a-45f1-b6c2-cc7c7d40db05', 'c822ae7b-c260-42a8-b7e3-c3a51a445a58', N'Loads JSON into a variable', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1b66b1ba-fd71-4f56-81e6-df0c8822a3e8', '8910eea9-e2e7-41e2-b67b-ddcd80ed0f1f', N'Writes Python data to a JSON file', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7056c288-c2da-4e87-80bf-7b0b907e32cd', 'c822ae7b-c260-42a8-b7e3-c3a51a445a58', N'Writes Python data to a JSON file', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1c1eb198-e0b5-4ebd-ac17-f11e5c49a503', '8910eea9-e2e7-41e2-b67b-ddcd80ed0f1f', N'Deletes JSON data', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('99a1d377-3f9d-4d06-9eaf-647710521146', 'c822ae7b-c260-42a8-b7e3-c3a51a445a58', N'Deletes JSON data', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b0ca3849-c3cd-4395-b645-3b9e0911da34', '8910eea9-e2e7-41e2-b67b-ddcd80ed0f1f', N'Prints a JSON string', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f19ba2ca-9f2c-4d3e-ba77-5b5f77178916', 'c822ae7b-c260-42a8-b7e3-c3a51a445a58', N'Prints a JSON string', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c31f0c21-1f53-4d4f-babe-23809518e328', '4b9e7156-a170-442a-85f7-8009e2fa75a9', N'Reads CSV data as dictionaries', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('79e989f0-47c0-4306-b8ab-43bd43ea9ffb', 'a9e7ba16-b54d-49e0-ad56-86026db15301', N'Reads CSV data as dictionaries', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('64a81e44-2752-4d57-a848-2a54976e8c4f', '4b9e7156-a170-442a-85f7-8009e2fa75a9', N'Reads only numeric data', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('99e5f95c-fce8-4e64-b1bf-1e9f95f028b3', 'a9e7ba16-b54d-49e0-ad56-86026db15301', N'Reads only numeric data', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('11f81bfd-87c6-4203-adbb-862f24ae77b5', '4b9e7156-a170-442a-85f7-8009e2fa75a9', N'Writes CSV rows', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b4889fd4-57c8-4a3a-8e6f-0b6d632452b6', 'a9e7ba16-b54d-49e0-ad56-86026db15301', N'Writes CSV rows', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('39efd426-5f21-496e-9156-8cf589f44f60', '4b9e7156-a170-442a-85f7-8009e2fa75a9', N'Formats text', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('aceb9999-a498-4b73-8361-48f411b1e7c0', 'a9e7ba16-b54d-49e0-ad56-86026db15301', N'Formats text', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9acc7264-8e7a-4c8f-a59e-210ccd71f321', '6d3b0c4d-9108-4795-98d0-3040241e96a6', N'Success', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('590b1c18-7814-43af-9170-c5530a93f34d', 'd07d6970-b887-4fc6-a31a-26a22003ab62', N'Success', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b1973195-bedb-4a73-b38e-feae6bd4984b', '6d3b0c4d-9108-4795-98d0-3040241e96a6', N'Not Found', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('21dba0a8-93d5-4455-b2f9-f3a2425056e8', 'd07d6970-b887-4fc6-a31a-26a22003ab62', N'Not Found', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9444626a-28b7-4060-bdb2-3cbcd55ad37c', '6d3b0c4d-9108-4795-98d0-3040241e96a6', N'Unauthorized', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('51fbe6e2-9d6e-4c1f-b296-6b8bf3a8ac0e', 'd07d6970-b887-4fc6-a31a-26a22003ab62', N'Unauthorized', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('079329b2-f4ee-4d54-9a75-adec5bb7afa3', '6d3b0c4d-9108-4795-98d0-3040241e96a6', N'Error on client side', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('90f84a51-b77c-4c27-9279-94e84402667b', 'd07d6970-b887-4fc6-a31a-26a22003ab62', N'Error on client side', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ba4ff9ad-c959-4761-8ac8-ce193b583111', '73dfddf6-942a-4d8a-bc53-156457819dc6', N'response.text()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('79ed3527-2c78-4281-bcf6-f87f7ce55626', 'f49158de-aeee-43b4-8ee7-38278d8506a8', N'response.text()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('28b26e61-ecfd-4a9c-a54c-07ff5365a46b', '73dfddf6-942a-4d8a-bc53-156457819dc6', N'response.data()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7e4a536d-432e-4864-aebe-76e129b3b52b', 'f49158de-aeee-43b4-8ee7-38278d8506a8', N'response.data()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('13cd52bb-44d6-4b14-b3c5-ad581ecf010e', '73dfddf6-942a-4d8a-bc53-156457819dc6', N'response.json()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('262ef8b1-a28e-46a0-8829-a1a0c075b77b', 'f49158de-aeee-43b4-8ee7-38278d8506a8', N'response.json()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0f077b45-5ae9-44b3-bfe9-b5bd4c21d257', '73dfddf6-942a-4d8a-bc53-156457819dc6', N'response.load()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d0c12d33-bf85-4c90-a510-cdbfd438b347', 'f49158de-aeee-43b4-8ee7-38278d8506a8', N'response.load()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ad0a1012-f211-4e1b-a797-cacf625e15d9', 'f5327c69-7293-48a0-bad2-6b4608a9a710', N'A Python dictionary', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f9589c67-5018-4e2f-b99b-f2d65267c3b4', '77a7c0e7-4b82-481a-bc9b-423c6ee42de5', N'A Python dictionary', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('08b773c6-a333-4d94-a07e-3d7101cd5d50', 'f5327c69-7293-48a0-bad2-6b4608a9a710', N'A JSON string', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('00d3ac7e-a4b8-43ca-a56a-9493893304f9', '77a7c0e7-4b82-481a-bc9b-423c6ee42de5', N'A JSON string', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d370a1cb-5344-48a4-a329-968fb103aebe', 'f5327c69-7293-48a0-bad2-6b4608a9a710', N'A list', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('01ffd175-144b-4b94-94bc-dae842648a6e', '77a7c0e7-4b82-481a-bc9b-423c6ee42de5', N'A list', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('35190fe4-60d5-4055-aaf1-1b53ea16688c', 'f5327c69-7293-48a0-bad2-6b4608a9a710', N'None', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bdc4f1e1-50e1-4ad0-a1ac-c4d85b13e7f1', '77a7c0e7-4b82-481a-bc9b-423c6ee42de5', N'None', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('65ce33d6-ba83-4ecc-b184-e3b856d1dc98', '517d5147-e395-4979-a476-6c0259e9a9db', N'It will create a new file', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8ce5044f-63d9-404a-a48c-3c18744150fe', '439c380a-6c2c-4e84-b4ae-f9a13f2c518b', N'It will create a new file', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fa93bb3b-7d59-4d52-9e9a-d48ea7c41e16', '517d5147-e395-4979-a476-6c0259e9a9db', N'It will raise an error', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('be59b03c-6773-4f5f-8241-4ccf3c8b221b', '439c380a-6c2c-4e84-b4ae-f9a13f2c518b', N'It will raise an error', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1ec248ac-9b6c-4732-b3b9-b63ef97fdc27', '517d5147-e395-4979-a476-6c0259e9a9db', N'It will skip it', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('79da0f8f-5d73-4534-8496-533a4809ceaf', '439c380a-6c2c-4e84-b4ae-f9a13f2c518b', N'It will skip it', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bb1a971a-c2be-4b53-b96e-ba41cf8e682b', '517d5147-e395-4979-a476-6c0259e9a9db', N'It will write a blank row', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1e8cf1c3-0040-4e8a-a5ed-df9f4f64c594', '439c380a-6c2c-4e84-b4ae-f9a13f2c518b', N'It will write a blank row', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('94d8db8b-0caf-426b-9ac9-a4069c049845', 'adaeadf8-3197-4b0a-9e52-3297ee19c113', N'with', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ce4fc371-e19d-4a52-8795-6ce930e90145', '851db0d7-367c-4da2-8711-53e243b4850d', N'with', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0c66cba1-15a0-49da-906f-d1c8c637d6fd', 'adaeadf8-3197-4b0a-9e52-3297ee19c113', N'as', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('90708675-dde4-4821-9c61-24641a4a8503', '851db0d7-367c-4da2-8711-53e243b4850d', N'as', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0f127459-26ee-426d-9a28-e42375ce5038', 'adaeadf8-3197-4b0a-9e52-3297ee19c113', N'close', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b30dec16-7597-4a72-9537-ad6daaf5c502', '851db0d7-367c-4da2-8711-53e243b4850d', N'close', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('11bc6849-b4a8-48ea-b779-27cbf50de821', 'adaeadf8-3197-4b0a-9e52-3297ee19c113', N'finally', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f06a2d76-393a-4c1a-8af4-167e716bdc7a', '851db0d7-367c-4da2-8711-53e243b4850d', N'finally', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2ead9d5d-27e0-48a3-9329-21568b3d8cf4', '47c2a59b-015d-4023-a043-0ce2bf88f961', N'http', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5df101d2-0700-484a-b66f-931384ae6d31', 'a67d3154-981b-4aa5-b68d-0f49592f662c', N'http', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e45b7a30-19c5-46ba-a613-0fb493bf98aa', '47c2a59b-015d-4023-a043-0ce2bf88f961', N'web', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('68a4f46e-f126-4235-b0df-cd7eaca00d2b', 'a67d3154-981b-4aa5-b68d-0f49592f662c', N'web', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('78d7e6ca-18bd-4def-a1ee-ec2a9044885f', '47c2a59b-015d-4023-a043-0ce2bf88f961', N'requests', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b37bacb9-8e51-41ee-9267-aa3840047b0a', 'a67d3154-981b-4aa5-b68d-0f49592f662c', N'requests', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('007488a5-18b7-41ad-b9b7-d795e1697988', '47c2a59b-015d-4023-a043-0ce2bf88f961', N'network', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('26d9130c-56bc-4cf9-aa2a-23b5da5b53d4', 'a67d3154-981b-4aa5-b68d-0f49592f662c', N'network', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('81efbfa0-7a2a-4c5f-b0dc-830030f0473c', '34a59503-6396-4396-af05-ef5275bc7901', N'Append data to the file', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('08645d57-3f4f-499e-9de2-77c2d3b13492', '1a25a12b-f58a-41bc-a626-ca8282082c54', N'Append data to the file', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f73e7171-da02-429f-b35e-b2ddebac2800', '34a59503-6396-4396-af05-ef5275bc7901', N'Write a single row with two values', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('87a913aa-e245-4573-b554-fc20877c4087', '1a25a12b-f58a-41bc-a626-ca8282082c54', N'Write a single row with two values', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4da1c392-e582-4d5d-90bf-99a979eb38d0', '34a59503-6396-4396-af05-ef5275bc7901', N'Write column headers', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b2d83119-8337-45dd-90f7-196378b4849e', '1a25a12b-f58a-41bc-a626-ca8282082c54', N'Write column headers', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d4bdecb3-cfa0-49a1-952a-0c4cf029cc71', '34a59503-6396-4396-af05-ef5275bc7901', N'Do nothing', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('563f4cce-96e4-4e01-a6a5-d9e2a29dff20', '1a25a12b-f58a-41bc-a626-ca8282082c54', N'Do nothing', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6ef8806b-4464-43b2-a8e2-07eb9e1fa152', '23267584-2bdf-49c2-8ea1-c2e6786683f9', N'200', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7799380c-40e7-4e60-a21a-a077b211e080', 'a55e5bb2-0aec-4319-bb8f-30c619845ac4', N'200', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('13106358-ca58-4ac2-94b4-1bae3fdeabc6', '23267584-2bdf-49c2-8ea1-c2e6786683f9', N'404', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('18ade15e-a496-4a27-b126-cfa19e9d94dd', 'a55e5bb2-0aec-4319-bb8f-30c619845ac4', N'404', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e5dacb67-2568-4bff-90b5-74ac21658cdd', '23267584-2bdf-49c2-8ea1-c2e6786683f9', N'401', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e341fe87-01bc-4f3d-a451-270691e2cdd8', 'a55e5bb2-0aec-4319-bb8f-30c619845ac4', N'401', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('58d4814e-7b15-43b5-8995-5be84f56ff13', '23267584-2bdf-49c2-8ea1-c2e6786683f9', N'500', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ddf42db1-84f9-4aff-9a8b-eaaf1c49ec0a', 'a55e5bb2-0aec-4319-bb8f-30c619845ac4', N'500', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fd290e23-47b6-4afa-ab9b-0f257d19a453', '453df2dc-f202-4a52-bde4-61bbeacd05eb', N'Adds blank lines', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7c86d943-9ab5-4b31-a54b-72fc554d3e91', 'd00ea115-a4b8-4d0e-bd48-4e47d6d4501b', N'Adds blank lines', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a7c03271-65f5-4ce9-a746-b05bc8050871', '453df2dc-f202-4a52-bde4-61bbeacd05eb', N'Prevents extra blank lines in output', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('db4df4a7-0177-4c2d-9520-af8f14d49d9d', 'd00ea115-a4b8-4d0e-bd48-4e47d6d4501b', N'Prevents extra blank lines in output', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a5b6712e-4922-4e7a-8373-1ce3e75cde56', '453df2dc-f202-4a52-bde4-61bbeacd05eb', N'Closes the file early', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b6289ba0-987a-44b9-9f4c-75ed203ab16c', 'd00ea115-a4b8-4d0e-bd48-4e47d6d4501b', N'Closes the file early', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b6c6eee8-87f2-49d3-ba40-8e17b132a4ce', '453df2dc-f202-4a52-bde4-61bbeacd05eb', N'Adds commas automatically', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b2eae598-4b6b-4ff5-b56c-a24c608dab93', 'd00ea115-a4b8-4d0e-bd48-4e47d6d4501b', N'Adds commas automatically', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('570ef2eb-b056-463f-b55d-c2ef4c130868', '5a92285e-093a-4611-b438-2e01535d0493', N'List', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f11f844d-5444-4fa5-85d8-097e5f950ffc', '063a8579-bae5-428b-8b46-4ef0707ae539', N'List', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0d9cd28d-46f2-4385-bd5b-6ae7ade697ee', '5a92285e-093a-4611-b438-2e01535d0493', N'Dictionary', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c28c6569-3ce7-4f8f-8381-b36d75d63f2c', '063a8579-bae5-428b-8b46-4ef0707ae539', N'Dictionary', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cae4b6e7-29ab-4da7-852f-13c66ea58ae3', '5a92285e-093a-4611-b438-2e01535d0493', N'Tuple', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('80d0d8eb-50ed-4e41-a191-5ca0ad27c10b', '063a8579-bae5-428b-8b46-4ef0707ae539', N'Tuple', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('20c328cc-1e5f-49a4-a022-52c9d3863e89', '5a92285e-093a-4611-b438-2e01535d0493', N'String', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a587615f-a2f7-4dfd-b420-c9d94d91baed', '063a8579-bae5-428b-8b46-4ef0707ae539', N'String', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8e43db56-cf30-436d-98c4-bc9885f288fb', '21444085-ce66-4e71-bffa-aae2693d79ce', N'requests.post(url, data=data)', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ce3956bb-205e-4c9f-9f0d-0441fe1e9e71', '08d843f0-d397-4f7d-aeb7-566dc67481cf', N'requests.post(url, data=data)', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c51fb0c9-1370-47c4-be83-752a443d673c', '21444085-ce66-4e71-bffa-aae2693d79ce', N'requests.send(data)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8f45d835-2fac-48bb-a9b4-0932d13fe93e', '08d843f0-d397-4f7d-aeb7-566dc67481cf', N'requests.send(data)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4d6c0214-09c8-4ceb-b5d1-8c386f42bb38', '21444085-ce66-4e71-bffa-aae2693d79ce', N'requests.push(url)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('51d6d161-8943-4f09-bf24-d27cf6d6a153', '08d843f0-d397-4f7d-aeb7-566dc67481cf', N'requests.push(url)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('395b7bae-d4c3-43a4-937c-42efcbf711d1', '21444085-ce66-4e71-bffa-aae2693d79ce', N'requests.api(url)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('773fe548-1a2f-4620-a15e-d7762dd3ad2b', '08d843f0-d397-4f7d-aeb7-566dc67481cf', N'requests.api(url)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2d2aa8c9-36a0-4389-9fa2-2fdc21751543', '34b18d57-c94b-417c-b211-ea7b34620579', N'JSON is better for structured, nested data', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('de70b43d-b24c-4034-8c0c-e597aff9a1b7', 'ad80ecfd-43d1-4e8e-9661-3745d05e4bce', N'JSON is better for structured, nested data', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1af812da-ffc1-420d-9863-592e5701f39b', '34b18d57-c94b-417c-b211-ea7b34620579', N'CSV is always faster', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('06f4cc63-74d5-49ec-adc3-038c1f7ef0b2', 'ad80ecfd-43d1-4e8e-9661-3745d05e4bce', N'CSV is always faster', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d2c96302-b312-4b56-919b-b1465dbd3e8c', '34b18d57-c94b-417c-b211-ea7b34620579', N'CSV cannot be read', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b52b2659-7638-4133-998b-38f94dacbdc4', 'ad80ecfd-43d1-4e8e-9661-3745d05e4bce', N'CSV cannot be read', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('abebbbb6-da30-416d-a805-e5f00fce215c', '34b18d57-c94b-417c-b211-ea7b34620579', N'JSON is simpler but less readable', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('60c39efe-d76e-40b1-b9d3-43ca6eab8161', 'ad80ecfd-43d1-4e8e-9661-3745d05e4bce', N'JSON is simpler but less readable', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7f4cd36e-85fd-43a9-93ab-918ac518f993', '058fbca0-4a7b-4fb0-95fd-a22f2693928c', N'pygame', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b6c4fe79-60a3-4725-a576-47c310c5cec2', '31701509-368b-4a95-9bda-68de9b01c56e', N'pygame', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('167cf51b-80b2-496f-b909-8f07ae731e6b', '058fbca0-4a7b-4fb0-95fd-a22f2693928c', N'tkinter', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f28fca7e-86bd-4439-b54a-b0e727f4b040', '31701509-368b-4a95-9bda-68de9b01c56e', N'tkinter', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('452bc290-40db-4dfd-9f3e-9b7b842ed2a1', '058fbca0-4a7b-4fb0-95fd-a22f2693928c', N'pandas', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f1a01eee-e87d-4bca-8bd1-776b35d1afed', '31701509-368b-4a95-9bda-68de9b01c56e', N'pandas', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e902c46b-be6f-4110-b602-26b178366aa4', '058fbca0-4a7b-4fb0-95fd-a22f2693928c', N'math', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b9113c7b-f187-4120-8552-7cac6e95dd03', '31701509-368b-4a95-9bda-68de9b01c56e', N'math', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2b9fe807-5946-4f85-b370-f8cedaa2ecc6', '4f3648d8-18c8-4c67-b4b4-2f73b716193c', N'Closes the window', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4a9517d5-c16d-4ea2-851e-b88fa914896c', 'deb6c1e7-65b2-4e60-8bf5-5c66b8b7ed5f', N'Closes the window', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f613eef2-7c8d-4a8d-8edd-0e98cb5cb843', '4f3648d8-18c8-4c67-b4b4-2f73b716193c', N'Keeps the window open', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('92e303f1-c32c-48e1-9129-701be60b7998', 'deb6c1e7-65b2-4e60-8bf5-5c66b8b7ed5f', N'Keeps the window open', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('797fbbfc-ed73-44ef-ae10-f465aa8254ba', '4f3648d8-18c8-4c67-b4b4-2f73b716193c', N'Starts the computer', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('05b83858-644a-4613-8ce1-d2e4f4efbbba', 'deb6c1e7-65b2-4e60-8bf5-5c66b8b7ed5f', N'Starts the computer', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('44bf359a-a51d-4f0c-b6d0-881c5f9070eb', '4f3648d8-18c8-4c67-b4b4-2f73b716193c', N'Refreshes widgets only', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dee2821f-0219-4c90-b1f2-38eb2a5b5d6d', 'deb6c1e7-65b2-4e60-8bf5-5c66b8b7ed5f', N'Refreshes widgets only', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5ad5b9fe-0db6-46e7-9330-9dd5cf6adf24', '637d5b9c-3f6d-4705-8f4c-ea8a91fe3007', N'Label', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('305230a5-2465-4657-8a98-be475fd969ed', 'a8629418-1003-48dc-9dc9-39ca7bbbfeab', N'Label', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d45c50ad-8db2-4943-8cab-020ef1a5ceae', '637d5b9c-3f6d-4705-8f4c-ea8a91fe3007', N'Button', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2bbf98ea-b14d-4015-b117-3481c992a637', 'a8629418-1003-48dc-9dc9-39ca7bbbfeab', N'Button', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8d903e18-4bf6-4902-bd77-13c507dc017d', '637d5b9c-3f6d-4705-8f4c-ea8a91fe3007', N'Entry', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('53ddebf8-0aa9-45a2-8223-c31ccc01c607', 'a8629418-1003-48dc-9dc9-39ca7bbbfeab', N'Entry', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('80472f9b-3d72-4df8-b8aa-9cb1c2e002b7', '637d5b9c-3f6d-4705-8f4c-ea8a91fe3007', N'Canvas', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4dd240cc-e738-432e-8166-11ae0a4bee6f', 'a8629418-1003-48dc-9dc9-39ca7bbbfeab', N'Canvas', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('176dea8b-7b18-4f28-b744-74a859522281', '53e6c4a8-f7f0-462d-80a1-eafced96a384', N'Loads music', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('601e37ff-8193-4ab8-a3f9-912ba784cf13', '27fcf7e8-52e1-41e1-9bad-2def8f561d0f', N'Loads music', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b98f21a9-daa8-44d0-a4ce-14851b53a92f', '53e6c4a8-f7f0-462d-80a1-eafced96a384', N'Redraws the game window', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('513f4aad-af01-4940-8f74-f02a88ef844f', '27fcf7e8-52e1-41e1-9bad-2def8f561d0f', N'Redraws the game window', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7137ca80-fc9e-4df9-a107-f442d08233df', '53e6c4a8-f7f0-462d-80a1-eafced96a384', N'Closes the screen', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0e473b2b-37cd-4a17-8acf-1fc57ece7ddd', '27fcf7e8-52e1-41e1-9bad-2def8f561d0f', N'Closes the screen', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('32109d50-fb81-4fa8-8bd9-ebda6d94e932', '53e6c4a8-f7f0-462d-80a1-eafced96a384', N'Plays sound', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c9bef8d8-f0dd-40f1-99d2-3616e359a1f2', '27fcf7e8-52e1-41e1-9bad-2def8f561d0f', N'Plays sound', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6baef069-526b-440c-9261-5d376f188167', '8086c3f6-31c5-4282-a963-015081163d08', N'pygame.stop()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('23d50d24-f695-4cff-86e0-e5a9f4e559bf', 'eccbac47-b568-4ce8-bbea-200c1d7d20d6', N'pygame.stop()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('aeaff4e8-4479-4290-98eb-09cb785ecdc5', '8086c3f6-31c5-4282-a963-015081163d08', N'pygame.quit()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('35bef592-0941-4600-b4c0-7106605a1f52', 'eccbac47-b568-4ce8-bbea-200c1d7d20d6', N'pygame.quit()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('71e2e425-f777-4c57-95c5-e5f12e2ca1b3', '8086c3f6-31c5-4282-a963-015081163d08', N'exit()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('11b6c0bf-be9a-4b91-996a-cc6714b3bdd8', 'eccbac47-b568-4ce8-bbea-200c1d7d20d6', N'exit()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('928ca811-5a3a-4ee3-afd6-50c2b548ebd4', '8086c3f6-31c5-4282-a963-015081163d08', N'close()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e1962a98-4816-47fc-bcc8-cb5beb9dff0e', 'eccbac47-b568-4ce8-bbea-200c1d7d20d6', N'close()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0f603a7a-fac2-47b4-97af-073842f4adb1', '402ca38c-09cf-4c18-a107-9f4db66caad5', N'Tkinter window object', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('645bbbd4-03f7-44fe-accf-220cc19d4208', '3eea4f1c-f6bd-4e7f-a093-333fff5faf28', N'Tkinter window object', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('747527f7-fa12-4b63-ac38-1e7d236af618', '402ca38c-09cf-4c18-a107-9f4db66caad5', N'String', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('0a3e2c22-5adf-47c4-b164-7f42a13346b9', '3eea4f1c-f6bd-4e7f-a093-333fff5faf28', N'String', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('40ae064e-8d55-42a2-b667-9b68773fd79c', '402ca38c-09cf-4c18-a107-9f4db66caad5', N'Error', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4e5cdc9c-4645-44c9-983f-73a7cf020eec', '3eea4f1c-f6bd-4e7f-a093-333fff5faf28', N'Error', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e0ae6e57-69f5-42eb-82b6-b18eb6ce7d3b', '402ca38c-09cf-4c18-a107-9f4db66caad5', N'List', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d2162833-7977-445a-8d5d-ab38bd6719b4', '3eea4f1c-f6bd-4e7f-a093-333fff5faf28', N'List', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cb57308e-f8f5-4f1e-a3f9-7c15ff7075d9', '1dd5638a-8076-4f2e-a763-885795536a1e', N'pygame.rect()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('96e8a204-164c-4518-905d-9a242bc5fc5b', '752e44f9-1eb7-4b8d-82c8-2e511bfe7ad3', N'pygame.rect()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('23d2d121-21ce-4e2b-b43b-66b7471c6519', '1dd5638a-8076-4f2e-a763-885795536a1e', N'pygame.draw.rect()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('614e06f0-19b7-408a-9ce3-c405c6503a11', '752e44f9-1eb7-4b8d-82c8-2e511bfe7ad3', N'pygame.draw.rect()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f62236da-638b-423f-86ed-2d3f9ffa1e01', '1dd5638a-8076-4f2e-a763-885795536a1e', N'pygame.rectangle()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('03d0f460-4fb2-47df-9c7d-e0473a262d3d', '752e44f9-1eb7-4b8d-82c8-2e511bfe7ad3', N'pygame.rectangle()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('267ccf35-cfb6-466c-9410-fa4e522e035f', '1dd5638a-8076-4f2e-a763-885795536a1e', N'pygame.draw()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e2b7059e-37f8-47d0-8d62-08fcd37d7202', '752e44f9-1eb7-4b8d-82c8-2e511bfe7ad3', N'pygame.draw()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ab4d3e3c-0880-4220-a63c-d09f691524e1', '4ca1593b-f430-4dd7-91b2-8eec536cef6b', N'Creates a game window of 500x400 pixels', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('82a9b892-61cd-4d56-82a6-a07cd0bef35f', '313e7550-bc9e-48b6-a8b5-678dd64b1f11', N'Creates a game window of 500x400 pixels', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5b4a28dc-f798-4523-859f-c1f7d0ecab62', '4ca1593b-f430-4dd7-91b2-8eec536cef6b', N'Draws a rectangle', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6f7fc322-c74c-461b-94f3-82fe669e81a4', '313e7550-bc9e-48b6-a8b5-678dd64b1f11', N'Draws a rectangle', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dc06cd2d-6a46-4328-bd4f-608b913064dc', '4ca1593b-f430-4dd7-91b2-8eec536cef6b', N'Sets the FPS', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a5e892c7-feed-4508-a052-5ba6efb0ad73', '313e7550-bc9e-48b6-a8b5-678dd64b1f11', N'Sets the FPS', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('88ec3489-02e9-48cd-8222-9ad8e65f5b6d', '4ca1593b-f430-4dd7-91b2-8eec536cef6b', N'Creates a sprite', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('48026df1-0bf5-44e4-8913-244b01626bcf', '313e7550-bc9e-48b6-a8b5-678dd64b1f11', N'Creates a sprite', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a15a0d3d-3a5c-402c-acf3-0f04a29da03c', '988031af-292e-4f95-9fa2-558e13689705', N'display()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('774ad43d-689b-4b9d-bfb5-867f2d68eb50', '17fed7c9-5786-44b1-87fa-1e6b4aeb5265', N'display()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a0ef56f5-0192-4a69-95e7-d46a22e907bd', '988031af-292e-4f95-9fa2-558e13689705', N'arrange()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e77aa64e-2eb0-4bff-be13-6f488ab08f32', '17fed7c9-5786-44b1-87fa-1e6b4aeb5265', N'arrange()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('978d2999-1eed-4918-9e4a-bce7d72b02c9', '988031af-292e-4f95-9fa2-558e13689705', N'pack()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7a9a238f-3c8a-4b41-9d4b-0891baf69016', '17fed7c9-5786-44b1-87fa-1e6b4aeb5265', N'pack()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('aca6731f-ada0-4511-a822-0067b0347128', '988031af-292e-4f95-9fa2-558e13689705', N'set()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('be43056e-a654-4c96-b6f0-9721786dd645', '17fed7c9-5786-44b1-87fa-1e6b4aeb5265', N'set()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('30729165-8a00-4eb3-b36e-248b77187e29', 'f6db94f9-77c5-45bb-abe6-ab433121ae60', N'Function', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('41620387-1d5b-4a9f-8505-57cf627016e4', '4af39aa7-4b88-41e0-bbb0-f04039e89519', N'Function', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fd28d9a3-92bf-4163-81c3-34d74acdcc47', 'f6db94f9-77c5-45bb-abe6-ab433121ae60', N'Loop', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7770686a-01ff-4be7-9122-c7f769101367', '4af39aa7-4b88-41e0-bbb0-f04039e89519', N'Loop', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5f4c5819-9d70-4a66-bf9a-8d1c3872b249', 'f6db94f9-77c5-45bb-abe6-ab433121ae60', N'Class', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9d198d61-f4df-4c36-9904-7ffeb38998e0', '4af39aa7-4b88-41e0-bbb0-f04039e89519', N'Class', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5b9c0285-01f8-4208-9be5-63d2236b5a6c', 'f6db94f9-77c5-45bb-abe6-ab433121ae60', N'Event', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('560c9017-e76d-418d-99fa-438083ede6ab', '4af39aa7-4b88-41e0-bbb0-f04039e89519', N'Event', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5c5ed9fd-09ff-48b4-b5f4-7c1912a946ec', 'f494c8d0-4fde-4b3b-903f-7f82326d3403', N'Calls a function when the button is clicked', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('06e77469-b6aa-48df-adaa-7e3e0484cfc1', '89df1314-2cea-4b58-b2da-73ca3bdb3cf5', N'Calls a function when the button is clicked', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('024f511d-ad97-4fee-9527-10354fcc6675', 'f494c8d0-4fde-4b3b-903f-7f82326d3403', N'Creates a label', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e0ff8718-a08d-4554-8e37-ae3d90a7cf12', '89df1314-2cea-4b58-b2da-73ca3bdb3cf5', N'Creates a label', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('312c7227-8bd2-40db-8c1e-869b1dcb6fdb', 'f494c8d0-4fde-4b3b-903f-7f82326d3403', N'Defines text', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('64ce92ce-d217-4260-9dea-9ee078c2f0c7', '89df1314-2cea-4b58-b2da-73ca3bdb3cf5', N'Defines text', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('7f95834f-8d24-4ee0-938d-aec0af3fef0f', 'f494c8d0-4fde-4b3b-903f-7f82326d3403', N'Starts the game', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('42d0df9f-59d0-4a83-9214-30fbf8a2eb35', '89df1314-2cea-4b58-b2da-73ca3bdb3cf5', N'Starts the game', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4bd991ee-76f4-4cc3-95eb-d5f0d466f615', 'ec2a4ed2-e4f6-45da-a75b-4206ac6d91f7', N'pygame.keys()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9e6ede88-4763-4cbe-9139-644fb6200a9f', 'a120795e-d859-4608-884f-f697c290ffab', N'pygame.keys()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4078a834-54e5-474e-b78d-9ea93014ca93', 'ec2a4ed2-e4f6-45da-a75b-4206ac6d91f7', N'pygame.get_key()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('324e0f84-f199-4d33-8a5a-bf5860ecbf90', 'a120795e-d859-4608-884f-f697c290ffab', N'pygame.get_key()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f579a5b0-670e-4d3f-bcb6-037ca86f50f4', 'ec2a4ed2-e4f6-45da-a75b-4206ac6d91f7', N'pygame.key.get_pressed()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('24ac31a5-50c6-44ff-ba6b-f6db11543305', 'a120795e-d859-4608-884f-f697c290ffab', N'pygame.key.get_pressed()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('38b05c16-073e-43e1-94b4-d642bb5e7c5c', 'ec2a4ed2-e4f6-45da-a75b-4206ac6d91f7', N'pygame.check_key()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('31a7bfdc-404a-41bf-bb00-96b49a09dae8', 'a120795e-d859-4608-884f-f697c290ffab', N'pygame.check_key()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('4496ddbb-173a-4b50-86db-460c2f83dfcc', '831ac369-c183-4852-b63f-5f54f50344c0', N'pygame.CLOSE', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dbccf370-75e1-491e-8591-064ba80c9437', '214247b1-2602-4c38-8f80-e1a3038fb91f', N'pygame.CLOSE', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bf62a5e1-f107-4231-9d47-f9a5165962e8', '831ac369-c183-4852-b63f-5f54f50344c0', N'pygame.EXIT', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('30322ebb-7b91-4651-b16f-0062ec6fea63', '214247b1-2602-4c38-8f80-e1a3038fb91f', N'pygame.EXIT', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3843083a-9043-440f-a0a4-9028a636a05c', '831ac369-c183-4852-b63f-5f54f50344c0', N'pygame.QUIT', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('030af746-33a5-43a3-8564-8951eff5b924', '214247b1-2602-4c38-8f80-e1a3038fb91f', N'pygame.QUIT', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('056e1c61-111f-4ebf-94cd-e0efa2fc8518', '831ac369-c183-4852-b63f-5f54f50344c0', N'pygame.END', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6066f797-ee25-40d4-a226-61a561f3b9df', '214247b1-2602-4c38-8f80-e1a3038fb91f', N'pygame.END', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('6813a2bc-e17a-4aef-81f0-c87714913188', '4c540383-d9ec-4d94-8a22-0bf06393faa7', N'Blue', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('de8d903c-3fba-4e09-9a76-039dbe034363', '1e4771ee-04c9-473e-a09a-430e946dd7bf', N'Blue', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('248e0fb9-8768-40a5-913e-375d9b3a28c6', '4c540383-d9ec-4d94-8a22-0bf06393faa7', N'Yellow', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8a1de897-88df-40e9-9b5b-fe8d32ce4e82', '1e4771ee-04c9-473e-a09a-430e946dd7bf', N'Yellow', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1b2faa76-aa11-4002-8085-dc1f2134b803', '4c540383-d9ec-4d94-8a22-0bf06393faa7', N'Red', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('db87a979-d4ef-4281-b98a-98dbae117bf6', '1e4771ee-04c9-473e-a09a-430e946dd7bf', N'Red', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('5c8272cd-fa73-49db-a8a0-e786fddf4e5e', '4c540383-d9ec-4d94-8a22-0bf06393faa7', N'White', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('44f97ac7-03e1-406c-a108-aba86be46b98', '1e4771ee-04c9-473e-a09a-430e946dd7bf', N'White', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d5e0f290-7c92-40ea-9e35-84d97c53118a', 'eef11054-0009-499d-8235-5968677b7c75', N'pygame.image.load("file.png")', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('de23d98e-bccd-4c71-bea8-1f3da6502fdd', '50f4d1cb-71cc-4786-a454-df29bf4e716b', N'pygame.image.load("file.png")', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('997d1cc1-73eb-4768-9828-a0a9b7891f5d', 'eef11054-0009-499d-8235-5968677b7c75', N'pygame.load.image("file.png")', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('085b145d-735a-4959-889e-2986cd145fd3', '50f4d1cb-71cc-4786-a454-df29bf4e716b', N'pygame.load.image("file.png")', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b45e4f3f-d280-40ff-8da4-0c7d969e6419', 'eef11054-0009-499d-8235-5968677b7c75', N'pygame.img("file.png")', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3647abea-3fbe-44fc-8c4f-368cb85e1b72', '50f4d1cb-71cc-4786-a454-df29bf4e716b', N'pygame.img("file.png")', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f52ef755-ac90-4d02-9c38-556838344597', 'eef11054-0009-499d-8235-5968677b7c75', N'pygame.display.image()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ae9a6ce9-c8be-4c56-a8a5-cd54427f0545', '50f4d1cb-71cc-4786-a454-df29bf4e716b', N'pygame.display.image()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3efb99ed-be95-4a03-ba02-cfef75915dbd', 'c56a198c-6aa7-4a7e-a772-55e00a56442c', N'sound.play()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ddff4c00-bfed-4282-8803-78db72695b61', '4f2120b2-02ea-48a5-93ed-c5ae6fde62fd', N'sound.play()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('9a5e11db-c94b-4988-974f-92f4492154f1', 'c56a198c-6aa7-4a7e-a772-55e00a56442c', N'pygame.play(sound)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('912a6ec3-5c86-44c7-a45d-5898f946ed8d', '4f2120b2-02ea-48a5-93ed-c5ae6fde62fd', N'pygame.play(sound)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2a98b474-57be-43dc-a575-5436c83648c1', 'c56a198c-6aa7-4a7e-a772-55e00a56442c', N'pygame.mixer(sound)', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d1387f6f-770c-4b89-8d8d-e037e551e987', '4f2120b2-02ea-48a5-93ed-c5ae6fde62fd', N'pygame.mixer(sound)', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('97e8e66e-6d33-4b54-b94c-90b6b2c72b2b', 'c56a198c-6aa7-4a7e-a772-55e00a56442c', N'pygame.start_sound()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('64c1e39d-fbd4-4d9c-953e-ce765c7dfcf2', '4f2120b2-02ea-48a5-93ed-c5ae6fde62fd', N'pygame.start_sound()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bc68a2fd-644e-4bd3-aa62-d10915c51832', '0ce513d9-0920-48e8-b90c-0ca164603a87', N'Game loop', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('dc0d5d79-f9ff-4250-9799-35d64a7c7bf7', '468bb52f-1d6d-4520-b7a7-32a1f5e94dd7', N'Game loop', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('cd993145-cefa-414c-a6bd-86844eed26c1', '0ce513d9-0920-48e8-b90c-0ca164603a87', N'Event handler only', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c9b1f14a-cdb4-4cbe-8941-6d2431117b95', '468bb52f-1d6d-4520-b7a7-32a1f5e94dd7', N'Event handler only', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('ba439806-152a-425a-b414-df0b94cc68c3', '0ce513d9-0920-48e8-b90c-0ca164603a87', N'Initialization', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('1b015f13-24d4-4fb9-ac47-ac5764dcb038', '468bb52f-1d6d-4520-b7a7-32a1f5e94dd7', N'Initialization', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3956e9bb-0ace-4ac5-a293-83838cfec49c', '0ce513d9-0920-48e8-b90c-0ca164603a87', N'Quit section', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('88edc045-568e-46b3-b687-1995827a71cb', '468bb52f-1d6d-4520-b7a7-32a1f5e94dd7', N'Quit section', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3a8b05bb-41cd-48d3-bd9b-6f9c2a0fbf66', '4e169b37-4d37-4197-8b50-9c9dd4a3c90b', N'Label', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('31e93127-fe03-427e-b363-c9151939bf27', '847a2ce0-068a-4bf5-8f2f-bb9311c885b3', N'Label', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2a8bf068-825e-4ee0-9c37-56318b06bc8f', '4e169b37-4d37-4197-8b50-9c9dd4a3c90b', N'Canvas', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('afad1938-961a-4a5b-812e-4f2bba05b7e5', '847a2ce0-068a-4bf5-8f2f-bb9311c885b3', N'Canvas', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e4d2f0fb-cac8-4900-9bac-69ad1d9d642c', '4e169b37-4d37-4197-8b50-9c9dd4a3c90b', N'Frame', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3b4c5276-ba46-4e09-a958-d185a1473759', '847a2ce0-068a-4bf5-8f2f-bb9311c885b3', N'Frame', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('fbc54f96-7b6b-4c71-9d31-12b7633d9593', '4e169b37-4d37-4197-8b50-9c9dd4a3c90b', N'Text', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2a752f35-ce29-44c7-ad8c-f228adc24cb8', '847a2ce0-068a-4bf5-8f2f-bb9311c885b3', N'Text', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('2406a83e-84a6-4dc0-ba9f-12fd93075061', '6f33b140-3b3c-432d-a109-71997404f77c', N'pygame.close()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d4c4574a-ad0a-445d-bbe8-4894e7985fb7', '5dbf98ba-f02e-4519-bc69-39ea423e7be6', N'pygame.close()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('b21e44e5-747d-45ad-b9dd-1264712fb15a', '6f33b140-3b3c-432d-a109-71997404f77c', N'pygame.end()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('f4958989-aa43-4e83-8361-04480327b1e9', '5dbf98ba-f02e-4519-bc69-39ea423e7be6', N'pygame.end()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('56d7b563-0961-4b73-85fa-56878e1a5975', '6f33b140-3b3c-432d-a109-71997404f77c', N'pygame.quit()', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e628d263-426a-40e8-a308-24d9195e846a', '5dbf98ba-f02e-4519-bc69-39ea423e7be6', N'pygame.quit()', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('c4e8449f-3071-4183-b090-a28084050a6c', '6f33b140-3b3c-432d-a109-71997404f77c', N'exit()', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('bb3474bb-7efe-492f-8ff9-b57aa1aceff6', '5dbf98ba-f02e-4519-bc69-39ea423e7be6', N'exit()', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('e3f70e0f-82ce-4836-83e0-51cbb1b88e64', '34988b93-c440-408c-9d90-43a3bd4bf44f', N'It still runs', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('395dc6db-32be-4694-93c6-ea86ec339850', 'ae704d89-bcf7-4c72-be03-b50dc50329db', N'It still runs', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('8da636cf-1610-4fc0-99e9-99367ed97a87', '34988b93-c440-408c-9d90-43a3bd4bf44f', N'Some modules may not work properly', 1);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('18f2eeb7-f28e-4f8d-a317-d238af418598', 'ae704d89-bcf7-4c72-be03-b50dc50329db', N'Some modules may not work properly', 1);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('d282f957-5817-4c1f-80ad-8cd914ce7696', '34988b93-c440-408c-9d90-43a3bd4bf44f', N'It prints “error”', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('a888098f-6642-40f6-b9be-ab240bb94374', 'ae704d89-bcf7-4c72-be03-b50dc50329db', N'It prints “error”', 0);
 GO
-INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('146d6601-0f22-4293-a089-a07325c02014', '34988b93-c440-408c-9d90-43a3bd4bf44f', N'It installs missing files', 0);
+INSERT INTO QuestionOptions (OptionId, QuestionId, OptionText, IsCorrect) VALUES ('3d01ba41-1528-4194-9cf0-32ec6efd08ea', 'ae704d89-bcf7-4c72-be03-b50dc50329db', N'It installs missing files', 0);
 GO

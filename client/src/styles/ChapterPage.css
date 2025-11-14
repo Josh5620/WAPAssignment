@@ -96,6 +96,276 @@
   margin-bottom: 1rem;
 }
 
+/* Notes Section Styling */
+.chapter-section--notes {
+  background: rgba(239, 241, 237, 0.8);
+  border-color: rgba(113, 119, 68, 0.4);
+}
+
+.notes-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.note-item {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(113, 119, 68, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(55, 61, 32, 0.06);
+  transition: all 0.3s ease;
+}
+
+.note-item:hover {
+  border-color: rgba(113, 119, 68, 0.4);
+  box-shadow: 0 6px 18px rgba(55, 61, 32, 0.1);
+  transform: translateY(-2px);
+}
+
+.note-content {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.note-content p {
+  margin: 0 0 1rem 0;
+}
+
+.note-content p:last-child {
+  margin-bottom: 0;
+}
+
+.note-content h1,
+.note-content h2,
+.note-content h3,
+.note-content h4 {
+  font-family: 'Press Start 2P', cursive;
+  color: var(--primary);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.note-content h1:first-child,
+.note-content h2:first-child,
+.note-content h3:first-child,
+.note-content h4:first-child {
+  margin-top: 0;
+}
+
+.note-content ul,
+.note-content ol {
+  margin: 1rem 0;
+  padding-left: 2rem;
+}
+
+.note-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.note-content code {
+  background: rgba(113, 119, 68, 0.1);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+.note-content pre {
+  background: rgba(55, 61, 32, 0.05);
+  border: 1px solid rgba(113, 119, 68, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.note-content pre code {
+  background: none;
+  padding: 0;
+}
+
+/* ==================== */
+/* LESSON PREVIEW       */
+/* ==================== */
+
+.chapter-section--lesson-preview {
+  background: rgba(239, 241, 237, 0.9);
+  border: 2px solid rgba(113, 119, 68, 0.25);
+}
+
+.lesson-preview-content {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.lesson-preview-content p {
+  margin: 0;
+  line-height: 1.7;
+}
+
+/* ==================== */
+/* LESSON CONTENT       */
+/* ==================== */
+
+.lesson-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.lesson-content-wrapper {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+
+.lesson-html-content {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+
+/* Format paragraphs in lesson content */
+.lesson-html-content p {
+  margin: 0 0 1.25rem 0;
+  line-height: 1.8;
+}
+
+.lesson-html-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Format headings (subtopics) in lesson content */
+.lesson-html-content h1,
+.lesson-html-content h2,
+.lesson-html-content h3,
+.lesson-html-content h4,
+.lesson-html-content h5,
+.lesson-html-content h6 {
+  font-family: 'Press Start 2P', cursive;
+  color: var(--primary);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.lesson-html-content h1:first-child,
+.lesson-html-content h2:first-child,
+.lesson-html-content h3:first-child,
+.lesson-html-content h4:first-child {
+  margin-top: 0;
+}
+
+/* Format lists in lesson content */
+.lesson-html-content ul,
+.lesson-html-content ol {
+  margin: 1rem 0 1.5rem 0;
+  padding-left: 2rem;
+}
+
+.lesson-html-content li {
+  margin-bottom: 0.75rem;
+  line-height: 1.7;
+}
+
+.lesson-html-content ul li {
+  list-style-type: disc;
+}
+
+.lesson-html-content ol li {
+  list-style-type: decimal;
+}
+
+/* Format code blocks in lesson content */
+.lesson-html-content code {
+  background: rgba(113, 119, 68, 0.15);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+  color: var(--primary);
+  border: 1px solid rgba(113, 119, 68, 0.2);
+}
+
+.lesson-html-content pre {
+  background: rgba(55, 61, 32, 0.08);
+  border: 2px solid rgba(113, 119, 68, 0.25);
+  border-radius: 12px;
+  padding: 1.25rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  box-shadow: 0 4px 12px rgba(55, 61, 32, 0.1);
+}
+
+.lesson-html-content pre code {
+  background: none;
+  padding: 0;
+  border: none;
+  color: var(--text);
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+
+/* Format strong/bold text */
+.lesson-html-content strong,
+.lesson-html-content b {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* Format emphasis/italic text */
+.lesson-html-content em,
+.lesson-html-content i {
+  font-style: italic;
+  color: var(--text-muted, var(--text));
+}
+
+/* Format blockquotes if any */
+.lesson-html-content blockquote {
+  border-left: 4px solid var(--primary);
+  padding-left: 1.5rem;
+  margin: 1.5rem 0;
+  color: var(--text-muted, var(--text));
+  font-style: italic;
+}
+
+/* Format horizontal rules if any */
+.lesson-html-content hr {
+  border: none;
+  border-top: 2px solid rgba(113, 119, 68, 0.2);
+  margin: 2rem 0;
+}
+
+/* Format tables if any */
+.lesson-html-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.lesson-html-content table th,
+.lesson-html-content table td {
+  padding: 0.75rem;
+  border: 1px solid rgba(113, 119, 68, 0.2);
+  text-align: left;
+}
+
+.lesson-html-content table th {
+  background: rgba(113, 119, 68, 0.1);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  color: var(--primary);
+}
+
 .chapter-section ul {
   margin: 0;
   padding-left: 1.2rem;
@@ -132,6 +402,82 @@
   font-size: 0.8rem;
   color: var(--primary);
   margin-top: 0.15rem;
+}
+
+/* ==================== */
+/* START LEARNING       */
+/* ==================== */
+
+.chapter-section--start-learning {
+  text-align: center;
+  background: rgba(239, 241, 237, 0.9);
+  border: 3px solid rgba(113, 119, 68, 0.3);
+  padding: 3rem 2rem;
+}
+
+.start-learning-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.start-learning-icon {
+  font-size: 3.5rem;
+  animation: gentle-bounce 2s ease-in-out infinite;
+}
+
+@keyframes gentle-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.start-learning-content h2 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1rem;
+  color: var(--primary);
+  margin: 0;
+}
+
+.start-learning-content p {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text);
+  margin: 0;
+}
+
+.start-learning-btn {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.85rem;
+  padding: 1rem 2rem;
+  background: var(--primary);
+  color: var(--bg);
+  border: 3px solid var(--primary);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 16px rgba(55, 61, 32, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.start-learning-btn:hover {
+  background: var(--primary-hover, #6b7a3d);
+  border-color: var(--primary-hover, #6b7a3d);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(55, 61, 32, 0.3);
+}
+
+.start-learning-btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(55, 61, 32, 0.2);
 }
 
 /* ==================== */
@@ -714,6 +1060,25 @@
   background: var(--muted);
   color: var(--text-muted);
   cursor: not-allowed;
+}
+
+.chapter-nav-button.locked {
+  background: #95a5a6;
+  color: #ffffff;
+  border-color: #7f8c8d;
+  opacity: 0.7;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.chapter-nav-button.locked:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.chapter-nav-button.locked::before {
+  content: '🔒';
+  margin-right: 0.5rem;
 }
 
 /* ==================== */

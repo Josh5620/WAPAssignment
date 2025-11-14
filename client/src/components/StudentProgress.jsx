@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/apiService';
 import { quickApi } from '../services/apiService';
+import '../styles/StudentProgress.css';
 
 const StudentProgress = ({ courseId }) => {
   const [progress, setProgress] = useState([]);
@@ -102,12 +103,22 @@ const StudentProgress = ({ courseId }) => {
 
   return (
     <div className="student-progress">
-      <h3>Your Learning Progress</h3>
+      <h3>Learning Progress</h3>
       <div className="progress-list">
         {filteredProgress.map((courseProgress) => (
           <div key={courseProgress.courseId} className="progress-item">
             <div className="progress-header">
-              <h4>{courseProgress.courseTitle}</h4>
+              <div>
+                <p style={{ 
+                  fontFamily: 'system-ui, -apple-system, sans-serif', 
+                  fontSize: '0.9rem', 
+                  color: '#666',
+                  margin: '0 0 0.25rem 0'
+                }}>
+                  Your Learning Progress
+                </p>
+                <h4>{courseProgress.courseTitle}</h4>
+              </div>
               <span className="progress-percentage">
                 {courseProgress.progressPercentage.toFixed(1)}%
               </span>
@@ -122,7 +133,7 @@ const StudentProgress = ({ courseId }) => {
 
             <div className="progress-details">
               <div className="progress-stat">
-                <span className="stat-label">Chapters Completed:</span>
+                <span className="stat-label">CHAPTERS COMPLETED:</span>
                 <span className="stat-value">
                   {courseProgress.completedChapters} / {courseProgress.totalChapters}
                 </span>
@@ -131,13 +142,13 @@ const StudentProgress = ({ courseId }) => {
               {courseProgress.totalMcqsAttempted > 0 && (
                 <>
                   <div className="progress-stat">
-                    <span className="stat-label">Quiz Accuracy:</span>
+                    <span className="stat-label">QUIZ ACCURACY:</span>
                     <span className="stat-value">
                       {courseProgress.mcqAccuracy.toFixed(1)}%
                     </span>
                   </div>
                   <div className="progress-stat">
-                    <span className="stat-label">Questions Attempted:</span>
+                    <span className="stat-label">QUESTIONS ATTEMPTED:</span>
                     <span className="stat-value">
                       {courseProgress.totalMcqsAttempted} ({courseProgress.totalMcqsCorrect} correct)
                     </span>

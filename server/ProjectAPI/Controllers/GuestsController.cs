@@ -95,6 +95,7 @@ public class GuestsController : ControllerBase
                 previewContent = course.PreviewContent,
                 published = course.Published,
                 approvalStatus = course.ApprovalStatus,
+                chapterCount = course.Chapters.Count,
                 totalChapters = course.Chapters.Count,
                 chapters = previewChapters
                     .Select(ch => new
@@ -117,7 +118,6 @@ public class GuestsController : ControllerBase
                             {
                                 resourceId = r.ResourceId,
                                 type = r.Type,
-                                title = r.Title,
                                 content = r.Content
                             })
                             .ToList()
@@ -480,13 +480,22 @@ public class GuestsController : ControllerBase
     /// Get all testimonials from the database
     /// </summary>
     [HttpGet("testimonials")]
-    public async Task<IActionResult> GetTestimonials(CancellationToken ct = default)
+    public async Task<IActionResult> GetTestimonials([FromQuery] Guid? courseId = null, [FromQuery] int? limit = null, CancellationToken ct = default)
     {
         try
         {
-            var testimonials = await _context.Testimonials
+            var query = _context.Testimonials
                 .Include(t => t.Profile)
                 .Include(t => t.Course)
+                .AsQueryable();
+
+            // Filter by courseId if provided
+            if (courseId.HasValue)
+            {
+                query = query.Where(t => t.CourseId == courseId.Value);
+            }
+
+            var testimonials = await query
                 .Select(t => new
                 {
                     testimonialId = t.TestimonialId,
@@ -507,6 +516,12 @@ public class GuestsController : ControllerBase
                 })
                 .OrderByDescending(t => t.createdAt)
                 .ToListAsync(ct);
+
+            // Apply limit if provided
+            if (limit.HasValue && limit.Value > 0)
+            {
+                testimonials = testimonials.Take(limit.Value).ToList();
+            }
 
             return Ok(new
             {

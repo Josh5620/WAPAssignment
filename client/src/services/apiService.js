@@ -649,25 +649,40 @@ const getGuestChapterPreview = async (courseId, chapterId) => {
 // Update getGuestTestimonials to remove fallback
 const getGuestTestimonials = async ({ courseId, limit } = {}) => {
   const query = buildQueryString({ courseId, limit });
+  const url = `${API_BASE_URL}/guests/testimonials${query}`;
+  console.log('Fetching testimonials from:', url);
+  
   try {
-    const response = await fetch(`${API_BASE_URL}/guests/testimonials${query}`, {
+    const response = await fetch(url, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     });
 
+    console.log('Testimonials API response status:', response.status, response.statusText);
+
     if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Testimonials API error response:', errorText);
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
 
     const data = await response.json();
+    console.log('Testimonials API raw data:', data);
     
     if (Array.isArray(data)) {
       return { testimonials: data };
     }
-    return data;
+    
+    // Handle case where backend returns { testimonials: [...], total: ... }
+    if (data && data.testimonials) {
+      return data;
+    }
+    
+    // If data is an object but not the expected format, try to extract testimonials
+    return { testimonials: [] };
   } catch (error) {
     console.error('Failed to fetch testimonials:', error);
-    return { testimonials: [] }; // Return empty array instead of fallback
+    throw error; // Re-throw instead of silently returning empty array
   }
 };
 
@@ -1731,6 +1746,24 @@ const getChapterProgress = async (userId, chapterId) => {
   }
 };
 
+const isChapterUnlocked = async (chapterId) => {
+  try {
+    const token = getToken();
+    const response = await fetch(`${API_BASE_URL}/students/chapters/${chapterId}/unlocked`, {
+      method: 'GET',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Check chapter unlocked error:', error);
+    throw error;
+  }
+};
+
 const markChapterComplete = async (userId, chapterId) => {
   try {
     const token = getToken();
@@ -2047,6 +2080,7 @@ export const api = {
     getQuestionHint,
     getStudentProgress,
     getChapterProgress,
+    isChapterUnlocked,
     markChapterComplete,
     getStudentProfile,
     updateStudentProfile,

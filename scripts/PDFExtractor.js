@@ -22,6 +22,100 @@ const escapeSql = (text) => {
 };
 
 /**
+ * Generates a concise summary from chapter notes content.
+ * Extracts key points and creates a 2-3 sentence summary.
+ * @param {string} notesContent The full notes content for the chapter.
+ * @param {string} chapterTitle The chapter title for context.
+ * @returns {string} A concise summary of the chapter notes.
+ */
+const generateSummary = (notesContent, chapterTitle) => {
+    if (!notesContent || notesContent.trim().length === 0) {
+        return `Learn ${chapterTitle} concepts and fundamentals.`;
+    }
+
+    // Clean the content - preserve structure but normalize whitespace
+    let content = notesContent.trim();
+    
+    // Split into sentences for better processing
+    const sentences = content.split(/[.!?]+\s+/).filter(s => s.trim().length > 20);
+    
+    // Extract key sections (look for headings or important markers)
+    const sections = content.split(/\n\s*\n/).filter(s => s.trim().length > 30);
+    
+    // Build summary from first meaningful sentences
+    let summary = '';
+    
+    // Try to get the first 2-3 meaningful sentences (50-200 chars each)
+    const meaningfulSentences = sentences.filter(s => {
+        const len = s.trim().length;
+        return len >= 50 && len <= 200;
+    }).slice(0, 3);
+    
+    if (meaningfulSentences.length > 0) {
+        summary = meaningfulSentences.join('. ');
+        if (!summary.endsWith('.')) {
+            summary += '.';
+        }
+    } else {
+        // Fallback: use first section or first 250 characters
+        if (sections.length > 0) {
+            const firstSection = sections[0].trim();
+            // Take first 250 chars and find last complete sentence
+            if (firstSection.length > 250) {
+                const truncated = firstSection.substring(0, 250);
+                const lastPeriod = truncated.lastIndexOf('.');
+                if (lastPeriod > 100) {
+                    summary = truncated.substring(0, lastPeriod + 1);
+                } else {
+                    summary = truncated.trim() + '...';
+                }
+            } else {
+                summary = firstSection;
+                if (!summary.endsWith('.') && !summary.endsWith('!') && !summary.endsWith('?')) {
+                    summary += '.';
+                }
+            }
+        } else {
+            // Last resort: first 250 characters
+            summary = content.substring(0, 250).trim();
+            const lastPeriod = summary.lastIndexOf('.');
+            if (lastPeriod > 100) {
+                summary = summary.substring(0, lastPeriod + 1);
+            } else {
+                summary += '...';
+            }
+        }
+    }
+    
+    // Extract key topics/headings (lines that look like section headers)
+    const headings = content.match(/(?:^|\n)([A-Z][A-Za-z\s]{10,60})(?:\n|$)/g) || [];
+    const keyTopics = headings
+        .map(h => h.replace(/^\n/, '').trim())
+        .filter(h => !h.includes('Chapter') && !h.includes('Notes') && h.length > 10 && h.length < 80)
+        .slice(0, 4);
+    
+    // Add key topics if summary is short enough
+    if (keyTopics.length > 0 && summary.length < 350) {
+        const topicsText = keyTopics.slice(0, 3).join(', ');
+        if (summary.length + topicsText.length + 30 < 500) {
+            summary += ` Key topics include: ${topicsText}.`;
+        }
+    }
+    
+    // Ensure summary is not too long (max 500 chars)
+    if (summary.length > 500) {
+        const lastPeriod = summary.substring(0, 500).lastIndexOf('.');
+        if (lastPeriod > 300) {
+            summary = summary.substring(0, lastPeriod + 1);
+        } else {
+            summary = summary.substring(0, 497) + '...';
+        }
+    }
+    
+    return summary.trim();
+};
+
+/**
  * Main function to generate all seed files.
  */
 async function generateSeeds() {
@@ -114,10 +208,13 @@ GO
             }
         }
         
+        // Generate a proper summary from the notes content
+        const chapterSummary = generateSummary(chapterContent, chapterTitle);
+        
         const chapterSql = `
 -- Seed for Chapter ${i}: ${chapterTitle}
 INSERT INTO Chapters (ChapterId, Title, Summary, Number, CourseId)
-VALUES ('${chapterId}', '${escapeSql(chapterTitle)}', N'${escapeSql(chapterContent.substring(0, 200))}...', ${i}, '${courseId}');
+VALUES ('${chapterId}', '${escapeSql(chapterTitle)}', N'${escapeSql(chapterSummary)}', ${i}, '${courseId}');
 GO`;
         chapterSqls.push(chapterSql);
 

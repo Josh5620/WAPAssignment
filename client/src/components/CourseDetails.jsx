@@ -64,6 +64,14 @@ const CourseDetails = ({ courseId, userRole, onBack, onStartLearning }) => {
         course.chapters ||
         course.Chapters ||
         [],
+      chapterCount:
+        course.chapterCount ??
+        course.ChapterCount ??
+        course.totalChapters ??
+        course.TotalChapters ??
+        (Array.isArray(course.chapters) ? course.chapters.length : null) ??
+        (Array.isArray(course.Chapters) ? course.Chapters.length : null) ??
+        0,
     };
   }, [course]);
 
@@ -238,6 +246,10 @@ const CourseDetails = ({ courseId, userRole, onBack, onStartLearning }) => {
               <span className={metadata.published ? 'status-published' : 'status-draft'}>
                 {metadata.published ? 'Published' : 'Draft'}
               </span>
+            </div>
+            <div className="info-item">
+              <strong>Chapters:</strong>
+              <span className="chapter-count-value">{metadata.chapterCount ?? 0}</span>
             </div>
             <div className="info-item">
               <strong>Course ID:</strong>

@@ -70,6 +70,62 @@ public class DebugController : ControllerBase
             return StatusCode(500, new { error = ex.Message, details = ex.InnerException?.Message });
         }
     }
+
+    [HttpGet("testimonials")]
+    public async Task<IActionResult> CheckTestimonials()
+    {
+        try
+        {
+            var count = await _context.Testimonials.CountAsync();
+            var testimonials = await _context.Testimonials
+                .Include(t => t.Profile)
+                .Include(t => t.Course)
+                .Select(t => new
+                {
+                    t.TestimonialId,
+                    t.Rating,
+                    t.Comment,
+                    UserEmail = t.Profile.Email,
+                    UserName = t.Profile.FullName,
+                    CourseTitle = t.Course != null ? t.Course.Title : "General"
+                })
+                .Take(10)
+                .ToListAsync();
+
+            var pythonCourse = await _context.Courses
+                .FirstOrDefaultAsync(c => c.Title == "The Garden of Python");
+            
+            var requiredProfiles = new[]
+            {
+                "alice.student@codesage.com",
+                "bob.smith@codesage.com",
+                "emma.t@codesage.com",
+                "carlos.m@codesage.com",
+                "sophia.lee@codesage.com",
+                "james.w@codesage.com"
+            };
+
+            var existingProfiles = await _context.Profiles
+                .Where(p => requiredProfiles.Contains(p.Email))
+                .Select(p => p.Email)
+                .ToListAsync();
+
+            return Ok(new
+            {
+                testimonialCount = count,
+                testimonials,
+                pythonCourseExists = pythonCourse != null,
+                pythonCourseId = pythonCourse?.CourseId,
+                requiredProfiles = requiredProfiles,
+                existingProfiles = existingProfiles,
+                missingProfiles = requiredProfiles.Except(existingProfiles).ToList()
+            });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { error = ex.Message, details = ex.InnerException?.Message });
+        }
+    }
 }
 
 public class TestLoginRequest

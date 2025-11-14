@@ -326,7 +326,10 @@ const StudentDashboard = () => {
     navigate(`/chapters/${chapter.id}`);
   };
 
-  if (loading) {
+  // Check if student is enrolled in any courses
+  const isEnrolled = myCourses.length > 0;
+
+  if (loading || myCoursesLoading) {
     return (
       <>
         <Navbar />
@@ -334,6 +337,57 @@ const StudentDashboard = () => {
           <div className="loading-spinner">🌱</div>
           <p>Loading your garden...</p>
         </div>
+      </>
+    );
+  }
+
+  // Show enrollment prompt if not enrolled
+  if (!isEnrolled) {
+    return (
+      <>
+        <Navbar />
+        <main className="student-dashboard-page">
+          <section className="student-dashboard-header">
+            <h1>Welcome to Your Garden!</h1>
+            <p>{greeting}</p>
+          </section>
+
+          <section className="student-dashboard-enrollment-prompt">
+            <div className="enrollment-prompt-card">
+              <div className="enrollment-prompt-icon">🌱</div>
+              <h2>Start Your Learning Journey</h2>
+              <p>
+                You're not enrolled in any courses yet. Enroll in a course to unlock your garden and start growing your skills!
+              </p>
+              <button
+                type="button"
+                className="btn-enroll-now"
+                onClick={() => navigate('/courses')}
+              >
+                Explore Courses
+              </button>
+            </div>
+          </section>
+
+          <section className="student-dashboard-courses">
+            <div className="courses-card">
+              <div className="courses-header">
+                <div>
+                  <h2>My Courses</h2>
+                  <p>Enroll in a course to start your learning journey.</p>
+                </div>
+                <button
+                  type="button"
+                  className="btn-explore-courses"
+                  onClick={() => navigate('/courses')}
+                >
+                  Explore Courses
+                </button>
+              </div>
+              <ul className="courses-list">{renderMyCourses()}</ul>
+            </div>
+          </section>
+        </main>
       </>
     );
   }

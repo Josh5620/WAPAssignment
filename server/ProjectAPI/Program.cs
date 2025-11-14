@@ -80,7 +80,9 @@ builder.Services
     {
         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
-        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+        // Always include null properties - we need Notes to always be present (even if null)
+        // so frontend can detect DTO format
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.Never;
     });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -161,15 +163,47 @@ static async Task SeedDatabaseIfEmpty(ApplicationDbContext context, ILogger logg
             logger.LogInformation($"✓ Profiles already exist ({profileCount} found)");
         }
 
-        // Seed course content if needed
-        if (courseCount == 0 || chapterCount == 0)
+        // Check resources count and types
+        var resourceCount = await context.Resources.CountAsync();
+        var lessonResourceCount = await context.Resources.CountAsync(r => r.Type.ToLower() == "lesson");
+        logger.LogInformation($"   Resources: {resourceCount} (Lesson resources: {lessonResourceCount})");
+
+        // Check if chapters exist but don't have lesson resources
+        var chaptersWithoutLessons = await context.Chapters
+            .Where(ch => !context.Resources.Any(r => r.ChapterId == ch.ChapterId && r.Type.ToLower() == "lesson"))
+            .CountAsync();
+        
+        logger.LogInformation($"   Chapters without lesson resources: {chaptersWithoutLessons}");
+
+        // Seed course content if needed (courses, chapters, resources missing, or no lesson resources, or chapters missing lessons)
+        if (courseCount == 0 || chapterCount == 0 || resourceCount == 0 || lessonResourceCount == 0 || chaptersWithoutLessons > 0)
         {
             logger.LogInformation("🌱 Seeding course content from SQL files...");
+            if (lessonResourceCount == 0 && resourceCount > 0)
+            {
+                logger.LogWarning("⚠️ Database has resources but no lesson resources. Reseeding to add lesson content...");
+            }
+            if (chaptersWithoutLessons > 0)
+            {
+                logger.LogWarning($"⚠️ {chaptersWithoutLessons} chapters are missing lesson resources. Reseeding...");
+            }
             await ExecuteSqlSeedFiles(context, logger);
         }
         else
         {
-            logger.LogInformation($"✓ Course content already exists ({courseCount} courses, {chapterCount} chapters)");
+            logger.LogInformation($"✓ Course content already exists ({courseCount} courses, {chapterCount} chapters, {resourceCount} resources, {lessonResourceCount} lesson resources)");
+        }
+
+        // Always check and seed testimonials if needed (separate from course seeding)
+        var testimonialCount = await context.Testimonials.CountAsync();
+        if (testimonialCount == 0)
+        {
+            logger.LogInformation("🌱 Seeding testimonials...");
+            await ExecuteSqlSeedFile(context, logger, "Data/Seeds/08-testimonials.sql");
+        }
+        else
+        {
+            logger.LogInformation($"✓ Testimonials already exist ({testimonialCount} found)");
         }
 
         logger.LogInformation("✅ Database seeding check completed!");
@@ -258,6 +292,67 @@ static async Task ExecuteSqlSeedFiles(ApplicationDbContext context, ILogger logg
     }
     
     logger.LogInformation("🎉 SQL seed file execution completed!");
+}
+
+static async Task ExecuteSqlSeedFile(ApplicationDbContext context, ILogger logger, string seedFile)
+{
+    try
+    {
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), seedFile);
+        
+        if (!File.Exists(filePath))
+        {
+            logger.LogWarning($"⚠️ Seed file not found: {filePath}");
+            return;
+        }
+
+        logger.LogInformation($"📄 Reading seed file: {seedFile}");
+        var sql = await File.ReadAllTextAsync(filePath);
+        
+        if (string.IsNullOrWhiteSpace(sql))
+        {
+            logger.LogWarning($"⚠️ Seed file is empty: {seedFile}");
+            return;
+        }
+        
+        // Split by GO statements (case-insensitive, handling different newline styles) and execute each batch
+        var batches = Regex.Split(sql, @"^\s*GO\s*$", RegexOptions.Multiline | RegexOptions.IgnoreCase)
+            .Where(batch => !string.IsNullOrWhiteSpace(batch))
+            .ToList();
+
+        logger.LogInformation($"📦 Found {batches.Count} SQL batches in {seedFile}");
+
+        int batchNumber = 0;
+        foreach (var batch in batches)
+        {
+            batchNumber++;
+            var trimmedBatch = batch.Trim();
+            
+            if (string.IsNullOrWhiteSpace(trimmedBatch))
+            {
+                continue;
+            }
+
+            try
+            {
+                logger.LogInformation($"   ⚡ Executing batch {batchNumber}/{batches.Count} ({trimmedBatch.Length} chars)");
+                await context.Database.ExecuteSqlRawAsync(trimmedBatch);
+                logger.LogInformation($"   ✅ Batch {batchNumber} completed");
+            }
+            catch (Exception batchEx)
+            {
+                logger.LogError(batchEx, $"   ❌ Error in batch {batchNumber} of {seedFile}");
+                logger.LogError($"   📝 Failed SQL (first 200 chars): {trimmedBatch.Substring(0, Math.Min(200, trimmedBatch.Length))}...");
+                // Continue with next batch instead of failing completely
+            }
+        }
+        
+        logger.LogInformation($"✅ Completed seed file: {seedFile}");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, $"❌ Failed to process seed file: {seedFile}");
+    }
 }
 
 static async Task SeedTestProfiles(ApplicationDbContext context, ILogger logger)

@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import ReturnHome from '../components/ReturnHome';
 import StudentQuizComponent from '../components/StudentQuizComponent';
 import StudentFlashcardComponent from '../components/StudentFlashcardComponent';
+import ChapterPopup from '../components/ChapterPopup';
 import {
   teacherCourseService,
   chapterManagementService,
@@ -33,6 +34,7 @@ const CourseViewerPage = () => {
   const [error, setError] = useState('');
   const [userProgress, setUserProgress] = useState(null);
   const [chapterProgressMap, setChapterProgressMap] = useState({}); // Map of chapterId -> { completed, chapterNumber }
+  const [popupChapter, setPopupChapter] = useState(null); // Chapter to show in popup
 
   const loadResources = useCallback(
     async (chapterId, { silent = false } = {}) => {
@@ -411,65 +413,52 @@ const CourseViewerPage = () => {
                 </div>
                 <div className="chapters-summary-grid">
                   {chapters
-                    .sort((a, b) => (a.number || a.Number || 0) - (b.number || b.Number || 0))
+                    .sort((a, b) => {
+                      const numA = a.number || a.Number || 0;
+                      const numB = b.number || b.Number || 0;
+                      
+                      // Normal order: 1,2,3,4,5,6,7,8,9,10
+                      // CSS will position 10 below 8
+                      return numA - numB;
+                    })
                     .map((chapter) => {
                       const id = chapter.id || chapter.Id;
                       const number = chapter.number || chapter.Number || 0;
                       const title = chapter.title || chapter.Title || 'Untitled Chapter';
                       const summary = chapter.summary || chapter.Summary || 'No summary available.';
-                      const isExpanded = id === selectedChapterId;
                       
                       return (
                         <div
                           key={id}
-                          className={`chapter-summary-card ${isExpanded ? 'is-expanded' : ''}`}
+                          className={`chapter-summary-card chapter-${number}`}
+                          onClick={() => {
+                            setPopupChapter({
+                              id,
+                              number,
+                              title,
+                              summary
+                            });
+                          }}
                         >
-                          <div 
-                            className="chapter-summary-card-header"
-                            onClick={() => {
-                              if (isExpanded) {
-                                setSelectedChapterId(null);
-                              } else {
-                                setSelectedChapterId(id);
-                              }
-                            }}
-                          >
-                            <div className="chapter-summary-number">
-                              <span>{number}</span>
+                          <div className="chapter-card-inner">
+                            {/* Front Side - Number and Title Only */}
+                            <div className="chapter-card-front">
+                              <div className="chapter-summary-number">
+                                <span>{number}</span>
+                              </div>
+                              <div className="chapter-summary-content">
+                                <h3>{title}</h3>
+                              </div>
                             </div>
-                            <div className="chapter-summary-content">
-                              <h3>{title}</h3>
-                              <p>{summary}</p>
-                            </div>
-                            <div className="chapter-summary-action">
-                              <span>{isExpanded ? '↑' : '→'}</span>
+                            
+                            {/* Back Side - Summary */}
+                            <div className="chapter-card-back">
+                              <div className="chapter-card-back-content">
+                                <h4>What You'll Study</h4>
+                                <p>{summary}</p>
+                              </div>
                             </div>
                           </div>
-                          
-                          {isExpanded && (() => {
-                            const user = getUser();
-                            const isTeacherOrAdmin = user && (user.role === 'teacher' || user.role === 'admin');
-                            return (
-                              <div className="chapter-summary-expanded-content">
-                                <div className="chapter-expanded-summary">
-                                  <h4>{isTeacherOrAdmin ? 'Chapter Overview' : 'What You\'ll Study'}</h4>
-                                  <p>{summary}</p>
-                                </div>
-                                <div className="chapter-expanded-actions">
-                                  <button
-                                    type="button"
-                                    className="chapter-start-learning-btn"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      handleStartLearning(id, number);
-                                    }}
-                                  >
-                                    {isTeacherOrAdmin ? 'Edit Chapter →' : 'Start Learning →'}
-                                  </button>
-                                </div>
-                              </div>
-                            );
-                          })()}
                         </div>
                       );
                     })}
@@ -485,6 +474,13 @@ const CourseViewerPage = () => {
         )}
         </div>
       </div>
+
+      <ChapterPopup
+        isOpen={popupChapter !== null}
+        chapter={popupChapter}
+        onClose={() => setPopupChapter(null)}
+        onStartLearning={handleStartLearning}
+      />
     </>
   );
 };

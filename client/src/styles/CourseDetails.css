@@ -293,6 +293,7 @@
   padding-bottom: 0.75rem;
   border-bottom: 2px solid var(--cs-olive6);
   font-family: 'Pixelify Sans', cursive;
+  gap: 1rem;
 }
 
 .info-item:last-child {
@@ -322,6 +323,13 @@
   border-radius: 8px;
   font-size: 0.85rem;
   color: var(--cs-olive7);
+}
+
+.chapter-count-value {
+  font-family: 'Pixelify Sans', cursive;
+  color: var(--cs-olive9);
+  font-weight: 700;
+  font-size: 0.95rem;
 }
 
 /* Loading and Error States */

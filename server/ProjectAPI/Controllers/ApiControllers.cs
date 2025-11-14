@@ -323,8 +323,63 @@ public sealed class CoursesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> List(CancellationToken ct) =>
-        Ok(await _context.Courses.ToListAsync(ct));
+    public async Task<IActionResult> List(CancellationToken ct)
+    {
+        var courses = await _context.Courses
+            .Select(c => new
+            {
+                courseId = c.CourseId,
+                id = c.CourseId,
+                title = c.Title,
+                description = c.Description,
+                previewContent = c.PreviewContent,
+                published = c.Published,
+                approvalStatus = c.ApprovalStatus,
+                teacherId = c.TeacherId,
+                chapterCount = c.Chapters.Count,
+                totalChapters = c.Chapters.Count
+            })
+            .ToListAsync(ct);
+        
+        return Ok(courses);
+    }
+
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetById(Guid id, CancellationToken ct)
+    {
+        var course = await _context.Courses
+            .Include(c => c.Chapters)
+            .Select(c => new
+            {
+                courseId = c.CourseId,
+                id = c.CourseId,
+                title = c.Title,
+                description = c.Description,
+                previewContent = c.PreviewContent,
+                published = c.Published,
+                approvalStatus = c.ApprovalStatus,
+                teacherId = c.TeacherId,
+                chapterCount = c.Chapters.Count,
+                totalChapters = c.Chapters.Count,
+                chapters = c.Chapters
+                    .OrderBy(ch => ch.Number)
+                    .Select(ch => new
+                    {
+                        chapterId = ch.ChapterId,
+                        id = ch.ChapterId,
+                        number = ch.Number,
+                        title = ch.Title,
+                        summary = ch.Summary
+                    })
+                    .ToList()
+            })
+            .FirstOrDefaultAsync(c => c.courseId == id, ct);
+
+        if (course == null)
+            return NotFound();
+
+        return Ok(course);
+    }
 
     public sealed record CreateDto(string Title, string? Description);
     [HttpPost]

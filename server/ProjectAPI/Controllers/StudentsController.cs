@@ -1896,6 +1896,68 @@ public class StudentsController : ControllerBase
     }
 
     #endregion
+
+    #region Help Requests
+
+    /// <summary>
+    /// Create a new help request for a chapter
+    /// </summary>
+    [HttpPost("help-request")]
+    public async Task<IActionResult> CreateHelpRequest([FromBody] CreateHelpRequestDto request, CancellationToken ct = default)
+    {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var studentId))
+        {
+            return Unauthorized(new { error = "Invalid or missing student identification" });
+        }
+
+        if (request == null || !ModelState.IsValid)
+        {
+            return BadRequest(new { error = "Invalid request data" });
+        }
+
+        try
+        {
+            // Verify chapter exists
+            var chapter = await _context.Chapters.FindAsync(new object?[] { request.ChapterId }, ct);
+            if (chapter == null)
+            {
+                return NotFound(new { error = "Chapter not found" });
+            }
+
+            // Create help request
+            var helpRequest = new HelpRequest
+            {
+                HelpRequestId = Guid.NewGuid(),
+                StudentId = studentId,
+                ChapterId = request.ChapterId,
+                Question = request.Question,
+                Status = "Pending",
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _context.HelpRequests.Add(helpRequest);
+            await _context.SaveChangesAsync(ct);
+
+            _logger.LogInformation("Help request created: {HelpRequestId} by student {StudentId}", 
+                helpRequest.HelpRequestId, studentId);
+
+            return Ok(new
+            {
+                success = true,
+                helpRequestId = helpRequest.HelpRequestId,
+                message = "Help request submitted successfully"
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating help request for student {StudentId}", studentId);
+            return StatusCode(500, new { error = "An error occurred while submitting your help request" });
+        }
+    }
+
+    #endregion
 }
 
 #region DTOs
@@ -2025,6 +2087,16 @@ public class SimpleUserDto
     public Guid UserId { get; init; }
     public string FullName { get; init; } = string.Empty;
     public string Email { get; init; } = string.Empty;
+}
+
+public record CreateHelpRequestDto
+{
+    [Required]
+    public Guid ChapterId { get; init; }
+
+    [Required]
+    [MinLength(1)]
+    public string Question { get; init; } = string.Empty;
 }
 
 #endregion

@@ -1,3 +1,17 @@
+// Map numeric chapter IDs to actual database GUIDs
+const chapterIdMapping = {
+  1: '6726025c-c216-4846-a277-7c4474860331',
+  2: '88a180a2-2c08-42a7-a890-1e8747b30031',
+  3: '4a1ba0c6-6dc2-4ca9-8e77-c34ca3ae8f35',
+  4: 'd03876a5-8c5d-46b4-bdb8-f416f291cae0',
+  5: '52e3d2b6-b7a2-46a7-9a9c-99e80cef3275',
+  6: '32026dab-05cf-411c-8688-9e820d7f81a8',
+  7: '8e4fa95b-511c-4ecd-9759-8b60c1dd4c11',
+  8: '7e7d010e-97a9-4689-91f2-fc8ed2bbdc31',
+  9: '6e3d42c0-7adf-4c39-8206-38c4b4dc2e27',
+  10: 'b7360b9c-a840-40f9-af2d-40e9e3b14be8',
+};
+
 const emptyQuestions = () => ({
   easy: [],
   medium: [],
@@ -573,5 +587,17 @@ export const chapterDetails = {
   },
 };
 
-export const getChapterDetails = (id) => chapterDetails[id] ?? null;
+export const getChapterDetails = (id) => {
+  const details = chapterDetails[id] ?? null;
+  if (details) {
+    return {
+      ...details,
+      databaseChapterId: chapterIdMapping[id],
+      numericId: id,
+    };
+  }
+  return null;
+};
 
+// Export the mapping for use in other components
+export const getDatabaseChapterId = (numericId) => chapterIdMapping[numericId];

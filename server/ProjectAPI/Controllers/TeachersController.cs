@@ -895,6 +895,66 @@ public class TeachersController : ControllerBase
     }
 
     #endregion
+
+    #region Forum Management
+
+    /// <summary>
+    /// Get all forum posts across all courses (for teacher forum management)
+    /// </summary>
+    [HttpGet("forum-posts")]
+    public async Task<IActionResult> GetAllForumPosts(CancellationToken ct = default)
+    {
+        try
+        {
+            var posts = await _context.ForumPosts
+                .Include(p => p.Profile)
+                .Select(p => new
+                {
+                    id = p.ForumId,
+                    title = p.Content.Length > 50 ? p.Content.Substring(0, 50) + "..." : p.Content,
+                    p.Content,
+                    authorName = p.Profile.FullName,
+                    p.CreatedAt
+                })
+                .OrderByDescending(p => p.CreatedAt)
+                .ToListAsync(ct);
+
+            return Ok(new { success = true, data = posts });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving forum posts");
+            return StatusCode(500, new { success = false, message = "Failed to load forum posts", error = ex.Message });
+        }
+    }
+
+    /// <summary>
+    /// Delete a forum post
+    /// </summary>
+    [HttpDelete("forum-posts/{postId}")]
+    public async Task<IActionResult> DeleteForumPost(Guid postId, CancellationToken ct = default)
+    {
+        try
+        {
+            var post = await _context.ForumPosts.FindAsync(new object?[] { postId }, ct);
+            if (post == null)
+            {
+                return NotFound(new { success = false, message = "Forum post not found" });
+            }
+
+            _context.ForumPosts.Remove(post);
+            await _context.SaveChangesAsync(ct);
+
+            return Ok(new { success = true, message = "Forum post deleted successfully" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting forum post {PostId}", postId);
+            return StatusCode(500, new { success = false, message = "Failed to delete forum post", error = ex.Message });
+        }
+    }
+
+    #endregion
 }
 
 #region DTOs

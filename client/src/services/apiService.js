@@ -1156,7 +1156,7 @@ export const adminService = {
   getAllForumPosts: async () => {
     try {
       const token = getToken();
-      const response = await fetch(`${API_BASE_URL}/Admin/forum-posts`, {
+      const response = await fetch(`${API_BASE_URL}/Teachers/forum-posts`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -1168,8 +1168,9 @@ export const adminService = {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
       
-      const data = await response.json();
-      return { success: true, data: data };
+      const result = await response.json();
+      // Backend returns { success: true, data: [...] }
+      return result;
     } catch (error) {
       console.error('Get forum posts error:', error);
       return { success: false, message: 'Forum posts not available yet' };
@@ -1179,7 +1180,7 @@ export const adminService = {
   deleteForumPost: async (postId) => {
     try {
       const token = getToken();
-      const response = await fetch(`${API_BASE_URL}/Admin/forum-posts/${postId}`, {
+      const response = await fetch(`${API_BASE_URL}/Teachers/forum-posts/${postId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

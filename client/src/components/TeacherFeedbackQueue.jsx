@@ -13,7 +13,9 @@ const TeacherFeedbackQueue = () => {
     setError(null);
     try {
       const response = await api.teachers.getHelpRequests();
-      setRequests(Array.isArray(response) ? response : []);
+      // Backend returns { helpRequests: [...], totalPending, teacherId }
+      const helpRequests = response?.helpRequests || [];
+      setRequests(Array.isArray(helpRequests) ? helpRequests : []);
     } catch (err) {
       console.error('Failed to load help requests', err);
       setError(err.message || 'Unable to load help requests.');
@@ -67,10 +69,10 @@ const TeacherFeedbackQueue = () => {
             requests.map((request) => (
               <article key={request.helpRequestId} className="feedback-item" role="listitem">
                 <header>
-                  <h3>{request?.student?.fullName || 'Student'}</h3>
-                  <p className="feedback-item__chapter">Chapter: {request?.chapter?.title || 'Unknown chapter'}</p>
+                  <h3>{request?.studentName || 'Student'}</h3>
+                  <p className="feedback-item__chapter">Chapter: {request?.chapterTitle || 'Unknown chapter'}</p>
                   <p className="feedback-item__timestamp">
-                    Requested: {request?.requestedAt ? new Date(request.requestedAt).toLocaleString() : 'Unknown'}
+                    Requested: {request?.createdAt ? new Date(request.createdAt).toLocaleString() : 'Unknown'}
                   </p>
                 </header>
                 <p className="feedback-item__question">{request?.question}</p>

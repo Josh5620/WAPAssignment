@@ -3,8 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import StudentHelpRequest from '../components/StudentHelpRequest';
 import { gardenPathData } from '../data/curriculum.js';
-import { getChapterDetails } from '../data/chapterDetails.js';
-import { getDatabaseChapterId } from '../data/chapterIdMapping.js';
+import { getChapterDetails, getDatabaseChapterId } from '../data/chapterDetails.js';
 import { api } from '../services/apiService.js';
 import '../styles/ChapterPage.css';
 import StudentFlashcardComponent from '../components/StudentFlashcardComponent.jsx';
@@ -19,14 +18,14 @@ const ChapterPage = () => {
 
   // Convert URL numeric ID to database GUID
   const numericId = Number(chapterId);
-  const databaseChapterId = getDatabaseChapterId(numericId);
+  const details = useMemo(() => getChapterDetails(numericId), [numericId]);
+  const databaseChapterId = details?.databaseChapterId || getDatabaseChapterId(numericId);
   
   // Fallback static data (for UI structure and navigation)
   const metadata = useMemo(
     () => gardenPathData.find((chapter) => chapter.id === numericId),
     [numericId],
   );
-  const details = useMemo(() => getChapterDetails(numericId), [numericId]);
 
   const previousChapter = useMemo(
     () => gardenPathData.find((chapter) => chapter.id === numericId - 1),
@@ -454,7 +453,7 @@ const ChapterPage = () => {
           )}
 
           {activeTab === 'help' && (
-            <StudentHelpRequest chapterId={numericId} />
+            <StudentHelpRequest chapterId={databaseChapterId} />
           )}
         </div>
 

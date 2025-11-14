@@ -3,12 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import { getUser } from '../utils/auth';
 import Navbar from '../components/Navbar';
 import PrimaryButton from '../components/PrimaryButton';
+import CourseList from '../components/CourseList';
+import CourseDetails from '../components/CourseDetails';
+import EnrollmentSuccessPopup from '../components/EnrollmentSuccessPopup';
+import { quickApi, api } from '../services/apiService';
 import '../styles/CoursesPage.css';
 
 const CoursesPage = () => {
   const navigate = useNavigate();
   const [userRole, setUserRole] = useState('student');
   const [user, setUser] = useState(null);
+  const [selectedCourseId, setSelectedCourseId] = useState(null);
+  const [selectedCourseTitle, setSelectedCourseTitle] = useState(null);
+  const [enrollmentPopup, setEnrollmentPopup] = useState({ isOpen: false, courseTitle: '' });
 
   // Redirect guests to guest courses page
   useEffect(() => {
@@ -36,132 +43,99 @@ const CoursesPage = () => {
     navigate('/manage-course');
   };
 
+  const handleCourseSelect = (courseId, courseTitle) => {
+    // Navigate directly to course preview page instead of showing CourseDetails
+    navigate(`/courses/${courseId}/view`);
+  };
+
+  const handleBackToList = () => {
+    setSelectedCourseId(null);
+    setSelectedCourseTitle(null);
+  };
+
+  const handleEnrollNow = async (courseId, courseTitle) => {
+    try {
+      const token = quickApi.getUserToken();
+      if (!token) {
+        alert('Please log in to enroll in courses');
+        return;
+      }
+
+      // Check if already enrolled
+      const isEnrolled = await api.enrollments.checkEnrollment(courseId, token);
+      if (isEnrolled) {
+        // Already enrolled, just show popup
+        setEnrollmentPopup({ isOpen: true, courseTitle });
+        return;
+      }
+
+      // Enroll the user
+      await quickApi.enrollInCourse(courseId);
+      
+      // Show success popup
+      setEnrollmentPopup({ isOpen: true, courseTitle });
+    } catch (err) {
+      console.error('Failed to enroll:', err);
+      alert('Failed to enroll in course. Please try again.');
+    }
+  };
+
+  const handleStartLearning = async (courseId, courseTitle) => {
+    try {
+      // Check if user is enrolled, if not, enroll them first
+      const token = quickApi.getUserToken();
+      if (token && userRole === 'student') {
+        const isEnrolled = await api.enrollments.checkEnrollment(courseId, token);
+        
+        if (!isEnrolled) {
+          // Enroll the user first
+          await quickApi.enrollInCourse(courseId);
+        }
+      }
+      
+      // Navigate to course viewer
+      navigate(`/courses/${courseId}/view`);
+    } catch (err) {
+      console.error('Failed to start learning:', err);
+      // Still navigate to course viewer even if enrollment check fails
+      navigate(`/courses/${courseId}/view`);
+    }
+  };
+
   if (!user) {
     return null;
   }
 
   const displayName = user.full_name || user.fullName || user.FullName || user.name || 'there';
 
+  // Show the course catalog
   return (
     <>
       <Navbar />
       <div className="courses-page">
         <div className="courses-hero">
           <div className="courses-hero-content">
-            <h1>🌱 Your Python Learning Journey</h1>
+            <h1>🌱 Explore Courses</h1>
             <p className="courses-subtitle">
-              Welcome {displayName}! Grow your coding skills through our interactive Python garden.
+              Welcome {displayName}! Browse our courses and start your learning journey.
             </p>
           </div>
         </div>
 
-        <div className="course-showcase">
-          <div className="course-card-large">
-            <div className="course-card-header">
-              <div className="course-icon">🐍</div>
-              <div className="course-badge">Featured Course</div>
-            </div>
-            
-            <div className="course-card-body">
-              <h2>Introduction to Python</h2>
-              <p className="course-description">
-                Master Python fundamentals through an immersive garden-themed learning experience. 
-                Complete interactive chapters, earn achievements, and watch your knowledge bloom.
-              </p>
-
-              <div className="course-features">
-                <div className="feature-item">
-                  <span className="feature-icon">📚</span>
-                  <div className="feature-text">
-                    <strong>10 Chapters</strong>
-                    <span>From basics to advanced topics</span>
-                  </div>
-                </div>
-                <div className="feature-item">
-                  <span className="feature-icon">⏱️</span>
-                  <div className="feature-text">
-                    <strong>Self-paced</strong>
-                    <span>Learn at your own speed</span>
-                  </div>
-                </div>
-                <div className="feature-item">
-                  <span className="feature-icon">🎯</span>
-                  <div className="feature-text">
-                    <strong>Interactive</strong>
-                    <span>Quizzes, flashcards & coding</span>
-                  </div>
-                </div>
-                <div className="feature-item">
-                  <span className="feature-icon">🏆</span>
-                  <div className="feature-text">
-                    <strong>Achievements</strong>
-                    <span>Earn XP and badges</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="course-topics">
-                <h3>What you'll learn:</h3>
-                <ul className="topics-grid">
-                  <li>🌿 Python basics & syntax</li>
-                  <li>🌿 Variables & data types</li>
-                  <li>🌿 Control flow & loops</li>
-                  <li>🌿 Functions & modules</li>
-                  <li>🌿 Data structures</li>
-                  <li>🌿 Object-oriented programming</li>
-                  <li>🌿 File handling</li>
-                  <li>🌿 Error handling</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="course-card-actions">
-              {userRole === 'student' && (
-                <PrimaryButton size="lg" onClick={handleStartGarden}>
-                  Continue Your Garden →
-                </PrimaryButton>
-              )}
-              {(userRole === 'teacher' || userRole === 'admin') && (
-                <>
-                  <PrimaryButton size="lg" onClick={handleManageCourse}>
-                    Manage Course Content
-                  </PrimaryButton>
-                  <PrimaryButton variant="outline" size="md" onClick={() => navigate('/teacher-dashboard')}>
-                    View Dashboard
-                  </PrimaryButton>
-                </>
-              )}
-            </div>
-          </div>
-
-          {userRole === 'student' && (
-            <div className="course-sidebar">
-              <div className="sidebar-card">
-                <h3>🎓 Your Progress</h3>
-                <p>Track your growth as you complete each chapter of your Python journey.</p>
-                <PrimaryButton variant="outline" onClick={handleStartGarden}>
-                  View My Garden
-                </PrimaryButton>
-              </div>
-
-              <div className="sidebar-card">
-                <h3>💬 Need Help?</h3>
-                <p>Join discussions with fellow learners and get support from teachers.</p>
-                <PrimaryButton variant="outline" onClick={() => navigate('/student-dashboard')}>
-                  Community Forum
-                </PrimaryButton>
-              </div>
-
-              <div className="sidebar-card">
-                <h3>📊 Leaderboard</h3>
-                <p>See how you rank among other Python learners in the garden.</p>
-                <PrimaryButton variant="outline" onClick={() => navigate('/student-dashboard')}>
-                  View Rankings
-                </PrimaryButton>
-              </div>
-            </div>
-          )}
+        <div className="courses-catalog-section">
+          <CourseList
+            userRole={userRole}
+            onCourseSelect={handleCourseSelect}
+            onStartLearning={handleStartLearning}
+            onEnrollNow={handleEnrollNow}
+          />
         </div>
+
+        <EnrollmentSuccessPopup
+          isOpen={enrollmentPopup.isOpen}
+          courseTitle={enrollmentPopup.courseTitle}
+          onClose={() => setEnrollmentPopup({ isOpen: false, courseTitle: '' })}
+        />
 
         <div className="courses-cta">
           <h2>Ready to grow your Python skills?</h2>

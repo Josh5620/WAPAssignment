@@ -214,6 +214,255 @@
   margin-bottom: 1.25rem;
 }
 
+/* Course Catalog Section */
+.courses-catalog-section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
+/* Course List Container */
+.course-list-container {
+  width: 100%;
+}
+
+.course-list-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.course-list-header h2 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.4rem;
+  color: var(--cs-olive9);
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.course-list-header p {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1rem;
+  color: var(--cs-brown);
+  margin: 0;
+}
+
+/* Courses Grid */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Course Card */
+.course-card {
+  background: white;
+  border-radius: 24px;
+  border: 3px solid var(--cs-olive6);
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(55, 61, 32, 0.1);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(55, 61, 32, 0.15);
+}
+
+.course-header {
+  background: linear-gradient(135deg, var(--cs-sage3) 0%, rgba(239, 241, 237, 0.5) 100%);
+  padding: 1.5rem;
+  border-bottom: 3px solid var(--cs-olive6);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.course-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1rem;
+  color: var(--cs-olive9);
+  margin: 0;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.course-card .published-badge {
+  background: var(--cs-olive7);
+  color: var(--cs-beige);
+  padding: 0.4rem 0.85rem;
+  border-radius: 10px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.55rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.course-content {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.course-card .course-description {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.95rem;
+  color: var(--cs-brown);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.course-preview {
+  background: var(--cs-sage3);
+  padding: 1rem;
+  border-radius: 16px;
+  border: 2px solid var(--cs-olive6);
+}
+
+.course-preview h4 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  color: var(--cs-olive9);
+  margin: 0 0 0.5rem 0;
+}
+
+.course-preview p {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.85rem;
+  color: var(--cs-brown);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.course-meta-line {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.9rem;
+  color: var(--cs-olive7);
+}
+
+.course-meta-line strong {
+  color: var(--cs-olive9);
+  font-weight: 700;
+}
+
+.course-actions {
+  padding: 1.5rem;
+  background: var(--cs-sage3);
+  border-top: 3px solid var(--cs-olive6);
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.course-actions .btn-primary,
+.course-actions .btn-secondary {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  border: 3px solid;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+  min-width: 140px;
+}
+
+.course-actions .btn-primary {
+  background: var(--cs-olive7);
+  color: var(--cs-beige);
+  border-color: var(--cs-olive8);
+}
+
+.course-actions .btn-primary:hover {
+  background: var(--cs-olive8);
+  border-color: var(--cs-olive9);
+  transform: translateY(-2px);
+}
+
+.course-actions .btn-secondary {
+  background: var(--cs-olive9);
+  color: var(--cs-beige);
+  border-color: var(--cs-olive9);
+}
+
+.course-actions .btn-secondary:hover {
+  background: var(--cs-olive8);
+  transform: translateY(-2px);
+}
+
+.course-actions .btn-edit {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  border: 3px solid var(--cs-brown);
+  background: var(--cs-beige);
+  color: var(--cs-brown);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+  min-width: 140px;
+}
+
+.course-actions .btn-edit:hover {
+  background: var(--cs-brown);
+  color: var(--cs-beige);
+  transform: translateY(-2px);
+}
+
+.course-meta {
+  padding: 1rem 1.5rem;
+  background: white;
+  border-top: 2px solid var(--cs-olive6);
+}
+
+.course-meta small {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 0.75rem;
+  color: var(--cs-olive7);
+}
+
+/* Loading and Error States */
+.course-list-loading,
+.course-list-error {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1.1rem;
+  color: var(--cs-brown);
+}
+
+.course-list-error .retry-button {
+  margin-top: 1rem;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--cs-olive7);
+  color: var(--cs-beige);
+  border: 3px solid var(--cs-olive8);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.course-list-error .retry-button:hover {
+  background: var(--cs-olive8);
+  transform: translateY(-2px);
+}
+
+.no-courses {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1.1rem;
+  color: var(--cs-brown);
+}
+
 /* Bottom CTA */
 .courses-cta {
   max-width: 800px;
@@ -257,6 +506,11 @@
 
   .topics-grid {
     grid-template-columns: 1fr;
+  }
+
+  .courses-grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
   }
 }
 
@@ -312,5 +566,24 @@
 
   .courses-cta h2 {
     font-size: 1.2rem;
+  }
+
+  .courses-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .course-list-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .course-actions {
+    flex-direction: column;
+  }
+
+  .course-actions .btn-primary,
+  .course-actions .btn-secondary,
+  .course-actions .btn-edit {
+    width: 100%;
   }
 }

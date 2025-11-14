@@ -30,6 +30,8 @@ const CourseViewerPage = () => {
   const [loading, setLoading] = useState(true);
   const [resourcesLoading, setResourcesLoading] = useState(false);
   const [error, setError] = useState('');
+  const [userProgress, setUserProgress] = useState(null);
+  const [chapterProgressMap, setChapterProgressMap] = useState({}); // Map of chapterId -> { completed, chapterNumber }
 
   const loadResources = useCallback(
     async (chapterId, { silent = false } = {}) => {
@@ -57,49 +59,123 @@ const CourseViewerPage = () => {
     [],
   );
 
-  useEffect(() => {
-    let ignore = false;
-    const load = async () => {
-      setLoading(true);
-      try {
-        const [courseData, chapterData] = await Promise.all([
-          teacherCourseService.getCourse(courseId),
-          chapterManagementService.list(courseId),
-        ]);
-        if (ignore) return;
-        const chapterList = Array.isArray(chapterData) ? chapterData : [];
-        setCourse(courseData);
-        setChapters(chapterList);
-        if (chapterList.length) {
-          const firstId = chapterList[0].id || chapterList[0].Id;
-          setSelectedChapterId(firstId);
-          await loadResources(firstId, { silent: true });
-        } else {
-          setSelectedChapterId(null);
-          setResources([]);
-        }
-        setError('');
-      } catch (err) {
-        if (!ignore) {
-          console.error('Failed to load course', err);
-          setError(err.message || 'Failed to load course');
-        }
-      } finally {
-        if (!ignore) {
-          setLoading(false);
-        }
-      }
-    };
+  const loadCourse = useCallback(async () => {
+    console.log('loadCourse called, courseId:', courseId);
+    setLoading(true);
+    setError('');
+    try {
+      const [courseData, chapterData] = await Promise.all([
+        teacherCourseService.getCourse(courseId),
+        chapterManagementService.list(courseId),
+      ]);
+      const chapterList = Array.isArray(chapterData) ? chapterData : [];
+      setCourse(courseData);
+      setChapters(chapterList);
+      // Don't auto-select first chapter - show summary view by default
+      setSelectedChapterId(null);
+      setResources([]);
+      setError('');
 
-    load();
-    return () => {
-      ignore = true;
-    };
-  }, [courseId, loadResources]);
+      // Fetch user progress if user is a student (non-blocking)
+      const user = getUser();
+      if (user && user.id && (user.role === 'student' || !user.role)) {
+        // Fetch progress asynchronously without blocking course load
+        (async () => {
+          try {
+            // Fetch all chapter progress in parallel for better performance
+            const progressPromises = chapterList.map(async (chapter) => {
+              const chapterId = chapter.id || chapter.Id;
+              const chapterNumber = chapter.number || chapter.Number || 0;
+              try {
+                const chapterProgress = await api.students.getChapterProgress(user.id, chapterId);
+                return {
+                  chapterId,
+                  chapterNumber,
+                  completed: chapterProgress.completed || false
+                };
+              } catch (err) {
+                // If progress doesn't exist, chapter is not completed
+                return {
+                  chapterId,
+                  chapterNumber,
+                  completed: false
+                };
+              }
+            });
+
+            const progressResults = await Promise.all(progressPromises);
+            const progressMap = {};
+            progressResults.forEach(result => {
+              progressMap[result.chapterId] = {
+                completed: result.completed,
+                chapterNumber: result.chapterNumber
+              };
+            });
+
+            setChapterProgressMap(progressMap);
+          } catch (progressErr) {
+            // If progress fetch fails, just continue without progress data
+            console.log('Could not load progress:', progressErr);
+            setChapterProgressMap({});
+          }
+        })();
+      }
+    } catch (err) {
+      console.error('Failed to load course', err);
+      setError(err.message || 'Failed to load course details. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  }, [courseId]);
+
+  useEffect(() => {
+    loadCourse();
+  }, [loadCourse]);
 
   const handleSelectChapter = async (chapterId) => {
     setSelectedChapterId(chapterId);
     await loadResources(chapterId);
+  };
+
+  // Check if a chapter is unlocked based on quiz completion
+  // A chapter unlocks only if the previous chapter's quiz is completed
+  const isChapterUnlocked = (chapterNumber, chapterId) => {
+    // Chapter 1 is always unlocked
+    if (chapterNumber === 1) {
+      return true;
+    }
+    
+    // Check if previous chapter (chapterNumber - 1) is completed
+    const previousChapterNumber = chapterNumber - 1;
+    
+    // Find the previous chapter in the chapters list
+    const previousChapter = chapters.find(
+      ch => (ch.number || ch.Number || 0) === previousChapterNumber
+    );
+    
+    if (!previousChapter) {
+      // If previous chapter doesn't exist, unlock this one (shouldn't happen normally)
+      return true;
+    }
+    
+    const previousChapterId = previousChapter.id || previousChapter.Id;
+    const previousChapterProgress = chapterProgressMap[previousChapterId];
+    
+    // Chapter is unlocked if the previous chapter's quiz is completed
+    return previousChapterProgress?.completed === true;
+  };
+
+  const handleStartLearning = (chapterId, chapterNumber) => {
+    const user = getUser();
+    const isStudent = user && (user.role === 'student' || !user.role);
+    
+    if (isStudent && isChapterUnlocked(chapterNumber, chapterId)) {
+      // Navigate to dashboard if chapter is unlocked (quiz completed for previous chapter)
+      navigate('/student-dashboard');
+    } else {
+      // Navigate to chapter page if locked (previous chapter's quiz not completed) or not a student
+      navigate(`/chapters/${chapterId}`);
+    }
   };
 
   const renderResource = (resource) => {
@@ -165,6 +241,107 @@ const CourseViewerPage = () => {
     return <pre className="course-viewer__text">{content}</pre>;
   };
 
+  // Show error page if there's an error and no course data
+  if (error && !course && !loading) {
+    const handleRetry = async () => {
+      console.log('Retry button clicked, courseId:', courseId);
+      setError('');
+      setLoading(true);
+      try {
+        const [courseData, chapterData] = await Promise.all([
+          teacherCourseService.getCourse(courseId),
+          chapterManagementService.list(courseId),
+        ]);
+        const chapterList = Array.isArray(chapterData) ? chapterData : [];
+        setCourse(courseData);
+        setChapters(chapterList);
+        setSelectedChapterId(null);
+        setResources([]);
+        setError('');
+
+        // Fetch user progress if user is a student (non-blocking)
+        const user = getUser();
+        if (user && user.id && (user.role === 'student' || !user.role)) {
+          (async () => {
+            try {
+              const progressPromises = chapterList.map(async (chapter) => {
+                const chapterId = chapter.id || chapter.Id;
+                const chapterNumber = chapter.number || chapter.Number || 0;
+                try {
+                  const chapterProgress = await api.students.getChapterProgress(user.id, chapterId);
+                  return {
+                    chapterId,
+                    chapterNumber,
+                    completed: chapterProgress.completed || false
+                  };
+                } catch (err) {
+                  return {
+                    chapterId,
+                    chapterNumber,
+                    completed: false
+                  };
+                }
+              });
+
+              const progressResults = await Promise.all(progressPromises);
+              const progressMap = {};
+              progressResults.forEach(result => {
+                progressMap[result.chapterId] = {
+                  completed: result.completed,
+                  chapterNumber: result.chapterNumber
+                };
+              });
+              setChapterProgressMap(progressMap);
+            } catch (progressErr) {
+              console.log('Could not load progress:', progressErr);
+              setChapterProgressMap({});
+            }
+          })();
+        }
+      } catch (err) {
+        console.error('Failed to load course on retry:', err);
+        setError(err.message || 'Failed to load course details. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    return (
+      <div className="course-viewer-page">
+        <ReturnHome />
+        <div className="course-viewer__container">
+          <div className="course-viewer__error">
+            <h2>Failed to Load Course</h2>
+            <p>{error}</p>
+            <div className="course-viewer__error-actions">
+              <button 
+                type="button" 
+                className="retry-button"
+                onClick={handleRetry}
+              >
+                Try Again
+              </button>
+              <button 
+                type="button" 
+                className="back-button"
+                onClick={() => {
+                  const user = getUser();
+                  if (user?.role === 'teacher') {
+                    navigate('/teacher-dashboard');
+                  } else {
+                    navigate('/student-dashboard');
+                  }
+                }}
+              >
+                Back to Dashboard
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="course-viewer-page">
       <ReturnHome />
@@ -189,48 +366,105 @@ const CourseViewerPage = () => {
           </button>
         </header>
 
-        {error && <div className="course-viewer__alert">{error}</div>}
+        {error && course && <div className="course-viewer__alert">{error}</div>}
 
         {loading ? (
           <div className="course-viewer__loading">Loading course...</div>
         ) : (
           <div className="course-viewer__body">
-            <aside className="course-viewer__sidebar">
-              <h2>Chapters</h2>
-              <ul>
-                {chapters.map((chapter) => {
-                  const id = chapter.id || chapter.Id;
-                  const isActive = id === selectedChapterId;
-                  return (
-                    <li key={id} className={isActive ? 'is-active' : ''}>
-                      <button type="button" onClick={() => handleSelectChapter(id)}>
-                        {chapter.title || chapter.Title}
-                      </button>
-                    </li>
-                  );
-                })}
-                {chapters.length === 0 && <li className="course-viewer__empty">No chapters yet.</li>}
-              </ul>
-            </aside>
+            {selectedChapterId && (
+              <aside className="course-viewer__sidebar">
+                <h2>Chapters</h2>
+                <ul>
+                  {chapters.map((chapter) => {
+                    const id = chapter.id || chapter.Id;
+                    const isActive = id === selectedChapterId;
+                    return (
+                      <li key={id} className={isActive ? 'is-active' : ''}>
+                        <button type="button" onClick={() => handleSelectChapter(id)}>
+                          {chapter.title || chapter.Title}
+                        </button>
+                      </li>
+                    );
+                  })}
+                  {chapters.length === 0 && <li className="course-viewer__empty">No chapters yet.</li>}
+                </ul>
+              </aside>
+            )}
 
             <main className="course-viewer__content">
-              {resourcesLoading ? (
-                <div className="course-viewer__loading">Loading resources...</div>
-              ) : resources.length ? (
-                resources.map((resource) => {
-                  const id = resource.id || resource.Id;
-                  return (
-                    <article key={id} className="course-viewer__resource">
-                      <header>
-                        <h3>{resource.title || resource.Title || 'Resource'}</h3>
-                      </header>
-                      <div className="course-viewer__resource-body">{renderResource(resource)}</div>
-                    </article>
-                  );
-                })
-              ) : (
-                <div className="course-viewer__empty">No resources for this chapter yet.</div>
-              )}
+              <div className="course-viewer__chapter-summary-view">
+                <div className="chapter-summary-header">
+                  <h2>Course Overview</h2>
+                  <p>Explore all chapters in this course. Click on any chapter to expand and view its content.</p>
+                </div>
+                <div className="chapters-summary-grid">
+                  {chapters
+                    .sort((a, b) => (a.number || a.Number || 0) - (b.number || b.Number || 0))
+                    .map((chapter) => {
+                      const id = chapter.id || chapter.Id;
+                      const number = chapter.number || chapter.Number || 0;
+                      const title = chapter.title || chapter.Title || 'Untitled Chapter';
+                      const summary = chapter.summary || chapter.Summary || 'No summary available.';
+                      const isExpanded = id === selectedChapterId;
+                      
+                      return (
+                        <div
+                          key={id}
+                          className={`chapter-summary-card ${isExpanded ? 'is-expanded' : ''}`}
+                        >
+                          <div 
+                            className="chapter-summary-card-header"
+                            onClick={() => {
+                              if (isExpanded) {
+                                setSelectedChapterId(null);
+                              } else {
+                                setSelectedChapterId(id);
+                              }
+                            }}
+                          >
+                            <div className="chapter-summary-number">
+                              <span>{number}</span>
+                            </div>
+                            <div className="chapter-summary-content">
+                              <h3>{title}</h3>
+                              <p>{summary}</p>
+                            </div>
+                            <div className="chapter-summary-action">
+                              <span>{isExpanded ? '↑' : '→'}</span>
+                            </div>
+                          </div>
+                          
+                          {isExpanded && (
+                            <div className="chapter-summary-expanded-content">
+                              <div className="chapter-expanded-summary">
+                                <h4>What You'll Study</h4>
+                                <p>{summary}</p>
+                              </div>
+                              <div className="chapter-expanded-actions">
+                                <button
+                                  type="button"
+                                  className="chapter-start-learning-btn"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleStartLearning(id, number);
+                                  }}
+                                >
+                                  Start Learning →
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  {chapters.length === 0 && (
+                    <div className="chapter-summary-empty">
+                      <p>No chapters available yet.</p>
+                    </div>
+                  )}
+                </div>
+              </div>
             </main>
           </div>
         )}

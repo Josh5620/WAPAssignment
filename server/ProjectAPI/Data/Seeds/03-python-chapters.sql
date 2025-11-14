@@ -73,9 +73,9 @@ systems or applications.
 The most common formats for this purpose are JSON (JavaScript Object Notation),...', 9, '66bb020d-fb25-4841-a3d9-9b837baca542');
 GO
 
--- Seed for Chapter 10: Graphical  User  Interface  (GUI)  and  Game  Basics  using  Tkinter  and
+-- Seed for Chapter 10: Graphical User Interface (GUI) and Game Basics using Tkinter and Pygame
 INSERT INTO Chapters (ChapterId, Title, Summary, Number, CourseId)
-VALUES ('b7360b9c-a840-40f9-af2d-40e9e3b14be8', 'Graphical  User  Interface  (GUI)  and  Game  Basics  using  Tkinter  and', N'Python  is  not  limited  to  text-based  programs — you  can  also  build  visual  applications  and 
+VALUES ('b7360b9c-a840-40f9-af2d-40e9e3b14be8', 'Graphical User Interface (GUI) and Game Basics using Tkinter and Pygame', N'Python  is  not  limited  to  text-based  programs — you  can  also  build  visual  applications  and 
 games. 
 Two popular tools for this are Tkinter, which is used for creating Graphical User Interfa...', 10, '66bb020d-fb25-4841-a3d9-9b837baca542');
 GO

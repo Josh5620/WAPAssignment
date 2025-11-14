@@ -19,7 +19,7 @@ const normalizeCourse = (course) => ({
     (Array.isArray(course?.Chapters) ? course.Chapters.length : null),
 });
 
-const CourseList = ({ userRole, onCourseSelect, onStartLearning }) => {
+const CourseList = ({ userRole, onCourseSelect, onStartLearning, onEnrollNow }) => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -112,7 +112,7 @@ const CourseList = ({ userRole, onCourseSelect, onStartLearning }) => {
                   {userRole === 'student' && course.published && (
                     <button
                       className="btn-secondary"
-                      onClick={() => onStartLearning && onStartLearning(courseId, course.title)}
+                      onClick={() => onEnrollNow && onEnrollNow(courseId, course.title)}
                     >
                       Enroll Now
                     </button>

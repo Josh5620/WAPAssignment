@@ -1,0 +1,151 @@
+.enrollment-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(55, 61, 32, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  backdrop-filter: blur(4px);
+}
+
+.enrollment-popup-content {
+  background: var(--cs-beige);
+  border-radius: 24px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 8px 32px rgba(55, 61, 32, 0.3);
+  border: 4px solid var(--cs-olive8);
+  overflow: hidden;
+}
+
+.enrollment-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background: var(--cs-olive7);
+  border-bottom: 3px solid var(--cs-olive8);
+}
+
+.enrollment-popup-header h3 {
+  margin: 0;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1rem;
+  color: var(--cs-beige);
+}
+
+.enrollment-close-button {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--cs-beige);
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-family: 'Press Start 2P', cursive;
+  line-height: 1;
+}
+
+.enrollment-close-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.enrollment-popup-body {
+  padding: 2rem;
+  text-align: center;
+}
+
+.enrollment-success-message {
+  margin-bottom: 2rem;
+}
+
+.enrollment-success-message p {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1rem;
+  color: var(--cs-brown);
+  margin: 0.5rem 0;
+}
+
+.enrollment-success-message h4 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.1rem;
+  color: var(--cs-olive9);
+  margin: 1rem 0;
+  word-wrap: break-word;
+}
+
+.enrollment-submessage {
+  font-size: 0.9rem;
+  color: var(--cs-olive7);
+  margin-top: 1rem !important;
+}
+
+.enrollment-popup-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.enrollment-dashboard-button,
+.enrollment-close-button-secondary {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  padding: 0.75rem 1.5rem;
+  border: 3px solid var(--cs-olive8);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.enrollment-dashboard-button {
+  background: var(--cs-olive7);
+  color: var(--cs-beige);
+}
+
+.enrollment-dashboard-button:hover {
+  background: var(--cs-olive8);
+  border-color: var(--cs-olive9);
+  transform: translateY(-2px);
+}
+
+.enrollment-close-button-secondary {
+  background: var(--cs-beige);
+  color: var(--cs-brown);
+  border-color: var(--cs-brown);
+}
+
+.enrollment-close-button-secondary:hover {
+  background: var(--cs-brown);
+  color: var(--cs-beige);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .enrollment-popup-content {
+    width: 95%;
+    max-width: none;
+  }
+
+  .enrollment-popup-header h3 {
+    font-size: 0.85rem;
+  }
+
+  .enrollment-popup-actions {
+    flex-direction: column;
+  }
+
+  .enrollment-dashboard-button,
+  .enrollment-close-button-secondary {
+    width: 100%;
+  }
+}
+

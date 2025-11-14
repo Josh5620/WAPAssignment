@@ -1,7 +1,19 @@
 {
+  "name": "wapassignment",
+  "version": "1.0.0",
+  "description": "CodeSage Learning Platform",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd server/ProjectAPI && dotnet run",
+    "dev:frontend": "cd client && npm run dev",
+    "install:all": "cd server/ProjectAPI && dotnet restore && cd ../../client && npm install"
+  },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
     "@supabase/supabase-js": "^2.55.0",
     "monaco-editor": "^0.54.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }

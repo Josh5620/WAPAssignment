@@ -1,165 +1,200 @@
-/* Course Details Styles */
+/* Course Details Styles - Pixelated Garden Theme */
 .course-details-container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 20px;
-  background: #f8f9fa;
+  padding: 2.5rem 1.5rem;
+  background: var(--cs-beige);
   min-height: 100vh;
+  font-family: 'Pixelify Sans', cursive;
 }
 
 .course-details-header {
-  margin-bottom: 30px;
+  margin-bottom: 2rem;
 }
 
 .back-button {
-  background: #6c757d;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  background: var(--cs-olive7);
+  color: var(--cs-beige);
+  border: 3px solid var(--cs-olive8);
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
   cursor: pointer;
-  margin-bottom: 20px;
-  transition: background-color 0.3s;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
 }
 
 .back-button:hover {
-  background: #5a6268;
+  background: var(--cs-olive8);
+  border-color: var(--cs-olive9);
+  transform: translateY(-2px);
 }
 
 .course-title-section {
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin-bottom: 20px;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .course-title {
-  color: #2c3e50;
-  font-size: 2.5rem;
+  font-family: 'Press Start 2P', cursive;
+  color: var(--cs-olive9);
+  font-size: 1.8rem;
   margin: 0;
-  font-weight: 600;
+  line-height: 1.4;
 }
 
 .published-badge {
-  background: #27ae60;
-  color: white;
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: 500;
+  background: var(--cs-olive7);
+  color: var(--cs-beige);
+  padding: 0.4rem 0.85rem;
+  border-radius: 10px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.6rem;
+  white-space: nowrap;
 }
 
 .course-details-content {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 30px;
+  gap: 2rem;
 }
 
 .course-main-info {
   background: white;
-  border-radius: 12px;
-  padding: 30px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
+  padding: 2rem;
+  border: 3px solid var(--cs-olive6);
+  box-shadow: 0 8px 32px rgba(55, 61, 32, 0.1);
 }
 
 .course-description-section h2,
 .course-preview-section h2,
 .course-chapters-section h2 {
-  color: #2c3e50;
-  margin-bottom: 15px;
-  font-size: 1.5rem;
+  font-family: 'Press Start 2P', cursive;
+  color: var(--cs-olive9);
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  line-height: 1.4;
 }
 
 .course-description {
-  color: #5a6c7d;
-  line-height: 1.7;
-  font-size: 1.1rem;
-  margin-bottom: 30px;
+  font-family: 'Pixelify Sans', cursive;
+  color: var(--cs-brown);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
 }
 
 .preview-content {
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 8px;
-  border-left: 4px solid #3498db;
-  margin-bottom: 30px;
+  background: var(--cs-sage3);
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 2px solid var(--cs-olive6);
+  margin-bottom: 2rem;
+}
+
+.preview-content p {
+  font-family: 'Pixelify Sans', cursive;
+  color: var(--cs-brown);
+  margin: 0;
+  line-height: 1.6;
 }
 
 .chapters-list {
-  margin-top: 20px;
+  margin-top: 1.5rem;
 }
 
 .chapter-item {
   display: flex;
   align-items: center;
-  padding: 15px;
-  background: #f8f9fa;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  border-left: 4px solid #3498db;
+  padding: 1rem;
+  background: var(--cs-sage3);
+  border-radius: 16px;
+  margin-bottom: 0.75rem;
+  border: 2px solid var(--cs-olive6);
+  transition: all 0.3s ease;
+}
+
+.chapter-item:hover {
+  background: white;
+  transform: translateX(4px);
 }
 
 .chapter-number {
-  background: #3498db;
-  color: white;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
+  background: var(--cs-olive7);
+  color: var(--cs-beige);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
-  margin-right: 15px;
-  font-size: 0.9rem;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  margin-right: 1rem;
+  flex-shrink: 0;
 }
 
 .chapter-info h3 {
-  color: #2c3e50;
-  margin: 0 0 5px 0;
-  font-size: 1.1rem;
+  font-family: 'Press Start 2P', cursive;
+  color: var(--cs-olive9);
+  margin: 0 0 0.25rem 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
 }
 
 .chapter-info p {
-  color: #6c757d;
+  font-family: 'Pixelify Sans', cursive;
+  color: var(--cs-brown);
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
 }
 
 .no-chapters {
   text-align: center;
-  padding: 40px;
-  color: #6c757d;
+  padding: 2.5rem;
+  font-family: 'Pixelify Sans', cursive;
+  color: var(--cs-brown);
+  font-size: 1rem;
 }
 
 .course-sidebar {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1.5rem;
 }
 
 .enrollment-card,
 .course-info-card {
   background: white;
-  border-radius: 12px;
-  padding: 25px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
+  padding: 2rem;
+  border: 3px solid var(--cs-olive6);
+  box-shadow: 0 4px 16px rgba(55, 61, 32, 0.08);
 }
 
 .enrollment-card h3,
 .course-info-card h3 {
-  color: #2c3e50;
-  margin: 0 0 20px 0;
-  font-size: 1.3rem;
+  font-family: 'Press Start 2P', cursive;
+  color: var(--cs-olive9);
+  margin: 0 0 1.25rem 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
 }
 
 .enrolled-badge {
-  background: #27ae60;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-weight: 500;
+  background: var(--cs-olive7);
+  color: var(--cs-beige);
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.6rem;
   display: inline-block;
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
 }
 
 .btn-continue,
@@ -169,91 +204,86 @@
 .btn-manage,
 .btn-students {
   width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 6px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  padding: 0.75rem 1.25rem;
+  border: 3px solid;
+  border-radius: 12px;
   cursor: pointer;
-  font-weight: 500;
-  margin-bottom: 10px;
-  transition: all 0.3s;
+  margin-bottom: 0.75rem;
+  transition: all 0.3s ease;
 }
 
 .btn-continue {
-  background: #27ae60;
-  color: white;
+  background: var(--cs-olive7);
+  color: var(--cs-beige);
+  border-color: var(--cs-olive8);
 }
 
 .btn-continue:hover {
-  background: #219a52;
-  transform: translateY(-1px);
+  background: var(--cs-olive8);
+  border-color: var(--cs-olive9);
+  transform: translateY(-2px);
 }
 
 .btn-enroll {
-  background: #3498db;
-  color: white;
+  background: var(--cs-olive9);
+  color: var(--cs-beige);
+  border-color: var(--cs-olive9);
 }
 
 .btn-enroll:hover {
-  background: #2980b9;
-  transform: translateY(-1px);
+  background: var(--cs-olive8);
+  transform: translateY(-2px);
 }
 
 .btn-preview {
-  background: #f39c12;
-  color: white;
+  background: var(--cs-beige);
+  color: var(--cs-brown);
+  border-color: var(--cs-brown);
 }
 
 .btn-preview:hover {
-  background: #d68910;
-  transform: translateY(-1px);
+  background: var(--cs-brown);
+  color: var(--cs-beige);
+  transform: translateY(-2px);
 }
 
-.btn-edit {
-  background: #e74c3c;
-  color: white;
-}
-
-.btn-edit:hover {
-  background: #c0392b;
-  transform: translateY(-1px);
-}
-
-.btn-manage {
-  background: #9b59b6;
-  color: white;
-}
-
-.btn-manage:hover {
-  background: #8e44ad;
-  transform: translateY(-1px);
-}
-
+.btn-edit,
+.btn-manage,
 .btn-students {
-  background: #1abc9c;
-  color: white;
+  background: var(--cs-beige);
+  color: var(--cs-brown);
+  border-color: var(--cs-brown);
 }
 
+.btn-edit:hover,
+.btn-manage:hover,
 .btn-students:hover {
-  background: #16a085;
-  transform: translateY(-1px);
+  background: var(--cs-brown);
+  color: var(--cs-beige);
+  transform: translateY(-2px);
 }
 
 .not-published {
-  color: #e74c3c;
-  font-style: italic;
+  font-family: 'Pixelify Sans', cursive;
+  color: var(--cs-brown);
   text-align: center;
-  padding: 20px;
-  background: #fdf2f2;
-  border-radius: 6px;
+  padding: 1.5rem;
+  background: var(--cs-sage3);
+  border-radius: 16px;
+  border: 2px solid var(--cs-olive6);
+  font-size: 0.9rem;
 }
 
 .info-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #e9ecef;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--cs-olive6);
+  font-family: 'Pixelify Sans', cursive;
 }
 
 .info-item:last-child {
@@ -261,22 +291,28 @@
   margin-bottom: 0;
 }
 
+.info-item strong {
+  color: var(--cs-olive9);
+  font-weight: 700;
+}
+
 .status-published {
-  color: #27ae60;
-  font-weight: 500;
+  color: var(--cs-olive7);
+  font-weight: 700;
 }
 
 .status-draft {
-  color: #f39c12;
-  font-weight: 500;
+  color: var(--cs-brown);
+  font-weight: 700;
 }
 
 .course-id {
-  font-family: monospace;
-  background: #f8f9fa;
-  padding: 2px 6px;
-  border-radius: 4px;
+  font-family: 'Pixelify Sans', cursive;
+  background: var(--cs-sage3);
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
   font-size: 0.85rem;
+  color: var(--cs-olive7);
 }
 
 /* Loading and Error States */
@@ -289,28 +325,41 @@
   justify-content: center;
   min-height: 60vh;
   text-align: center;
-  padding: 40px;
+  padding: 3rem 1.5rem;
+  font-family: 'Pixelify Sans', cursive;
 }
 
-.course-details-error h2,
-.course-not-found h2 {
-  color: #e74c3c;
-  margin-bottom: 15px;
+.course-details-loading {
+  font-size: 1.1rem;
+  color: var(--cs-brown);
 }
 
-.retry-button {
-  background: #3498db;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 6px;
+.course-details-error p,
+.course-not-found p {
+  font-family: 'Pixelify Sans', cursive;
+  font-size: 1.1rem;
+  color: var(--cs-brown);
+  margin-bottom: 1.5rem;
+}
+
+.retry-button,
+.back-button {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  background: var(--cs-olive7);
+  color: var(--cs-beige);
+  border: 3px solid var(--cs-olive8);
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
   cursor: pointer;
-  margin: 5px;
-  transition: background-color 0.3s;
+  margin: 0.5rem;
+  transition: all 0.3s ease;
 }
 
 .retry-button:hover {
-  background: #2980b9;
+  background: var(--cs-olive8);
+  border-color: var(--cs-olive9);
+  transform: translateY(-2px);
 }
 
 /* Responsive Design */

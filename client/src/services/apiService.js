@@ -2085,10 +2085,10 @@ export const api = {
         
         const response = await requestWithAuth('/students/award-xp', {
           method: 'POST',
-          body: JSON.stringify({ 
+          body: {
             userId: userIdStr,
-            xpAmount: xpAmount 
-          })
+            xpAmount: xpAmount
+          }
         });
         
         console.log('✅ API: XP awarded successfully:', response);

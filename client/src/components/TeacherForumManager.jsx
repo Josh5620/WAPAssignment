@@ -1,136 +1,95 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PrimaryButton from './PrimaryButton';
+import { adminService } from '../services/apiService';
 import '../styles/TeacherForumManager.css';
 
-const initialPosts = [
-  {
-    id: 'post-1',
-    studentName: 'Lena Park',
-    chapter: 'Loops in the Garden',
-    question:
-      'I keep watering the same flower twice in my loop. How can I track which plants have already been watered?',
-    replies: [
-      {
-        id: 'reply-1',
-        author: 'You',
-        message:
-          'Try using an array to remember each plot you have watered. You can check before watering again.',
-        timestamp: '2 hours ago',
-      },
-    ],
-  },
-  {
-    id: 'post-2',
-    studentName: 'Mateo Alvarez',
-    chapter: 'Functions & Pollinators',
-    question:
-      'My helper function works, but the flowers still wilt after the main function runs. What should I inspect?',
-    replies: [],
-  },
-  {
-    id: 'post-3',
-    studentName: 'Amina Bashir',
-    chapter: 'Debugging Garden Pests',
-    question:
-      "The console keeps warning about an undefined 'gardenPlan'. How do I trace where it disappears?",
-    replies: [],
-  },
-];
-
 const TeacherForumManager = () => {
-  const [posts, setPosts] = useState(initialPosts);
-  const [replyDrafts, setReplyDrafts] = useState(() => {
-    const drafts = {};
-    initialPosts.forEach((post) => {
-      drafts[post.id] = '';
-    });
-    return drafts;
-  });
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const handleDraftChange = (postId, value) => {
-    setReplyDrafts((prev) => ({ ...prev, [postId]: value }));
+  const fetchPosts = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await adminService.getAllForumPosts();
+      if (response?.success === false) {
+        throw new Error(response?.message || 'Unable to load forum posts.');
+      }
+      const data = Array.isArray(response?.data) ? response.data : [];
+      setPosts(data);
+    } catch (err) {
+      console.error('Failed to load forum posts', err);
+      setError(err.message || 'Unable to load forum posts.');
+      setPosts([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handlePostReply = (postId) => {
-    setPosts((prevPosts) => {
-      const draft = replyDrafts[postId]?.trim();
-      if (!draft) {
-        return prevPosts;
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const handleDeletePost = async (postId) => {
+    const confirmed = window.confirm('Are you sure you want to delete this post?');
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      const response = await adminService.deleteForumPost(postId);
+      if (response?.success === false) {
+        throw new Error(response?.message || 'Unable to delete forum post.');
       }
-
-      return prevPosts.map((post) => {
-        if (post.id !== postId) return post;
-
-        const newReply = {
-          id: `${postId}-reply-${post.replies.length + 1}`,
-          author: 'You',
-          message: draft,
-          timestamp: 'just now',
-        };
-
-        return {
-          ...post,
-          replies: [...post.replies, newReply],
-        };
-      });
-    });
-
-    setReplyDrafts((prev) => ({ ...prev, [postId]: '' }));
+      setPosts((prev) => prev.filter((post) => post.forumId !== postId));
+    } catch (err) {
+      console.error('Failed to delete forum post', err);
+      alert(err.message || 'Unable to delete the post. Please try again.');
+    }
   };
 
   return (
     <div className="forum-manager">
       <header className="forum-header">
-        <h2>Student Forum</h2>
-        <p>
-          These threads are simulated to demonstrate how you can coach discussions while the student app is
-          still wired to static content.
-        </p>
+        <h2>Community Forum Moderation</h2>
+        <p>Monitor and moderate live community posts from your students.</p>
       </header>
 
-      <div className="forum-list" role="list">
-        {posts.map((post) => (
-          <article key={post.id} className="forum-post" role="listitem">
-            <header className="forum-post__header">
-              <div>
-                <h3>{post.studentName}</h3>
-                <p className="forum-post__chapter">Chapter: {post.chapter}</p>
-              </div>
-            </header>
-            <p className="forum-post__question">{post.question}</p>
-
-            <section className="forum-replies" aria-label={`Replies to ${post.studentName}'s question`}>
-              {post.replies.length === 0 ? (
-                <p className="forum-replies__empty">No replies yet. Be the first to help this student bloom!</p>
-              ) : (
-                post.replies.map((reply) => (
-                  <div key={reply.id} className="forum-reply">
-                    <span className="forum-reply__meta">{reply.author}</span>
-                    <p>{reply.message}</p>
-                    <span className="forum-reply__timestamp">{reply.timestamp}</span>
-                  </div>
-                ))
-              )}
-            </section>
-
-            <div className="forum-reply-form">
-              <label htmlFor={`${post.id}-reply`} className="sr-only">
-                Add a reply to {post.studentName}'s post
-              </label>
-              <textarea
-                id={`${post.id}-reply`}
-                rows="3"
-                placeholder="Type your coaching note here..."
-                value={replyDrafts[post.id] ?? ''}
-                onChange={(event) => handleDraftChange(post.id, event.target.value)}
-              />
-              <PrimaryButton size="sm" onClick={() => handlePostReply(post.id)}>
-                Post Reply
-              </PrimaryButton>
+      {loading ? (
+        <div className="forum-list" role="status">
+          <div className="forum-empty">Loading forum posts...</div>
+        </div>
+      ) : error ? (
+        <div className="forum-list" role="alert">
+          <div className="forum-empty">{error}</div>
+        </div>
+      ) : (
+        <div className="forum-list" role="list">
+          {posts.length === 0 ? (
+            <div className="forum-empty" role="listitem">
+              No forum posts to review right now.
             </div>
-          </article>
-        ))}
-      </div>
+          ) : (
+            posts.map((post) => (
+              <article key={post.forumId} className="forum-post" role="listitem">
+                <header className="forum-post__header">
+                  <div>
+                    <h3>{post?.user?.fullName || 'Student'}</h3>
+                    <p className="forum-post__timestamp">
+                      Posted: {post?.createdAt ? new Date(post.createdAt).toLocaleString() : 'Unknown'}
+                    </p>
+                  </div>
+                </header>
+                <p className="forum-post__question">{post?.content}</p>
+                <PrimaryButton size="sm" onClick={() => handleDeletePost(post.forumId)}>
+                  Delete Post
+                </PrimaryButton>
+              </article>
+            ))
+          )}
+        </div>
+      )}
     </div>
   );
 };

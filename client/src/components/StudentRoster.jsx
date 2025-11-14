@@ -4,10 +4,10 @@ import '../styles/StudentRoster.css';
 
 const normalizeStudents = (payload) => {
   if (!payload) return [];
-  if (Array.isArray(payload)) return payload;
-  if (Array.isArray(payload?.data)) return payload.data;
-  if (Array.isArray(payload?.students)) return payload.students;
-  if (Array.isArray(payload?.results)) return payload.results;
+  const data = payload?.data ?? payload;
+  if (Array.isArray(data)) return data;
+  if (Array.isArray(data?.students)) return data.students;
+  if (Array.isArray(data?.results)) return data.results;
   return [];
 };
 
@@ -22,10 +22,13 @@ const StudentRoster = () => {
     const fetchStudents = async () => {
       setLoading(true);
       try {
-        if (typeof adminService.getAllStudents !== 'function') {
-          throw new Error('adminService.getAllStudents is not available in this environment.');
+        if (typeof adminService.getAllUsers !== 'function') {
+          throw new Error('adminService.getAllUsers is not available in this environment.');
         }
-        const response = await adminService.getAllStudents();
+        const response = await adminService.getAllUsers();
+        if (response?.success === false) {
+          throw new Error(response?.message || 'Unable to load students right now.');
+        }
         if (!isMounted) return;
         const list = normalizeStudents(response);
         setStudents(list);
@@ -66,7 +69,7 @@ const StudentRoster = () => {
               <tr>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Enrolled Course</th>
+                <th>Role</th>
               </tr>
             </thead>
             <tbody>
@@ -89,7 +92,7 @@ const StudentRoster = () => {
                     <tr key={student.id || student.Id || student.userId || email}>
                       <td data-label="Name">{fullName}</td>
                       <td data-label="Email">{email}</td>
-                      <td data-label="Enrolled Course">Python Garden Path</td>
+                      <td data-label="Role">{student.role || '—'}</td>
                     </tr>
                   );
                 })

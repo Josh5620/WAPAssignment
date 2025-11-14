@@ -59,30 +59,25 @@ const CourseList = ({ userRole, onCourseSelect, onStartLearning, onEnrollNow }) 
 
   return (
     <div className="course-list-container">
-      <div className="course-list-header">
-        <h2>Available Courses</h2>
-        <p>Choose from our programming courses to enhance your skills</p>
-      </div>
-
       {courses.length === 0 ? (
         <div className="no-courses">
           <p>No courses available at the moment.</p>
         </div>
       ) : (
-        <div className="courses-grid">
+        <>
           {courses.map((rawCourse) => {
             const course = normalizeCourse(rawCourse);
             const courseId = course.id;
             return (
-              <div key={courseId || course.title} className="course-card">
-                <div className="course-header">
-                  <h3 className="course-title">{course.title}</h3>
+              <div key={courseId || course.title} className="course-card-large">
+                <div className="course-card-header">
                   {course.published && (
-                    <span className="published-badge">Published</span>
+                    <span className="course-badge">Published</span>
                   )}
                 </div>
 
-                <div className="course-content">
+                <div className="course-card-body">
+                  <h2>{course.title}</h2>
                   <p className="course-description">
                     {course.description || 'No description available'}
                   </p>
@@ -101,7 +96,7 @@ const CourseList = ({ userRole, onCourseSelect, onStartLearning, onEnrollNow }) 
                   )}
                 </div>
 
-                <div className="course-actions">
+                <div className="course-card-actions">
                   <button
                     className="btn-primary"
                     onClick={() => onCourseSelect && onCourseSelect(courseId, course.title)}
@@ -131,18 +126,10 @@ const CourseList = ({ userRole, onCourseSelect, onStartLearning, onEnrollNow }) 
                     </button>
                   )}
                 </div>
-
-                <div className="course-meta">
-                  {courseId ? (
-                    <small>Course ID: {courseId.toString().slice(0, 8)}...</small>
-                  ) : (
-                    <small>Untracked course identifier</small>
-                  )}
-                </div>
               </div>
             );
           })}
-        </div>
+        </>
       )}
     </div>
   );

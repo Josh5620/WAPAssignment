@@ -1,11 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Testimonials from '../components/Testimonials';
 import ThemeSelector from '../components/ThemeSelector';
 import PrimaryButton from '../components/PrimaryButton';
-import GuestCourseCatalog from '../components/GuestCourseCatalog';
-import { api } from '../services/apiService';
+import { getUser } from '../utils/auth';
 import '../styles/HomePage.css';
 
 const featureHighlights = [
@@ -51,37 +50,8 @@ const howItWorksSteps = [
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const [featuredCourses, setFeaturedCourses] = useState([]);
-  const [loadingFeatured, setLoadingFeatured] = useState(true);
-  const [featuredError, setFeaturedError] = useState('');
-
-  useEffect(() => {
-    let isMounted = true;
-    const fetchFeaturedCourses = async () => {
-      try {
-        setLoadingFeatured(true);
-        const data = await api.guests.getFeaturedCourses(6);
-        if (isMounted) {
-          setFeaturedCourses(data.courses || data || []);
-          setFeaturedError('');
-        }
-      } catch (error) {
-        console.error('Failed to load featured courses:', error);
-        if (isMounted) {
-          setFeaturedError('Featured courses are taking a moment to bloom. Please try again.');
-        }
-      } finally {
-        if (isMounted) {
-          setLoadingFeatured(false);
-        }
-      }
-    };
-
-    fetchFeaturedCourses();
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  const user = getUser(); // Check if user is logged in
+  const isGuest = !user; // True if not logged in
 
   const heroCTAs = useMemo(
     () => [
@@ -91,7 +61,7 @@ const HomePage = () => {
         variant: 'primary',
       },
       {
-        label: 'Browse Courses',
+        label: 'Browse Our Course',
         action: () => navigate('/guest/courses'),
         variant: 'secondary',
       },
@@ -141,27 +111,6 @@ const HomePage = () => {
               <p>{feature.description}</p>
             </article>
           ))}
-        </section>
-
-        <section className="course-preview" aria-labelledby="course-preview-title">
-          <div className="section-heading">
-            <h2 id="course-preview-title">Popular Python Journeys</h2>
-            <p>Preview a curated selection of courses that visitors love exploring.</p>
-          </div>
-          <div className="course-preview__grid">
-            {loadingFeatured && <div className="course-preview__skeleton">Loading featured courses…</div>}
-            {!loadingFeatured && featuredError && (
-              <div className="course-preview__error">{featuredError}</div>
-            )}
-            {!loadingFeatured && !featuredError && featuredCourses.length > 0 && (
-              <GuestCourseCatalog courses={featuredCourses} limit={6} compact />
-            )}
-          </div>
-          <div className="course-preview__actions">
-            <PrimaryButton size="md" onClick={() => navigate('/guest/courses')}>
-              View All Courses
-            </PrimaryButton>
-          </div>
         </section>
 
         <section className="how-it-works" aria-labelledby="how-it-works-title">

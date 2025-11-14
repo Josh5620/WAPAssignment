@@ -19,10 +19,10 @@ import ExplainTest from './pages/ExplainTest';
 import About from './pages/About';
 import ChapterPage from './pages/ChapterPage.jsx';
 import CoursesPage from './pages/CoursesPage';
-import GuestCoursesPage from './pages/GuestCoursesPage';
+import GuestLandingPage from './pages/GuestLandingPage';
+import GuestChapterViewer from './pages/GuestChapterViewer';
 import FAQ from './pages/FAQ';
 import VisitorPage from './pages/VisitorPage';
-import GuestCoursePreviewPage from './pages/GuestCoursePreviewPage';
 import ForumPage from './pages/ForumPage';
 import ApiTest from './components/ApiTest';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
@@ -112,8 +112,8 @@ function App() {
               </ProtectedRoute>
             )}
           />
-          <Route path="/guest/courses" element={<GuestCoursesPage />} />
-          <Route path="/guest/courses/:courseId/preview" element={<GuestCoursePreviewPage />} />
+          <Route path="/guest/courses" element={<GuestLandingPage />} />
+          <Route path="/guest/courses/:courseId/chapters/:chapterId" element={<GuestChapterViewer />} />
           <Route path="/python" element={<VisitorPage />} />
           <Route path="/api-test" element={<ApiTest />} />
           <Route

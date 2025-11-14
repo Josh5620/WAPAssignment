@@ -137,13 +137,15 @@ const CoursesPage = () => {
           onClose={() => setEnrollmentPopup({ isOpen: false, courseTitle: '' })}
         />
 
-        <div className="courses-cta">
-          <h2>Ready to grow your Python skills?</h2>
-          <p>Start your interactive learning journey today</p>
-          <PrimaryButton size="lg" onClick={handleStartGarden}>
-            {userRole === 'student' ? 'Go to My Garden' : 'Go to Dashboard'}
-          </PrimaryButton>
-        </div>
+        {userRole === 'student' && (
+          <div className="courses-cta">
+            <h2>Ready to grow your Python skills?</h2>
+            <p>Start your interactive learning journey today</p>
+            <PrimaryButton size="lg" onClick={handleStartGarden}>
+              Go to My Garden
+            </PrimaryButton>
+          </div>
+        )}
       </div>
     </>
   );

@@ -6,16 +6,16 @@ const ReturnHome = () => {
     const navigate = useNavigate();
 
     const handleReturnHome = () => {
-        navigate('/');
+        navigate('/courses');
     };
 
     return (
         <button 
             onClick={handleReturnHome} 
             className="return-home-arrow"
-            title="Back to Home"
+            title="Back to Courses"
         >
-            ←
+            Back
         </button>
     );
 };

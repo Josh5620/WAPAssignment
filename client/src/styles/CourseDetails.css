@@ -200,7 +200,6 @@
 .btn-continue,
 .btn-enroll,
 .btn-preview,
-.btn-edit,
 .btn-manage,
 .btn-students {
   width: 100%;
@@ -211,6 +210,16 @@
   border-radius: 12px;
   cursor: pointer;
   margin-bottom: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.btn-edit {
+  width: 48%;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  border: 3px solid;
+  border-radius: 12px;
+  cursor: pointer;
   transition: all 0.3s ease;
 }
 

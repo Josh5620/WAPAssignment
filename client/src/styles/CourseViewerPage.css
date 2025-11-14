@@ -46,18 +46,19 @@
   font-family: 'Press Start 2P', cursive;
   font-size: 0.7rem;
   padding: 0.75rem 1.5rem;
-  border: 3px solid var(--cs-olive8);
+  border: 3px solid var(--primary);
   border-radius: 12px;
-  background: var(--cs-olive7);
+  background: var(--primary);
   color: var(--cs-beige);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .course-viewer__header button:hover {
-  background: var(--cs-olive8);
-  border-color: var(--cs-olive9);
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(55, 61, 32, 0.3);
 }
 
 .course-viewer__alert {
@@ -116,21 +117,23 @@
   font-family: 'Press Start 2P', cursive;
   font-size: 0.7rem;
   padding: 0.75rem 1.5rem;
-  border: 3px solid var(--cs-olive8);
+  border: 3px solid;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .course-viewer__error-actions .retry-button {
-  background: var(--cs-olive7);
+  background: var(--primary);
   color: var(--cs-beige);
+  border-color: var(--primary);
 }
 
 .course-viewer__error-actions .retry-button:hover {
-  background: var(--cs-olive8);
-  border-color: var(--cs-olive9);
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(55, 61, 32, 0.3);
 }
 
 .course-viewer__error-actions .back-button {
@@ -198,9 +201,10 @@
 }
 
 .course-viewer__sidebar li.is-active button {
-  background: var(--cs-olive7);
+  background: var(--primary);
   color: var(--cs-beige);
-  border-color: var(--cs-olive8);
+  border-color: var(--primary);
+  font-weight: 700;
 }
 
 .course-viewer__sidebar li button:hover {
@@ -226,9 +230,9 @@
 .course-viewer__back-to-summary {
   font-family: 'Press Start 2P', cursive;
   font-size: 0.7rem;
-  background: var(--cs-olive7);
+  background: var(--primary);
   color: var(--cs-beige);
-  border: 3px solid var(--cs-olive8);
+  border: 3px solid var(--primary);
   padding: 0.75rem 1.5rem;
   border-radius: 12px;
   cursor: pointer;
@@ -236,9 +240,10 @@
 }
 
 .course-viewer__back-to-summary:hover {
-  background: var(--cs-olive8);
-  border-color: var(--cs-olive9);
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(55, 61, 32, 0.3);
 }
 
 .course-viewer__content {
@@ -321,7 +326,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 1.5rem;
-  align-items: start;
+  align-items: stretch;
 }
 
 .chapter-summary-card {
@@ -333,8 +338,12 @@
   flex-direction: column;
   transition: all 0.3s ease;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   min-height: fit-content;
+}
+
+.chapter-summary-card:hover {
+  background: var(--cs-sage3);
 }
 
 .chapter-summary-card.is-expanded {
@@ -360,13 +369,9 @@
   left: 0;
   width: 4px;
   height: 100%;
-  background: var(--cs-olive7);
+  background: var(--primary);
   transform: scaleY(0);
   transition: transform 0.3s ease;
-}
-
-.chapter-summary-card-header:hover {
-  background: var(--cs-sage3);
 }
 
 .chapter-summary-card.is-expanded::before {
@@ -415,9 +420,9 @@
 .chapter-start-learning-btn {
   font-family: 'Press Start 2P', cursive;
   font-size: 0.7rem;
-  background: var(--cs-olive9);
+  background: var(--primary);
   color: var(--cs-beige);
-  border: 3px solid var(--cs-olive9);
+  border: 3px solid var(--primary);
   padding: 0.75rem 1.5rem;
   border-radius: 12px;
   cursor: pointer;
@@ -425,9 +430,10 @@
 }
 
 .chapter-start-learning-btn:hover {
-  background: var(--cs-olive8);
-  border-color: var(--cs-olive8);
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(55, 61, 32, 0.3);
 }
 
 @keyframes expandContent {
@@ -443,24 +449,23 @@
 
 .chapter-summary-number {
   flex-shrink: 0;
-  width: 3.5rem;
-  height: 3.5rem;
-  background: var(--cs-olive7);
+  width: 2.75rem;
+  height: 2.75rem;
+  background: var(--primary);
   color: var(--cs-beige);
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Press Start 2P', cursive;
-  font-size: 1rem;
-  border: 2px solid var(--cs-olive8);
+  font-size: 0.85rem;
+  border: 2px solid var(--primary);
   transition: all 0.3s ease;
 }
 
 .chapter-summary-card:hover .chapter-summary-number {
-  background: var(--cs-olive8);
-  border-color: var(--cs-olive9);
-  transform: scale(1.1);
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
 }
 
 .chapter-summary-card.is-selected .chapter-summary-number {
@@ -508,7 +513,7 @@
   justify-content: center;
   font-family: 'Press Start 2P', cursive;
   font-size: 1rem;
-  color: var(--cs-olive7);
+  color: var(--primary);
   transition: all 0.3s ease;
 }
 

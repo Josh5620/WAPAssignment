@@ -74,6 +74,7 @@ public class GuestsController : ControllerBase
         {
             var course = await _context.Courses
                 .Include(c => c.Chapters)
+                    .ThenInclude(ch => ch.Resources)
                 .FirstOrDefaultAsync(c => c.CourseId == courseId && c.ApprovalStatus == "Approved", ct);
 
             if (course == null)
@@ -81,7 +82,11 @@ public class GuestsController : ControllerBase
                 return NotFound(new { error = "Course not found or not approved for preview" });
             }
 
-            // Return course with chapter titles and numbers
+            // Return course with first 3 chapters for preview (guest can only see 3 chapters)
+            // For preview chapters, only show notes and flashcards (no challenges or help requests)
+            var allChapters = course.Chapters.OrderBy(ch => ch.Number).ToList();
+            var previewChapters = allChapters.Take(3).ToList();
+            
             var preview = new
             {
                 courseId = course.CourseId,
@@ -91,16 +96,34 @@ public class GuestsController : ControllerBase
                 published = course.Published,
                 approvalStatus = course.ApprovalStatus,
                 totalChapters = course.Chapters.Count,
-                chapters = course.Chapters
-                    .OrderBy(ch => ch.Number)
+                chapters = previewChapters
                     .Select(ch => new
                     {
                         chapterId = ch.ChapterId,
                         number = ch.Number,
-                        title = ch.Title
+                        title = ch.Title,
+                        summary = ch.Summary,
+                        // Preview mode: only notes and flashcards available
+                        availableFeatures = new
+                        {
+                            notes = ch.Resources.Any(r => r.Type == "note"),
+                            flashcards = ch.Resources.Any(r => r.Type == "flashcard"),
+                            challenges = false, // Locked for guests
+                            helpRequests = false // Locked for guests
+                        },
+                        previewResources = ch.Resources
+                            .Where(r => r.Type == "note" || r.Type == "flashcard")
+                            .Select(r => new
+                            {
+                                resourceId = r.ResourceId,
+                                type = r.Type,
+                                title = r.Title,
+                                content = r.Content
+                            })
+                            .ToList()
                     })
                     .ToList(),
-                message = "This is a preview. Register to access full course content, quizzes, and progress tracking."
+                message = "Preview mode: Access notes and flashcards. Sign up to unlock challenges, quizzes, and help requests."
             };
 
             return Ok(preview);

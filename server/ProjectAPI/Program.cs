@@ -192,7 +192,8 @@ static async Task ExecuteSqlSeedFiles(ApplicationDbContext context, ILogger logg
         "Data/Seeds/04-python-resources.sql",
         "Data/Seeds/05-python-flashcards.sql",
         "Data/Seeds/06-python-questions.sql",
-        "Data/Seeds/07-python-question-options.sql"
+        "Data/Seeds/07-python-question-options.sql",
+        "Data/Seeds/08-testimonials.sql"
     };
 
     foreach (var seedFile in seedFiles)

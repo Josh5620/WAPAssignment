@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getUser } from '../utils/auth';
+import Navbar from '../components/Navbar';
 import ReturnHome from '../components/ReturnHome';
 import StudentQuizComponent from '../components/StudentQuizComponent';
 import StudentFlashcardComponent from '../components/StudentFlashcardComponent';
@@ -167,14 +168,19 @@ const CourseViewerPage = () => {
 
   const handleStartLearning = (chapterId, chapterNumber) => {
     const user = getUser();
+    const isTeacherOrAdmin = user && (user.role === 'teacher' || user.role === 'admin');
     const isStudent = user && (user.role === 'student' || !user.role);
     
-    if (isStudent && isChapterUnlocked(chapterNumber, chapterId)) {
+    if (isTeacherOrAdmin) {
+      // Navigate to manage-course page with chapter editing for teachers/admins
+      navigate(`/manage-course?courseId=${courseId}&chapterId=${chapterId}`);
+    } else if (isStudent && isChapterUnlocked(chapterNumber, chapterId)) {
       // Navigate to dashboard if chapter is unlocked (quiz completed for previous chapter)
       navigate('/student-dashboard');
     } else {
-      // Navigate to chapter page if locked (previous chapter's quiz not completed) or not a student
-      navigate(`/chapters/${chapterId}`);
+      // Navigate to chapter page if locked (previous chapter's quiz not completed)
+      // Note: This uses numeric chapter IDs from the static garden path
+      navigate(`/chapters/${chapterNumber}`);
     }
   };
 
@@ -307,66 +313,71 @@ const CourseViewerPage = () => {
     };
 
     return (
-      <div className="course-viewer-page">
-        <ReturnHome />
-        <div className="course-viewer__container">
-          <div className="course-viewer__error">
-            <h2>Failed to Load Course</h2>
-            <p>{error}</p>
-            <div className="course-viewer__error-actions">
-              <button 
-                type="button" 
-                className="retry-button"
-                onClick={handleRetry}
-              >
-                Try Again
-              </button>
-              <button 
-                type="button" 
-                className="back-button"
-                onClick={() => {
-                  const user = getUser();
-                  if (user?.role === 'teacher') {
-                    navigate('/teacher-dashboard');
-                  } else {
-                    navigate('/student-dashboard');
-                  }
-                }}
-              >
-                Back to Dashboard
-              </button>
+      <>
+        <Navbar />
+        <div className="course-viewer-page">
+          <ReturnHome />
+          <div className="course-viewer__container">
+            <div className="course-viewer__error">
+              <h2>Failed to Load Course</h2>
+              <p>{error}</p>
+              <div className="course-viewer__error-actions">
+                <button 
+                  type="button" 
+                  className="retry-button"
+                  onClick={handleRetry}
+                >
+                  Try Again
+                </button>
+                <button 
+                  type="button" 
+                  className="back-button"
+                  onClick={() => {
+                    const user = getUser();
+                    if (user?.role === 'teacher') {
+                      navigate('/teacher-dashboard');
+                    } else {
+                      navigate('/student-dashboard');
+                    }
+                  }}
+                >
+                  Back to Dashboard
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="course-viewer-page">
-      <ReturnHome />
-      <div className="course-viewer__container">
-        <header className="course-viewer__header">
-          <div>
-            <h1>{course?.title || course?.Title || 'Course Preview'}</h1>
-            {(course?.description || course?.Description) && <p>{course.description || course.Description}</p>}
-          </div>
-          <button 
-            type="button" 
-            onClick={() => {
-              const user = getUser();
-              if (user?.role === 'teacher') {
-                navigate('/teacher-dashboard');
-              } else {
-                navigate('/student-dashboard');
-              }
-            }}
-          >
-            Back to Dashboard
-          </button>
-        </header>
+    <>
+      <Navbar />
+      <div className="course-viewer-page">
+        <ReturnHome />
+        <div className="course-viewer__container">
+          <header className="course-viewer__header">
+            <div>
+              <h1>{course?.title || course?.Title || 'Course Preview'}</h1>
+              {(course?.description || course?.Description) && <p>{course.description || course.Description}</p>}
+            </div>
+            <button 
+              type="button" 
+              onClick={() => {
+                const user = getUser();
+                if (user?.role === 'teacher') {
+                  navigate('/teacher-dashboard');
+                } else {
+                  navigate('/student-dashboard');
+                }
+              }}
+            >
+              Back to Dashboard
+            </button>
+          </header>
 
-        {error && course && <div className="course-viewer__alert">{error}</div>}
+          {error && course && <div className="course-viewer__alert">{error}</div>}
 
         {loading ? (
           <div className="course-viewer__loading">Loading course...</div>
@@ -435,26 +446,30 @@ const CourseViewerPage = () => {
                             </div>
                           </div>
                           
-                          {isExpanded && (
-                            <div className="chapter-summary-expanded-content">
-                              <div className="chapter-expanded-summary">
-                                <h4>What You'll Study</h4>
-                                <p>{summary}</p>
+                          {isExpanded && (() => {
+                            const user = getUser();
+                            const isTeacherOrAdmin = user && (user.role === 'teacher' || user.role === 'admin');
+                            return (
+                              <div className="chapter-summary-expanded-content">
+                                <div className="chapter-expanded-summary">
+                                  <h4>{isTeacherOrAdmin ? 'Chapter Overview' : 'What You\'ll Study'}</h4>
+                                  <p>{summary}</p>
+                                </div>
+                                <div className="chapter-expanded-actions">
+                                  <button
+                                    type="button"
+                                    className="chapter-start-learning-btn"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleStartLearning(id, number);
+                                    }}
+                                  >
+                                    {isTeacherOrAdmin ? 'Edit Chapter →' : 'Start Learning →'}
+                                  </button>
+                                </div>
                               </div>
-                              <div className="chapter-expanded-actions">
-                                <button
-                                  type="button"
-                                  className="chapter-start-learning-btn"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleStartLearning(id, number);
-                                  }}
-                                >
-                                  Start Learning →
-                                </button>
-                              </div>
-                            </div>
-                          )}
+                            );
+                          })()}
                         </div>
                       );
                     })}
@@ -468,8 +483,9 @@ const CourseViewerPage = () => {
             </main>
           </div>
         )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

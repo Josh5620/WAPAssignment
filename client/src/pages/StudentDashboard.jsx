@@ -353,6 +353,12 @@ const StudentDashboard = () => {
           <p>{greeting}</p>
         </section>
 
+        <GardenPath
+          chapters={gardenPathData}
+          progress={progress}
+          onChapterClick={handleChapterSelection}
+        />
+
         <section className="student-dashboard-courses">
           <div className="courses-card">
             <div className="courses-header">
@@ -401,12 +407,6 @@ const StudentDashboard = () => {
             <ul className="notification-list">{renderNotifications()}</ul>
           </div>
         </section>
-
-        <GardenPath
-          chapters={gardenPathData}
-          progress={progress}
-          onChapterClick={handleChapterSelection}
-        />
       </main>
     </>
   );

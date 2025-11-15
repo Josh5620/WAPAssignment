@@ -435,10 +435,15 @@
   transform: rotateY(180deg);
   flex-direction: column;
   box-shadow: 0 8px 24px rgba(55, 61, 32, 0.15);
+  overflow: hidden;
 }
 
 .chapter-card-back-content {
   width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .chapter-card-back-content h4 {
@@ -447,6 +452,9 @@
   color: var(--cs-olive9);
   margin: 0 0 1rem 0;
   line-height: 1.4;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .chapter-card-back-content p {
@@ -458,6 +466,12 @@
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: normal;
+  hyphens: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
 }
 
 .chapter-summary-card-header {

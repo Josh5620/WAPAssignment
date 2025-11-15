@@ -391,10 +391,6 @@ const CourseList = ({ userRole, onCourseSelect, onStartLearning, onEnrollNow }) 
                 </>
               )}
 
-              <div className="edit-course-note">
-                <span className="note-icon">ℹ️</span>
-                <p>Changes are saved locally and will persist during your session.</p>
-              </div>
             </div>
 
             <div className="edit-course-footer">

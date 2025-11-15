@@ -170,20 +170,6 @@ const Login = () => {
             </div>
           </form>
 
-          <div className="auth-divider">Or</div>
-
-          <div className="auth-social">
-            <button type="button" className="auth-social__button" aria-label="Continue with Google">
-              <img src="/google.svg" alt="Google" />
-            </button>
-            <button type="button" className="auth-social__button" aria-label="Continue with Apple">
-              <img src="/apple.svg" alt="Apple" />
-            </button>
-            <button type="button" className="auth-social__button" aria-label="Continue with Facebook">
-              <img src="/facebook.svg" alt="Facebook" />
-            </button>
-          </div>
-
           <p className="auth-footer">
             Don&apos;t have an account? <Link to="/register">Sign Up</Link>
           </p>

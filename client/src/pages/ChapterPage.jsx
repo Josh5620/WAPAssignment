@@ -804,7 +804,7 @@ const ChapterPage = () => {
                 'Checking...'
               ) : !nextChapterUnlocked ? (
                 <>
-                  🔒 {nextChapter.title} (Locked)
+                 {nextChapter.title} (Locked)
                 </>
               ) : (
                 `${nextChapter.title} →`

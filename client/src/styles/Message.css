@@ -5,8 +5,8 @@
   gap: 8px;
   width: 100%;
   animation: messageSlideIn 0.3s ease;
-  margin-bottom: 12px;
   position: relative;
+  box-sizing: border-box;
 }
 
 .message.user {
@@ -56,23 +56,27 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  max-width: calc(85% - 40px);
+  max-width: 220px;
+  box-sizing: border-box;
 }
 
 .message.bot .message-content {
-  margin-left: 44px;
+  margin-left: 24px;
 }
 
 .message.user .message-content {
-  margin-right: 44px;
+  margin-right: 24px;
 }
 
 .message-text {
-  padding: 12px 16px;
+  padding: 12px 16px 8px 16px;
   border-radius: 18px;
   font-size: 14px;
   line-height: 1.4;
   word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  box-sizing: border-box;
 }
 
 .message.bot .message-text {
@@ -90,6 +94,10 @@
   font-size: 11px;
   color: #766153;
   padding: 0 4px;
+}
+
+.message.bot .message-time {
+  text-align: left;
 }
 
 .message.user .message-time {

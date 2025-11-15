@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import StudentFlashcardComponent from '../components/StudentFlashcardComponent.jsx';
 import PrimaryButton from '../components/PrimaryButton';
 import { api } from '../services/apiService.js';
+import { getChapterNotes } from '../data/chapterNotes';
 import '../styles/GuestChapterViewer.css';
 
 const GuestChapterViewer = () => {
@@ -76,9 +77,9 @@ const GuestChapterViewer = () => {
     );
   }
 
-  // Separate resources by type
-  const notes = chapterData.previewResources?.filter(r => r.type === 'note') || [];
-  const flashcards = chapterData.previewResources?.filter(r => r.type === 'flashcard') || [];
+  // Use fake notes from local data instead of API
+  const notes = getChapterNotes(chapterId);
+  const flashcards = chapterData?.previewResources?.filter(r => r.type === 'flashcard') || [];
 
   return (
     <>

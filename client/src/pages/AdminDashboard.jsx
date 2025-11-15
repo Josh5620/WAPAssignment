@@ -210,7 +210,7 @@ const AdminDashboard = () => {
                 // Refresh announcements list
                 const announcementsResult = await adminService.getAllAnnouncements();
                 if (announcementsResult.success) {
-                    setAnnouncements(announcementsResult.value.data || []);
+                    setAnnouncements(announcementsResult.data || []);
                 }
             } else {
                 setError(result.message || 'Failed to create announcement');

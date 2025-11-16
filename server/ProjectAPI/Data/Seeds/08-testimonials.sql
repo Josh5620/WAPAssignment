@@ -2,21 +2,11 @@
 -- ==============================
 -- TESTIMONIALS SEED DATA
 -- ==============================
--- This seed file creates sample testimonials for testing and demo purposes
--- Testimonials can be course-specific or general platform reviews (CourseId = NULL)
-
--- Get Python Course ID
-DECLARE @PythonCourseId uniqueidentifier = (SELECT CourseId FROM Courses WHERE Title='The Garden of Python');
-
--- Get User IDs from Profiles (these must exist from previous test data seeding)
-DECLARE @AliceId uniqueidentifier = (SELECT UserId FROM Profiles WHERE Email='alice.student@codesage.com');
-DECLARE @BobId uniqueidentifier = (SELECT UserId FROM Profiles WHERE Email='bob.smith@codesage.com');
-DECLARE @EmmaId uniqueidentifier = (SELECT UserId FROM Profiles WHERE Email='emma.t@codesage.com');
-DECLARE @CarlosId uniqueidentifier = (SELECT UserId FROM Profiles WHERE Email='carlos.m@codesage.com');
-DECLARE @SophiaId uniqueidentifier = (SELECT UserId FROM Profiles WHERE Email='sophia.lee@codesage.com');
-DECLARE @JamesId uniqueidentifier = (SELECT UserId FROM Profiles WHERE Email='james.w@codesage.com');
 
 -- Testimonial 1: Alice - Python Course (5 stars)
+DECLARE @AliceId uniqueidentifier = (SELECT UserId FROM Profiles WHERE Email='alice.student@codesage.com');
+DECLARE @PythonCourseId uniqueidentifier = (SELECT CourseId FROM Courses WHERE Title='The Garden of Python');
+
 IF @AliceId IS NOT NULL AND @PythonCourseId IS NOT NULL
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM Testimonials WHERE UserId=@AliceId AND CourseId=@PythonCourseId)
@@ -124,4 +114,3 @@ BEGIN
     );
 END
 GO
-

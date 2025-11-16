@@ -18,48 +18,84 @@ DECLARE @Chapter5 UNIQUEIDENTIFIER = (SELECT TOP 1 ChapterId FROM Chapters WHERE
 -- 1. PENDING COURSE APPROVALS (3 courses)
 -- ========================================
 
-INSERT INTO Courses (CourseId, TeacherId, Title, Description, PreviewContent, Published, ApprovalStatus, RejectionReason)
-VALUES 
-(NEWID(), @TeacherId, 'Advanced JavaScript Patterns', 
-'Master design patterns, closures, and advanced JavaScript concepts for building scalable applications.',
-'Learn about the module pattern, revealing module pattern, singleton, factory, and more advanced JavaScript techniques.',
-0, 'Pending', NULL),
+IF NOT EXISTS (SELECT 1 FROM Courses WHERE Title = 'Advanced JavaScript Patterns')
+BEGIN
+    INSERT INTO Courses (CourseId, TeacherId, Title, Description, PreviewContent, Published, ApprovalStatus, RejectionReason)
+    VALUES 
+    (NEWID(), @TeacherId, 'Advanced JavaScript Patterns', 
+    'Master design patterns, closures, and advanced JavaScript concepts for building scalable applications.',
+    'Learn about the module pattern, revealing module pattern, singleton, factory, and more advanced JavaScript techniques.',
+    0, 'Pending', NULL);
+END
 
-(NEWID(), @TeacherId, 'React & Redux Fundamentals', 
-'Build modern web applications with React and manage state effectively using Redux.',
-'Introduction to React components, hooks, Redux store, actions, and reducers for building interactive UIs.',
-0, 'Pending', NULL),
+IF NOT EXISTS (SELECT 1 FROM Courses WHERE Title = 'React & Redux Fundamentals')
+BEGIN
+    INSERT INTO Courses (CourseId, TeacherId, Title, Description, PreviewContent, Published, ApprovalStatus, RejectionReason)
+    VALUES 
+    (NEWID(), @TeacherId, 'React & Redux Fundamentals', 
+    'Build modern web applications with React and manage state effectively using Redux.',
+    'Introduction to React components, hooks, Redux store, actions, and reducers for building interactive UIs.',
+    0, 'Pending', NULL);
+END
 
-(NEWID(), @TeacherId, 'Database Design & SQL Mastery', 
-'Learn database normalization, SQL queries, indexing, and optimization techniques.',
-'Comprehensive guide to relational database design, SQL syntax, joins, subqueries, and performance tuning.',
-0, 'Pending', NULL);
+IF NOT EXISTS (SELECT 1 FROM Courses WHERE Title = 'Database Design & SQL Mastery')
+BEGIN
+    INSERT INTO Courses (CourseId, TeacherId, Title, Description, PreviewContent, Published, ApprovalStatus, RejectionReason)
+    VALUES 
+    (NEWID(), @TeacherId, 'Database Design & SQL Mastery', 
+    'Learn database normalization, SQL queries, indexing, and optimization techniques.',
+    'Comprehensive guide to relational database design, SQL syntax, joins, subqueries, and performance tuning.',
+    0, 'Pending', NULL);
+END
 
 -- ========================================
 -- 2. ANNOUNCEMENTS (5 announcements)
 -- ========================================
 
-INSERT INTO Announcements (AnnouncementId, AdminId, Title, Message, CreatedAt)
-VALUES 
-(NEWID(), @AdminId, 'Platform Maintenance Scheduled', 
-'Our learning platform will undergo scheduled maintenance on Sunday, November 17th from 2:00 AM to 6:00 AM UTC. During this time, the platform may be temporarily unavailable. We apologize for any inconvenience.',
-DATEADD(HOUR, -2, GETUTCDATE())),
+IF NOT EXISTS (SELECT 1 FROM Announcements WHERE Title = 'Platform Maintenance Scheduled')
+BEGIN
+    INSERT INTO Announcements (AnnouncementId, AdminId, Title, Message, CreatedAt)
+    VALUES 
+    (NEWID(), @AdminId, 'Platform Maintenance Scheduled', 
+    'Our learning platform will undergo scheduled maintenance on Sunday, November 17th from 2:00 AM to 6:00 AM UTC. During this time, the platform may be temporarily unavailable. We apologize for any inconvenience.',
+    DATEADD(HOUR, -2, GETUTCDATE()));
+END
 
-(NEWID(), @AdminId, 'New Course Library Update', 
-'We are excited to announce that 5 new courses have been added to our catalog this week! Check out Advanced Web Development, Cloud Computing Essentials, and more in the Courses section.',
-DATEADD(DAY, -1, GETUTCDATE())),
+IF NOT EXISTS (SELECT 1 FROM Announcements WHERE Title = 'New Course Library Update')
+BEGIN
+    INSERT INTO Announcements (AnnouncementId, AdminId, Title, Message, CreatedAt)
+    VALUES 
+    (NEWID(), @AdminId, 'New Course Library Update', 
+    'We are excited to announce that 5 new courses have been added to our catalog this week! Check out Advanced Web Development, Cloud Computing Essentials, and more in the Courses section.',
+    DATEADD(DAY, -1, GETUTCDATE()));
+END
 
-(NEWID(), @AdminId, 'Student Achievement Recognition', 
-'Congratulations to our top performers this month! Over 150 students have completed their Python certification. Keep up the excellent work and continue learning!',
-DATEADD(DAY, -3, GETUTCDATE())),
+IF NOT EXISTS (SELECT 1 FROM Announcements WHERE Title = 'Student Achievement Recognition')
+BEGIN
+    INSERT INTO Announcements (AnnouncementId, AdminId, Title, Message, CreatedAt)
+    VALUES 
+    (NEWID(), @AdminId, 'Student Achievement Recognition', 
+    'Congratulations to our top performers this month! Over 150 students have completed their Python certification. Keep up the excellent work and continue learning!',
+    DATEADD(DAY, -3, GETUTCDATE()));
+END
 
-(NEWID(), @AdminId, 'Holiday Learning Promotion', 
-'Special offer for the holiday season! All premium courses are now available at a 30% discount. Enroll now and advance your skills. Offer valid until December 31st.',
-DATEADD(DAY, -5, GETUTCDATE())),
+IF NOT EXISTS (SELECT 1 FROM Announcements WHERE Title = 'Holiday Learning Promotion')
+BEGIN
+    INSERT INTO Announcements (AnnouncementId, AdminId, Title, Message, CreatedAt)
+    VALUES 
+    (NEWID(), @AdminId, 'Holiday Learning Promotion', 
+    'Special offer for the holiday season! All premium courses are now available at a 30% discount. Enroll now and advance your skills. Offer valid until December 31st.',
+    DATEADD(DAY, -5, GETUTCDATE()));
+END
 
-(NEWID(), @AdminId, 'Forum Guidelines Update', 
-'We have updated our community forum guidelines to ensure a positive learning environment for everyone. Please review the new guidelines in the Help section before posting.',
-DATEADD(DAY, -7, GETUTCDATE()));
+IF NOT EXISTS (SELECT 1 FROM Announcements WHERE Title = 'Forum Guidelines Update')
+BEGIN
+    INSERT INTO Announcements (AnnouncementId, AdminId, Title, Message, CreatedAt)
+    VALUES 
+    (NEWID(), @AdminId, 'Forum Guidelines Update', 
+    'We have updated our community forum guidelines to ensure a positive learning environment for everyone. Please review the new guidelines in the Help section before posting.',
+    DATEADD(DAY, -7, GETUTCDATE()));
+END
 
 -- ========================================
 -- 3. ANONYMOUS FEEDBACK / SUGGESTIONS (5 items)

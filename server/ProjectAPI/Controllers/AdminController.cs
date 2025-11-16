@@ -298,7 +298,9 @@ namespace ProjectAPI.Controllers
         {
             try
             {
+                // Only show approved courses in course management (not pending approval)
                 var courses = await _context.Courses
+                    .Where(c => c.ApprovalStatus == "Approved")
                     .Include(c => c.Chapters)
                     .Include(c => c.Enrolments)
                     .Select(c => new
@@ -325,9 +327,20 @@ namespace ProjectAPI.Controllers
         {
             try
             {
-                // TODO: Implement when approval fields are added to Course model
-                // For now, return empty array
-                var pendingCourses = new object[] { };
+                var pendingCourses = await _context.Courses
+                    .Where(c => c.ApprovalStatus == "Pending")
+                    .Include(c => c.Teacher)
+                    .Include(c => c.Chapters)
+                    .Select(c => new
+                    {
+                        courseId = c.CourseId,
+                        title = c.Title,
+                        description = c.Description,
+                        createdBy = c.Teacher.FullName,
+                        chapterCount = c.Chapters.Count,
+                        submittedForApproval = c.Published ? (DateTime?)null : DateTime.UtcNow // placeholder
+                    })
+                    .ToListAsync();
 
                 return Ok(new { success = true, data = pendingCourses });
             }

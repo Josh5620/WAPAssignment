@@ -77,8 +77,7 @@ const GuestChapterViewer = () => {
     );
   }
 
-  // Use fake notes from local data instead of API
-  const notes = getChapterNotes(chapterId);
+  const notes = getChapterNotes(chapterData?.number || 1);
   const flashcards = chapterData?.previewResources?.filter(r => r.type === 'flashcard') || [];
 
   return (
@@ -113,17 +112,21 @@ const GuestChapterViewer = () => {
           </button>
           <button
             type="button"
-            className={`guest-tab ${activeTab === 'flashcards' ? 'active' : ''}`}
-            onClick={() => setActiveTab('flashcards')}
+            className="guest-tab locked"
+            onClick={() => {
+              alert('🌱 Want interactive flashcards to boost your learning?\n\nBecome a CodeSage member to unlock:\n✨ Interactive flashcards\n🏆 Practice challenges\n💬 Get help from instructors\n\nJoin us today!');
+            }}
           >
             <span className="tab-icon">🎴</span>
             <span>Flashcards</span>
-            <span className="tab-badge">{flashcards.length}</span>
+            <span className="tab-lock">🔒</span>
           </button>
           <button
             type="button"
             className="guest-tab locked"
-            onClick={() => navigate('/register')}
+            onClick={() => {
+              alert('🏆 Ready to test your Python skills?\n\nBecome a CodeSage member to unlock:\n✨ Practice challenges\n🎯 Quizzes and assessments\n📊 Track your progress\n\nJoin us today!');
+            }}
           >
             <span className="tab-icon">🏆</span>
             <span>Challenges</span>
@@ -132,7 +135,9 @@ const GuestChapterViewer = () => {
           <button
             type="button"
             className="guest-tab locked"
-            onClick={() => navigate('/register')}
+            onClick={() => {
+              alert('💬 Need help with Python?\n\nBecome a CodeSage member to unlock:\n✨ Get help from instructors\n👥 Community forum access\n🌟 Personalized support\n\nJoin us today!');
+            }}
           >
             <span className="tab-icon">💬</span>
             <span>Help</span>
@@ -199,22 +204,6 @@ const GuestChapterViewer = () => {
               </div>
             </div>
           )}
-        </div>
-
-        {/* Chapter Navigation */}
-        <div className="guest-chapter-navigation">
-          <button 
-            className="nav-button prev"
-            onClick={() => navigate(`/guest/courses`)}
-          >
-            ← Back to Course Overview
-          </button>
-          <PrimaryButton 
-            size="lg"
-            onClick={() => navigate('/register')}
-          >
-            Unlock Full Course →
-          </PrimaryButton>
         </div>
       </main>
     </>

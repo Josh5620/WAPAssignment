@@ -1,7 +1,7 @@
 # CodeSage Test Accounts
 
 ## Quick Reference
-Here are all the test accounts available in your CodeSage application:
+Here are all the test accounts available in the CodeSage application:
 
 ## 👨‍💼 Administrator Accounts
 | Email | Password | Full Name | Role |

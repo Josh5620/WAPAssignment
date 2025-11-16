@@ -61,6 +61,12 @@ const ChapterPage = () => {
     }
   }, [activeTab]);
 
+  // Reset to notes tab when chapter changes
+  useEffect(() => {
+    setActiveTab('notes');
+    setHasStartedLearning(false);
+  }, [chapterId]);
+
   // Preload Pyodide in the background when chapter page loads
   // This ensures it's ready when users open the practice lab
   useEffect(() => {
@@ -760,9 +766,32 @@ const ChapterPage = () => {
               ) : (
                 <StudentQuizComponent 
                   chapterId={databaseChapterId}
-                  onQuizComplete={(result) => {
+                  onQuizComplete={async (result) => {
                     console.log('Quiz completed:', result);
-                    // Optionally refresh progress or show success message
+                    
+                    // Check if the quiz was passed and next chapter should be unlocked
+                    if (result.passed && nextChapter) {
+                      // Refresh the unlock status for the next chapter
+                      try {
+                        const nextChapterDetails = getChapterDetails(nextChapter.id);
+                        const nextDatabaseChapterId = nextChapterDetails?.databaseChapterId || getDatabaseChapterId(nextChapter.id);
+                        
+                        if (nextDatabaseChapterId) {
+                          const unlockStatus = await api.students.isChapterUnlocked(nextDatabaseChapterId);
+                          setNextChapterUnlocked(unlockStatus.unlocked || false);
+                          
+                          if (unlockStatus.unlocked) {
+                            console.log('✅ Next chapter unlocked!');
+                            // Show celebration with garden theme
+                            setTimeout(() => {
+                              alert(`🌱 Garden Path Unlocked! 🌱\n\nCongratulations! You've passed the quiz and unlocked:\n"${nextChapter.title}"\n\nReturn to your Garden Dashboard to see your progress bloom!`);
+                            }, 500);
+                          }
+                        }
+                      } catch (err) {
+                        console.error('Failed to refresh chapter unlock status:', err);
+                      }
+                    }
                   }}
                 />
               )}

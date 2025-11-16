@@ -1728,6 +1728,24 @@ const getStudentProgress = async (userId) => {
   }
 };
 
+const getGardenProgress = async (userId) => {
+  try {
+    const token = getToken();
+    const response = await fetch(`${API_BASE_URL}/students/${userId}/garden-progress`, {
+      method: 'GET',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Get garden progress error:', error);
+    throw error;
+  }
+};
+
 const getChapterProgress = async (userId, chapterId) => {
   try {
     const token = getToken();
@@ -2079,6 +2097,7 @@ export const api = {
     submitQuiz,
     getQuestionHint,
     getStudentProgress,
+    getGardenProgress,
     getChapterProgress,
     isChapterUnlocked,
     markChapterComplete,

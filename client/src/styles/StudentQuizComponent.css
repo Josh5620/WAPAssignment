@@ -147,7 +147,11 @@
 
 .question-number {
   font-weight: bold;
+  font-size: 1.1rem;
   color: var(--cs-olive9, #717744);
+  background: rgba(113, 119, 68, 0.15);
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
 }
 
 .question-difficulty {

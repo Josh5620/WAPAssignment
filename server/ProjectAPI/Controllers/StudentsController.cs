@@ -1306,6 +1306,73 @@ public class StudentsController : ControllerBase
     }
 
     /// <summary>
+    /// Get garden path progress (chapter-level progress for the main Python course)
+    /// </summary>
+    [HttpGet("{userId}/garden-progress")]
+    public async Task<IActionResult> GetGardenProgress(Guid userId, CancellationToken ct = default)
+    {
+        try
+        {
+            var userExists = await _context.Profiles.AnyAsync(p => p.UserId == userId, ct);
+            if (!userExists)
+            {
+                return NotFound(new { error = "User not found" });
+            }
+
+            // Get the main Python course (assuming it's the first course or has a specific identifier)
+            var mainCourse = await _context.Courses
+                .Include(c => c.Chapters)
+                .FirstOrDefaultAsync(ct);
+
+            if (mainCourse == null)
+            {
+                return Ok(new
+                {
+                    completedChapterIds = new List<int>(),
+                    currentChapterId = 1
+                });
+            }
+
+            // Get chapter progress for this user
+            var chapterProgress = await _context.ChapterProgress
+                .Where(cp => cp.UserId == userId && cp.Chapter.CourseId == mainCourse.CourseId)
+                .Include(cp => cp.Chapter)
+                .ToListAsync(ct);
+
+            // Get completed chapter IDs (chapters where quiz was passed)
+            var completedChapterIds = chapterProgress
+                .Where(cp => cp.Completed)
+                .Select(cp => cp.Chapter.Number)
+                .OrderBy(num => num)
+                .ToList();
+
+            // Determine current chapter (next incomplete chapter or last chapter if all complete)
+            int currentChapterId;
+            if (completedChapterIds.Count == 0)
+            {
+                currentChapterId = 1; // Start at chapter 1
+            }
+            else
+            {
+                var maxCompleted = completedChapterIds.Max();
+                var totalChapters = mainCourse.Chapters.Count;
+                currentChapterId = maxCompleted < totalChapters ? maxCompleted + 1 : maxCompleted;
+            }
+
+            return Ok(new
+            {
+                completedChapterIds,
+                currentChapterId
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving garden progress for user {UserId}", userId);
+            return StatusCode(500, new { error = "An error occurred while retrieving garden progress" });
+        }
+    }
+
+    /// <summary>
     /// Get detailed progress for a specific chapter
     /// </summary>
     [HttpGet("{userId}/chapters/{chapterId}/progress")]

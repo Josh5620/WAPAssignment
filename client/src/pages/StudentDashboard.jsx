@@ -33,8 +33,8 @@ const StudentDashboard = () => {
 
       try {
         setLoading(true);
-        // Fetch real progress from API using user ID
-        const progressData = await api.students.getStudentProgress(user.id);
+        // Fetch garden path progress from API using user ID
+        const progressData = await api.students.getGardenProgress(user.id);
         setProgress({
           completedChapterIds: progressData.completedChapterIds || [],
           currentChapterId: progressData.currentChapterId || 1,
@@ -205,13 +205,6 @@ const StudentDashboard = () => {
           </small>
         </div>
         <div className="course-actions">
-          <button
-            type="button"
-            className="btn-course-view"
-            onClick={() => navigate(`/courses/${course.courseId}`)}
-          >
-            Continue
-          </button>
           <button
             type="button"
             className="btn-course-unenroll"
